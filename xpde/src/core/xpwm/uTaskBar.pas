@@ -242,6 +242,8 @@ end;
 procedure TTaskBar.TimerTimer(Sender: TObject);
 begin
     lbTimer.Caption:=formatdatetime(sTimeFormat,now);
+    lbTimer.hint:=FormatDateTime('dddd, mmmm d, yyyy', Now);
+    pnTimer.hint:=lbTimer.Hint;
 end;
 
 procedure TTaskBar.btnStartMouseDown(Sender: TObject;

@@ -73,6 +73,8 @@ object TaskBar: TTaskBar
     BevelOuter = bvNone
     BorderWidth = 2
     Color = 13554646
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 0
     OnDblClick = pnTimerDblClick
     object pnTray: TPanel
@@ -95,6 +97,8 @@ object TaskBar: TTaskBar
       Anchors = [akTop, akRight]
       Caption = 'lbTimer'
       Masked = True
+      ParentShowHint = False
+      ShowHint = True
       Transparent = True
       Layout = tlCenter
       OnDblClick = pnTimerDblClick

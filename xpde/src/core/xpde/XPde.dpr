@@ -17,6 +17,5 @@ begin
   Application.Initialize;
   setXPStyle(application);
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TOpenWithDlg, OpenWithDlg);
   Application.Run;
 end.

@@ -33,12 +33,10 @@ requires
 
 contains
   uXPCommon in 'uXPCommon.pas',
-  distro in 'distro.pas',
   uMouseAPI in 'uMouseAPI.pas',
   numlock in 'numlock.pas',
   uXPIPC in 'uXPIPC.pas',
   xlib_binds in 'xlib_binds.pas',
-  uXPPNG in 'uXPPNG.pas',
-  xpclasses in 'xpclasses.pas';
+  uXPPNG in 'uXPPNG.pas';
 
 end.

@@ -28,10 +28,10 @@ package XPShellControls;
 requires
   rtl,
   visualclx,
-  XPRegistry,
-  XPStyle,
   XPCommon,
-  XPAPI;
+  XPRegistry,
+  XPAPI,
+  XPStyle;
 
 contains
   uSysListView in 'uSysListView.pas',

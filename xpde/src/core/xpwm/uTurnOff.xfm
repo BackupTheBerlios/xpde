@@ -1,6 +1,6 @@
 object Turnoff: TTurnoff
-  Left = 572
-  Top = 370
+  Left = 576
+  Top = 390
   Width = 314
   Height = 200
   HorzScrollBar.Range = 303
@@ -5916,7 +5916,7 @@ object Turnoff: TTurnoff
   Scaled = False
   OnCreate = FormCreate
   OnMouseMove = FormMouseMove
-  PixelsPerInch = 90
+  PixelsPerInch = 75
   object turnoff_off: TImage
     Left = 53
     Top = 157
@@ -6152,7 +6152,9 @@ object Turnoff: TTurnoff
     Top = 81
     Width = 33
     Height = 33
+    Hint = 'Shuts down Linux so that you can safely turn off the computer.'
     AutoSize = True
+    ParentShowHint = False
     Picture.Data = {
       07544269746D61701E0D0000424D1A0D00000000000036000000280000002100
       0000210000000100180000000000E40C0000120B0000120B0000000000000000
@@ -6260,6 +6262,7 @@ object Turnoff: TTurnoff
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6F6F6CABDF6
       B69CF6B69C00}
+    ShowHint = True
     OnClick = turnoffClick
     OnMouseMove = turnoffMouseMove
   end
@@ -6268,7 +6271,9 @@ object Turnoff: TTurnoff
     Top = 81
     Width = 33
     Height = 33
+    Hint = 'Shuts down Linux and then starts Linux again.'
     AutoSize = True
+    ParentShowHint = False
     Picture.Data = {
       07544269746D61701E0D0000424D1A0D00000000000036000000280000002100
       0000210000000100180000000000E40C0000120B0000120B0000000000000000
@@ -6376,6 +6381,7 @@ object Turnoff: TTurnoff
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6F6F6CABDEE
       A183EEA18300}
+    ShowHint = True
     OnClick = restartClick
     OnMouseMove = restartMouseMove
   end
@@ -6627,6 +6633,7 @@ object Turnoff: TTurnoff
     Top = 119
     Width = 45
     Height = 15
+    Hint = 'Shuts down Linux so that you can safely turn off the computer.'
     Caption = 'Turn Off'
     Font.Color = clWhite
     Font.Height = 11
@@ -6635,6 +6642,8 @@ object Turnoff: TTurnoff
     Font.Style = [fsBold]
     Masked = True
     ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
     Transparent = True
   end
   object Label2: TLabel
@@ -6642,6 +6651,7 @@ object Turnoff: TTurnoff
     Top = 119
     Width = 43
     Height = 15
+    Hint = 'Shuts down Linux and then starts Linux again.'
     Caption = 'Restart'
     Font.Color = clWhite
     Font.Height = 11
@@ -6650,13 +6660,15 @@ object Turnoff: TTurnoff
     Font.Style = [fsBold]
     Masked = True
     ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
     Transparent = True
   end
   object Label3: TLabel
     Left = 14
     Top = 11
-    Width = 153
-    Height = 24
+    Width = 151
+    Height = 29
     Caption = 'Turn off computer'
     Font.Color = clWhite
     Font.Height = 20

@@ -3,7 +3,7 @@ unit uTurnOff;
 interface
 
 uses
-  SysUtils, Types, Classes, Variants, QTypes, QGraphics, QControls, QForms, 
+  Libc, SysUtils, Types, Classes, Variants, QTypes, QGraphics, QControls, QForms, 
   QDialogs, QStdCtrls, QExtCtrls;
 
 type
@@ -75,12 +75,13 @@ end;
 
 procedure TTurnoff.restartClick(Sender: TObject);
 begin
-    showmessage('Restart');
+        Libc.system('shutdown -t3 -r now');
 end;
 
 procedure TTurnoff.turnoffClick(Sender: TObject);
 begin
-    showmessage('turn off');
+        if Libc.system('poweroff')<>-1 then
+        Libc.system('shutdown -t3 -h now');
 end;
 
 procedure TTurnoff.FormCreate(Sender: TObject);

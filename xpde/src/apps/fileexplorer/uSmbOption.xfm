@@ -14,10 +14,10 @@ object smbOption: TsmbOption
   Font.Pitch = fpVariable
   Font.Style = []
   ParentFont = False
+  Position = poScreenCenter
+  Scaled = False
   OnShow = FormShow
-  PixelsPerInch = 78
-  TextHeight = 18
-  TextWidth = 5
+  PixelsPerInch = 90
   object GroupBox1: TGroupBox
     Left = 8
     Top = 192
@@ -28,15 +28,15 @@ object smbOption: TsmbOption
     object Label4: TLabel
       Left = 53
       Top = 20
-      Width = 80
-      Height = 18
+      Width = 82
+      Height = 15
       Caption = 'Use WINS server'
     end
     object WinsInp: TEdit
       Left = 52
       Top = 40
       Width = 185
-      Height = 26
+      Height = 23
       Enabled = False
       TabOrder = 1
     end
@@ -87,14 +87,14 @@ object smbOption: TsmbOption
       Left = 147
       Top = 28
       Width = 174
-      Height = 26
+      Height = 23
       TabOrder = 0
     end
     object Label3: TLabel
       Left = 52
       Top = 30
-      Width = 85
-      Height = 18
+      Width = 55
+      Height = 30
       Caption = 'Enter  WorkGroup'
       WordWrap = True
     end
@@ -110,22 +110,22 @@ object smbOption: TsmbOption
       Left = 133
       Top = 24
       Width = 188
-      Height = 26
+      Height = 23
       TabOrder = 0
     end
     object smbPass: TEdit
       Left = 133
       Top = 56
       Width = 188
-      Height = 26
+      Height = 23
       EchoMode = emPassword
       TabOrder = 1
     end
     object Label1: TLabel
       Left = 53
       Top = 27
-      Width = 51
-      Height = 18
+      Width = 27
+      Height = 30
       Caption = 'User Name'
       Font.Color = clBlack
       Font.Height = 11
@@ -139,7 +139,7 @@ object smbOption: TsmbOption
       Left = 54
       Top = 58
       Width = 74
-      Height = 18
+      Height = 15
       Caption = 'User Password '
       Font.Color = clBlack
       Font.Height = 11

@@ -2031,6 +2031,7 @@ begin
         xlibinterface.outputDebugString(iINFO,format('Frame(%d,%d)-(%d,%d)',[attr.x,attr.y, attr.width,attr.height]));
         {$endif}
 
+
         fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
         co:=(frame as TWindowsClassic).getorigin;
 
@@ -2052,14 +2053,16 @@ begin
         frame.height:=attr.height+(fbs.bottom+co.y);
 
 
-        if (sizehints^.flags and PMinSize)=PMinSize then begin
-            if sizehints^.min_width>frame.constraints.MinWidth then frame.Constraints.MinWidth:=sizehints^.min_width+(fbs.left+fbs.right);
-            if sizehints^.min_height>frame.Constraints.MinHeight then frame.Constraints.MinHeight:=sizehints^.min_height+(co.Y+fbs.top);
-        end;
+        if (assigned(sizehints)) and (framed) then begin
+            if (sizehints^.flags and PMinSize)=PMinSize then begin
+                if sizehints^.min_width>frame.constraints.MinWidth then frame.Constraints.MinWidth:=sizehints^.min_width+(fbs.left+fbs.right);
+                if sizehints^.min_height>frame.Constraints.MinHeight then frame.Constraints.MinHeight:=sizehints^.min_height+(co.Y+fbs.top);
+            end;
 
-        if (sizehints^.flags and PMaxSize)=PMaxSize then begin
-            if sizehints^.max_width>=sizehints^.min_width then frame.Constraints.maxWidth:=sizehints^.max_width+(fbs.left+fbs.right);
-            if sizehints^.max_height>=sizehints^.min_height then frame.Constraints.maxHeight:=sizehints^.max_height+(co.Y+fbs.top);
+            if (sizehints^.flags and PMaxSize)=PMaxSize then begin
+                if sizehints^.max_width>=sizehints^.min_width then frame.Constraints.maxWidth:=sizehints^.max_width+(fbs.left+fbs.right);
+                if sizehints^.max_height>=sizehints^.min_height then frame.Constraints.maxHeight:=sizehints^.max_height+(co.Y+fbs.top);
+            end;
         end;
 
         if FWindowState=wsNormal then begin
@@ -2545,6 +2548,7 @@ var
     co: TPoint;
 begin
     if not assigned(frame) then exit;
+    if not framed then exit;
     fbs:=(frame as TWindowsClassic).getframebordersizes;
     co:=(frame as TWindowsClassic).getorigin;
 

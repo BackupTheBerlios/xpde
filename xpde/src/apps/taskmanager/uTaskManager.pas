@@ -285,9 +285,6 @@ end;
 procedure TWindowsTaskManagerDlg.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-        Timer1.Enabled:=false;
-        Timer2.Enabled:=false;
-        Timer3.Enabled:=false;
         PB1.Free;
         PB2.Free;
         PB3.Free;
@@ -324,6 +321,7 @@ var i,j,x:integer;
     ssa:Array[0..2] of string; // pid , command , flags (won't be shown)
     procs:Array[0..1024,0..1] of string; // FIXME
 Begin
+
         ListView1.Items.Clear;
         tmpstr:=TStringList.Create;
         try
@@ -359,6 +357,7 @@ Begin
         End;
         ListView1.Items.EndUpdate;
         tmpstr.Free;
+        
 End;
 
 Procedure TWindowsTaskManagerDlg.Fill_Processes;
@@ -368,6 +367,7 @@ var i,j,x,jj:integer;
     procs:Array[0..1024,0..4] of string; // FIXME
     tnode:TTreeNode;
 Begin
+
         tnode:=Nil;
         TreeView2.Items.Clear;
         tmpstr:=TStringList.Create;
@@ -432,16 +432,19 @@ Begin
                 End;
                 TreeView2.Items.EndUpdate;
         tmpstr.Free;
+
 End;
 
 procedure TWindowsTaskManagerDlg.Timer1Timer(Sender: TObject);
 begin
+        (*
         if PageControl1.ActivePage=TabSheet1 then
         Fill_Applications else
         if PageControl1.ActivePage=TabSheet5 then
         Fill_Processes;
-        Fill_Net_Devices; 
+        Fill_Net_Devices;
         Find_Lusers;
+        *)
 end;
 
 procedure TWindowsTaskManagerDlg.FormShow(Sender: TObject);
@@ -755,6 +758,7 @@ Begin
         if j<>0 then begin
         j:=pos(' ',numfks);
         num_forks:=copy(numfks,j+1,length(numfks));
+        Lab24.Caption:=num_forks;        
         End;
         End;
 
@@ -800,10 +804,12 @@ End;
 
 procedure TWindowsTaskManagerDlg.Timer2Timer(Sender: TObject);
 begin
+
         Read_Stats('/proc/stat');
         MemInfo;
         AverageLoad('/proc/loadavg');
         Read_Net('/proc/net/dev');
+
 end;
 
 Procedure TWindowsTaskManagerDlg.Paint_PB1;
@@ -1444,6 +1450,7 @@ End;
 
 procedure TWindowsTaskManagerDlg.Timer3Timer(Sender: TObject);
 begin
+
         Paint_PB1;
         Paint_PB2;
         Paint_PB3;
@@ -1502,7 +1509,7 @@ Begin
         StatusBar1.Panels[0].Text:='Processes: '+sbuf;
         Lab22.Caption:=ss;
         Lab23.Caption:=sbuf;
-        Lab24.Caption:=num_forks;
+//        Lab24.Caption:=num_forks;
 
         finally
         tmpstr_avg.Free;

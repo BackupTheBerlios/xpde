@@ -96,6 +96,7 @@ type
     procedure Run1Click(Sender: TObject);
     procedure TaskManager1Click(Sender: TObject);
     procedure imNetDblClick(Sender: TObject);
+    procedure TurnOffComputer1Click(Sender: TObject);
   private
     menupaths: TStringList;
     procedure OnMenuItemClick(Sender: TObject);
@@ -130,7 +131,7 @@ implementation
 
 {$R *.xfm}
 
-uses uWindowManager;
+uses uWindowManager, uTurnOff;
 
 function GetTickCount:integer;
 var
@@ -552,6 +553,11 @@ end;
 procedure TTaskBar.imNetDblClick(Sender: TObject);
 begin
     XPAPI.ShellExecute(XPAPI.getsysinfo(siAppDir)+'/networkstatus -i eth0',false);
+end;
+
+procedure TTaskBar.TurnOffComputer1Click(Sender: TObject);
+begin
+    turnoff.showmodal;
 end;
 
 initialization

@@ -1030,6 +1030,7 @@ object TaskBar: TTaskBar
         FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
       Caption = 'Turn Off Computer...             '
+      OnClick = TurnOffComputer1Click
     end
   end
   object ImageList1: TImageList

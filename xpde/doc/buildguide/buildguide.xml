@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+<article>
+  <title>Build Guide</title>
+
+  <articleinfo>
+    <date>2002/11/19</date>
+
+    <author>
+      <surname>León</surname>
+
+      <firstname>José</firstname>
+    </author>
+  </articleinfo>
+
+  <sect1>
+    <title>Introduction</title>
+
+    <para>This document explains how to build XPde from the sources on the
+    CVS. It documents how to get the sources, where to get and install Kylix
+    OE, which ProjectGroup to load and what packages to install in the IDE.
+    It&#39;s very simple, just follow these steps and you could
+    rebuild/modify/contribute to XPde.</para>
+  </sect1>
+
+  <sect1>
+    <title>Getting the sources</title>
+
+    <para>To get the sources you will need a cvs client, it&#39;s included in
+    most common Linux distributions, you can check it by typing cvs in the
+    command prompt:</para>
+
+    <programlisting>ttm@ttm:~&#62; cvs
+Usage: cvs [cvs-options] command [command-options-and-arguments]
+  where cvs-options are -q, -n, etc.
+    (specify --help-options for a list of options)
+  where command is add, admin, etc.
+    (specify --help-commands for a list of commands
+     or --help-synonyms for a list of command synonyms)
+  where command-options-and-arguments depend on the specific command
+    (specify -H followed by a command name for command-specific help)
+  Specify --help to receive this message
+
+The Concurrent Versions System (CVS) is a tool for version control.
+For CVS updates and additional information, see
+    the CVS home page at http://www.cvshome.org/ or
+    Pascal Molli&#39;s CVS site at http://www.loria.fr/~molli/cvs-index.html
+</programlisting>
+
+    <para>If you don&#39;t have it, you can install the package from your
+    Linux distro or browse to <olink>http://www.cvshome.org</olink>.</para>
+
+    <para>To get the XPde sources, go to your home directory and type these
+    commands:</para>
+
+    <programlisting>cvs -d:pserver:anonymous@cvs.xpde.berlios.de:/cvsroot/xpde login
+
+cvs -z3 -d:pserver:anonymous@cvs.xpde.berlios.de:/cvsroot/xpde co xpde</programlisting>
+
+    <para>The first comand will login into the server, if you are prompted for
+    a password, just press enter. The second command will create a directory
+    called xpde under your current directory and will download all the sources
+    from the CVS server.</para>
+  </sect1>
+
+  <sect1>
+    <title>Installing Kylix OE</title>
+
+    <para>Kylix OE is a down-sized version of Kylix Enterprise, it&#39;s free
+    for download and allows only GPL development, so fits very well with this
+    project. We will always try that XPde can be built using Kylix OE. You can
+    get it from <olink>http://www.borland.com/products/downloads/download_kylix.html</olink>,
+    at the time of writting, the version you need to download is Kylix 3 Open
+    Edition, requires registration.</para>
+
+    <para>After you download, just decompress the file you downloaded,
+    probably a tar.gz, by using:</para>
+
+    <programlisting>tar xvzf yourfilename.tar.gz</programlisting>
+
+    <para>This will create a directory which holds the Kylix Open Setup,
+    execute the installation and follow the steps.</para>
+
+    <para><emphasis>Note: Installing Kylix OE as root is reported to cause
+    problems, so it&#39;s better you install it as the user is going to use
+    it.</emphasis></para>
+  </sect1>
+
+  <sect1>
+    <title>Rebuilding the sources</title>
+
+    <para>Rebuild the sources is easy, you just need to open a project group,
+    install several packages on the IDE and select Project | Build All
+    projects command from the Kylix menu. The ProjectGroup you need to open is
+    located at ~/xpde/src/core/xpde/XPdePG.bpg</para>
+
+    <para>At the time of writting, the projectgroup is composed of this
+    projects:</para>
+
+    <programlisting>bplXPCommon
+bplXPRegistry
+bplXPAPI
+bplXPMenus
+bplXPStyle
+bplXPLocalizator
+bplXPLocalizatorIDE
+bplXPColorSelect
+bplXPShellControls
+bplXPCommctrls
+taskmanager
+networkstatus
+networkproperties
+appexec
+bpldesk.so
+XPwm
+XPde</programlisting>
+
+    <para>The output dir of all packages and applications is set to
+    $(HOME)/xpde, this means that this directory must exist, or you will get
+    errors when compiling.</para>
+
+    <para>You will need to install all packages from bplXPCommon to
+    bplXPCommctrls, you can do that, but right-clicking on the Project Manager
+    and selecting the option Install. This will rebuild that package and will
+    install it on the IDE. </para>
+
+    <para>The projectgroup will grow and maybe this guide will be outdated
+    between releases, so the rule here is &#34;You must install in the IDE all
+    the packages from the first until you find an application&#34;.</para>
+
+    <para>After you install all the needed packages, you can use the command
+    Project | Build All Projects, this will rebuild the entire project. And
+    that&#39;s all, to get it running, read the Install guide which explains
+    how to install it.</para>
+  </sect1>
+</article>

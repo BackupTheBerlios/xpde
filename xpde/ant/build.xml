@@ -3,7 +3,7 @@
   XPde build file
   </description>
   <property name="kylix" location="/home/ttm/kylix3" />
-  <property name="version" value="0.3.5" />
+  <property name="version" value="0.4.0" />
   <property name="src" location="src"/>
   <property name="build" location="xpde-${version}"/>
   <property name="units" location="dcu"/>  
@@ -12,7 +12,7 @@
   <property name="sources" location="${base}/src" />
   <property name="libpath" value="${kylix}/bin:${build}" />
   <property name="packages" value="rtl:visualclx:XPRegistry:XPCommon:XPAPI:XPMenus:XPTrayIcon:XPStyle:XPColorSelect:XPShellControls:XPCommctrls" />
-  <property name="dcupath" value="${sources}/common:${sources}/components/style:${sources}/components/menu:${sources}/components/commctrls:${sources}/components/toolsapi:${sources}/components/localization:${sources}/components/registry:${sources}/components/shellcontrols:${sources}/components/colorselect:${sources}/core/xpde" />  
+  <property name="dcupath" value="${sources}/core/xpde:${sources}/common:${sources}/components/style:${sources}/components/menu:${sources}/components/commctrls:${sources}/components/toolsapi:${sources}/components/localization:${sources}/components/registry:${sources}/components/shellcontrols:${sources}/components/colorselect:${sources}/components/sysprovider:${sources}/components/vt:${sources}/components/printing:${sources}/components/vt:${sources}/components/xpimagelist:${sources}/components/xplistview" />  
   <property name="params" value="-B -E${build} -LE${build} -LN${units} -U${units}:${dcupath} -N${units}" />
   <property name="pkgparams" value="${params} -LU${packages}" />
 
@@ -84,6 +84,37 @@
 	  <arg line="XPCommctrls.dpk" />
   </exec>
   
+  <exec dir="${sources}/components/sysprovider" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="XPsysprovider.dpk" />
+  </exec>  
+  
+  <exec dir="${sources}/components/printing" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="XPPrinting.dpk" />
+  </exec>  
+  
+  <exec dir="${sources}/components/vt" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="VTClx_K3.dpk" />
+  </exec>  
+  
+  <exec dir="${sources}/components/vt" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="dclVTClx_K3.dpk" />
+  </exec>    
+  
+  
+  <exec dir="${sources}/apps/regedit" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${pkgparams}" />
+	  <arg line="regedit.dpr" />
+  </exec>
+  
   <exec dir="${sources}/apps/taskmanager" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
 	  <arg line="${pkgparams}" />
@@ -114,6 +145,18 @@
 	  <arg line="${pkgparams}" />
 	  <arg line="networkproperties.dpr" />
   </exec>    
+  
+  <exec dir="${sources}/applets/systemproperties" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${pkgparams}" />
+	  <arg line="systemproperties.dpr" />
+  </exec>      
+  
+  <exec dir="${sources}/apps/fontview" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${pkgparams}" />
+	  <arg line="fontview.dpr" />
+  </exec>      
   
   <exec dir="${sources}/apps/fileexplorer" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      

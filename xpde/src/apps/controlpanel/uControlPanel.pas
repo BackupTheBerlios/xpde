@@ -27,11 +27,13 @@ type
     procedure FormShow(Sender: TObject);
     procedure IconView1ItemDoubleClick(Sender: TObject;
       Item: TIconViewItem);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     procedure loaddatetimeapplet;
     procedure loadmouseapplet;
     procedure loadnetapplet;
+    procedure loaddeskapplet;
   public
     { Public declarations }
   end;
@@ -59,7 +61,7 @@ procedure TControlFanelFrm.IconView1ItemDoubleClick(Sender: TObject;
 begin
     case item.Index of
         0: loaddatetimeapplet;
-        1: showmessage('this option is not ready yet!');
+        1: loaddeskapplet;
         2: loadmouseapplet;
         3: loadnetapplet;
     end;
@@ -87,9 +89,21 @@ begin
     XPAPI.ShellExecute(XPAPI.getsysinfo(siAppletsDir)+'mouse',false);
 end;
 
+procedure TControlFanelFrm.loaddeskapplet;
+begin
+    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppletsDir)+'desk',false);
+end;
+
 procedure TControlFanelFrm.loadnetapplet;
 begin
     XPAPI.ShellExecute(XPAPI.getsysinfo(siAppletsDir)+'networkstatus -i eth0',false);
+end;
+
+procedure TControlFanelFrm.FormCreate(Sender: TObject);
+begin
+    //These lines are here to set the font of the menubar
+    font.name:='';
+    parentfont:=true;
 end;
 
 end.

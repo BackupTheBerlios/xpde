@@ -29,7 +29,7 @@ uses
   Classes, QGraphics, uXPStyleConsts,
   QControls, QForms, QDialogs,
   QButtons, QStdCtrls, uWindowManager,
-  QExtCtrls;
+  QExtCtrls, Qt;
 
 type
     TWindowsClassic = class(TForm)
@@ -164,18 +164,27 @@ end;
 
 procedure TWindowsClassic.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
-var
-    r: TRect;
+//var
+//    r: TRect;
 begin
     if moving then begin
+        {
         r:=boundsrect;
         r.left:=r.left+(x-ox);
         r.top:=r.top+(y-oy);
         r.Right:=r.left+width;
         r.Bottom:=r.top+height;
-        XSync(XPWindowManager.Display,0);        
-        boundsrect:=r;
-        XSync(XPWindowManager.Display,0);
+        }
+
+
+        XSync(xpwindowmanager.display,1);
+        QWidget_move(self.handle,left+(x-ox),top+(y-oy));
+//        sendsyn(qwidget_winid(self.handle));
+        XSync(xpwindowmanager.display,0);
+
+//        XSync(XPWindowManager.Display,0);
+//        boundsrect:=r;
+//        XSync(XPWindowManager.Display,0);
    end
     else begin
     {

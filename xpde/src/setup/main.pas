@@ -3,8 +3,11 @@ unit main;
 interface
 
 uses
-  SysUtils, Types, Classes, Variants, QTypes, QGraphics, QControls, QForms, 
-  QDialogs, QStdCtrls, QExtCtrls, QComCtrls;
+  SysUtils, Types, Classes,
+  Variants, QTypes, QGraphics,
+  QControls, QForms, QDialogs,
+  QStdCtrls, QExtCtrls, QComCtrls,
+  Libc;
 
 type
   TBackForm = class(TForm)
@@ -33,7 +36,6 @@ type
     imStep4: TImage;
     imStep5: TImage;
     pbProgress: TProgressBar;
-    Button1: TButton;
     imCurrent1: TImage;
     imCurrent2: TImage;
     imCurrent3: TImage;
@@ -49,12 +51,15 @@ type
     activeStar: TImage;
     tmStars: TTimer;
     tmTexts: TTimer;
+    startTimer: TTimer;
     procedure imLogoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure tmStarsTimer(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure tmTextsTimer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure startTimerTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,12 +70,15 @@ type
     curtext: integer;
     procedure fillTexts;
     procedure setCurrentStep(const step:integer);
+    procedure installscript;
   end;
 
 var
   BackForm: TBackForm;
 
 implementation
+
+uses uPersonalizeDlg, uStartInstallation;
 
 {$R *.xfm}
 
@@ -182,6 +190,101 @@ begin
     lbDarktitle.Caption:=title;
     lbText.caption:=text;
     inc(curtext);
+end;
+
+procedure TBackForm.FormShow(Sender: TObject);
+begin
+    startTimer.enabled:=true;
+end;
+
+procedure TBackForm.startTimerTimer(Sender: TObject);
+var
+    rs: TModalResult;
+begin
+    //Check here if the user is root or not
+    startTimer.enabled:=false;
+    with tStartInstallationDlg.create(application) do begin
+        try
+            rs:=showmodal;
+            if rs=mrCancel then begin
+                application.terminate;
+            end;
+            if rs=mrOk then begin
+                installscript;
+            end;
+            showmessage('Installation finished');
+            application.terminate;
+        finally
+            free;
+        end;
+    end;
+end;
+
+function getTickCount:integer;
+var
+    tv: timeval;
+    tz: timezone;
+begin
+    gettimeofday(tv,tz);
+    result:=tv.tv_sec;
+end;
+
+procedure TBackForm.installscript;
+var
+    script: string;
+    lines: TStringList;
+    i: integer;
+    line: string;
+    init: integer;
+    cur: integer;
+    eta: integer;
+    lasteta: integer;
+    st: integer;
+begin
+    inc(curstep);
+    setCurrentStep(curstep);
+    inc(curstep);
+    setCurrentStep(curstep);
+    inc(curstep);
+    setCurrentStep(curstep);
+            
+    init:=getTickCount;
+    script:=extractfilepath(application.exename)+'install.sh';
+    if fileexists(script) then begin
+        lines:=TStringList.create;
+        try
+            lines.LoadFromFile(script);
+            pbProgress.Max:=lines.count-1;
+            lbOperation.caption:='Copying files...';
+            lasteta:=65535;
+            for i:=0 to lines.count-1 do begin
+                line:=lines[i];
+                pbProgress.position:=i;
+                application.processmessages;
+                st:=libc.system(PChar(line));
+                if st<>0 then begin
+                    showmessage('Script error [Line '+inttostr(i)+']: ' + line);
+                end;
+                cur:=getTickCount;
+                if ((cur-init)>5) then begin
+                    eta:=(lines.count*(cur-init));
+                    eta:=eta div (i+1);
+                    eta:=eta - (cur-init);
+                    if lasteta>eta then begin
+                        lasteta:=eta;
+                    end;
+                    lbEta.Caption:=inttostr(lasteta)+' seconds';
+                end
+                else lbEta.caption:='Calculating...';
+            end;
+        finally
+            lines.free;
+        end;
+    end
+    else begin
+        showmessage('Cannot find install script: '+script);
+        application.terminate;
+    end;
 end;
 
 end.

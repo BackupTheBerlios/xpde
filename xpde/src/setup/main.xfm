@@ -1,11 +1,10 @@
 object BackForm: TBackForm
-  Left = 499
-  Top = 167
+  Left = 345
+  Top = 42
   Width = 639
   Height = 526
   HorzScrollBar.Range = 201
   VertScrollBar.Range = 154
-  ActiveControl = Button1
   BorderStyle = fbsNone
   Caption = 'XPde Setup'
   Color = clBackground
@@ -14,6 +13,7 @@ object BackForm: TBackForm
   Scaled = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   PixelsPerInch = 90
   object Panel1: TPanel
     Left = 0
@@ -7115,7 +7115,6 @@ object BackForm: TBackForm
       Color = clWhite
       FillColor = 43520
       ParentColor = False
-      Position = 50
       Smooth = True
     end
     object imCurrent1: TImage
@@ -7394,7 +7393,6 @@ object BackForm: TBackForm
       Width = 150
       Height = 15
       AutoSize = False
-      Caption = '%s'
       Font.Color = clWhite
       Font.Height = 11
       Font.Name = 'tahoma'
@@ -7428,7 +7426,6 @@ object BackForm: TBackForm
       Height = 15
       Alignment = taCenter
       AutoSize = False
-      Caption = '%s'
       Font.Color = clWhite
       Font.Height = 11
       Font.Name = 'tahoma'
@@ -25159,15 +25156,6 @@ object BackForm: TBackForm
       Transparent = True
       WordWrap = True
     end
-    object Button1: TButton
-      Left = 52
-      Top = 128
-      Width = 293
-      Height = 25
-      Caption = 'Increase step!! Test Button!! Hide me!!'
-      TabOrder = 3
-      OnClick = Button1Click
-    end
   end
   object Panel3: TPanel
     Left = 0
@@ -29619,5 +29607,11 @@ object BackForm: TBackForm
     OnTimer = tmTextsTimer
     Left = 316
     Top = 372
+  end
+  object startTimer: TTimer
+    Enabled = False
+    OnTimer = startTimerTimer
+    Left = 256
+    Top = 300
   end
 end

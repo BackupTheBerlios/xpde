@@ -62,8 +62,7 @@ UseLauncher=0
 DebugCWD=
 
 [Excluded Packages]
-/home/ttm/xpde/bin/bplXPColorSelect.so=XPColorSelect components
-/home/ttm/xpde/bin/bplXPCommctrls.so=XPCommctrls unit
+/home/linda/My_Documents/Kylix_Downloads/SDL_Apps/SDLAppSuite-0-2-0/bplFileNameContainerDT.so.0.1=Filename Containers
 
 [HistoryLists\hlOutputDirectorry]
 Count=1

@@ -28,7 +28,7 @@ interface
 uses
   SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs, uXPAPI,
   QStdCtrls, QMenus, QTypes, QExtCtrls, QComCtrls,uQXPComCtrls, QImgList,
-  uTrayIcon;
+  uTrayIcon,SysProvider;
 
 type
   TWindowsTaskManagerDlg = class(TForm)
@@ -135,6 +135,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Close1Click(Sender: TObject);
   private
+    sysp:TSysProvider;    
     Procedure Get_PIDS_Apps(__cmdline:string);
     Procedure Read_stats(statsfile_:string);
     Procedure Read_Net(netfile:string);
@@ -222,6 +223,7 @@ Const PRIO_NORMAL=10000;
       // using of ps for such purpose.
 
 var tmpstr,tmpstr_stat:TStrings;
+    din:TUname;
     is_all:boolean; // Show all procs ? This is for checkbox37
     num_forks:string='0'; // num of forks since boot
     CPUuser_, CPUsyst_:longint;
@@ -283,12 +285,17 @@ end;
 procedure TWindowsTaskManagerDlg.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+        Timer1.Enabled:=false;
+        Timer2.Enabled:=false;
+        Timer3.Enabled:=false;
         PB1.Free;
         PB2.Free;
         PB3.Free;
         PB4.Free;
         PB5.Free;
+        sysp.Free;
         Action:=caFree;
+        Application.Terminate;
 end;
 
 Procedure TWindowsTaskManagerDlg.Get_PIDS_Apps(__cmdline:string);
@@ -321,6 +328,9 @@ Begin
         tmpstr:=TStringList.Create;
         try
         // FIX THIS -> via pipe, not this way (too slow).
+        if (din.dist=Ord(diiRedhat)) and (din.version='9') then
+        pidcmd:='ps -xo pid,ucomm,flags --sort pid | grep " 0"'
+        else
         pidcmd:='ps -xo pid,ucomm,flags --sort pid | grep 000';
         Get_PIDS_Apps(pidcmd);
         except
@@ -332,14 +342,17 @@ Begin
         ss:='';
         ss:=tmpstr.Strings[i];
         ss:=trimleft(ss);
+        
                 for x:=0 to 2 do begin
                 j:=pos(' ',ss);
                 ssa[x]:=copy(ss,1,j-1);
                 ss:=copy(ss,j,length(ss)-j);
                 ss:=trimleft(ss);
                 End;
+                
         procs[i][0]:=ssa[0];
         procs[i][1]:=ssa[1];
+
         ListView1.Items.Add.Subitems.Add(procs[i][1]);
         ListView1.Items.Item[i].Caption:=procs[i][0];
         Application.ProcessMessages;
@@ -401,7 +414,7 @@ Begin
         jj:=Pos('\',procs[i][4]);
 
                 if jj<>0 then begin
-                // WE FOUND A CILD PROCESS
+                // WE FOUND A CHILD PROCESS
                 procs[i][4]:=copy(procs[i][4],jj+2,length(procs[i][4])-(jj+1));
                 procs[i][4]:=trimleft(procs[i][4]);
                 TreeView2.Items.AddChild(tnode,procs[i][4]);
@@ -1512,6 +1525,8 @@ Begin
         else
         if ss='ipp' then Result:='ISDN Connection'
         else
+        if ss='vmn' then Result:='VMWare Virtual Device'
+        else
         Result:='Unknown Interface';
         End;
 End;
@@ -1564,7 +1579,7 @@ Begin
         tmp_users:=TStringList.Create;
         tmpfile_:=_get_tmp_fname;
         try
-        ss:='who -i > '+tmpfile_;
+        ss:='who -u > '+tmpfile_;
         Libc.System(PChar(ss));
         AssignFile(fi,tmpfile_);
         Reset(fi);
@@ -1639,6 +1654,8 @@ begin
     parentfont:=true;
 
     Randomize;
+    sysp:=TsysProvider.Create;
+    din:=sysp.DistInfo;
 end;
 
 procedure TWindowsTaskManagerDlg.Close1Click(Sender: TObject);

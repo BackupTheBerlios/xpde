@@ -332,6 +332,8 @@ Begin
         else
         if ss='ipp' then Result:='ISDN Connection'
         else
+        if ss='vmn' then Result:='VMWare Virtual Device'
+        else
         Result:='Unknown Interface';
         End;
 End;

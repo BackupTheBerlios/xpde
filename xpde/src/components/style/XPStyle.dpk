@@ -29,8 +29,8 @@ requires
   rtl,
   visualclx,
   XPMenus,
-  XPCommon,
-  XPRegistry;
+  XPRegistry,
+  XPCommon;
 
 contains
   uXPStyle in 'uXPStyle.pas',

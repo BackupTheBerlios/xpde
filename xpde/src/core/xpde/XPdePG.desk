@@ -1,41 +1,34 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,134,71,161,1,1
-File_1=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyleConsts.pas',0,1,39,20,58,0,0
-File_2=SourceModule,'/home/ttm/xpde/src/components/menu/uXPPopupMenu.pas',0,1,39,15,39,0,0
-File_3=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyle.pas',0,1,151,58,180,0,0
-File_4=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,1,432,23,451,0,0
-File_5=SourceModule,'/home/ttm/xpde/src/apps/controlpanel/uControlPanel.pas',0,1,92,21,106,1,0
-File_6=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,69,97,77,0,0
-File_7=SourceModule,'/home/ttm/xpde/src/core/xpde/uAboutDlg.pas',0,1,1,1,1,1,1
+File_0=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,509,7,518,0,0
+File_1=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,1,443,5,460,0,0
+File_2=SourceModule,'/home/ttm/xpde/src/components/trayicon/uTrayIcon.pas',0,1,167,39,174,0,0
+File_3=SourceModule,'/home/ttm/xpde/src/applets/desk/uDisplayProperties.pas',0,1,23,3,33,0,0
+File_4=SourceModule,'/home/ttm/xpde/src/core/xpde/uDesktopMain.pas',0,1,185,43,205,0,0
+File_5=SourceModule,'/home/ttm/xpde/src/common/uXPIPC.pas',0,1,34,1,34,0,0
+File_6=SourceModule,'/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas',0,1,20,51,30,0,0
+File_7=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyle.pas',0,1,17,23,29,0,0
+File_8=SourceModule,'/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas',0,1,481,40,499,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
-Module1=/home/ttm/xpde/src/apps/fileexplorer/main.pas
-Module2=/home/ttm/kylix3/source/rtl/common/Classes.pas
-Count=3
+Module0=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
+Count=1
 EditWindowCount=1
-PackageWindowCount=8
+PackageWindowCount=9
 
-[/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas]
+[/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
 ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/apps/fileexplorer/main.pas]
-ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
-[/home/ttm/kylix3/source/rtl/common/Classes.pas]
-ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/core/xpde/XPdePG.bpg]
-FormState=0
-FormOnTop=0
+FormState=1
+FormOnTop=1
 
 [/home/ttm/xpde/src/components/registry/XPRegistry.dpk]
+FormState=0
+FormOnTop=1
+
+[/home/ttm/xpde/src/components/trayicon/XPTrayIcon.dpk]
+FormState=0
+FormOnTop=1
+
+[/home/ttm/xpde/src/core/xpde/XPdePG.bpg]
 FormState=0
 FormOnTop=0
 
@@ -128,24 +121,22 @@ FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=3
+ViewCount=1
 CurrentView=0
 View0=0
-View1=1
-View2=2
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
 Visible=1
 State=0
-Left=196
-Top=152
-Width=1079
-Height=753
+Left=268
+Top=136
+Width=696
+Height=482
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1079
-ClientHeight=753
+ClientWidth=696
+ClientHeight=482
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
@@ -155,29 +146,15 @@ BottomPanelClients=MessageView@EditWindow0
 BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
-Module=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
-CursorX=43
-CursorY=483
-TopLine=481
-LeftCol=1
-
-[View1]
-Module=/home/ttm/kylix3/source/rtl/common/Classes.pas
+Module=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
 CursorX=1
-CursorY=2776
-TopLine=2760
-LeftCol=1
-
-[View2]
-Module=/home/ttm/xpde/src/apps/fileexplorer/main.pas
-CursorX=1
-CursorY=205
-TopLine=187
+CursorY=1
+TopLine=1
 LeftCol=1
 
 [PackageWindow0]
 Create=1
-Visible=0
+Visible=1
 State=0
 Left=284
 Top=317
@@ -199,6 +176,28 @@ Module=/home/ttm/xpde/src/components/registry/XPRegistry.dpk
 
 [PackageWindow1]
 Create=1
+Visible=1
+State=0
+Left=292
+Top=336
+Width=368
+Height=244
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=362
+ClientHeight=219
+TBDockHeight=244
+LRDockWidth=368
+Dockable=1
+StatusBar=0
+TextLabels=1
+Toolbar=1
+SectionWidth0=150
+SectionWidth1=212
+Module=/home/ttm/xpde/src/components/trayicon/XPTrayIcon.dpk
+
+[PackageWindow2]
+Create=1
 Visible=0
 State=0
 Left=252
@@ -219,7 +218,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/common/XPCommon.dpk
 
-[PackageWindow2]
+[PackageWindow3]
 Create=1
 Visible=0
 State=0
@@ -241,7 +240,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/toolsapi/XPAPI.dpk
 
-[PackageWindow3]
+[PackageWindow4]
 Create=1
 Visible=0
 State=0
@@ -263,7 +262,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/menu/XPMenus.dpk
 
-[PackageWindow4]
+[PackageWindow5]
 Create=1
 Visible=0
 State=0
@@ -285,7 +284,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/style/XPStyle.dpk
 
-[PackageWindow5]
+[PackageWindow6]
 Create=1
 Visible=0
 State=0
@@ -307,7 +306,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/colorselect/XPColorSelect.dpk
 
-[PackageWindow6]
+[PackageWindow7]
 Create=1
 Visible=0
 State=0
@@ -329,7 +328,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/shellcontrols/XPShellControls.dpk
 
-[PackageWindow7]
+[PackageWindow8]
 Create=1
 Visible=0
 State=0
@@ -358,7 +357,7 @@ Watch1='verb',256,0,18,1,0,'Watches'
 
 [Breakpoints]
 Count=2
-Breakpoint0='/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',2050,'',0,1,'',1,0,0,'',1,'','',''
+Breakpoint0='/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',2049,'',0,1,'',1,0,0,'',1,'','',''
 Breakpoint1='/home/ttm/xpde/src/core/xpwm/uDisplay.pas',764,'',0,1,'',1,0,0,'',1,'','',''
 
 [AddressBreakpoints]
@@ -368,27 +367,27 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=3
-Top=28
-Width=1273
+Left=4
+Top=19
+Width=1016
 Height=87
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1273
+ClientWidth=1016
 ClientHeight=87
 
 [ProjectManager]
 Create=1
 Visible=1
 State=0
-Left=369
-Top=372
+Left=348
+Top=274
 Width=535
-Height=368
+Height=369
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=529
-ClientHeight=343
+ClientHeight=344
 TBDockHeight=368
 LRDockWidth=535
 Dockable=1
@@ -410,36 +409,36 @@ ClientHeight=60
 Create=1
 Visible=1
 State=0
-Left=4
-Top=465
-Width=190
-Height=412
+Left=0
+Top=265
+Width=258
+Height=429
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=184
-ClientHeight=387
-TBDockHeight=412
+ClientWidth=252
+ClientHeight=404
+TBDockHeight=298
 LRDockWidth=190
 Dockable=1
-SplitPos=85
+SplitPos=106
 ArrangeBy=Name
-SelectedItem=
-ExpandedItems=
+SelectedItem=Images
+ExpandedItems=BorderIcons,EdgeBorders,Font.Style,Localizable,Miscellaneous,Visual
 HiddenCategories=
 
 [ObjectTree]
 Create=1
 Visible=1
 State=0
-Left=2
-Top=124
+Left=0
+Top=115
 Width=190
-Height=336
+Height=260
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=184
-ClientHeight=311
-TBDockHeight=336
+ClientHeight=235
+TBDockHeight=260
 LRDockWidth=190
 Dockable=1
 
@@ -450,11 +449,11 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=653
+Height=382
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=653
+ClientHeight=382
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
@@ -465,11 +464,11 @@ Visible=1
 State=0
 Left=12
 Top=0
-Width=1067
+Width=684
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1067
+ClientWidth=684
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443
@@ -479,5 +478,5 @@ Dockable=1
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=14
+ActiveProject=23
 

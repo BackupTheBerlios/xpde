@@ -46,6 +46,8 @@ type
         procedure getColumnData(const columns:TStrings);
         procedure doubleClick;
         function getUniqueID:string;
+        function locationExists(const location:string):boolean;
+        procedure stripLocation(const location:string;pieces:TStrings);        
         procedure getStatusData(const status:TStrings);
         procedure getVerbItems(const verbs:TStrings);
         procedure executeVerb(const verb:integer);

@@ -122,6 +122,7 @@ type
     { Public declarations }
     procedure ChildrenNotified(const sender: IXPVirtualFile; const op: TXPChildrenOperation; const item: IXPVirtualFile);
     procedure updateall;
+    procedure setLocation(const location:string);
     procedure populatenodes(parent: TTreeNode; const item: IXPVirtualFile);
     procedure addnodes(parent: TTreeNode; const item: IXPVirtualFile);
     procedure updatelistview(const item: IXPVirtualFile);
@@ -316,6 +317,7 @@ end;
 procedure TExplorerForm.FormShow(Sender: TObject);
 begin
     updateall;
+    if paramstr(1)<>'' then setLocation(paramstr(1));
 end;
 
 procedure TExplorerForm.FormCreate(Sender: TObject);
@@ -636,6 +638,52 @@ begin
     if assigned(tvItems.selected) then begin
         f:=IXPVirtualFile(tvItems.selected.data);
         f.executeVerb((sender as TMenuItem).tag);
+    end;
+end;
+
+procedure TExplorerForm.setLocation(const location: string);
+var
+    i: longint;
+    roots: TInterfaceList;
+    f: IXPVirtualFile;
+    a: IXPVirtualFile;
+    pieces: TStringList;
+    k: integer;
+    l: integer;
+    n: TTreeNode;
+    r: TTreeNode;
+    cl: string;
+    sl: string;
+begin
+    r:=tvItems.Items[0];
+    for i:=0 to r.count-1 do begin
+        n:=r.Item[i];
+        f:=IXPVirtualFile(n.data);
+        if f.locationExists(location) then begin
+            n.Expand(false);
+            pieces:=TStringList.create;
+            try
+                f.striplocation(location,pieces);
+                cl:='';
+                for k:=0 to pieces.count-1 do begin
+                    cl:=cl+pieces[k];
+                    for l:=0 to n.Count-1 do begin
+                        a:=IXPVirtualFile(n.item[l].data);
+                        sl:=a.getUniqueID;
+                        if sl=cl then begin
+                            n:=n.Item[l];
+                            n.Expand(false);
+                            break;
+                        end;
+                    end;
+                end;
+            finally
+                pieces.free;
+            end;
+            n.Selected:=true;
+            n.MakeVisible;
+            break;
+        end;
     end;
 end;
 

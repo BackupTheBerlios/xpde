@@ -49,9 +49,11 @@ type
     public
         procedure doChildrenModified(const op: TXPChildrenOperation; const item: IXPVirtualFile);
         function hasChild: boolean; virtual;
+        function locationExists(const location:string):boolean; virtual;
         function getChildren: TInterfaceList; virtual;
         function getDisplayName: string; virtual;
         procedure getColumns(const columns:TStrings); virtual;
+        procedure stripLocation(const location:string;pieces:TStrings); virtual;
         function getUniqueID:string; virtual;
         procedure setNode(anode:TObject); virtual;
         function getNode:TObject; virtual;
@@ -176,6 +178,7 @@ type
         function hasChild: boolean; override;
         function getDisplayName: string; override;
         procedure getColumns(const columns:TStrings); override;
+        function locationExists(const location:string):boolean; override;
         function getChildren: TInterfaceList; override;
         procedure getVerbItems(const verbs:TStrings); override;
         constructor Create;
@@ -826,6 +829,12 @@ begin
     result:=true;
 end;
 
+function TMyPC.locationExists(const location: string): boolean;
+begin
+    result:=DirectoryExists(location);
+    if not result then result:=FileExists(location);
+end;
+
 { TLocalFile }
 
 constructor TLocalFile.Create;
@@ -944,6 +953,11 @@ begin
     result:=false;
 end;
 
+function TLocalFile.locationExists(const location: string): boolean;
+begin
+    result:=false;
+end;
+
 procedure TLocalFile.setChildrenModified(value: TXPChildrenModified);
 begin
     FChildrenModified:=value;
@@ -952,6 +966,34 @@ end;
 procedure TLocalFile.setNode(anode: TObject);
 begin
     node:=anode;
+end;
+
+procedure TLocalFile.stripLocation(const location: string; pieces: TStrings);
+var
+    i: integer;
+    s: string;
+    li: integer;
+    loc: string;
+begin
+    li:=1;
+    loc:=removeTrailingSlash(location);
+    for i:=length(loc) downto 1 do begin
+        if loc[i]='/' then begin
+            if i=1 then begin
+                s:=copy(loc,i+1,li);
+            end
+            else begin
+                s:=copy(loc,i,li);
+            end;
+            if trim(s)<>'' then begin
+                s:=removeTrailingSlash(s);
+                pieces.insert(0,s);
+            end;
+            li:=0;
+        end;
+        inc(li);
+    end;
+    pieces.insert(0,'/');
 end;
 
 { TDevice }

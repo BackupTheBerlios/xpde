@@ -36,6 +36,7 @@ Const diUnknown=0;
       diLindows=8;
       diSlackware=9;
       FreeBSD=10; // ;) just a hope ....
+      dist_reg:Array[0..5] of string=('distribution_enum','distribution_name','distribution_sys','distribution_version','distribution_kernel','distribution_machine');
 
 type  uname_r = record
         dist   : integer;
@@ -59,6 +60,7 @@ type  uname_r = record
         TConfInfo = needed_info;
 
         Function Get_Distro_Version:TUname;
+        Function Get_Config_Paths(dist_:integer):TConfInfo;
 
 implementation
 
@@ -330,10 +332,10 @@ Begin
                 End;
 End;
 
-Function Get_Config_Paths:TConfInfo;
+Function Get_Config_Paths(dist_:integer):TConfInfo;
 var myconfinfo:TConfInfo;
 Begin
-        case Get_Distro of
+        case dist_ of
               diRedHat  :Begin
                          myconfinfo.net_conf:='/etc/sysconfig/network_scripts';
                          myconfinfo.ppp_conf:='/etc/ppp';

@@ -212,7 +212,7 @@ Begin
 
         try
         if reg.OpenKey('Software/XPde/System',true) then begin
-            reg.DeleteKey;
+           // reg.DeleteKey;
             reg.Writeinteger(dist_reg[0],struct_Data.dist);
             reg.Writestring(dist_reg[1],struct_Data.name);
             reg.Writestring(dist_reg[2],struct_Data.sys);

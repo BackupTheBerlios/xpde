@@ -232,7 +232,7 @@ begin
         lvItems.items.clear;
         lvItems.Columns.Clear;
         if item.hasChild then begin
-            item.getColumns(cols);
+            item.getColumnHeaders(cols);
             for i:=0 to cols.count-1 do begin
                 c:=lvItems.Columns.Add;
                 c.Caption:=cols[i];

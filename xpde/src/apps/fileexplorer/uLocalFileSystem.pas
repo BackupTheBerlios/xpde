@@ -31,6 +31,8 @@ uses
 
 type
 
+    //Local File
+    //Implements some of the common functions of files and folders
     TLocalFile=class(TInterfacedObject, IXPVirtualFile)
     private
         node: TObject;
@@ -52,7 +54,7 @@ type
         function locationExists(const location:string):boolean; virtual;
         function getChildren: TInterfaceList; virtual;
         function getDisplayName: string; virtual;
-        procedure getColumns(const columns:TStrings); virtual;
+        procedure getColumnHeaders(const columns:TStrings); virtual;
         procedure stripLocation(const location:string;pieces:TStrings); virtual;
         function getUniqueID:string; virtual;
         procedure setNode(anode:TObject); virtual;
@@ -181,7 +183,7 @@ type
     public
         function hasChild: boolean; override;
         function getDisplayName: string; override;
-        procedure getColumns(const columns:TStrings); override;
+        procedure getColumnHeaders(const columns:TStrings); override;
         function locationExists(const location:string):boolean; override;
         function getChildren: TInterfaceList; override;
         procedure getVerbItems(const verbs:TStrings); override;
@@ -192,7 +194,7 @@ type
 
     TControlPanel=class(TFolder)
     public
-        procedure getColumns(const columns:TStrings); override;
+        procedure getColumnHeaders(const columns:TStrings); override;
         function getDisplayName: string; override;
         function getUniqueID:string; override;
         constructor Create; reintroduce;
@@ -884,7 +886,7 @@ begin
     result:=children;
 end;
 
-procedure TMyPC.getColumns(const columns: TStrings);
+procedure TMyPC.getColumnHeaders(const columns: TStrings);
 begin
     columns.clear;
     columns.add('Name');
@@ -981,7 +983,7 @@ begin
     columns.add('');
 end;
 
-procedure TLocalFile.getColumns(const columns: TStrings);
+procedure TLocalFile.getColumnHeaders(const columns: TStrings);
 begin
     columns.clear;
     columns.add('Name');
@@ -1181,7 +1183,7 @@ begin
     inherited Create(XPAPI.getsysinfo(siControlPanel));
 end;
 
-procedure TControlPanel.getColumns(const columns: TStrings);
+procedure TControlPanel.getColumnHeaders(const columns: TStrings);
 begin
     columns.clear;
     columns.add('Name');

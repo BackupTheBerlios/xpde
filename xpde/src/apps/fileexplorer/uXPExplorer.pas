@@ -40,10 +40,13 @@ type
         function getClipboard:TStringList;
         procedure clearclipboard;
         procedure copycurrentselectiontoclipboard;
+        {
         procedure copytoclipboard(const item:string); overload;
+        procedure copytoclipboard(const items:TStrings); overload;
+        }
+        procedure copytoclipboard(const item:IXPVirtualFile); overload;        
         procedure setclipboard;
         function getcurrentpath:string;
-        procedure copytoclipboard(const items:TStrings); overload;
         function createNewProgressDlg(const title:string):TForm;
         procedure updateProgressDlg(const dialog:TForm; const progress: integer; const max: integer; const str: string; const status: string; const eta:string);
         function registerImage(const bmp: TBitmap):integer;
@@ -66,6 +69,7 @@ begin
     sclipboard.clear;
 end;
 
+{
 procedure TXPExplorer.copytoclipboard(const item: string);
 var
     m: TMemoryStream;
@@ -73,6 +77,17 @@ begin
     clearclipboard;
     sclipboard.add(item);
     setclipboard;
+end;
+}
+procedure TXPExplorer.copytoclipboard(const item: IXPVirtualFile);
+var
+    m: TMemoryStream;
+begin
+{
+    clearclipboard;
+    sclipboard.add(item);
+    setclipboard;
+}
 end;
 
 function TXPExplorer.ClipboardEmpty: boolean;

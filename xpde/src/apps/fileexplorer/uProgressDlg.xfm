@@ -1,6 +1,6 @@
 object ProgressDlg: TProgressDlg
-  Left = 764
-  Top = 508
+  Left = 542
+  Top = 65
   ActiveControl = btnCancel
   AutoScroll = False
   BorderStyle = fbsDialog

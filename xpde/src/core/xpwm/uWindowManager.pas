@@ -1748,7 +1748,8 @@ begin
     {$endif}
       case (event.xconfigurerequest.detail) of
         Above: begin
-            activate;
+            bringtofront;
+//            activate;
     {$ifdef DEBUG}
     xlibinterface.outputDebugString('bringtofront');
     {$endif}

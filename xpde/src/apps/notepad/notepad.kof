@@ -4,8 +4,8 @@ Version=6.0
 [Compiler]
 A=8
 B=0
-C=1
-D=1
+C=0
+D=0
 E=0
 F=0
 G=1
@@ -13,7 +13,7 @@ H=1
 I=1
 J=0
 K=0
-L=1
+L=0
 M=0
 N=1
 O=1
@@ -26,7 +26,7 @@ U=0
 V=1
 W=0
 X=1
-Y=1
+Y=0
 Z=1
 ShowHints=1
 ShowWarnings=1
@@ -44,12 +44,12 @@ ExeDescription=
 DynamicLoader=/lib/ld-linux.so.2
 
 [Directories]
-OutputDir=$(HOME)/xpde/bin/apps
+OutputDir=$HOME/xpde/bin/apps
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
-Packages=rtl:visualclx:dataclx:visualdbclx:netclx:netdataclx:xmlrtl:indy:webdsnapclx:websnapclx:soaprtl:XPCommon:XPRegistry:XPAPI:XPMenus:XPStyle:XPLocalizator:XPColorSelect:XPShellControls:XPCommctrls
+Packages=rtl:visualclx:XPRegistry:XPCommon:XPAPI:XPMenus:XPTrayIcon:XPStyle:XPColorSelect:XPShellControls:XPCommctrls:XPsysprovider
 Conditionals=
 DebugSourceDirs=
 UsePackages=0
@@ -62,6 +62,8 @@ UseLauncher=0
 DebugCWD=
 
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=$(HOME)/xpde/bin/applets
+Count=3
+Item0=$HOME/xpde/bin/apps
+Item1=$(HOME)/xpde/bin/apps
+Item2=$(HOME)/xpde/bin/applets
 

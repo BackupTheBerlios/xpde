@@ -1,261 +1,190 @@
-object MainForm: TMainForm
-  Left = 427
-  Top = 332
+object frmMain: TfrmMain
+  Left = 258
+  Top = 186
   Width = 696
   Height = 480
+  VertScrollBar.Range = 19
   ActiveControl = Memo
-  Caption = 'MainForm'
+  Caption = 'XPde Notepad'
   Color = clBackground
-  Icon.Data = {
-    424D360C00000000000036000000280000002000000020000000010018000000
-    0000000C0000120B0000120B00000000000000000000FF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-    FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFCCCCCCCCCCCCCC
-    CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-    CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4B19584B19584B1
-    9584B19584B19584B19584B19584B19584B19584B19584B19584B19584B19584
-    B19584B19584B19584B19584B19584B19584B19584B19584B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFDF4FFFFFFFF
-    FFFFFFFEF9FFFEF9FFFDF8FFFCF7FFF9F4FFF9F4FFF8F2FFF7F1FFF6F0FEF3ED
-    FDF1EAFCF0E9FAEDE6F9ECE4F8EAE2F8EAE2F7E8E1FCEAE0B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFEF9FFFEF9FFFDF8FFFCF7FFF9F4FFF9F4FFF8F2FFF7F1FFF6F0FEF3ED
-    FDF1EAFCF0E9FAEDE6F9ECE4F8EAE2F8EAE2F7E8E1FCEAE0B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFEF9FFFEF9FFFDF8FFFCF7FFF9F4FFF9F4FFF8F2FFF7F1FFF6F0FCF1EB
-    F8EBE4FAEEE7FAEDE6F9ECE4F8EAE2F8EAE2F7E8E1FCEAE0B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFCFFFEFAFFFDF8FCF9F48A96BFEEE6E2E9DFDAE9DFD9E9DED8E8DBD6
-    E7DAD4E6D8D2ECDFD9F3E6DFF8EBE3F8EAE2F7E9E1FBE9E0B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFEFFFEFAFFFEF9FFFDF850608D697AAAE9E0DBE9DFD9E9DED8E9DDD8
-    E7DAD4E7D9D3E5D7D0E5D6CFE4D5CFEADBD4F1E3DBFAE9DFB19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFEFFFEFAFFFEF9FFFDF85C6D938585977185B8E9DFD9E9DED8E9DCD7
-    E7DAD5E6D8D2E5D7D0E5D6CFE4D3CDE2D2CBE3D3CCE7D4CCA88C7CC7C6C6FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFBFFFEF9FFFDF76D96C6D3ECFEC0DBF55272B6DBD2D3E9DDD8
-    E8DAD5E6D8D2E6D8D1E5D6CFE4D5CEE2D2CBE3D3CCE5D2CAA38677BBB8B8FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFCFFFEF9FFFDF859A2E7D3ECFED3ECFED0E7F86A85C0DAD0D0
-    E7DAD4E6D8D2E5D7D0E5D6CFE3D4CDE3D3CCE3D2CBE5D2C9A38677BBB8B8FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFCFFFEF9FFFEF959ABEECEEBFEA4E4FE8DDDFE8BD0FB7393CB
-    EADCD7E6D8D2E5D6CFE4D5CEE4D4CDE2D1CAE2D0C9E5D2C9A38677BBB8B8FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFDF9FFFDF851B6F586EEFE70DCFE6EDAFE7DCEFE4E96E4
-    DCD8E2F6E9E3EDDED8E5D7CFE2D2CCE2D1CAE1D1CAE5D1C8A38677BBB8B8FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFEF9FFFDF84EC7F87AF3FE69DCFE64D8FE6BCFFE73C5FE
-    6889CDFBEEE7F9ECE5F9EBE3F1E3DBE9D9D2E3D2CBE3CFC6A38677BBB8B8FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFBF693D1F566ECFD66E7FE5CD5FE59D2FE6BBFFE
-    4A91E2E9DFE0F8EBE4F8EAE2F7E7DFF5E6DEF4E6DDF0DED4A88C7CBBB8B8FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFCEFF1F248D1FA5FF1FE54D6FE50D1FE5BC3FE
-    58AFF97F94CCF8E9E1F5E6DEF4E6DDF4E5DCF3E4DAF6E3D9B19584CACACAFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD87CDF354F0FE4DE0FE48CEFE47CAFE
-    58B2FE3378D8F5E6DEF4E5DDF3E4DBF2E1D8F1E1D8F4E0D5B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDFF1FE28C8F944ECFE3FCEFE3CCAFE
-    49B6FE47A2F998A0C9F3E2D9F2E1D7F0DED4EFDDD4F2DED2B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6CCEF839EDFE37D8FE35C8FE
-    37BEFE45A6FE316FD0F0DFD5EFDCD2EDDBD0EDDBD0F0DACEB19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFEAFD21D1F92CE7FE2EC4FE
-    2AC3FE38A9FE3190F5A3A5C5ECD9CEEAD7CCEAD7CBECD5C8B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF49C4F822EBFE23D1FE
-    23C0FE28B1FE349AFE4779CDE9D4C9E7D2C7E6D2C6E8D0C3B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFE1FB15DCFC17E1FE
-    1CBEFE19BDFE2999FE1D78E9ACA9BFE5CFC2E4CDC1E5CBBDB19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF24B8F50DE8FE
-    13C6FE13B9FE18A9FE238EFE5B80C7E0C9BBDFC6B9E0C5B5B19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD9FCFF305E0FD
-    06DBFE0DB7FE0CB3FE1C8CFE1065E0C1B1B5DCC3B4DBBEAEB19584CCCCCCFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFFFBF720C1F5
-    00E6FE07BBFE06B3FE0E9CFE1C87FE4C68AFC5A998C5A998C5A998FF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFFF9F57FC0ED
-    00DEFD01D2FE01B0FE01ACFE1C87FE1E70E1E2D1CEC6B2A6FF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFAFFF9F3EDEAEB
-    0FC4F500E6FE00B6FE00AFFE1096FE1982F9677AB3D9D9D9FF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFCF8FFF7F1FCEFE9
-    6BB7E600E6FE00CAFE10B6FE51C4FE93CBFE4A7CCDECECECFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBFFFAF5FEF4EDFAEDE6
-    D4D6DB00BCF53EE4FEC3E8FED3ECFEA3C5EEA3B8E1FF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFCFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDF8FFF7F2FDF1EAF7E9E1
-    F0DFD555ACDB84C5F284AEE6A5C0EADFE5F5FF00FFFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4FFFFFBFFFFFFFF
-    FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFAF5FEF3EDF9EBE4
-    F2E1D8E9D0C2CBBBB2FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE5D0C4E5D0C4E5D0C4E5
-    D0C4E5D0C4E5D0C4E5D0C4E5D0C4E5D0C4E5D0C4E5D0C4E5D0C4E5D0C4E5D0C4
-    E5D0C4C9B5AAFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
   Menu = MainMenu
+  Position = poDesktopCenter
+  Scaled = False
   OnCreate = FormCreate
-  PixelsPerInch = 84
-  TextHeight = 17
-  TextWidth = 7
+  PixelsPerInch = 90
   object Memo: TMemo
     Left = 0
     Top = 0
     Width = 696
-    Height = 453
+    Height = 434
     Align = alClient
     ScrollBars = ssBoth
     TabOrder = 0
-    OnChange = MemoChange
+    WantTabs = True
+  end
+  object StatusBar: TStatusBar
+    Left = 0
+    Top = 434
+    Width = 696
+    Height = 19
+    Panels = <>
+    SimplePanel = True
   end
   object MainMenu: TMainMenu
     Color = clBackground
-    Left = 192
+    Left = 24
     Top = 24
-    object FileMNU: TMenuItem
+    object mnuFile: TMenuItem
       Caption = '&File'
-      object NewMNU: TMenuItem
+      object mnuFileNew: TMenuItem
+        AutoHotkeys = maManual
         Caption = '&New'
-        OnClick = NewMNUClick
+        ShortCut = 16462
+        OnClick = mnuFileNewClick
       end
-      object OpenMNU: TMenuItem
-        Caption = '&Open'
-        OnClick = OpenMNUClick
+      object mnuFileOpen: TMenuItem
+        AutoHotkeys = maManual
+        Caption = '&Open...'
+        ShortCut = 16463
+        OnClick = mnuFileOpenClick
       end
-      object SaveMNU: TMenuItem
+      object mnuFileSave: TMenuItem
+        AutoHotkeys = maManual
         Caption = '&Save'
-        OnClick = SaveMNUClick
+        ShortCut = 16467
+        OnClick = mnuFileSaveClick
       end
-      object SaveAsMNU: TMenuItem
+      object mnuFileSaveAs: TMenuItem
+        AutoHotkeys = maManual
         Caption = 'Save &As...'
-        OnClick = SaveAsMNUClick
+        OnClick = mnuFileSaveAsClick
       end
       object N5: TMenuItem
+        AutoHotkeys = maManual
         Caption = '-'
       end
-      object PageSetupMNU: TMenuItem
+      object mnuFilePageSetup: TMenuItem
+        AutoHotkeys = maManual
         Caption = '&Page Se&tup...'
-        Enabled = False
+        OnClick = mnuFilePageSetupClick
       end
-      object Print1: TMenuItem
+      object mnuFilePrint: TMenuItem
+        AutoHotkeys = maManual
         Caption = '&Print'
-        Enabled = False
+        ShortCut = 16464
+        OnClick = mnuFilePrintClick
       end
       object N1: TMenuItem
+        AutoHotkeys = maManual
         Caption = '-'
       end
-      object ExitMNU: TMenuItem
+      object mnuFileExit: TMenuItem
+        AutoHotkeys = maManual
         Caption = 'E&xit'
-        OnClick = ExitMNUClick
+        OnClick = mnuFileExitClick
       end
     end
-    object EditMNU: TMenuItem
+    object mnuEdit: TMenuItem
       Caption = '&Edit'
-      OnClick = EditMNUClick
-      object UndoMNU: TMenuItem
-        Caption = '&Undo'
-        ShortCut = 16474
-        OnClick = UndoMNUClick
+      object mnuEditUndo: TMenuItem
+        Action = EditUndo
       end
       object N2: TMenuItem
         Caption = '-'
       end
-      object CutMNU: TMenuItem
-        Caption = '&C&ut'
-        ShortCut = 16472
-        OnClick = CutMNUClick
+      object mnuEditCut: TMenuItem
+        Action = EditCut
       end
-      object CopyMNU: TMenuItem
-        Caption = '&Copy'
-        ShortCut = 16451
-        OnClick = CopyMNUClick
+      object mnuEditCopy: TMenuItem
+        Action = EditCopy
       end
-      object PasteMNU: TMenuItem
-        Caption = '&Paste'
-        ShortCut = 16470
-        OnClick = PasteMNUClick
+      object mnuEditPaste: TMenuItem
+        Action = EditPaste
       end
-      object DeleteMNU: TMenuItem
-        Caption = '&Delete'
-        ShortCut = 4103
-        OnClick = DeleteMNUClick
+      object mnuEditDelete: TMenuItem
+        Action = EditDelete
       end
       object N3: TMenuItem
         Caption = '-'
       end
-      object SelectAllMNU: TMenuItem
-        Caption = 'Select &All'
-        OnClick = SelectAllMNUClick
-      end
-      object TimeDateMNU: TMenuItem
-        Caption = '&Time/Date'
-        ShortCut = 4148
-        OnClick = TimeDateMNUClick
-      end
-      object N4: TMenuItem
-        Caption = '-'
-      end
-      object WordWrapMNU: TMenuItem
-        Caption = '&Word Wrap'
-        OnClick = WordWrapMNUClick
-      end
-      object SetFontMNU: TMenuItem
-        Caption = '&Set Font...'
-        OnClick = SetFontMNUClick
-      end
-    end
-    object Search1: TMenuItem
-      Caption = '&Search'
-      object FindMNU: TMenuItem
+      object mnuEditFind: TMenuItem
         Caption = '&Find...'
-        OnClick = FindMNUClick
+        ShortCut = 16454
+        OnClick = mnuEditFindClick
       end
-      object FindAgainMNU: TMenuItem
+      object mnuEditFindNext: TMenuItem
         Caption = 'Find &Next'
         ShortCut = 4146
-        OnClick = FindAgainMNUClick
+        OnClick = mnuEditFindNextClick
+      end
+      object mnuEditReplace: TMenuItem
+        Caption = '&Replace...'
+        ShortCut = 16456
+        OnClick = mnuEditReplaceClick
+      end
+      object mnuEditGoTo: TMenuItem
+        Caption = '&Go To...'
+        ShortCut = 16455
+        OnClick = mnuEditGoToClick
+      end
+      object N6: TMenuItem
+        Caption = '-'
+      end
+      object mnuEditSelectAll: TMenuItem
+        Action = EditSelectAll
+      end
+      object mnuEditTimeDate: TMenuItem
+        Caption = '&Time/Date'
+        ShortCut = 4148
+        OnClick = mnuEditTimeDateClick
       end
     end
-    object Help1: TMenuItem
+    object mnuFormat: TMenuItem
+      Caption = 'F&ormat'
+      object mnuFormatWordWrap: TMenuItem
+        Caption = '&Word Wrap'
+        Checked = True
+        OnClick = mnuFormatWordWrapClick
+      end
+      object mnuFormatSetFont: TMenuItem
+        Caption = '&Font...'
+        OnClick = mnuFormatSetFontClick
+      end
+    end
+    object mnuHelp: TMenuItem
       Caption = '&Help'
-      object About1: TMenuItem
+      object mnuHelpAbout: TMenuItem
         Caption = '&About Notepad'
-        OnClick = About1Click
+        OnClick = mnuHelpAboutClick
       end
     end
   end
-  object OpenDialog: TOpenDialog
-    FilterIndex = 0
-    Height = 0
-    Width = 0
-    Left = 64
-    Top = 24
+  object FindDialog: TFindDialog
+    Title = 'Find'
+    OnFind = FindDialogFind
+    Left = 24
+    Top = 64
+  end
+  object ReplaceDialog: TReplaceDialog
+    Title = 'Replace'
+    OnReplace = ReplaceDialogReplace
+    Left = 56
+    Top = 64
   end
   object SaveDialog: TSaveDialog
     FilterIndex = 0
     Height = 0
     Title = 'Save'
     Width = 0
-    Left = 96
-    Top = 24
+    Left = 24
+    Top = 104
   end
-  object FindDialog: TFindDialog
-    Title = 'Find'
-    OnFind = FindDialogFind
-    Left = 128
-    Top = 24
+  object OpenDialog: TOpenDialog
+    FilterIndex = 0
+    Height = 0
+    Width = 0
+    Left = 56
+    Top = 104
   end
   object FontDialog: TFontDialog
     Font.Color = clBlack
@@ -263,7 +192,52 @@ object MainForm: TMainForm
     Font.Name = 'helvetica'
     Font.Pitch = fpVariable
     Font.Style = []
-    Left = 160
-    Top = 24
+    Left = 88
+    Top = 104
+  end
+  object ActionList: TActionList
+    Left = 24
+    Top = 144
+    object EditCopy: TEditCopy
+      Category = 'Edit'
+      Caption = '&Copy'
+      Hint = 'Copy'
+      ImageIndex = 1
+      ShortCut = 16451
+    end
+    object EditPaste: TEditPaste
+      Category = 'Edit'
+      Caption = '&Paste'
+      Hint = 'Paste'
+      ImageIndex = 2
+      ShortCut = 16470
+    end
+    object EditSelectAll: TEditSelectAll
+      Category = 'Edit'
+      Caption = 'Select &All'
+      Hint = 'Select All'
+      ShortCut = 16449
+    end
+    object EditUndo: TEditUndo
+      Category = 'Edit'
+      Caption = '&Undo'
+      Hint = 'Undo'
+      ImageIndex = 3
+      ShortCut = 16474
+    end
+    object EditDelete: TEditDelete
+      Category = 'Edit'
+      Caption = '&Delete'
+      Hint = 'Delete'
+      ImageIndex = 5
+      ShortCut = 4103
+    end
+    object EditCut: TEditCut
+      Category = 'Edit'
+      Caption = 'Cu&t'
+      Hint = 'Cut'
+      ImageIndex = 0
+      ShortCut = 16472
+    end
   end
 end

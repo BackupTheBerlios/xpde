@@ -1,300 +1,482 @@
+{
+    XPde Notepad
+    (c) 2003 Khasan Balaev <balaev@inbox.ru>
+    Distributed under GNU GPL
+
+    <http://www.xpde.com/>
+
+    Current limitations:
+        page setup is not implemented (until XPde APIs are developed)
+        preferences are not saved (font & word wrap)
+        go to line is not (yet) available
+}
+
 unit main;
 
 interface
 
 uses
-  Sysutils, Types, Classes,
-  Variants, QTypes, QGraphics,
-  QControls, QForms, uXPAPI,
-  QDialogs, QStdCtrls, QMenus;
+  SysUtils,
+  Types,
+  Classes,
+  Variants,
+  QTypes,
+  QGraphics,
+  QControls,
+  QForms,
+  QDialogs,
+  QStdCtrls,
+  QExtCtrls,
+  QComCtrls,
+  QMenus,
+  QPrinters,
+  QStdActns,
+  QActnList,
+  StrUtils,
+  uXPAPI;
 
 type
-  TMainForm = class(TForm)
-    MainMenu: TMainMenu;
-    FileMNU: TMenuItem;
-    NewMNU: TMenuItem;
-    OpenMNU: TMenuItem;
-    SaveMNU: TMenuItem;
-    SaveAsMNU: TMenuItem;
-    N1: TMenuItem;
-    ExitMNU: TMenuItem;
-    EditMNU: TMenuItem;
-    Search1: TMenuItem;
-    CutMNU: TMenuItem;
-    CopyMNU: TMenuItem;
-    PasteMNU: TMenuItem;
-    FindMNU: TMenuItem;
-    FindAgainMNU: TMenuItem;
-    Help1: TMenuItem;
-    About1: TMenuItem;
+  TfrmMain = class(TForm)
     Memo: TMemo;
-    OpenDialog: TOpenDialog;
-    SaveDialog: TSaveDialog;
-    FindDialog: TFindDialog;
-    FontDialog: TFontDialog;
-    N2: TMenuItem;
-    SetFontMNU: TMenuItem;
-    UndoMNU: TMenuItem;
-    N3: TMenuItem;
-    DeleteMNU: TMenuItem;
-    SelectAllMNU: TMenuItem;
-    TimeDateMNU: TMenuItem;
-    N4: TMenuItem;
-    WordWrapMNU: TMenuItem;
+    MainMenu: TMainMenu;
+    mnuFile: TMenuItem;
+    mnuFileNew: TMenuItem;
+    mnuFileOpen: TMenuItem;
+    mnuFileSave: TMenuItem;
+    mnuFileSaveAs: TMenuItem;
     N5: TMenuItem;
-    Print1: TMenuItem;
-    PageSetupMNU: TMenuItem;
-    procedure NewMNUClick(Sender: TObject);
-    procedure OpenMNUClick(Sender: TObject);
-    procedure SaveAsMNUClick(Sender: TObject);
-    procedure SaveMNUClick(Sender: TObject);
-    procedure SetFontMNUClick(Sender: TObject);
-    procedure FindMNUClick(Sender: TObject);
-    procedure ExitMNUClick(Sender: TObject);
-    procedure FindAgainMNUClick(Sender: TObject);
-    procedure About1Click(Sender: TObject);
-    procedure CutMNUClick(Sender: TObject);
-    procedure CopyMNUClick(Sender: TObject);
-    procedure PasteMNUClick(Sender: TObject);
-    procedure WordWrapMNUClick(Sender: TObject);
-    procedure DeleteMNUClick(Sender: TObject);
-    procedure SelectAllMNUClick(Sender: TObject);
-    procedure TimeDateMNUClick(Sender: TObject);
-    procedure UndoMNUClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure MemoChange(Sender: TObject);
-    procedure EditMNUClick(Sender: TObject);
+    mnuFilePageSetup: TMenuItem;
+    mnuFilePrint: TMenuItem;
+    N1: TMenuItem;
+    mnuFileExit: TMenuItem;
+    mnuEdit: TMenuItem;
+    mnuEditUndo: TMenuItem;
+    N2: TMenuItem;
+    mnuEditCut: TMenuItem;
+    mnuEditCopy: TMenuItem;
+    mnuEditPaste: TMenuItem;
+    mnuEditDelete: TMenuItem;
+    N3: TMenuItem;
+    mnuEditFind: TMenuItem;
+    mnuEditFindNext: TMenuItem;
+    mnuEditReplace: TMenuItem;
+    mnuEditGoTo: TMenuItem;
+    N6: TMenuItem;
+    mnuEditSelectAll: TMenuItem;
+    mnuEditTimeDate: TMenuItem;
+    mnuFormat: TMenuItem;
+    mnuFormatWordWrap: TMenuItem;
+    mnuFormatSetFont: TMenuItem;
+    mnuHelp: TMenuItem;
+    mnuHelpAbout: TMenuItem;
+    FindDialog: TFindDialog;
+    ReplaceDialog: TReplaceDialog;
+    SaveDialog: TSaveDialog;
+    OpenDialog: TOpenDialog;
+    FontDialog: TFontDialog;
+    StatusBar: TStatusBar;
+    ActionList: TActionList;
+    EditCut: TEditCut;
+    EditCopy: TEditCopy;
+    EditPaste: TEditPaste;
+    EditSelectAll: TEditSelectAll;
+    EditUndo: TEditUndo;
+    EditDelete: TEditDelete;
     procedure FindDialogFind(Sender: TObject);
+    procedure ReplaceDialogReplace(Sender: TObject);
+    procedure mnuEditGoToClick(Sender: TObject);
+    procedure mnuFileNewClick(Sender: TObject);
+    procedure mnuFileOpenClick(Sender: TObject);
+    procedure mnuFileSaveClick(Sender: TObject);
+    procedure mnuFileSaveAsClick(Sender: TObject);
+    procedure mnuFilePageSetupClick(Sender: TObject);
+    procedure mnuFilePrintClick(Sender: TObject);
+    procedure mnuFileExitClick(Sender: TObject);
+    procedure mnuEditFindClick(Sender: TObject);
+    procedure mnuEditFindNextClick(Sender: TObject);
+    procedure mnuEditReplaceClick(Sender: TObject);
+    procedure mnuEditTimeDateClick(Sender: TObject);
+    procedure mnuFormatWordWrapClick(Sender: TObject);
+    procedure mnuFormatSetFontClick(Sender: TObject);
+    procedure mnuHelpAboutClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
-    CurrentFile: String;
-    Changed: Boolean;
+    function IsAllowed(s: string): boolean;
   public
     { Public declarations }
+    CurrentFileName: string;
   end;
 
 var
-  MainForm: TMainForm;
+  frmMain: TfrmMain;
 
 implementation
-
-uses
- QClipbrd;
 
 {$R *.xfm}
 
 resourcestring
- CapText = ' - Notepad';
- sUntitled='Untitled';
+    CaptionText = ' - XPde Notepad';
+    Untitled = 'Untitled';
+    SavePrompt = ' has been modified. Do you want to save it?';
+    SearchStringNotFound = 'Search string not found!';
 
-procedure TMainForm.NewMNUClick(Sender: TObject);
+function TfrmMain.IsAllowed(s: string): boolean;
+    var AsciiCode: byte;
 begin
-Memo.Lines.Clear;
-CurrentFile := sUntitled;
-MainForm.Caption := sUntitled + CapText;
-Changed := False;
+    AsciiCode := Ord(s[1]);
+
+    Result := ((AsciiCode >= 32) and (AsciiCode <= 47)) or
+        ((AsciiCode >= 58) and (AsciiCode <= 64)) or
+        ((AsciiCode >= 91) and (AsciiCode <= 96)) or
+        ((AsciiCode >= 123) and (AsciiCode <= 126));
 end;
 
-procedure TMainForm.OpenMNUClick(Sender: TObject);
+procedure TfrmMain.FindDialogFind(Sender: TObject);
+    var
+        SelPos, // where text to find is
+        SPos, // Memo.SelStart
+        SLen, // Memo.SelLen
+        TextLength: LongInt; // the length of memo's text
+        SearchString: string; // text that is searched in
+        TextToFind: string; // text than needs to be found
+        SearchStringClone: string; // attack of the clones
+        lc, rc: string;
 begin
-if OpenDialog.Execute then
- begin
-  Memo.Lines.LoadFromFile(OpenDialog.FileName);
-  CurrentFile := OpenDialog.Filename;
-  MainForm.Caption := OpenDialog.Filename + CapText;
-  Changed := False;
- end;
+        TextLength:=Length(Memo.Lines.Text);
+        SPos:=Memo.SelStart;
+        SLen:=Memo.SelLength;
+        TextToFind := FindDialog.FindText;
+
+        { copy a block of Memo's text according to user's selection }
+        if frDown in FindDialog.Options then begin
+            SearchString := Copy(Memo.Lines.Text, SPos + SLen + 1,
+                TextLength - SLen + 1)
+        end
+        else begin
+            SearchString := ReverseString(Copy(Memo.Lines.Text, 0, SPos{ + SLen}));
+            TextToFind := ReverseString(TextToFind);
+        end;
+
+        if not (frMatchCase in FindDialog.Options) then begin
+            SearchString := LowerCase(SearchString);
+            TextToFind := LowerCase(TextToFind);
+        end;
+        { / }
+
+        { search the text then }
+        if frWholeWord in FindDialog.Options then begin
+            SearchStringClone := Copy(SearchString, 0, Length(SearchString) + 99);
+            repeat
+                SelPos := Pos(TextToFind, SearchStringClone);
+
+                if SelPos = 0 then
+                    Break;
+
+                lc := Copy(SearchStringClone, SelPos - 1, 1);
+                rc := Copy(SearchStringClone, SelPos + Length(TextToFind), 1);
+
+                if IsAllowed(lc) and IsAllowed(rc) then
+                    Break;
+
+                SearchStringClone := Copy(SearchStringClone, SelPos + 1,
+                    Length(SearchStringClone) + 99); { copy the whole string }
+            until false;
+
+            if SelPos <> 0 then begin
+                SelPos := Length(SearchString) - (Length(SearchStringClone) - SelPos);
+            end;
+        end
+        else begin
+            SelPos := Pos(TextToFind, SearchString);
+        end;
+
+
+        if SelPos = 0 then begin
+            MessageDlg(SearchStringNotFound, mtError, [mbOk], 0);
+            Exit;
+        end
+        else begin
+            if frDown in FindDialog.Options then begin
+                Memo.SelStart := (SelPos - 1) + (SPos + SLen);
+                Memo.SelLength := Length(TextToFind);
+            end
+            else begin
+                Memo.SelStart := Length(SearchString) - SelPos - Length(TextToFind) + 1;
+                Memo.SelLength := Length(TextToFind);
+            end; {if frDown}
+        end; {SelPos = 0}
 end;
 
-procedure TMainForm.SaveAsMNUClick(Sender: TObject);
+procedure TfrmMain.ReplaceDialogReplace(Sender: TObject);
+    var
+        SelPos,
+        SPos,
+        SLen,
+        TextLength: LongInt;
+        SearchString: string;
+        SearchStringClone: string;
+        TextToFind: string;
+        ReplaceWith: string;
+        lc, rc: string;
+        ItsOverBaby: boolean;
 begin
-if SaveDialog.Execute then
- begin
-  Memo.Lines.SaveToFile(SaveDialog.FileName);
-  CurrentFile := SaveDialog.FileName;
-  MainForm.Caption := SaveDialog.FileName + CapText;
- end;
+        if frReplaceAll in ReplaceDialog.Options then
+            ItsOverBaby := false { it's only starting }
+        else
+            ItsOverBaby := true; { rejoice }
+
+        repeat
+
+        TextLength:=Length(Memo.Lines.Text);
+        SPos:=Memo.SelStart;
+        SLen:=Memo.SelLength;
+        TextToFind := ReplaceDialog.FindText;
+        ReplaceWith := ReplaceDialog.ReplaceText;
+
+        { copy appropriate block of Memo's text according to user's selection }
+        if frDown in ReplaceDialog.Options then begin
+            SearchString := Copy(Memo.Lines.Text, SPos + SLen + 1,
+                TextLength - SLen + 1)
+        end
+        else begin
+            SearchString := ReverseString(Copy(Memo.Lines.Text, 0, SPos{ + SLen}));
+            TextToFind := ReverseString(TextToFind);
+        end;
+
+        if not (frMatchCase in ReplaceDialog.Options) then begin
+            SearchString := LowerCase(SearchString);
+            TextToFind := LowerCase(TextToFind);
+        end;
+        { / }
+
+        { search the text then }
+        if frWholeWord in ReplaceDialog.Options then begin
+            SearchStringClone := Copy(SearchString, 0, Length(SearchString) + 99);
+            repeat
+                SelPos := Pos(TextToFind, SearchStringClone);
+
+                if SelPos = 0 then
+                    Break;
+
+                lc := Copy(SearchStringClone, SelPos - 1, 1);
+                rc := Copy(SearchStringClone, SelPos + Length(TextToFind), 1);
+
+                if IsAllowed(lc) and IsAllowed(rc) then
+                    Break;
+
+                SearchStringClone := Copy(SearchStringClone, SelPos + 1,
+                    Length(SearchStringClone) + 99); { copy the whole string }
+            until false;
+
+            if SelPos <> 0 then begin
+                SelPos := Length(SearchString) - (Length(SearchStringClone) - SelPos);
+            end;
+        end
+        else begin
+            SelPos := Pos(TextToFind, SearchString);
+        end;
+
+
+        if SelPos = 0 then begin
+            if frReplaceAll in ReplaceDialog.Options then begin
+                ItsOverBaby := true;
+                Exit;
+            end;
+            MessageDlg(SearchStringNotFound, mtError, [mbOk], 0);
+        end
+        else begin
+            if frDown in ReplaceDialog.Options then begin
+                Memo.SelStart := (SelPos - 1) + (SPos + SLen);
+                Memo.SelLength := Length(TextToFind);
+                Memo.SelText := ReplaceWith;
+            end
+            else begin
+                Memo.SelStart := Length(SearchString) - SelPos - Length(TextToFind) + 1;
+                Memo.SelLength := Length(TextToFind);
+                Memo.SelText := ReplaceWith;
+            end; {if frDown}
+        end; {SelPos = 0}
+
+        until ItsOverBaby;
 end;
 
-procedure TMainForm.SaveMNUClick(Sender: TObject);
+procedure TfrmMain.mnuEditGoToClick(Sender: TObject);
 begin
-if FileExists(CurrentFile) then
- begin
-   Memo.Lines.SaveToFile(CurrentFile);
- end
-else
- SaveAsMNUClick(Self);
+    // go go go!!
 end;
 
-procedure TMainForm.SetFontMNUClick(Sender: TObject);
+procedure TfrmMain.mnuFileNewClick(Sender: TObject);
 begin
-if FontDialog.Execute then
- begin
-  Memo.Font := FontDialog.Font;
- end;
+    Memo.Clear();
+    CurrentFileName := Untitled;
+    frmMain.Caption := Untitled + CaptionText;
+    StatusBar.SimpleText := CurrentFileName;
 end;
 
-procedure TMainForm.FindMNUClick(Sender: TObject);
+procedure TfrmMain.mnuFileOpenClick(Sender: TObject);
+    var mr: integer;
 begin
-FindDialog.Execute;
+    if Memo.Modified then begin
+        mr := MessageDlg(CurrentFileName + SavePrompt, mtWarning, [mbYes, mbNo, mbCancel], 0, mbYes);
+
+        if mr = mrYes then begin 
+            if FileExists(CurrentFileName) then begin
+                mnuFileSave.Click();
+            end
+            else begin
+                mnuFileSaveAs.Click();
+            end;
+        end
+        else if mr = mrNo then begin
+            ; // nothing
+        end
+        else if mr = mrCancel then begin
+            Exit;
+        end;
+    end;
+
+    if OpenDialog.Execute() then begin
+            CurrentFileName := OpenDialog.FileName;
+            Memo.Lines.LoadFromFile(CurrentFileName);
+            frmMain.Caption := CurrentFileName + CaptionText;
+            StatusBar.SimpleText := CurrentFileName;
+    end;
 end;
 
-procedure TMainForm.ExitMNUClick(Sender: TObject);
+procedure TfrmMain.mnuFileSaveClick(Sender: TObject);
 begin
-Close;
+    if FileExists(CurrentFileName) then begin
+        Memo.Lines.SaveToFile(CurrentFileName);
+        StatusBar.SimpleText := CurrentFileName;
+    end
+    else
+        mnuFileSaveAs.Click();
 end;
 
-procedure TMainForm.FindAgainMNUClick(Sender: TObject);
-var
-MatchCase: Boolean;
-WholeWord: Boolean;
+procedure TfrmMain.mnuFileSaveAsClick(Sender: TObject);
 begin
-if FindDialog.FindText <> '' then
- begin
-  if frMatchCase in FindDialog.Options then MatchCase := True;
-  if frWholeWord in FindDialog.Options then WholeWord := True;
-  Memo.Search(FindDialog.FindText,MatchCase,True,WholeWord,False,Memo.Selection.Line2,Memo.Selection.Col2);
- end
-else
- begin
-  FindMNUClick(Self);
- end;
+    if SaveDialog.Execute() then begin
+        CurrentFileName := SaveDialog.FileName;
+        Memo.Lines.SaveToFile(CurrentFileName);
+        frmMain.Caption := CurrentFileName + CaptionText;
+        StatusBar.SimpleText := CurrentFileName;
+    end;
 end;
 
-procedure TMainForm.About1Click(Sender: TObject);
+procedure TfrmMain.mnuFilePageSetupClick(Sender: TObject);
 begin
-    XPAPI.showaboutdlg('XPde Notepad');
+    MessageDlg('Sorry, not implemented yet', mtInformation, [mbOK], 0, mbOk);
 end;
 
-procedure TMainForm.CutMNUClick(Sender: TObject);
+procedure TfrmMain.mnuFilePrintClick(Sender: TObject);
+    var TextToPrint: TextFile;
+        i: LongInt;
 begin
-Memo.CutToClipboard;
+    AssignPrn(TextToPrint);
+    Rewrite(TextToPrint);
+
+    try
+        try
+            for i := 0 to Memo.Lines.Count - 1 do
+                WriteLn(TextToPrint, Memo.Lines[i]);
+            except on E:EInOutError do
+                MessageDlg('An error occured while printing. Error: '
+                    + IntToStr(E.ErrorCode), mtError, [mbOK], 0);
+        end;
+    finally
+        CloseFile(TextToPrint);
+    end;
 end;
 
-procedure TMainForm.CopyMNUClick(Sender: TObject);
+procedure TfrmMain.mnuFileExitClick(Sender: TObject);
+    var mr: integer;
 begin
-Memo.CopyToClipboard;
+    if Memo.Modified then begin
+        mr := MessageDlg(CurrentFileName + SavePrompt,
+            mtWarning, [mbYes, mbNo, mbCancel], 0, mbYes);
+
+        if mr = mrYes then begin
+            if FileExists(CurrentFileName) then begin
+                mnuFileSave.Click();
+                Close();
+            end
+            else begin
+                mnuFileSaveAs.Click();
+                Close();
+            end;
+        end;
+
+        if mr = mrNo then
+            Close();
+
+        if mr = mrCancel then
+            Exit;
+    end
+    else begin
+        Close();
+    end;
 end;
 
-procedure TMainForm.PasteMNUClick(Sender: TObject);
+procedure TfrmMain.mnuEditFindClick(Sender: TObject);
 begin
-if Memo.SelLength = 0 then
- Memo.PasteFromClipboard
-else
- begin
-  Memo.Insert('',True);
-  Memo.Insert(ClipBoard.AsText,False);
- end;
+    FindDialog.Execute();
 end;
 
-procedure TMainForm.WordWrapMNUClick(Sender: TObject);
+procedure TfrmMain.mnuEditFindNextClick(Sender: TObject);
 begin
-if not Memo.WordWrap then
- begin
-  Memo.WordWrap := True;
-  WordWrapMNU.Checked := True;
- end
-else
- begin
-  Memo.WordWrap := False;
-  WordWrapMNU.Checked := False;
- end;
+    FindDialogFind(frmMain);
 end;
 
-procedure TMainForm.DeleteMNUClick(Sender: TObject);
+procedure TfrmMain.mnuEditReplaceClick(Sender: TObject);
 begin
-Memo.Insert('',True);
+    ReplaceDialog.Execute();
 end;
 
-procedure TMainForm.SelectAllMNUClick(Sender: TObject);
+procedure TfrmMain.mnuEditTimeDateClick(Sender: TObject);
 begin
-Memo.SelectAll;
+    Memo.Insert(DateTimeToStr(Now),False); 
 end;
 
-procedure TMainForm.TimeDateMNUClick(Sender: TObject);
+procedure TfrmMain.mnuFormatWordWrapClick(Sender: TObject);
 begin
-Memo.Insert(DateTimeToStr(Now),False);
+    mnuFormatWordWrap.Checked := not mnuFormatWordWrap.Checked;
+    Memo.WordWrap := mnuFormatWordWrap.Checked;
 end;
 
-procedure TMainForm.UndoMNUClick(Sender: TObject);
+procedure TfrmMain.mnuFormatSetFontClick(Sender: TObject);
 begin
-Memo.Undo;
+    if FontDialog.Execute() then begin
+        Memo.Font := FontDialog.Font;
+        { save settings }
+    end;
 end;
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmMain.mnuHelpAboutClick(Sender: TObject);
+begin
+    XPAPI.ShowAboutDlg('XPde Notepad'); 
+end;
+
+procedure TfrmMain.FormCreate(Sender: TObject);
 begin
     //These lines are here to set the font of the menubar
     font.name:='';
     parentfont:=true;
-if ParamCount = 1 then
- begin
-  if FileExists(ParamStr(1)) then
-   begin
-    Memo.Lines.LoadFromFile(ParamStr(1));
-    MainForm.Caption := ParamStr(1) + CapText;
-   end
-  else
-   NewMNUClick(Self);
- end
-else
- begin
-  NewMNUClick(Self);
- end;
-end;
 
-procedure TMainForm.MemoChange(Sender: TObject);
-begin
-if not Changed then Changed := True;
-end;
+    if ParamCount = 1 then begin
+        if FileExists(ParamStr(1)) then begin
+            CurrentFileName := ParamStr(1);
+            Memo.Lines.LoadFromFile(CurrentFileName);
+            frmMain.Caption := Untitled + CaptionText;
+            StatusBar.SimpleText := CurrentFileName;
+        end
+        else begin
+            mnuFileNew.Click();
+            Exit;
+        end;
+    end;
 
-procedure TMainForm.EditMNUClick(Sender: TObject);
-begin
-if Clipboard.AsText <> '' then
- begin
-  PasteMNU.Enabled := True;
- end
-else
- begin
-  PasteMNU.Enabled := False;
- end;
-if Memo.SelLength <> 0 then
- begin
-  CutMNU.Enabled := True;
-  CopyMNU.Enabled := True;
-  DeleteMNU.Enabled := True;
- end
-else
- begin
-  CutMNU.Enabled := False;
-  CopyMNU.Enabled := False;
-  DeleteMNU.Enabled := False;
- end;
-if Changed then
- begin
-  UndoMNU.Enabled := True;
- end
-else
- begin
-  UndoMNU.Enabled := False;
- end;
-if Memo.Lines.Text <> '' then
- begin
-  SelectAllMNU.Enabled := True;
- end
-else
- begin
-  SelectAllMNU.Enabled := False;
- end;
-end;
-
-procedure TMainForm.FindDialogFind(Sender: TObject);
-var
-MatchCase: Boolean;
-WholeWord: Boolean;
-begin
-if frMatchCase in FindDialog.Options then MatchCase := True;
-if frWholeWord in FindDialog.Options then WholeWord := True;
-Memo.Search(FindDialog.FindText,MatchCase,True,WholeWord,True,Memo.Selection.Line2,Memo.Selection.Col2);
+    mnuFileNew.Click();
 end;
 
 end.

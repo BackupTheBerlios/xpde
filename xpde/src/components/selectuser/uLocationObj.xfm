@@ -1,0 +1,59 @@
+object LocationObj: TLocationObj
+  Left = 346
+  Top = 255
+  Width = 390
+  Height = 220
+  HorzScrollBar.Range = 387
+  VertScrollBar.Range = 215
+  ActiveControl = btnOk
+  BorderStyle = fbsDialog
+  Caption = 'Select location'
+  Color = clBackground
+  Position = poDesktopCenter
+  Scaled = False
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 78
+  object Label1: TLabel
+    Left = 8
+    Top = 16
+    Width = 179
+    Height = 13
+    Caption = 'Select the location you want to search.'
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 40
+    Width = 43
+    Height = 13
+    Caption = 'Location:'
+  end
+  object btnOk: TButton
+    Left = 224
+    Top = 192
+    Width = 75
+    Height = 23
+    Caption = 'Ok'
+    ModalResult = 1
+    TabOrder = 2
+    OnClick = btnOkClick
+  end
+  object btnCancel: TButton
+    Left = 312
+    Top = 192
+    Width = 75
+    Height = 23
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 3
+    OnClick = btnCancelClick
+  end
+  object trvLocation: TTreeView
+    Left = 8
+    Top = 56
+    Width = 374
+    Height = 129
+    Columns = <>
+    TabOrder = 4
+  end
+end

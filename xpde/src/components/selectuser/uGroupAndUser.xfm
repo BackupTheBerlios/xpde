@@ -1,0 +1,105 @@
+object SelUserGroup: TSelUserGroup
+  Left = 417
+  Top = 303
+  Width = 450
+  Height = 280
+  HorzScrollBar.Range = 443
+  VertScrollBar.Range = 274
+  ActiveControl = btnOk
+  BorderStyle = fbsDialog
+  Caption = 'Select Users or Group'
+  Color = clBackground
+  Position = poDesktopCenter
+  Scaled = False
+  PixelsPerInch = 78
+  object Label1: TLabel
+    Left = 8
+    Top = 8
+    Width = 105
+    Height = 13
+    Caption = 'Select this object type:'
+  end
+  object edObjectType: TEdit
+    Left = 8
+    Top = 24
+    Width = 337
+    Height = 21
+    TabOrder = 2
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 56
+    Width = 91
+    Height = 13
+    Caption = 'From this locations:'
+  end
+  object edLocation: TEdit
+    Left = 8
+    Top = 72
+    Width = 337
+    Height = 21
+    TabOrder = 4
+  end
+  object Label3: TLabel
+    Left = 8
+    Top = 104
+    Width = 107
+    Height = 13
+    Caption = 'Select the object name:'
+  end
+  object btnObjTypes: TButton
+    Left = 352
+    Top = 24
+    Width = 89
+    Height = 23
+    Caption = 'Object Types...'
+    TabOrder = 6
+    OnClick = btnObjTypesClick
+  end
+  object btnLocation: TButton
+    Left = 352
+    Top = 72
+    Width = 89
+    Height = 23
+    Caption = 'Locations...'
+    TabOrder = 7
+    OnClick = btnLocationClick
+  end
+  object btnCheckName: TButton
+    Left = 352
+    Top = 120
+    Width = 89
+    Height = 23
+    Caption = 'Check Names'
+    TabOrder = 8
+    OnClick = btnCheckNameClick
+  end
+  object btnOk: TButton
+    Left = 280
+    Top = 251
+    Width = 75
+    Height = 23
+    Caption = 'Ok'
+    ModalResult = 1
+    TabOrder = 9
+    OnClick = btnOkClick
+  end
+  object btnCancel: TButton
+    Left = 368
+    Top = 251
+    Width = 75
+    Height = 23
+    Cancel = True
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 10
+    OnClick = btnCancelClick
+  end
+  object chckUserGroup: TCheckListBox
+    Left = 8
+    Top = 120
+    Width = 337
+    Height = 124
+    TabOrder = 5
+  end
+end

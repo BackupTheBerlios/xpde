@@ -29,7 +29,7 @@ uses
   SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs,
   QStdCtrls, QExtCtrls, QComCtrls, Qt, uQXPComCtrls,uRegistry, Xlib;
 
-Const Mouse_Settings_Key = 'Mouse_Settings';
+Const Mouse_Settings_Key = 'Mouse';
       Mouse_Acceleration = 'Acceleration';
       Mouse_EnhancePrecision = 'Enhance_Precision';
       Mouse_Threshold = 'Threshold';
@@ -162,7 +162,7 @@ var
 
 
 implementation
-Const  key='Hardware/';
+Const  key='Control Panel/';
 var disply:PDisplay;
 {$R *.xfm}
 
@@ -252,7 +252,7 @@ Procedure TMousePropertiesDlg.Read_Registry_Key;
 var reg:TRegistry;
 Begin
         reg:=TRegistry.Create;
-        reg.RootKey:=HKEY_CURRENT_CONFIG;
+        reg.RootKey:=HKEY_CURRENT_USER;
 
         if reg.OpenKey(key+Mouse_Settings_Key,false) then begin
                 threshold_:=reg.Readinteger(Mouse_Threshold);

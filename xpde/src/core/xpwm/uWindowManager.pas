@@ -1537,6 +1537,9 @@ var
 //  in_grab_op:boolean;
   fbs: TRect;
   co: TPoint;
+
+    xwcm: cardinal;
+    xwc: XWindowChanges;  
 begin
     if not inresize then begin
     {$ifdef DEBUG}
@@ -1705,6 +1708,23 @@ begin
         {$endif}
         XResizeWindow(FWindowManager.FDisplay,xwindow,width,height);
     end;
+  end;
+
+  if not framed then begin
+        xwcm := event.xconfigurerequest.value_mask and (CWX or CWY or CWWidth or CWHeight or CWBorderWidth);
+
+        xwc.x := event.xconfigurerequest.x;
+        xwc.y := event.xconfigurerequest.y;
+        xwc.width := event.xconfigurerequest.width;
+        xwc.height := event.xconfigurerequest.height;
+        xwc.border_width := event.xconfigurerequest.border_width;
+
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iINFO,format('Configuring withdrawn window %s to %d,%d %dx%d border %d (some values may not be in mask)',[xlibinterface.formatwindow(xwindow),xwc.x, xwc.y, xwc.width, xwc.height, xwc.border_width]));
+        xlibinterface.outputDebugString(iINFO,format('%s to %d',[xlibinterface.formatwindow(event.xconfigurerequest.above),event.xconfigurerequest.detail]));
+        {$endif}
+
+        XConfigureWindow (FWindowManager.FDisplay, event.xconfigurerequest.xwindow, xwcm, @xwc);
   end;
 
   {* Handle stacking. We only handle raises/lowers, mostly because

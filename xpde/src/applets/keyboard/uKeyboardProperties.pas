@@ -131,7 +131,6 @@ Function SetRateAndDelay(rptdelay:integer; rptinterval:integer):boolean;
 var i,y:integer;
     stt:PStatus;
     decp:XkbDescPtr;
-    xcp:XkbControlsPtr;
     ind:XkbIndicatorPtr;
     rezult:bool;
 Begin
@@ -348,10 +347,19 @@ end;
 procedure TKeyboardPropertiesDlg.TB1Change(Sender: TObject);
 var ttb:TTrackBar;
 begin
-        {$IFDEF DEBUG_XKB}
+
         ttb:=Sender as TTrackBar;
+
+        if ttb.Name='TB1' then
+        repeat_rate:=TB1.Position
+        else
+        if ttb.Name='TB2' then
+        dly:=TB2.Position;
+
+        {$IFDEF DEBUG_XKB}
         writeln('POSITION ',ttb.position);
         {$ENDIF}
 end;
+
 
 end.

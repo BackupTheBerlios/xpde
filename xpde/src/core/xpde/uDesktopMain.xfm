@@ -1,16 +1,17 @@
 object MainForm: TMainForm
-  Left = 642
-  Top = 37
+  Left = 556
+  Top = 186
   Width = 587
   Height = 340
   BorderStyle = fbsNone
   Caption = 'MainForm'
   Color = clSilver
+  Visible = True
   OnActivate = FormActivate
   OnCreate = FormCreate
   OnShow = FormShow
-  PixelsPerInch = 96
-  TextHeight = 16
+  PixelsPerInch = 90
+  TextHeight = 17
   TextWidth = 7
   object ListBox: TListBox
     Left = 128
@@ -26,6 +27,17 @@ object MainForm: TMainForm
     ParentFont = False
     TabOrder = 0
     Visible = False
+  end
+  object XPDictionary: TXPDictionary
+    Active = False
+    Left = 456
+    Top = 32
+  end
+  object XPLocalizator: TXPLocalizator
+    Dictionary = XPDictionary
+    Active = True
+    Left = 552
+    Top = 128
   end
   object deskpopup: TXPPopupMenu
     AutoHotkeys = maManual
@@ -145,16 +157,5 @@ object MainForm: TMainForm
       Caption = 'Properties'
       OnClick = Properties2Click
     end
-  end
-  object XPDictionary: TXPDictionary
-    Active = False
-    Left = 456
-    Top = 32
-  end
-  object XPLocalizator: TXPLocalizator
-    Dictionary = XPDictionary
-    Active = True
-    Left = 552
-    Top = 128
   end
 end

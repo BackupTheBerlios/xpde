@@ -105,7 +105,11 @@ type
   end;
 
   TXPDesktop=class(TInterfacedObject, IXPDesktop)
+  private
+       customizeproc: TXPDesktopCustomize;
   public
+        constructor Create;
+        procedure registerCustomizeProcedure(const proc: TXPDesktopCustomize);
         function GetClientArea:TRect;
         procedure customize;
         procedure applychanges;
@@ -208,15 +212,13 @@ begin
     method:=2;
 
     XPAPI.setdefaultcursor;    
-    font.name:=sDefaultFontName;
-    font.size:=iDefaultFontSize;
-    font.Height:=iDefaultFontHeight;
     font.color:=dclBtnHighlight;
     desktop:=TSysListView.create(self);
     desktop.Align:=alClient;
     desktop.parent:=self;
     desktop.Color:=dclDesktopBackground;
     desktop.sendtoback;
+    desktop.font.assign(self.font);
     desktop.OnDblClick:=DesktopOnDblClick;
     desktop.PopupMenu:=deskpopup;
 
@@ -396,9 +398,18 @@ begin
     mainform.loadDesktopProperties;
 end;
 
+constructor TXPDesktop.Create;
+begin
+    inherited;
+    customizeproc:=nil;
+end;
+
 procedure TXPDesktop.customize;
 begin
-    loadpackage(XPAPI.getSysInfo(siUserDir)+'/xpde/bpldesk.so');
+    if not assigned(customizeproc) then begin
+        loadpackage(XPAPI.getSysInfo(siAppDir)+'/bpldesk.so');
+    end;
+    if assigned(customizeproc) then customizeproc;
 end;
 
 function TXPDesktop.GetClientArea: TRect;
@@ -406,9 +417,13 @@ begin
     result:=mainform.ClientRect;
 end;
 
+procedure TXPDesktop.registerCustomizeProcedure(
+  const proc: TXPDesktopCustomize);
+begin
+    customizeproc:=proc;    
+end;
+
 initialization
   XPDesktop:=TXPDesktop.create;
-  Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TOpenWithDlg, OpenWithDlg);
 
 end.

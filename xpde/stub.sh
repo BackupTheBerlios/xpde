@@ -1,2 +1,2 @@
-export LD_LIBRARY_PATH=/home/ttm/xpde/bin
+export LD_LIBRARY_PATH=/opt/xpde/bin
 $1

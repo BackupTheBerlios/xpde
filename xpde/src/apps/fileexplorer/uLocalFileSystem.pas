@@ -766,16 +766,20 @@ procedure TMyDocuments.getVerbItems(const verbs: TStrings);
 begin
     with verbs do begin
         clear;
-        add('Explore');
-        add('Open');
-        add('Find...');
+        iExplore:=add('Explore');
+        iOpen:=add('Open');
+        iFind:=add('Find...');
         add('-');
-        add('Copy');
+        iCut:=add('Cut');
+        iCopy:=add('Copy');
+        if not XPExplorer.ClipboardEmpty then begin
+            iPaste:=add('Paste');
+        end;
         add('-');
-        add('Delete');
-        add('Rename');
+        iDelete:=add('Delete');
+        iRename:=add('Rename');
         add('-');
-        add('Properties');
+        iProperties:=add('Properties');
     end;
 end;
 
@@ -1278,6 +1282,7 @@ var
     k: integer;
     newdir: string;
     addnew: boolean;
+    onew: boolean;
 
     buf: array [0..bufsize-1] of byte;
     rsize: integer;
@@ -1304,15 +1309,15 @@ begin
     s:=TFileStream.Create(source, fmOpenRead);
     newdir:=getNewDir(targetname,basepath);
     addnew:=not directoryexists(basepath+newdir);
+    onew:=not directoryexists(extractfilepath(targetname));
     ForceDirectories(extractfilepath(targetname));
     if (addnew) then begin
         targetFolder.addFolder(basepath+newdir);
     end;
 
     basedir:=extractdirpart(extractfilepath(targetname));
-
-    if (addnew) or (basedir=XPExplorer.getcurrentpath) then begin
-        targetFolder.addFolder(extractfilepath(targetname));
+    if (onew) and (basedir=XPExplorer.getcurrentpath) then begin
+            targetFolder.addFolder(extractfilepath(targetname));
     end;
 
     t:=TFileStream.Create(targetname, fmOpenWrite or fmCreate);

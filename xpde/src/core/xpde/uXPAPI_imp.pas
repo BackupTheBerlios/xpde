@@ -513,6 +513,7 @@ function TXPAPI.ReplaceSystemPaths(const path: string): string;
 begin
     result:=path;
     result:=StringReplace(result,'%APPS%',getAppsDir,[rfReplaceAll, rfIgnoreCase]);
+    result:=StringReplace(result,'%APP%',AppDir,[rfReplaceAll, rfIgnoreCase]);
     result:=StringReplace(result,'%APPLETS%',getAppletsDir,[rfReplaceAll, rfIgnoreCase]);
 end;
 

@@ -10,11 +10,17 @@ File_7=SourceModule,'/home/ttm/kylix3/source/rtl/sys/System.pas',0,1,1,1,18,0,0
 File_8=SourceModule,'/home/ttm/metacity-2.4.13/src/iconcache.c',0,1,472,52,477,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
-Module1=/home/ttm/xpde/src/core/xpwm/uWMFrame.pas
-Count=2
+Module0=/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas
+Module1=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
+Module2=/home/ttm/xpde/src/core/xpwm/uWMFrame.pas
+Count=3
 EditWindowCount=1
 PackageWindowCount=9
+
+[/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
 
 [/home/ttm/xpde/src/core/xpwm/uWindowManager.pas]
 ModuleType=SourceModule
@@ -127,10 +133,11 @@ FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=2
-CurrentView=1
+ViewCount=3
+CurrentView=2
 View0=0
 View1=1
+View2=2
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -150,7 +157,7 @@ LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=85
+BottomPanelSize=476
 BottomPanelClients=MessageView@EditWindow0
 BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
@@ -163,9 +170,16 @@ LeftCol=1
 
 [View1]
 Module=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
-CursorX=63
-CursorY=1605
-TopLine=1586
+CursorX=56
+CursorY=772
+TopLine=764
+LeftCol=1
+
+[View2]
+Module=/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas
+CursorX=1
+CursorY=130
+TopLine=122
 LeftCol=1
 
 [PackageWindow0]
@@ -444,14 +458,14 @@ HiddenCategories=
 Create=1
 Visible=0
 State=0
-Left=404
-Top=486
-Width=767
-Height=328
+Left=430
+Top=406
+Width=421
+Height=149
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=761
-ClientHeight=303
+ClientWidth=415
+ClientHeight=124
 TBDockHeight=149
 LRDockWidth=421
 Dockable=1
@@ -479,11 +493,11 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=751
+Height=360
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=751
+ClientHeight=360
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
@@ -495,12 +509,12 @@ State=0
 Left=12
 Top=0
 Width=1274
-Height=85
+Height=476
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1274
-ClientHeight=85
-TBDockHeight=85
+ClientHeight=476
+TBDockHeight=476
 LRDockWidth=443
 Dockable=1
 

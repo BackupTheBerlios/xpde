@@ -126,12 +126,16 @@ implementation
 
 function listtostr(const str:string):string;
 var
-    k: integer;
+    k:integer;
+    i: integer;
 begin
-    //Temp solution, puaj!
     result:=str;
-    k:=pos(#2,result);
-    if k<>0 then result:=copy(result,k+1,length(result));
+    k:=pos(#27,result);
+    while (k<>0) do begin
+        i:=pos(#2,result);
+        Delete(result,k,i-k+1);
+        k:=pos(#27,result);
+    end;
 end;
 
 end.

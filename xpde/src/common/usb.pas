@@ -1,6 +1,7 @@
 unit usb;
 interface
 
+Const usblibname='libusb.so';
 Type
     PLongint  = ^Longint;
     PSmallInt = ^SmallInt;
@@ -249,124 +250,96 @@ Type
 
 
 
-  function usb_open(dev:Pusb_device):Pusb_dev_handle;
+  function usb_open(dev:Pusb_device):Pusb_dev_handle; cdecl;
+  {$EXTERNALSYM usb_open}
+  function usb_close(dev:Pusb_dev_handle):longint; cdecl;
+  {$EXTERNALSYM usb_close}
+  function usb_bulk_write(dev:Pusb_dev_handle; ep:longint; bytes:Pchar; size:longint; timeout:longint):longint; cdecl;
+  {$EXTERNALSYM usb_bulk_write}
+  function usb_bulk_read(dev:Pusb_dev_handle; ep:longint; bytes:Pchar; size:longint; timeout:longint):longint; cdecl
+  {$EXTERNALSYM usb_bulk_read}
 
-  function usb_close(dev:Pusb_dev_handle):longint;
+  function usb_control_msg(dev:Pusb_dev_handle; requesttype:longint; request:longint; value:longint; index:longint;
+             bytes:Pchar; size:longint; timeout:longint):longint; cdecl;
+  {$EXTERNALSYM usb_control_msg}
 
-  function usb_bulk_write(dev:Pusb_dev_handle; ep:longint; bytes:Pchar; size:longint; timeout:longint):longint;
+  function usb_set_configuration(dev:Pusb_dev_handle; configuration:longint):longint; cdecl;
+  {$EXTERNALSYM usb_set_configuration}
 
-  function usb_bulk_read(dev:Pusb_dev_handle; ep:longint; bytes:Pchar; size:longint; timeout:longint):longint;
+  function usb_claim_interface(dev:Pusb_dev_handle; uinterface:longint):longint; cdecl;
+  {$EXTERNALSYM usb_claim_interface}
 
-  function usb_control_msg(dev:Pusb_dev_handle; requesttype:longint; request:longint; value:longint; index:longint; 
-             bytes:Pchar; size:longint; timeout:longint):longint;
+  function usb_release_interface(dev:Pusb_dev_handle; uinterface:longint):longint; cdecl;
+  {$EXTERNALSYM usb_release_interface}
 
-  function usb_set_configuration(dev:Pusb_dev_handle; configuration:longint):longint;
+  function usb_set_altinterface(dev:Pusb_dev_handle; alternate:longint):longint; cdecl;
+  {$EXTERNALSYM usb_set_altinterface}
 
-  function usb_claim_interface(dev:Pusb_dev_handle; uinterface:longint):longint;
+  function usb_resetep(dev:Pusb_dev_handle; ep:dword):longint; cdecl
+  {$EXTERNALSYM usb_resetep}
 
-  function usb_release_interface(dev:Pusb_dev_handle; uinterface:longint):longint;
+  function usb_clear_halt(dev:Pusb_dev_handle; ep:dword):longint; cdecl;
+ {$EXTERNALSYM usb_clear_halt}
 
-  function usb_set_altinterface(dev:Pusb_dev_handle; alternate:longint):longint;
+  function usb_reset(dev:Pusb_dev_handle):longint; cdecl;
+  {$EXTERNALSYM usb_reset}
 
-  function usb_resetep(dev:Pusb_dev_handle; ep:dword):longint;
+  function usb_get_string(dev:Pusb_dev_handle; index:longint; langid:longint; buf:Pchar; buflen:size_t):longint; cdecl;
+  {$EXTERNALSYM usb_get_string}
 
-  function usb_clear_halt(dev:Pusb_dev_handle; ep:dword):longint;
+  function usb_get_string_simple(dev:Pusb_dev_handle; index:longint; buf:Pchar; buflen:size_t):longint; cdecl
+  {$EXTERNALSYM usb_get_string_simple}
 
-  function usb_reset(dev:Pusb_dev_handle):longint;
+  function usb_strerror:Pchar; cdecl;
+  {$EXTERNALSYM usb_strerror}
 
-  function usb_get_string(dev:Pusb_dev_handle; index:longint; langid:longint; buf:Pchar; buflen:size_t):longint;
+  procedure usb_init; cdecl;
+  {$EXTERNALSYM usb_init}
 
-  function usb_get_string_simple(dev:Pusb_dev_handle; index:longint; buf:Pchar; buflen:size_t):longint;
+  procedure usb_set_debug(level:longint); cdecl;
+  {$EXTERNALSYM usb_set_debug}
 
-  function usb_strerror:Pchar;
+  function usb_find_busses:longint; cdecl;
+  {$EXTERNALSYM usb_find_busses}
 
-  procedure usb_init;
-
-  procedure usb_set_debug(level:longint);
-
-  function usb_find_busses:longint;
-
-  function usb_find_devices:longint;
-
+  function usb_find_devices:longint; cdecl;
+  {$EXTERNALSYM usb_find_devices}
 
 implementation
 
-  function usb_open(dev:Pusb_device):Pusb_dev_handle;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_close(dev:Pusb_dev_handle):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_bulk_write(dev:Pusb_dev_handle; ep:longint; bytes:Pchar; size:longint; timeout:longint):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_bulk_read(dev:Pusb_dev_handle; ep:longint; bytes:Pchar; size:longint; timeout:longint):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_control_msg(dev:Pusb_dev_handle; requesttype:longint; request:longint; value:longint; index:longint; 
-             bytes:Pchar; size:longint; timeout:longint):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_set_configuration(dev:Pusb_dev_handle; configuration:longint):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_claim_interface(dev:Pusb_dev_handle; uinterface:longint):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_release_interface(dev:Pusb_dev_handle; uinterface:longint):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_set_altinterface(dev:Pusb_dev_handle; alternate:longint):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_resetep(dev:Pusb_dev_handle; ep:dword):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_clear_halt(dev:Pusb_dev_handle; ep:dword):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_reset(dev:Pusb_dev_handle):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_get_string(dev:Pusb_dev_handle; index:longint; langid:longint; buf:Pchar; buflen:size_t):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_get_string_simple(dev:Pusb_dev_handle; index:longint; buf:Pchar; buflen:size_t):longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_strerror:Pchar;
-  begin
-    { You must implemented this function }
-  end;
-  procedure usb_init;
-  begin
-    { You must implemented this function }
-  end;
-  procedure usb_set_debug(level:longint);
-  begin
-    { You must implemented this function }
-  end;
-  function usb_find_busses:longint;
-  begin
-    { You must implemented this function }
-  end;
-  function usb_find_devices:longint;
-  begin
-    { You must implemented this function }
-  end;
+  function usb_open(dev:Pusb_device):Pusb_dev_handle; external usblibname name 'usb_open';
+  function usb_close(dev:Pusb_dev_handle):longint; external usblibname name 'usb_close';
+  function usb_bulk_write(dev:Pusb_dev_handle; ep:longint; bytes:Pchar; size:longint; timeout:longint):longint; external usblibname name 'usb_bulk_write';
+  function usb_bulk_read(dev:Pusb_dev_handle; ep:longint; bytes:Pchar; size:longint; timeout:longint):longint; external usblibname name 'usb_bulk_write';
+
+  function usb_control_msg(dev:Pusb_dev_handle; requesttype:longint; request:longint; value:longint; index:longint;
+             bytes:Pchar; size:longint; timeout:longint):longint; external usblibname name 'usb_control_msg';
+  function usb_set_configuration(dev:Pusb_dev_handle; configuration:longint):longint; external usblibname name 'usb_set_configuration';
+
+  function usb_claim_interface(dev:Pusb_dev_handle; uinterface:longint):longint; external usblibname name 'usb_claim_interface';
+
+  function usb_release_interface(dev:Pusb_dev_handle; uinterface:longint):longint; external usblibname name 'usb_release_interface';
+
+  function usb_set_altinterface(dev:Pusb_dev_handle; alternate:longint):longint; external usblibname name 'usb_set_altinterface';
+
+  function usb_resetep(dev:Pusb_dev_handle; ep:dword):longint; external usblibname name 'usb_resetep';
+
+  function usb_clear_halt(dev:Pusb_dev_handle; ep:dword):longint; external usblibname name 'usb_clear_halt';
+
+  function usb_reset(dev:Pusb_dev_handle):longint; external usblibname name 'usb_reset';
+
+  function usb_get_string(dev:Pusb_dev_handle; index:longint; langid:longint; buf:Pchar; buflen:size_t):longint; external usblibname name 'usb_get_string';
+
+  function usb_get_string_simple(dev:Pusb_dev_handle; index:longint; buf:Pchar; buflen:size_t):longint; external usblibname name 'usb_get_string_simple';
+
+  function usb_strerror:Pchar; external usblibname name 'usb_strerror';
+
+  procedure usb_init; external usblibname name 'usb_init';
+
+  procedure usb_set_debug(level:longint); external usblibname name 'usb_set_debug';
+
+  function usb_find_busses:longint; external usblibname name 'usb_find_busses';
+
+  function usb_find_devices:longint; external usblibname name 'usb_find_devices';
 
 end.

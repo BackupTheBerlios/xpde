@@ -2447,28 +2447,37 @@ var
     found: boolean;
 begin
     if FWindowState<>wsMinimized then begin
-        minimizedstate:=FWindowState;
-        {$ifdef DEBUG}
-        xlibinterface.outputDebugString(iMETHOD,'TWMClient.minimize'+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
-        {$endif}
-        frame.visible:=false;
-        FWindowState:=wsMinimized;
+            minimizedstate:=FWindowState;
+            {$ifdef DEBUG}
+            xlibinterface.outputDebugString(iMETHOD,'TWMClient.minimize'+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+            {$endif}
 
-        found:=false;
-        if FWindowManager.clients.count>1 then begin
-            for i:=1 to FWindowManager.clients.count-1 do begin
-                p:=FWindowManager.clients[i];
-                if assigned(p) then begin
-                    if (p.WindowState<>wsMinimized) then begin
-                        p.activate;
-                        found:=true;
-                        break;
+            if (framed) then begin
+                frame.visible:=false;
+            end
+            else begin
+                setMapState(IconicState);
+                UnmapCounter:=UnmapCounter+1;
+                XUnmapWindow(FWindowManager.Display,xwindow);
+            end;
+            FWindowState:=wsMinimized;
+
+            found:=false;
+            if FWindowManager.clients.count>1 then begin
+                for i:=1 to FWindowManager.clients.count-1 do begin
+                    p:=FWindowManager.clients[i];
+                    if assigned(p) then begin
+                        if (p.WindowState<>wsMinimized) then begin
+                            p.activate;
+                            writeln('found');
+                            found:=true;
+                            break;
+                        end;
                     end;
                 end;
             end;
-        end;
 
-        if not found then FWindowManager.activeclient:=nil;
+            if not found then FWindowManager.activeclient:=nil;
     end;
 end;
 
@@ -2522,7 +2531,10 @@ begin
             xlibinterface.outputDebugString(iMETHOD,'TWMClient.restore'+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
             {$endif}
             if FWindowState=wsMinimized then begin
-                frame.visible:=true;
+                if (framed) then frame.visible:=true
+                else begin
+                    XMapWindow(FWindowManager.FDisplay,xwindow);
+                end;
                 FWindowState:=minimizedstate;
             end
             else begin

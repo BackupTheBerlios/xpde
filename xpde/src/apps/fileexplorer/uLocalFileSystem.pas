@@ -1,25 +1,64 @@
+{ *************************************************************************** }
+{                                                                             }
+{ This file is part of the XPde project                                       }
+{                                                                             }
+{ Copyright (c) 2002 José León Serna <ttm@xpde.com>                           }
+{                                                                             }
+{ This program is free software; you can redistribute it and/or               }
+{ modify it under the terms of the GNU General Public                         }
+{ License as published by the Free Software Foundation; either                }
+{ version 2 of the License, or (at your option) any later version.            }
+{                                                                             }
+{ This program is distributed in the hope that it will be useful,             }
+{ but WITHOUT ANY WARRANTY; without even the implied warranty of              }
+{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           }
+{ General Public License for more details.                                    }
+{                                                                             }
+{ You should have received a copy of the GNU General Public License           }
+{ along with this program; see the file COPYING.  If not, write to            }
+{ the Free Software Foundation, Inc., 59 Temple Place - Suite 330,            }
+{ Boston, MA 02111-1307, USA.                                                 }
+{                                                                             }
+{ *************************************************************************** }
 unit uLocalFileSystem;
 
 interface
 
 uses
     Classes, SysUtils, QGraphics,
-    uExplorerAPI, QDialogs;
+    uExplorerAPI, QDialogs, uXPAPI;
 
 type
 
     TLocalFile=class(TInterfacedObject, IXPVirtualFile)
+    private
+        node: TObject;
+        iOpen: integer;
+        iOpenwith: integer;
+        iSendto: integer;
+        iCut: integer;
+        iCopy: integer;
+        iPaste: integer;
+        iCreateShortcut: integer;
+        iDelete: integer;
+        iRename: integer;
+        iProperties: integer;
     public
         function hasChild: boolean; virtual;
         function getChildren: TInterfaceList; virtual;
         function getDisplayName: string; virtual;
         procedure getColumns(const columns:TStrings); virtual;
+        function getUniqueID:string; virtual;
+        procedure setNode(anode:TObject); virtual;
+        function getNode:TObject; virtual;
+        procedure doubleClick; virtual;
         procedure getColumnData(const columns:TStrings); virtual;
         procedure getStatusData(const status:TStrings);virtual;
         procedure getVerbItems(const verbs:TStrings); virtual;
         procedure executeVerb(const verb:integer); virtual;
         function getIcon: integer; virtual;
         function getCategory: string; virtual;
+        constructor Create;
     end;
 
     TFile=class(TLocalFile)
@@ -30,6 +69,8 @@ type
         time: integer;
         function hasChild: boolean; override;
         function getDisplayName: string; override;
+        procedure doubleClick; override;
+        function getUniqueID:string; override;
         procedure getColumnData(const columns:TStrings); override;
         constructor Create(const APath:string); virtual;
         function getIcon: integer; override;
@@ -37,6 +78,18 @@ type
 
     TFolder=class(TLocalFile)
     private
+        iExplore: integer;
+        iOpen: integer;
+        iFind: integer;
+        iSharingandSecurity: integer;
+        iSendto: integer;
+        iCut: integer;
+        iCopy: integer;
+        iPaste: integer;
+        iDelete: integer;
+        iRename: integer;
+        iProperties: integer;
+
         children: TInterfaceList;
         FPath: string;
         procedure SetPath(const Value: string);
@@ -44,6 +97,7 @@ type
         size: integer;
         time: integer;
         function hasChild: boolean; override;
+        function getUniqueID:string; override;
         function getChildren: TInterfaceList; override;
         procedure getStatusData(const status:TStrings);override;
         procedure getColumnData(const columns:TStrings); override;
@@ -261,28 +315,40 @@ var
     f: TSearchRec;
     a: TFile;
     b: TFolder;
+    ss: TStringList;
+    locfile: TLocalFile;
+    i: integer;
 begin
     if children.count=0 then begin
         size:=0;
         if Findfirst(FPath+'/*',faHidden or faAnyFile or faSysFile or faDirectory,f)=0 then begin
-//        if Findfirst(FPath+'/*',faDirectory,f)=0 then begin
+            ss:=TStringList.create;
+            ss.sorted:=true;
             try
                repeat
                     if (f.name='.') or (f.name='..') then continue;
                     if ((faDirectory and f.Attr)=faDirectory) then begin
                         b:=TFolder.Create(f.PathOnly+f.Name);
                         b.time:=f.Time;
-                        children.add(b);
+                        ss.AddObject(f.name,b)
+                        //children.add(b);
                     end
                     else begin
                         a:=TFile.Create(f.PathOnly+f.Name);
                         a.filesize:=f.Size;
                         size:=size+a.filesize;
                         a.time:=f.Time;
-                        children.add(a);
+                        ss.AddObject(f.name,a)
+                        //children.add(a);
                     end;
                until (findnext(f)<>0);
+
+               for i:=0 to ss.count-1 do begin
+                    locfile:=ss.Objects[i] as TLocalFile;
+                    children.add(locfile);
+               end;
             finally
+                ss.free;
                 findclose(f);
             end;
         end;
@@ -338,25 +404,33 @@ begin
     status.add('My Computer');
 end;
 
+function TFolder.getUniqueID: string;
+begin
+    result:=FPath;
+end;
+
 procedure TFolder.getVerbItems(const verbs: TStrings);
 begin
     with verbs do begin
         clear;
-        add('Explore');
-        add('Open');
-        add('Find...');
+        iExplore:=add('Explore');
+        iOpen:=add('Open');
+        iFind:=add('Find...');
         add('-');
-        add('Sharing and Security...');
+        iSharingandSecurity:=add('Sharing and Security...');
         add('-');
-        add('Send to');
+        iSendto:=add('Send to');
         add('-');
-        add('Cut');
-        add('Copy');
+        iCut:=add('Cut');
+        iCopy:=add('Copy');
+        if not XPExplorer.ClipboardEmpty then begin
+            iPaste:=add('Paste');
+        end;
         add('-');
-        add('Delete');
-        add('Rename');
+        iDelete:=add('Delete');
+        iRename:=add('Rename');
         add('-');
-        add('Properties');
+        iProperties:=add('Properties');
     end;
 end;
 
@@ -376,6 +450,11 @@ end;
 constructor TFile.Create(const APath: string);
 begin
     FPath:=APath;
+end;
+
+procedure TFile.doubleClick;
+begin
+    XPAPI.ShellDocument(FPath);
 end;
 
 procedure TFile.getColumnData(const columns: TStrings);
@@ -401,6 +480,11 @@ end;
 function TFile.getIcon: integer;
 begin
     result:=imNOICON;
+end;
+
+function TFile.getUniqueID: string;
+begin
+    result:=FPath;
 end;
 
 function TFile.hasChild: boolean;
@@ -511,9 +595,25 @@ end;
 
 { TLocalFile }
 
+constructor TLocalFile.Create;
+begin
+    node:=nil;
+end;
+
+procedure TLocalFile.doubleClick;
+begin
+    showmessage('Not implemented yet!');
+end;
+
 procedure TLocalFile.executeVerb(const verb: integer);
 begin
+    if verb=iCopy then begin
+        XPExplorer.copytoclipboard(getUniqueID);
+    end;
 
+    if verb=iPaste then begin
+        showmessage('ok');
+    end;
 end;
 
 function TLocalFile.getCategory: string;
@@ -553,6 +653,11 @@ begin
     result:=imNOICON;
 end;
 
+function TLocalFile.getNode: TObject;
+begin
+    result:=node;
+end;
+
 procedure TLocalFile.getStatusData(const status: TStrings);
 var
     f: TInterfaceList;
@@ -570,17 +675,43 @@ begin
     status.add('My Computer');
 end;
 
+function TLocalFile.getUniqueID: string;
+begin
+    result:='';
+end;
+
 procedure TLocalFile.getVerbItems(const verbs: TStrings);
 begin
     verbs.clear;
     with verbs do begin
-        add('Share and security');
+        clear;
+        iOpen:=add('Open');
+        iOpenWith:=add('Open with...');
+        add('-');
+        iSendto:=add('Send to');
+        add('-');
+        iCut:=add('Cut');
+        iCopy:=add('Copy');
+        if not XPExplorer.ClipboardEmpty then begin
+            iPaste:=add('Paste');
+        end;
+        add('-');
+        iCreateshortcut:=add('Create shortcut');
+        iDelete:=add('Delete');
+        iRename:=add('Rename');
+        add('-');
+        iProperties:=add('Properties');
     end;
 end;
 
 function TLocalFile.hasChild: boolean;
 begin
     result:=false;
+end;
+
+procedure TLocalFile.setNode(anode: TObject);
+begin
+    node:=anode;
 end;
 
 { TDevice }

@@ -70,5 +70,5 @@ DebugCWD=
 
 [HistoryLists\hlOutputDirectorry]
 Count=1
-Item0=$(HOME)/xpde/bin/applets
+Item0=$(HOME)/xpde/bin/apps
 

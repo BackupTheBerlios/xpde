@@ -3,8 +3,8 @@ unit uSystemProperties;
 interface
 
 uses
-  SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs,
-  QStdCtrls, QComCtrls, QExtCtrls, uQXPComCtrls,SysProvider;
+  SysUtils, Types, SysProvider,Classes, QGraphics, QControls, QForms, QDialogs,
+  QStdCtrls, QComCtrls, QExtCtrls, uQXPComCtrls;
 
 type
   TSystemPropertiesDlg = class(TForm)
@@ -189,7 +189,7 @@ End;
 
 procedure TSystemPropertiesDlg.FormShow(Sender: TObject);
 begin
-      FillTabs;
+//      FillTabs;
 end;
 
 procedure TSystemPropertiesDlg.Button10Click(Sender: TObject);
@@ -198,7 +198,7 @@ begin
         try
             frmSystem.ShowModal;
         finally
-        frmSystem.Free;
+            frmSystem.Free;
         End;
 end;
 

@@ -274,8 +274,10 @@ end;
 procedure TfrmSystem.FormCreate(Sender: TObject);
 begin
     //These lines are here to set the font of the menubar
+    font.assign(application.font);
     font.name:='';
     parentfont:=true;
+    font.assign(application.font);
 end;
 
 end.

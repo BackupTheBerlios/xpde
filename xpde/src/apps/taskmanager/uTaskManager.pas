@@ -70,10 +70,8 @@ type
     AboutTaskManager1: TMenuItem;
     GBox1: TGroupBox;
     Pan1: TPanel;
-    PB1: TPaintBox;
     GBox2: TGroupBox;
     Pan2: TPanel;
-    PB2: TPaintBox;
     GBox3: TGroupBox;
     GBox4: TGroupBox;
     GBox5: TGroupBox;
@@ -81,9 +79,7 @@ type
     GBox7: TGroupBox;
     GBox8: TGroupBox;
     Pan3: TPanel;
-    PB3: TPaintBox;
     Pan4: TPanel;
-    PB4: TPaintBox;
     Lab1: TLabel;
     Lab2: TLabel;
     Lab3: TLabel;
@@ -112,7 +108,6 @@ type
     Timer3: TTimer;
     GBox9: TGroupBox;
     Pan5: TPanel;
-    PB5: TPaintBox;
     procedure ExitTaskManager1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -131,6 +126,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure LVNetSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure FormCreate(Sender: TObject);
   private
     Procedure Get_PIDS_Apps(__cmdline:string);
     Procedure Read_stats(statsfile_:string);
@@ -225,11 +221,11 @@ var tmpstr,tmpstr_stat:TStrings;
     diff_net_out:Array[0..20,0..0] of double;
     //FIXME This values will be replaced to dynamic array PB*.Width
     device_number_:integer; // temporary or Get_Info_From_Netstat
+    PB1,PB2,PB3,PB4,PB5:TBitmap;
 {$R *.xfm}
 
 function _get_tmp_fname:String;
 begin
-        Randomize;
         Result:='/tmp/'+FormatDateTime('XPdeTM-hh-mm-ss-ms',Now)+
         Format('.%d',[Random($FFFF)]);
 end;
@@ -269,6 +265,11 @@ end;
 procedure TWindowsTaskManagerDlg.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+        PB1.Free;
+        PB2.Free;
+        PB3.Free;
+        PB4.Free;
+        PB5.Free;
         Action:=caFree;
 end;
 
@@ -301,6 +302,7 @@ Begin
         ListView1.Items.Clear;
         tmpstr:=TStringList.Create;
         try
+        // FIX THIS -> via pipe, not this way (too slow).
         pidcmd:='ps -xo pid,ucomm,flags --sort pid | grep 000';
         Get_PIDS_Apps(pidcmd);
         except
@@ -402,12 +404,10 @@ End;
 
 procedure TWindowsTaskManagerDlg.Timer1Timer(Sender: TObject);
 begin
-        // Application.ProcessMessages;
         if PageControl1.ActivePage=TabSheet1 then
         Fill_Applications else
         if PageControl1.ActivePage=TabSheet5 then
         Fill_Processes;
-
         Fill_Net_Devices; 
         Find_Lusers;
 end;
@@ -415,6 +415,93 @@ end;
 procedure TWindowsTaskManagerDlg.FormShow(Sender: TObject);
 var j,jj:integer;
 begin
+         pb1:=TBitmap.Create;
+
+         pb1.PixelFormat:=pf32bit;
+         pb1.Height:=60;
+         pb1.Width:=70;
+
+         with PB1.Canvas do begin
+                Brush.Color:=clBlack;
+                Brush.Style:=bsSolid;
+                Pen.Color:=clLime;
+                Pen.Style:=psSolid;
+                Canvas.FillRect(ClientRect);
+         End;
+
+         Pan1.Bitmap:=PB1;
+
+         pb3:=TBitmap.Create;
+
+         pb3.PixelFormat:=pf32bit;
+         pb3.Height:=60;
+         pb3.Width:=70;
+
+         with PB3.Canvas do begin
+                Brush.Color:=clBlack;
+                Brush.Style:=bsSolid;
+                Pen.Color:=clLime;
+                Pen.Style:=psSolid;
+                Canvas.FillRect(ClientRect);
+         End;
+
+         Pan3.Bitmap:=PB3;
+
+
+         pb2:=TBitmap.Create;
+
+         pb2.PixelFormat:=pf32bit;
+         pb2.Height:=60;
+         pb2.Width:=228;
+
+         with PB2.Canvas do begin
+                Brush.Color:=clBlack;
+                Brush.Style:=bsSolid;
+                Pen.Color:=clLime;
+                Pen.Style:=psSolid;
+                Canvas.FillRect(ClientRect);
+         End;
+
+         Pan2.Bitmap:=PB2;
+
+
+         pb4:=TBitmap.Create;
+
+         pb4.PixelFormat:=pf32bit;
+         pb4.Height:=60;
+         pb4.Width:=228;
+
+         with PB4.Canvas do begin
+                Brush.Color:=clBlack;
+                Brush.Style:=bsSolid;
+                Pen.Color:=clLime;
+                Pen.Style:=psSolid;
+                Canvas.FillRect(ClientRect);
+         End;
+
+         Pan4.Bitmap:=PB4;
+
+         pb5:=TBitmap.Create;
+
+         pb5.PixelFormat:=pf32bit;
+         pb5.Height:=212;
+         pb5.Width:=351;
+
+         with PB5.Canvas do begin
+                Brush.Color:=clBlack;
+                Brush.Style:=bsSolid;
+                Pen.Color:=clLime;
+                Pen.Style:=psSolid;
+                Canvas.FillRect(ClientRect);
+         End;
+
+         Pan5.Bitmap:=PB5;
+
+
+
+
+
+
 
         for j:=0 to PB2.Width do
         user_matrix [j]:=PB2.Height;
@@ -867,18 +954,19 @@ Begin
 
         PB1.Canvas.TextOut((PB1.Width div 2)-14 ,PB1.Height - 22,fill_text(value_));
         PB1.Canvas.Stop;
+        Pan1.Bitmap.Canvas.Draw(0,0,PB1);
 End;
 
 procedure TWindowsTaskManagerDlg.Paint_PB2;
 var i,xx:integer;
 Begin
-        PB2.Repaint;
+//        PB2.Canvas.FillRect(ClientRect);
         PB2.Canvas.Start(true);
 
 
                 with PB2.Canvas do begin
                 Brush.Color:=clBlack;
-                Brush.Style:=bsCross;
+                Brush.Style:=bsSolid;
                 Pen.Color:=clGreen;
                 Pen.Style:=psSolid;
                 End;
@@ -917,6 +1005,7 @@ Begin
 
 
         PB2.Canvas.Stop;
+        Pan2.Bitmap.Canvas.Draw(0,0,PB2);
 
 End;
 
@@ -1120,18 +1209,20 @@ Begin
         value_:=IntToStr(diff_syst)+' %';
         PB3.Canvas.TextOut((PB3.Width div 2)-14 ,PB3.Height - 22,fill_text(value_));
         PB3.Canvas.Stop;
+
+        Pan3.Bitmap.Canvas.Draw(0,0,PB3);
 End;
 
 procedure TWindowsTaskManagerDlg.Paint_PB4;
 var i,xx:integer;
 Begin
-        PB4.Repaint;
+
         PB4.Canvas.Start(true);
 
 
                 with PB4.Canvas do begin
                 Brush.Color:=clBlack;
-                Brush.Style:=bsCross;
+                Brush.Style:=bsSolid;
                 Pen.Color:=clGreen;
                 Pen.Style:=psSolid;
                 End;
@@ -1171,20 +1262,19 @@ Begin
 
 
         PB4.Canvas.Stop;
-
+        Pan4.Bitmap.Canvas.Draw(0,0,PB4);
 End;
 
 
 procedure TWindowsTaskManagerDlg.Paint_PB5;
 var i,xx,p_i,div_me:integer;
 Begin
-        PB5.Repaint;
         PB5.Canvas.Start(true);
 
 
                 with PB5.Canvas do begin
                 Brush.Color:=clBlack;
-                Brush.Style:=bsCross;
+                Brush.Style:=bsSolid;
                 Pen.Color:=clGreen;
                 Pen.Style:=psSolid;
                 End;
@@ -1230,9 +1320,9 @@ Begin
 
         PB5.Canvas.Font.Size:=10;
         PB5.Canvas.Font.Color:=clYellow;
-        PB5.Canvas.TextOut(PB5.Left+10,PB5.Top+10,'  1 %');
-        PB5.Canvas.TextOut(PB5.Left+10,PB5.Height div 2,'0.5 %');
-        PB5.Canvas.TextOut(PB5.Left+10,PB5.Height - 20,'  0 %');
+        PB5.Canvas.TextOut(Pan5.Left+10,Pan5.Top+10,'  1 %');
+        PB5.Canvas.TextOut(Pan5.Left+10,Pan5.Height div 2,'0.5 %');
+        PB5.Canvas.TextOut(Pan5.Left+10,Pan5.Height - 20,'  0 %');
 
                 with PB5.Canvas do begin
                 Brush.Color:=clBlack;
@@ -1289,10 +1379,8 @@ Begin
         End;
         End;
 
-
-
         PB5.Canvas.Stop;
-
+        Pan5.Bitmap.Canvas.Draw(0,0,PB5);
 End;
 
 
@@ -1503,6 +1591,11 @@ procedure TWindowsTaskManagerDlg.LVNetSelectItem(Sender: TObject;
 begin
         if selected then
         device_number:=Item.Index+2;
+end;
+
+procedure TWindowsTaskManagerDlg.FormCreate(Sender: TObject);
+begin
+        Randomize;
 end;
 
 end.

@@ -224,15 +224,17 @@ begin
 
 
             if (m.imageindex<>-1) then begin
-                tx:=m.getparentmenu.Images.width+5;
-                gy:=crect.top+((crect.bottom-crect.top)-m.getparentmenu.Images.height) div 2;
-                ob:=TBitmap.create;
-                try
-                    m.getparentmenu.Images.GetBitmap(m.imageindex,ob);
-                    ob.transparent:=true;
-                    draw(cRect.left,gy,ob);
-                finally
-                    ob.free;
+                if assigned(m.getparentmenu.images) then begin
+                    tx:=m.getparentmenu.Images.width+5;
+                    gy:=crect.top+((crect.bottom-crect.top)-m.getparentmenu.Images.height) div 2;
+                    ob:=TBitmap.create;
+                    try
+                        m.getparentmenu.Images.GetBitmap(m.imageindex,ob);
+                        ob.transparent:=true;
+                        draw(cRect.left,gy,ob);
+                    finally
+                        ob.free;
+                    end;
                 end;
             end;
 

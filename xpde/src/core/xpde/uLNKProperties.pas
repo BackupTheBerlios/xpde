@@ -25,10 +25,13 @@ unit uLNKProperties;
 interface
 
 uses
-  SysUtils, QStdCtrls, QControls, uXPAPI, uXPAPI_imp,Math,
-  QGraphics, QExtCtrls, QComCtrls, uLNKFile, uQXPComCtrls, uXPStyleConsts,
-  Classes, QForms, QDialogs, uChangeIcon, uSysListItem, Libc,
-  uXPLocalizator;
+  SysUtils, QStdCtrls, QControls,
+  uXPAPI, uXPAPI_imp,Math,
+  QGraphics, QExtCtrls, QComCtrls,
+  uLNKFile, uQXPComCtrls, uXPStyleConsts,
+  Classes, QForms, QDialogs,
+  uChangeIcon, uSysListItem, Libc,
+  uXPLocalizator, uXPdeconsts;
 
 type
   TLNKPropertiesDlg = class(TForm)
@@ -183,7 +186,7 @@ begin
         edStartin.text:=lnk.startin;
         edComment.text:=lnk.comment;
         //**************************************
-        edTypeOfFile.text:='Shortcut';
+        edTypeOfFile.text:=sShortCut;
         edLocation.text:=extractfilepath(linkfile);
         stat(PChar(linkfile),buf);
         //**********************************

@@ -25,10 +25,12 @@ unit uCreateShortcut;
 interface
 
 uses
-  SysUtils, Types, Classes, uSysListItem, 
-  QGraphics, QControls, QForms, uXPStyleConsts,
-  QDialogs, IniFiles, QStdCtrls, uXPAPI_imp,
-  QComCtrls, QExtCtrls, uXPAPI, uXPLocalizator;
+  SysUtils, Types, Classes,
+  uSysListItem, QGraphics, QControls,
+  QForms, uXPStyleConsts, QDialogs,
+  IniFiles, QStdCtrls, uXPAPI_imp,
+  QComCtrls, QExtCtrls, uXPAPI,
+  uXPLocalizator, uXPdeconsts;
 
 type
   TCreateShortcutDlg = class(TForm)
@@ -138,13 +140,13 @@ begin
     case newpage.PageIndex of
         0: begin
             btnBack.enabled:=false;
-            btnNext.Caption:='&Next >';
-            caption:='Create Shortcut';
+            btnNext.Caption:=sNextStep;
+            caption:=sCreateShortcut;
         end;
         1: begin
             btnBack.enabled:=true;
-            btnNext.Caption:='&Finish';
-            caption:='Select a Title for the Program';
+            btnNext.Caption:=sFinishWizard;
+            caption:=sSelectaTitlefortheProgram;
         end;
     end;
 end;

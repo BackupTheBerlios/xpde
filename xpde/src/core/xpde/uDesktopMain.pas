@@ -30,9 +30,11 @@ uses
   QControls, QForms, QDialogs,
   QStdCtrls, QMenus, uXPPopupMenu,
   QExtCtrls,uSysListView, uSysListItem,
-  uXPAPI, uXPStyleConsts, uRegistry, uXPAPI_imp,
-  uLNKFile, uCreateShortcut, uMouseAPI,
-  uLNKProperties, Qt, uXPDictionary, uXPLocalizator, uXPStyle;
+  uXPAPI, uXPStyleConsts, uRegistry,
+  uXPAPI_imp, uLNKFile, uCreateShortcut,
+  uMouseAPI, uLNKProperties, Qt,
+  uXPDictionary, uXPLocalizator, uXPStyle,
+  uXPdeconsts;
 
 type
   TMainForm = class(TForm)
@@ -159,11 +161,11 @@ end;
 
 procedure TMainform.addSystemIcons;
 begin
-    addIcon('My Documents',sMYDOCUMENTS,'%MYDOCUMENTS%',false);
-    addIcon('My Computer',sMYCOMPUTER,'%MYCOMPUTER%',false);
-    addIcon('My Home',sMYHOME,'%MYHOME%',false);
-    addIcon('My Network Places',sMYNETWORKPLACES,'%MYNETWORKPLACES%',false);
-    addIcon('Recycle Bin',sRECYCLEBINEMPTY,'%RECYCLEBIN%',false);
+    addIcon(sMyDocuments,sMYDOCUMENTS,'%MYDOCUMENTS%',false);
+    addIcon(sMyComputer,sMYCOMPUTER,'%MYCOMPUTER%',false);
+    addIcon(sMyHome,sMYHOME,'%MYHOME%',false);
+    addIcon(sMyNetworkPlaces,sMYNETWORKPLACES,'%MYNETWORKPLACES%',false);
+    addIcon(sRecycleBin,sRECYCLEBINEMPTY,'%RECYCLEBIN%',false);
 end;
 
 function TMainform.addIcon(const caption, image, fullpath: string;islnk:boolean): TSysListItem;
@@ -376,7 +378,7 @@ var
 begin
     i:=1;
     repeat
-        dirname:=format('New Folder (%d)',[i]);
+        dirname:=format(sNewFolder,[i]);
         fullpath:=XPAPI.getSysInfo(siDesktopdir)+dirname;
         inc(i);
     until not (directoryexists(fullpath));

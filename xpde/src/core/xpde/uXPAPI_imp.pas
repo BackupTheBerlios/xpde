@@ -359,7 +359,7 @@ begin
     setwaitcursor;
     result:=Libc.system(PChar(aprog));
     if result = -1 then begin
-        showmessage('Unnable to execute '+prog);
+        showmessage(format('Unable to execute %s',[prog]));
     end;
     checkcpuload;
 end;

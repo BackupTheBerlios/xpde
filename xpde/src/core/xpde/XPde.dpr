@@ -8,7 +8,8 @@ uses
   uCreateShortcut in 'uCreateShortcut.pas' {CreateShortcutDlg},
   uLNKProperties in 'uLNKProperties.pas' {LNKPropertiesDlg},
   uOpenWith in 'uOpenWith.pas' {OpenWithDlg},
-  uXPAPI_imp in 'uXPAPI_imp.pas';
+  uXPAPI_imp in 'uXPAPI_imp.pas',
+  uXPdeconsts in 'uXPdeconsts.pas';
 
 {$R *.res}
 

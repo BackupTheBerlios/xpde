@@ -26,9 +26,10 @@ interface
 
 uses
   SysUtils, Types, Classes,
-  QGraphics, QControls, QForms, uXPStyleConsts,
-  QDialogs, QStdCtrls, uXPAPI, uXPAPI_imp,
-  QComCtrls, QImgList, uXPLocalizator;
+  QGraphics, QControls, QForms,
+  uXPStyleConsts, QDialogs, QStdCtrls,
+  uXPAPI, uXPAPI_imp, QComCtrls,
+  QImgList, uXPLocalizator, uXPdeconsts;
 
 type
   TChangeIconDlg = class(TForm)
@@ -182,7 +183,7 @@ var
     dir:widestring;
 begin
     dir:=edDirectory.text;
-    if SelectDirectory('Select a directory','/',dir,true) then begin
+    if SelectDirectory(sSelectADirectory,'/',dir,true) then begin
         edDirectory.text:=dir;
     end;
 end;

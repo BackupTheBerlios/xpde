@@ -147,6 +147,9 @@ var
   DisplayPropertiesDlg: TDisplayPropertiesDlg=nil;
   desktop:TDesktop;
 
+resourcestring
+    sNone='(None)';
+
 procedure customizeDesktop;
 
 implementation
@@ -277,7 +280,7 @@ begin
         end;
         list.sorted:=true;
         list.sorted:=false;
-        list.Insert(0,'(None)');
+        list.Insert(0,sNone);
         lvPictures.Items.BeginUpdate;
         try
             for i:=0 to list.count-1 do begin

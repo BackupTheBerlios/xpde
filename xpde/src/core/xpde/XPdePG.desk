@@ -11,9 +11,21 @@ File_8=SourceModule,'/home/ttm/xpde/src/applets/mouse/Xlib.pas',0,1,7098,64,7117
 File_9=SourceModule,'/home/ttm/xpde/src/applets/regional/uRegionalandLanguageOptions.pas',0,1,1,26,31,1,0
 
 [Modules]
-Count=0
-EditWindowCount=0
+Module0=/home/ttm/xpde/src/common/XPCommon.dpk
+Module1=/home/ttm/xpde/src/apps/taskmanager/taskmanager.dpr
+Count=2
+EditWindowCount=1
 PackageWindowCount=11
+
+[/home/ttm/xpde/src/common/XPCommon.dpk]
+ModuleType=PackageEditModule
+FormState=0
+FormOnTop=0
+
+[/home/ttm/xpde/src/apps/taskmanager/taskmanager.dpr]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
 
 [/home/ttm/xpde/src/core/xpde/XPde.dpr]
 FormState=0
@@ -24,10 +36,6 @@ FormState=0
 FormOnTop=0
 
 [/home/ttm/xpde/src/components/registry/XPRegistry.dpk]
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/common/XPCommon.dpk]
 FormState=0
 FormOnTop=0
 
@@ -60,10 +68,6 @@ FormState=0
 FormOnTop=0
 
 [/home/ttm/xpde/src/components/commctrls/XPCommctrls.dpk]
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/apps/taskmanager/taskmanager.dpr]
 FormState=0
 FormOnTop=0
 
@@ -107,29 +111,47 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
-[PackageWindow0]
+[EditWindow0]
+ViewCount=2
+CurrentView=1
+View0=0
+View1=1
+CodeExplorer=CodeExplorer@EditWindow0
+MessageView=MessageView@EditWindow0
 Create=1
-Visible=0
+Visible=1
 State=0
-Left=284
-Top=317
-Width=368
-Height=244
+Left=201
+Top=152
+Width=1059
+Height=753
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=362
-ClientHeight=219
-TBDockHeight=244
-LRDockWidth=368
-Dockable=1
-StatusBar=0
-TextLabels=1
-Toolbar=1
-SectionWidth0=150
-SectionWidth1=212
-Module=/home/ttm/xpde/src/components/registry/XPRegistry.dpk
+ClientWidth=1059
+ClientHeight=753
+LeftPanelSize=140
+LeftPanelClients=CodeExplorer@EditWindow0
+LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
+RightPanelSize=0
+BottomPanelSize=85
+BottomPanelClients=MessageView@EditWindow0
+BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
-[PackageWindow1]
+[View0]
+Module=/home/ttm/xpde/src/apps/taskmanager/taskmanager.dpr
+CursorX=60
+CursorY=8
+TopLine=1
+LeftCol=1
+
+[View1]
+Module=/home/ttm/xpde/src/common/XPCommon.dpk
+CursorX=29
+CursorY=26
+TopLine=1
+LeftCol=1
+
+[PackageWindow0]
 Create=1
 Visible=0
 State=0
@@ -150,6 +172,28 @@ Toolbar=1
 SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/common/XPCommon.dpk
+
+[PackageWindow1]
+Create=1
+Visible=0
+State=0
+Left=284
+Top=317
+Width=368
+Height=244
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=362
+ClientHeight=219
+TBDockHeight=244
+LRDockWidth=368
+Dockable=1
+StatusBar=0
+TextLabels=1
+Toolbar=1
+SectionWidth0=150
+SectionWidth1=212
+Module=/home/ttm/xpde/src/components/registry/XPRegistry.dpk
 
 [PackageWindow2]
 Create=1
@@ -440,9 +484,41 @@ TBDockHeight=336
 LRDockWidth=190
 Dockable=1
 
+[CodeExplorer@EditWindow0]
+Create=1
+Visible=1
+State=0
+Left=0
+Top=12
+Width=140
+Height=653
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=140
+ClientHeight=653
+TBDockHeight=305
+LRDockWidth=140
+Dockable=1
+
+[MessageView@EditWindow0]
+Create=1
+Visible=1
+State=0
+Left=12
+Top=0
+Width=1047
+Height=85
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=1047
+ClientHeight=85
+TBDockHeight=85
+LRDockWidth=443
+Dockable=1
+
 [DockHosts]
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=22
+ActiveProject=11
 

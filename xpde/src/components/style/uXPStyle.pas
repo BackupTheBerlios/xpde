@@ -229,7 +229,19 @@ begin
             end;
 
             ty:=crect.top+((crect.bottom-crect.top)-textheight(s)) div 2;
-            textrect(crect,crect.left+tx,ty,s,integer(AlignmentFlags_ShowPrefix));
+            if m.Enabled then begin
+                textrect(crect,crect.left+tx,ty,s,integer(AlignmentFlags_ShowPrefix));
+            end
+            else begin
+                if not highlighted then begin
+                    font.color:=clWhite;
+                    textrect(crect,crect.left+tx+1,ty+1,s,integer(AlignmentFlags_ShowPrefix));
+                end;
+
+
+                font.color:=dclBtnShadow;
+                textrect(crect,crect.left+tx,ty,s,integer(AlignmentFlags_ShowPrefix));
+            end;
             if m.Count>=1 then begin
                 gy:=crect.top+((crect.bottom-crect.top)-7) div 2;
                 if highlighted then draw(crect.right-14,gy,toRightWhite)

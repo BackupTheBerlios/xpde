@@ -24,9 +24,13 @@ unit uXPAPI_imp;
 
 interface
 
-uses Libc, uOpenWith, Classes, QExtCtrls, uXPAPI,
-    QForms, SysUtils, QGraphics, Qt, uLNKFile, uXPStyleConsts,
-    QControls, QDialogs, uRegistry, uQXPComCtrls;
+uses
+    Libc, uOpenWith, Classes,
+    QExtCtrls, uXPAPI, QForms,
+    SysUtils, QGraphics, Qt,
+    uLNKFile, uXPStyleConsts, QControls,
+    QDialogs, uRegistry, uQXPComCtrls,
+    uAboutDlg;
 
 
 type
@@ -56,6 +60,7 @@ type
         procedure OutputDebugString(const str:string);
         procedure setWaitCursor;
         function getExecutable(ext:string):string;
+        procedure showAboutDlg;
         procedure storeExecutable(ext:string;executable:string);
         function ReplaceSystemPaths(const path:string):string;
         function ShellExecute(const theprog:string;waitfor:boolean):integer;
@@ -484,6 +489,17 @@ end;
 function TXPAPI.ReplaceSystemPaths(const path: string): string;
 begin
     result:=StringReplace(path,'%APPS%',getAppsDir,[rfReplaceAll, rfIgnoreCase]);
+end;
+
+procedure TXPAPI.showAboutDlg;
+begin
+    with TAboutDlg.create(nil) do begin
+        try
+            showmodal;
+        finally
+            free;
+        end;
+    end;
 end;
 
 initialization

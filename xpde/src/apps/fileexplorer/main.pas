@@ -28,7 +28,7 @@ uses
   SysUtils, Types, Classes,
   Variants, QTypes, QGraphics,
   QControls, QForms, QDialogs,
-  QStdCtrls, QComCtrls,
+  QStdCtrls, QComCtrls, uXPAPI,
   uExplorerAPI, QExtCtrls,
   QMenus, QImgList, QButtons;
 
@@ -89,6 +89,7 @@ type
     cbAddress: TComboBox;
     Panel3: TPanel;
     pmItemProperties: TPopupMenu;
+    About1: TMenuItem;
     procedure tvItemsExpanding(Sender: TObject; Node: TTreeNode;
       var AllowExpansion: Boolean);
     procedure tvItemsEditing(Sender: TObject; Node: TTreeNode;
@@ -108,6 +109,7 @@ type
     procedure lvItemsItemDoubleClick(Sender: TObject; Item: TListItem);
     procedure SpeedButton3Click(Sender: TObject);
     procedure pmItemPropertiesPopup(Sender: TObject);
+    procedure About1Click(Sender: TObject);
   private
     { Private declarations }
     FVerbs: TList;
@@ -534,6 +536,11 @@ begin
         f:=IXPVirtualFile(tvItems.selected.data);
         updateitemsmenu(f);
     end;
+end;
+
+procedure TExplorerForm.About1Click(Sender: TObject);
+begin
+    XPAPI.showaboutdlg;
 end;
 
 end.

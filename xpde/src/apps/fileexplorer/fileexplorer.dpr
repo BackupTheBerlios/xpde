@@ -10,7 +10,8 @@ uses
   uOpenWith in '../../core/xpde/uOpenWith.pas' {OpenWithDlg},
   uXPAPI_imp in '../../core/xpde/uXPAPI_imp.pas',
   uXPAPI in '../../components/toolsapi/uXPAPI.pas',
-  uProgressDlg in 'uProgressDlg.pas' {ProgressDlg};
+  uProgressDlg in 'uProgressDlg.pas' {ProgressDlg},
+  uAboutDlg in '../../core/xpde/uAboutDlg.pas' {AboutDlg};
 
 {$R *.res}
 

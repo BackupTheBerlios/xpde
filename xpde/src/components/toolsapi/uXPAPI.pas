@@ -97,7 +97,8 @@ type
         function getExecutable(ext:string):string;                              //Returns the executable (if any) associated with a document
         function ShellExecute(const prog:string;waitfor:boolean):integer;       //Executes a program
         function getSysInfo(const info: TSysInfo):string;                       //Return system information
-        function ReplaceSystemPaths(const path:string):string;              
+        function ReplaceSystemPaths(const path:string):string;
+        procedure showAboutDlg;              
         procedure OutputDebugString(const str:string);
     end;
 

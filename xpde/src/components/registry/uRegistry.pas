@@ -481,7 +481,7 @@ End;
 
 Function getHomeDir:String;
 begin
-result := getpwuid(getuid)^.pw_dir;
+    result := getpwuid(getuid)^.pw_dir;
 end;
 
 end.

@@ -144,10 +144,12 @@ type
         procedure sendsyntheticConfigureNotify;
         procedure restore;
         procedure setMapState(state:integer);
+        procedure getMapState;
         procedure beginresize;
         procedure endresize;
         procedure close;
         procedure bringtofront;
+        procedure updateactivewindow;
         procedure sendtoback;
         function getWindow: Window;
         procedure updateactivestate;
@@ -550,7 +552,7 @@ begin
             result:=(xpwindowmanager.handleMapRequest(event^)=1);
         end;
         propertynotify: begin
-//            spewEvent(application.display,event^);
+            //spewEvent(application.display,event^);
             result:=(xpwindowmanager.handlePropertyNotify(event^)=1);
         end;
 //        destroynotify: result:=(xpwindowmanager.handleDestroyNotify(event^)=1);
@@ -1402,7 +1404,7 @@ begin
         if assigned(old) then old.updateactivestate;
         if assigned(FActiveClient) then begin
             FActiveClient.updateactivestate;
-
+            FActiveClient.updateactivewindow;
             if clients.count>1 then begin
 //                writeln('SetActiveClient');
                 if (clients.Remove(FActiveClient)<>-1) then clients.Insert(0,FActiveClient);
@@ -1551,7 +1553,9 @@ var
 begin
     tf:=FWindowManager.findTransientFor(xwindow);
 
+    //If it's not modal, but there is a modal shown
     if assigned(tf) then begin
+        {
         exclude:=TList.create;
         try
             exclude.add(self);
@@ -1563,22 +1567,35 @@ begin
         finally
             exclude.free;
         end;
+        }
+        if FWindowManager.ActiveClient<>tf then begin
+            bringtofront;
+        end;
+        tf.activate(restore);
     end
     else begin
         if (restore) then begin
             if FWindowState=wsMinimized then self.restore;
         end;
+        //If it's modal
         if (xtransientfor<>None) then begin
+            //Find the *parent*
             tf:=FWindowManager.findClient(xtransientfor);
             if assigned(tf) then begin
+                {
                 exclude:=TList.create;
                 try
                     exclude.add(self);
                     exclude.add(tf);
                     FWindowManager.sendalltoback(exclude);
-                    FWindowManager.ActiveClient:=tf;                    
+                    FWindowManager.ActiveClient:=tf;
                     //if assigned(tf) then tf.bringtofront;
                 finally
+                end;
+                }
+                if FWindowManager.ActiveClient<>self then begin
+                    FWindowManager.ActiveClient:=tf;                
+                    tf.bringtofront;
                 end;
             end;
         end;
@@ -1586,7 +1603,7 @@ begin
         FWindowManager.ActiveClient:=self;
         updateactivestate;
         XPTaskbar.activatetask(self);
-        
+
         bringtofront;
         focus;
         //This causes Delphi to raise a "Call to an OS function failed"
@@ -1875,6 +1892,7 @@ begin
     {$endif}
         end;
         Below: begin
+            sendtoback;
             //frame.sendtoback;
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iINFO, 'sendtoback');
@@ -1987,6 +2005,8 @@ begin
     end;
 
     updatetransientfor;
+
+    getMapState;
 
 
 
@@ -2209,6 +2229,38 @@ get_kwm_win_icon (MetaDisplay *display,
 
 end;
 
+procedure TWMClient.getMapState;
+var
+    data: PAtom;
+  aformat: integer;
+  nitems:integer;
+  atype: integer;
+  bytes_after:integer;
+  res: integer;    
+begin
+
+{
+  prop := XInternAtom(Application.Display, '_MOTIF_WM_HINTS', 0);
+  res := XGetWindowProperty (application.Display, xwindow, prop, 0, 20,  0, prop, @atype, @format, @nitems, @bytes_after, @data);
+
+  if (res=success) and (nitems >= PropMotifWmHintsElements) then begin
+    if ((data^.decorations and mwmDecorBorder)=mwmDecorBorder) then result:=true
+    else result:=false;
+    XFree (data);
+  end;
+  }
+{
+  data[0] := state;
+  data[1] := 0;
+}
+
+  res:=XGetWindowProperty(FWindowManager.Display, xwindow, FWindowManager.Atoms[atom_wm_state], 0,20,0,XA_ATOM, @atype, @aformat, @nitems, @bytes_after,@data);
+  if (res=success) then begin
+//        writeln('wm_state!!!! '+inttostr(nitems));
+        XFree(data);  
+  end;
+end;
+
 procedure TWMClient.getSizeHints;
 begin
 
@@ -2271,7 +2323,19 @@ begin
   prop := XInternAtom(Application.Display, '_MOTIF_WM_HINTS', 0);
   res := XGetWindowProperty (application.Display, xwindow, prop, 0, 20,  0, prop, @atype, @format, @nitems, @bytes_after, @data);
 
+  {
+    writeln('-----------------');
+  xlibinterface.outputDebugString(iMETHOD,sysutils.format('MWMHints %s',[xlibinterface.formatwindow(xwindow)]));
+    writeln('-----------------');
+    }
+
   if (res=success) and (nitems >= PropMotifWmHintsElements) then begin
+    {
+    writeln('flags:'+inttostr(data^.flags));
+    writeln('functions:'+inttostr(data^.functions));
+    writeln('decorations:'+inttostr(data^.decorations));
+    writeln('-----------------');
+    }
     if ((data^.decorations and mwmDecorAll)=mwmDecorAll) then result:=true
     else begin
         if ((data^.decorations and mwmDecorBorder)=mwmDecorBorder) then result:=true
@@ -2510,12 +2574,21 @@ begin
 end;
 
 procedure TWMClient.sendtoback;
+var
+    c: TWMClient;
 begin
     if not framed then begin
         //XMapRaised(application.display,xwindow);
     end
     else begin
-        if assigned(frame) then frame.SendToBack
+        if assigned(frame) then begin
+            c:=FWindowManager.framedclients[FWindowManager.framedclients.count-1];
+            if assigned(c) then begin
+                writeln((c.frame as TWindowsClassic).getTitle);
+//                QWidget_stackUnder(frame.Handle, c.frame.handle);
+                QWidget_lower(frame.Handle);
+            end;
+        end
         else begin
             //XMapRaised(application.display,xwindow);
         end;
@@ -2565,6 +2638,16 @@ begin
     if assigned(frame) then begin
         (frame as TWindowsClassic).updateactivestate;
     end;
+end;
+
+procedure TWMClient.updateactivewindow;
+var
+    data: array [0..1] of integer;
+begin
+    data[0] := xwindow;
+    data[1] := None;
+
+    XChangeProperty (FWindowManager.FDisplay, FWindowManager.Root, FWindowManager.Atoms[atom_net_active_window], XA_WINDOW, 32, PropModeReplace, @data, 2);
 end;
 
 procedure TWMClient.updatetransientfor;

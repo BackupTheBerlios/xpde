@@ -141,14 +141,16 @@ begin
      gridDate.Cells[iCol,iRow+1] := '';
   end;
   //fill
+  m_iDay := ensureRange(m_iDay, 1, MonthDays[IsLeapYear(iYear),iMonth]);
   for i := 0 to MonthDays[IsLeapYear(iYear),iMonth]-1 do begin
      iCol := (i + iStart) mod 7;
      iRow := (i + iStart) div 7;
      gridDate.Cells[iCol,iRow+1] := format(' %2d', [i+1]);
+     if m_iDay = i+1 then begin
+       griddate.col := iCol;
+       griddate.Row := iRow+1;
+     end;
   end;
-  m_iDay := ensureRange(m_iDay, 1, MonthDays[IsLeapYear(iYear),iMonth]);
-  griddate.Row := (m_iDay-1 + iStart) div 7 + 1;
-  griddate.col := (m_iDay-1 + iStart) mod 7;
 end;
 
 procedure TDateTimePropsFm.btnCancelClick(Sender: TObject);
@@ -166,9 +168,10 @@ procedure TDateTimePropsFm.btnApplyClick(Sender: TObject);
 var
   ut : TUnixTime;
   tt : Time_t;
+{
   fd : TFiledescriptor;
 const
-  RTC_SET_TIME = $4024700A;
+  RTC_SET_TIME = $4024700A;}
 begin
   fillchar(ut, sizeof(ut), 0);
   ut.tm_mday := m_iDay;
@@ -183,7 +186,7 @@ begin
   if stime( @tt ) <> 0 then
      raise Exception.Create('Cannot set time!');
 
-  fd := open('/dev/rtc', O_RDWR);
+{  fd := open('/dev/rtc', O_RDWR);
   if fd <= 0 then
      raise Exception.Create('Cannot open /dev/rtc!');
   try
@@ -191,7 +194,7 @@ begin
       raise Exception.Create('Cannot access /dev/rtc!');
   finally
    __close(fd);
-  end;
+  end;}
 end;
 
 procedure TDateTimePropsFm.efTimeChange(Sender: TObject);
@@ -226,7 +229,7 @@ begin
       m_iHour := iHour;
       m_iMin  := iMin;
       m_iSec  := iSec;
-      efTime.Text := format('%2d:%2d:%2d', [m_iHour, m_iMin, m_iSec]);;
+      efTime.Text := formatDateTime( 'hh:nn:ss', encodeTime(m_iHour, m_iMin, m_iSec,0) );
       pbClock.Repaint;
   end;
 end;
@@ -248,7 +251,8 @@ begin
   m_iMin  := m_iMin mod 60;
   m_iHour := m_iHour mod 24;
 
-  efTime.Text      := format('%2d:%2d:%2d', [m_iHour, m_iMin, m_iSec]);;
+  efTime.Text := formatDateTime( 'hh:nn:ss', encodeTime(m_iHour, m_iMin, m_iSec,0) );
+//  efTime.Text      := format('%2d:%2d:%2d', [m_iHour, m_iMin, m_iSec]);
   efTime.SelStart  := iSelStart;
   efTime.SelLength := iSelLength;
   pbClock.Repaint;

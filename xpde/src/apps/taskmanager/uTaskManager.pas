@@ -427,6 +427,7 @@ end;
 procedure TWindowsTaskManagerDlg.FormShow(Sender: TObject);
 var j,jj:integer;
 begin
+         Caption:='XPde Task Manager';
          pb1:=TBitmap.Create;
 
          pb1.PixelFormat:=pf32bit;

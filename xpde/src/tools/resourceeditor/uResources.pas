@@ -6,7 +6,6 @@
 { José León Serna <ttm@xpde.com>                                              }
 { Jens Kühner <jens@xpde.com>                                                 }
 {                                                                             }
-{                                                                             }
 { This program is free software; you can redistribute it and/or               }
 { modify it under the terms of the GNU General Public                         }
 { License as published by the Free Software Foundation; either                }
@@ -24,11 +23,20 @@
 {                                                                             }
 { *************************************************************************** }
 
+{ extract resources from elf-application to res-file:
+    resbind /app -r /untranslated.res
+
+  create so-language-file of tranmslated res-file
+    resbind -s ./app.de_DE ./app ./translated.res
+  where de_DE is the contents of the enviroment-var "lang"
+}
+
+
 unit uResources;
 
 interface
 
-uses SysUtils, Classes, QDialogs;
+uses Contnrs, SysUtils, Classes, QDialogs;
 
 type
     TResourceType=(rtCursor, rtBitmap, rtIcon, rtMenu, rtDialog, rtString, rtFontdir, rtFont, rtAccelerator, rtRCData, rtGroupCursor, rtGroupIcon, rtMessageTable, rtVersion, rtDLGInclude, rtPlugPlay, rtVXD, rtAnicursor, rtNone);
@@ -36,12 +44,12 @@ type
     //A resource file, just a list of resource entries
     TResourceFile=class(TComponent)
     private
-        procedure destroyresources;
         function getIsModified: boolean;
     public
-        resources: TList;
+        resources: TObjectList;
         procedure getResourceNames(strings: TStrings);
         procedure loadfromfile(const filename:string);
+        procedure savetofile(const filename:string);
         constructor Create(AOwner:TComponent);override;
         destructor Destroy;override;
         property IsModified:boolean read getIsModified;
@@ -57,10 +65,11 @@ type
         datasize:integer;
         headersize: integer;
         resourcetype: TResourceType;
-        sresourcetype: string;
+        sResourcetype: string;
         //If first two are $FFFF, the subsequent two bytes are numeric value
         //else, the first two are the first Unicode in a zs
-        resourcename: string;
+        sResourcename: string;
+        wResourcename : word;
         dataversion: integer;
         flags: word;
         language: word;
@@ -69,8 +78,7 @@ type
         data: TMemoryStream;
         resourcefile: TResourceFile;
         procedure ReadFromStream(stream:TStream);
-        function GetFormresAsText : string;
-        procedure GetStringListRes( strings : TStrings );
+        procedure WriteToStream(stream: TStream);
         constructor Create;
         destructor Destroy;override;
         property Modified:boolean read FModified write SetModified;
@@ -112,7 +120,7 @@ end;
 constructor TResourceFile.Create(AOwner: TComponent);
 begin
   inherited;
-  resources:=TList.create;
+  resources:=TObjectList.create;
 end;
 
 destructor TResourceFile.Destroy;
@@ -121,27 +129,13 @@ begin
   inherited;
 end;
 
-procedure TResourceFile.destroyresources;
-var
-    i:longint;
-    r: TResourceEntry;
-begin
-    for i:=resources.count-1 downto 0 do begin
-        r:=resources[i];
-        r.free;
-        resources.Delete(i);
-    end;
-end;
-
 function TResourceFile.getIsModified: boolean;
 var
     i:longint;
-    r: TResourceEntry;
 begin
     result:=false;
     for i:=0 to resources.count-1 do begin
-        r:=resources[i];
-        result:=r.Modified;
+        result:=(resources[i] as TResourceEntry).Modified;
         if result then break;
     end;
 end;
@@ -150,11 +144,9 @@ end;
 procedure TResourceFile.getResourceNames(strings: TStrings);
 var
     i:longint;
-    r: TResourceEntry;
 begin
     for i:=0 to resources.count-1 do begin
-        r:=resources[i];
-        strings.add(r.resourcename);
+        strings.add((resources[i] as TResourceEntry).sResourcename);
     end;
 end;
 
@@ -164,7 +156,7 @@ var
     f: TFileStream;
     r: TResourceEntry;
 begin
-    destroyresources;
+    resources.Clear;
     f:=TFileStream.create(filename,fmOpenRead);
     try
         //Skip first 32 bytes
@@ -186,6 +178,26 @@ begin
     end;
 end;
 
+//Saves a resource file
+procedure TResourceFile.savetofile(const filename:string);
+var
+    f: TFileStream;
+    i : integer;
+const
+  header : array[0..7] of Cardinal = ($0,$20,$FFFF,$FFFF,0,0,0,0);
+begin
+    f:=TFileStream.create(filename,fmCreate or fmOpenWrite);
+    try
+        //Skip first 32 bytes
+        f.Write(header, 32);
+
+        for i := 0 to resources.Count-1 do begin
+           (resources[i] as TResourceEntry).WriteToStream(f);
+        end;
+    finally
+        f.free;
+    end;
+end;
 
 { TResourceEntry }
 
@@ -238,12 +250,13 @@ begin
     stream.Read(w,2);
     if (w=$FFFF) then begin
         stream.Read(w,2);
-        resourcename:=inttostr(w);
+        sResourcename:=inttostr(w);
+        wResourceName:=w;
     end
     else begin
-        resourcename:='';
+        sResourcename:='';
         while (w<>0) do begin
-            resourcename:=resourcename+chr(w);
+            sResourcename:=sResourcename+chr(w);
             stream.Read(w,2);
         end;
     end;
@@ -264,48 +277,74 @@ begin
     stream.position:=dwordalign(stream.position);
 end;
 
-function TResourceEntry.GetFormResAsText : string;
+procedure TResourceEntry.WriteToStream(stream: TStream);
 var
-  streamOut : TStringStream;
+    w: word;
+    dw : Cardinal;
+    i : integer;
+    //Aligns a integer to a dword
+    function dwordalign(const value:integer):integer;
+    begin
+        result:=value;
+        if (result mod 2)<>0 then result:=result+1;
+        if (result mod 4)<>0 then result:=result+2;
+    end;
 begin
-   //only resourcetype RCData
-   //all forms begin with TFilerSignature signature TPF0 (Turbo-Pascal-Filer)
+    FModified:=false;
 
-   result := '';
-   if resourceType = rtRCData then begin
-     data.Position := 0;
-     streamOut := TStringStream.Create('');
+    dw := data.size;
+    stream.Write(dw,4);//write new data-size
+    stream.Write(headersize,4);//always equal to loaded
 
-     objectBinaryToText( data, streamOut );
-     result := streamOut.DataString;
-     streamOut.Free;
-   end;
+    //Writes the resource type
+    if sResourceType <> '' then begin
+      //string
+      for i := 1 to length(sResourceType) do begin
+         w := ord(sResourceType[i]);
+         stream.Write(w, 2);
+      end;
+      w := 0;
+      stream.Write(w, 2);
+    end else begin
+      //numeric
+      w := $FFFF;
+      stream.Write(w, 2);
+      w := ord(resourceType)+1;
+      stream.Write(w, 2);
+    end;
+
+    //writes the resource name
+    if wResourceName = 0 then begin
+      //string
+      for i := 1 to length(sResourceName) do begin
+         w := ord(sResourceName[i]);
+         stream.Write(w, 2);
+      end;
+      w := 0;
+      stream.Write(w, 2);
+    end else begin
+      //numeric
+      w := $FFFF;
+      stream.Write(w, 2);
+      stream.Write(wResourceName, 2);
+    end;
+
+    //Align dword boundaries
+    stream.position:=dwordalign(stream.position);
+
+    stream.Write(dataversion,4);
+    stream.Write(flags,2);
+    stream.Write(language,2);
+    stream.Write(version,4);
+    stream.Write(characteristics,4);
+
+    //Stores the resource data in the stream
+    data.Position := 0;
+    data.SaveToStream(stream);
+
+    //Align dword boundaries for next resource entry
+    stream.position:=dwordalign(stream.position);
 end;
-
-procedure TResourceEntry.GetStringListRes( strings : TStrings );
-var
-  len, w : word;
-  i : integer;
-  str : string;
-begin
-  //one stringlist resource can hold up to 16 strings
-  //2 byte for length, string with n 2byte-chars
-  //2 byte for length, string with n 2byte-chars
-  //...
-  strings.clear;
-  if resourceType = rtString then begin
-     data.Position := 0;
-     while (data.Read(len, 2) = 2) and (len > 0) do begin
-        str := '';
-        for i := 1 to len do begin
-          data.ReadBuffer(w, 2);
-          str := str + chr(w);
-        end;
-        strings.Add(str)
-     end;
-  end;
-end;
-
 
 procedure TResourceEntry.SetModified(const Value: boolean);
 begin

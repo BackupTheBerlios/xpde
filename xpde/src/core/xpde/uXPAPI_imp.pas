@@ -537,7 +537,7 @@ end;
 
 function TXPAPI.getVersionString: string;
 begin
-    result:='Version 0.3 (Build 20030401.xpdeclient)';
+    result:='Version 0.4.0 (Build 20030730.xpdeclient)';
 end;
 
 function TXPAPI.GetCurrentThemeSmallDir: string;

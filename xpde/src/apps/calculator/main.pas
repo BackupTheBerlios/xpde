@@ -76,7 +76,7 @@ uses
   Variants, QTypes, QGraphics,
   QControls, QForms, QDialogs,
   QStdCtrls, QMenus, QExtCtrls,
-   {uXPAPI,}BigNumber;
+  uXPAPI, BigNumber;
 
 
 
@@ -1014,7 +1014,7 @@ end;
 
 procedure TMainForm.AboutCalculator1Click(Sender: TObject);
 begin
-//    XPAPI.showAboutDlg('Calculator');
+    XPAPI.showAboutDlg('Calculator');
 end;
 
 

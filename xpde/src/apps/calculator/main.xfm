@@ -1,8 +1,8 @@
 object MainForm: TMainForm
   HelpType = htContext
   HelpKeyword = 'start'
-  Left = 400
-  Top = 176
+  Left = 392
+  Top = 130
   Width = 476
   Height = 294
   HorzScrollBar.Range = 433

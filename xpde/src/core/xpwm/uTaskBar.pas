@@ -600,7 +600,7 @@ end;
 
 procedure TTaskBar.Settings1Click(Sender: TObject);
 begin
-    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppsdir)+'controlpanel',false);
+    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppsdir)+'fileexplorer -f %CONTROLPANEL%',false);
 end;
 
 procedure TTaskBar.IPCNotification(Sender: TObject; msg, data: integer);

@@ -192,6 +192,7 @@ type
     public
         procedure getColumns(const columns:TStrings); override;
         function getDisplayName: string; override;
+        function getUniqueID:string; override;        
         constructor Create; reintroduce;
         function getIcon: integer; override;
         procedure getVerbItems(const verbs:TStrings); override;
@@ -858,6 +859,7 @@ begin
     if not result then result:=FileExists(location);
     if not result then begin
         if (location='%MYHOME%') then result:=true;
+        if (location='%CONTROLPANEL%') then result:=true;        
         if (location='%MYCOMPUTER%') then result:=true;        
     end;
 end;
@@ -1159,6 +1161,11 @@ end;
 function TControlPanel.getIcon: integer;
 begin
     result:=imCONTROLPANEL;
+end;
+
+function TControlPanel.getUniqueID: string;
+begin
+    result:='%CONTROLPANEL%';
 end;
 
 procedure TControlPanel.getVerbItems(const verbs: TStrings);

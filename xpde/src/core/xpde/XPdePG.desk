@@ -8,19 +8,43 @@ File_5=SourceModule,'/home/ttm/xpde/src/common/uXPPNG.pas',0,1,175,16,189,0,0
 File_6=SourceModule,'/home/ttm/xpde/src/common/uXPCommon.pas',0,1,50,18,57,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/apps/fileexplorer/main.pas
-Module1=/home/ttm/xpde/src/apps/fileexplorer/uXPExplorer.pas
-Module2=/home/ttm/xpde/src/apps/fileexplorer/uExplorerAPI.pas
-Module3=/home/ttm/kylix3/source/rtl/sys/SysUtils.pas
-Module4=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
-Module5=/home/ttm/xpde/src/core/xpde/XPde.dpr
-Count=6
+Module0=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
+Module1=/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas
+Module2=/home/ttm/xpde/src/apps/fileexplorer/main.pas
+Module3=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
+Module4=/home/ttm/xpde/src/common/numlock.pas
+Module5=/home/ttm/xpde/src/apps/fileexplorer/uXPExplorer.pas
+Module6=/home/ttm/xpde/src/apps/fileexplorer/uExplorerAPI.pas
+Module7=/home/ttm/kylix3/source/rtl/sys/SysUtils.pas
+Module8=/home/ttm/xpde/src/common/uMouseAPI.pas
+Module9=/home/ttm/xpde/src/core/xpde/XPde.dpr
+Count=10
 EditWindowCount=1
 PackageWindowCount=9
+
+[/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=0
+
+[/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=1
 
 [/home/ttm/xpde/src/apps/fileexplorer/main.pas]
 ModuleType=SourceModule
 FormState=1
+FormOnTop=1
+
+[/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
+[/home/ttm/xpde/src/common/numlock.pas]
+ModuleType=SourceModule
+FormState=0
 FormOnTop=0
 
 [/home/ttm/xpde/src/apps/fileexplorer/uXPExplorer.pas]
@@ -38,7 +62,7 @@ ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas]
+[/home/ttm/xpde/src/common/uMouseAPI.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
@@ -149,14 +173,18 @@ FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=6
-CurrentView=1
+ViewCount=10
+CurrentView=2
 View0=0
 View1=1
 View2=2
 View3=3
 View4=4
 View5=5
+View6=6
+View7=7
+View8=8
+View9=9
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -195,27 +223,55 @@ TopLine=507
 LeftCol=1
 
 [View2]
-Module=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
-CursorX=1
-CursorY=551
-TopLine=528
+Module=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
+CursorX=114
+CursorY=615
+TopLine=601
 LeftCol=1
 
 [View3]
+Module=/home/ttm/xpde/src/common/numlock.pas
+CursorX=22
+CursorY=89
+TopLine=73
+LeftCol=1
+
+[View4]
+Module=/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas
+CursorX=33
+CursorY=365
+TopLine=350
+LeftCol=1
+
+[View5]
+Module=/home/ttm/xpde/src/common/uMouseAPI.pas
+CursorX=1
+CursorY=1
+TopLine=1
+LeftCol=1
+
+[View6]
+Module=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
+CursorX=28
+CursorY=1183
+TopLine=1166
+LeftCol=1
+
+[View7]
 Module=/home/ttm/kylix3/source/rtl/sys/SysUtils.pas
 CursorX=72
 CursorY=4851
 TopLine=4828
 LeftCol=1
 
-[View4]
+[View8]
 Module=/home/ttm/xpde/src/apps/fileexplorer/uExplorerAPI.pas
 CursorX=39
 CursorY=73
 TopLine=61
 LeftCol=1
 
-[View5]
+[View9]
 Module=/home/ttm/xpde/src/apps/fileexplorer/uXPExplorer.pas
 CursorX=21
 CursorY=205
@@ -447,7 +503,7 @@ ClientHeight=87
 
 [ProjectManager]
 Create=1
-Visible=0
+Visible=1
 State=0
 Left=369
 Top=372
@@ -491,7 +547,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=OnClick
+SelectedItem=Caption
 ExpandedItems=
 HiddenCategories=
 
@@ -547,5 +603,5 @@ Dockable=1
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=16
+ActiveProject=24
 

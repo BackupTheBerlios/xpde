@@ -1,26 +1,33 @@
 [Closed Files]
 File_0=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,1,491,42,517,0,0
-File_1=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,587,16,597,1,0
-File_2=SourceModule,'/home/ttm/xpde/src/apps/appexec/uRun.pas',0,1,1,35,7,1,0
-File_3=SourceModule,'/home/ttm/xpde/src/core/xpde/uOpenWith.pas',0,1,1,11,35,1,0
-File_4=SourceModule,'/home/ttm/xpde/src/apps/fileexplorer/main.pas',0,1,507,17,511,1,1
-File_5=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,70,9,86,0,0
-File_6=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,752,57,767,0,0
-File_7=SourceModule,'/home/ttm/xpde/src/common/numlock.pas',0,1,73,22,89,0,0
-File_8=SourceModule,'/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas',0,1,350,33,365,1,1
+File_1=SourceModule,'/home/ttm/xpde/src/apps/appexec/uRun.pas',0,1,1,35,7,1,0
+File_2=SourceModule,'/home/ttm/xpde/src/core/xpde/uOpenWith.pas',0,1,1,11,35,1,0
+File_3=SourceModule,'/home/ttm/xpde/src/apps/fileexplorer/main.pas',0,1,507,17,511,1,1
+File_4=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,70,9,86,0,0
+File_5=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,752,57,767,0,0
+File_6=SourceModule,'/home/ttm/xpde/src/common/numlock.pas',0,1,73,22,89,0,0
+File_7=SourceModule,'/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas',0,1,350,33,365,1,1
 
 [Modules]
-Module0=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
-Count=1
+Module0=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
+Module1=/home/ttm/xpde/src/core/xpwm/XPwm.dpr
+Module2=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
+Count=3
 EditWindowCount=1
 PackageWindowCount=9
 
-[/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas]
+[/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=0
+
+[/home/ttm/xpde/src/core/xpwm/XPwm.dpr]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/core/xpde/XPde.dpr]
+[/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas]
+ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
@@ -116,40 +123,58 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/core/xpwm/XPwm.dpr]
+[/home/ttm/xpde/src/core/xpde/XPde.dpr]
 FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=1
-CurrentView=0
+ViewCount=3
+CurrentView=1
 View0=0
+View1=1
+View2=2
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
 Visible=1
-State=0
-Left=0
-Top=19
-Width=1280
-Height=851
-MaxLeft=-1
-MaxTop=-1
-ClientWidth=1280
+State=2
+Left=201
+Top=152
+Width=1079
+Height=753
+MaxLeft=1
+MaxTop=135
+MaxWidth=1286
+MaxHeight=851
+ClientWidth=1286
 ClientHeight=851
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=149
-BottomPanelClients=MessageView@EditWindow0,WatchWindow
-BottomPanelData=00000400010000000B0000004D6573736167655669657795000000000000000100050000000000000100000000950000000B000000576174636857696E646F770100000000950000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelSize=150
+BottomPanelClients=MessageView@EditWindow0
+BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
 CursorX=31
 CursorY=1311
-TopLine=1294
+TopLine=1306
+LeftCol=1
+
+[View1]
+Module=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
+CursorX=18
+CursorY=217
+TopLine=194
+LeftCol=1
+
+[View2]
+Module=/home/ttm/xpde/src/core/xpwm/XPwm.dpr
+CursorX=14
+CursorY=18
+TopLine=1
 LeftCol=1
 
 [PackageWindow0]
@@ -423,25 +448,9 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=
+SelectedItem=BorderWidth
 ExpandedItems=
 HiddenCategories=
-
-[WatchWindow]
-Create=1
-Visible=1
-State=0
-Left=12
-Top=0
-Width=1268
-Height=149
-MaxLeft=-1
-MaxTop=-1
-ClientWidth=1268
-ClientHeight=149
-TBDockHeight=149
-LRDockWidth=421
-Dockable=1
 
 [ObjectTree]
 Create=1
@@ -466,28 +475,28 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=687
+Height=686
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=687
+ClientHeight=686
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=0
+Visible=1
 State=0
 Left=12
-Top=74
-Width=1268
-Height=75
+Top=0
+Width=1274
+Height=150
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1268
-ClientHeight=75
-TBDockHeight=75
+ClientWidth=1274
+ClientHeight=150
+TBDockHeight=150
 LRDockWidth=443
 Dockable=1
 
@@ -495,5 +504,5 @@ Dockable=1
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=15
+ActiveProject=23
 

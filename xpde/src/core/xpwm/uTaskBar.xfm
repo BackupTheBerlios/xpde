@@ -94,6 +94,8 @@ object TaskBar: TTaskBar
       Alignment = taRightJustify
       Anchors = [akTop, akRight]
       Caption = 'lbTimer'
+      Masked = True
+      Transparent = True
       Layout = tlCenter
       OnDblClick = pnTimerDblClick
     end

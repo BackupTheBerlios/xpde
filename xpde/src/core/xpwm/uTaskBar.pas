@@ -214,6 +214,9 @@ begin
     top:=screen.Height-height;
     width:=screen.width;
 
+    lbTimer.Font.Size:=5;
+    lbTimer.Font.Assign(pnTimer.font);
+
 end;
 
 procedure TTaskBar.FormPaint(Sender: TObject);
@@ -664,8 +667,6 @@ end;
 procedure TTaskBar.FormShow(Sender: TObject);
 begin
     updatetraysize;
-    lbTimer.Font.size:=8;
-    lbTimer.Font.size:=9;
 end;
 
 procedure TXPTaskBar.updatetask(const task: IWMClient);

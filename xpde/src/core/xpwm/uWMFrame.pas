@@ -660,6 +660,9 @@ begin
     end;
 
     lbTitle.Caption:=wc;
+    {$ifdef DEBUG}
+     if assigned(client) then lbTitle.caption:=lbTitle.caption+' '+xlibinterface.formatwindow(client.getWindow);
+    {$endif}
     painttitle;
 
 end;

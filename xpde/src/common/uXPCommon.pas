@@ -24,20 +24,18 @@ unit uXPCommon;
 
 interface
 
-uses QForms,QGraphics,Types,Libc, Xlib, Qt;
+uses QForms,QGraphics,Types,Libc, Xlib, Qt, Classes, SysUtils;
 
 procedure MergeBitmaps(source1,source2,target:TBitmap;dens:longint);
 procedure MaskedBitmap(orig:TBitmap;result:TBitmap);
 procedure spawn(const cmd:string);
+function CopyFile(const Source, Destination: string): Boolean;
 
 implementation
 
-var
-    fina:integer;
-    aEBX, aESI, aEDI, aESP, aEBP, Dens1, Dens2: Longint;
-
 procedure MergeBitmaps(source1,source2,target:TBitmap;dens:longint);
 var
+    aEBX, aESI, aEDI, aESP, aEDX, Dens1, Dens2: Longint;
     i: longint;
     ptz: pointer;
     ptt: pointer;
@@ -46,6 +44,7 @@ var
     bmz:TBitmap;
     bmf:TBitmap;
     bmt:TBitmap;
+    fina:integer;
 const
     Maxize = (1294967280 Div SizeOf(TPoint));
     MaxPixelCount = 32768;
@@ -81,11 +80,11 @@ begin
         Ptt := bmt.Scanline[i];
         Ptf := bmf.Scanline[i];
             asm
-		        MOV &aEBX, EBX
-		        MOV &aEDI, EDI
-		        MOV &aESI, ESI
-		        MOV &aESP, ESP
-		        MOV &aEBP, EBP
+		        MOV aEBX, EBX
+		        MOV aEDI, EDI
+		        MOV aESI, ESI
+		        MOV aESP, ESP
+		        MOV aEDX, EDX
 
 		        MOV EBX, Dens
 		        MOV Dens1, EBX
@@ -107,12 +106,12 @@ begin
 		        ADD EAX, EDI
 		        MOV FinA, EAX
 
-		        MOV EBP,EDI
+		        MOV EDX,EDI
 		        MOV ESP,ESI
 		        MOV ECX,ECX
 
             @LOOPA:
-		        MOV  EAX, [EBP]
+		        MOV  EAX, [EDX]
 		        MOV  EDI, [ESP]
 		        MOV  EBX, EAX
 		        AND  EAX, Mask1010
@@ -134,18 +133,18 @@ begin
 		        OR   EAX, EBX
 		        MOV [ECX], EAX
 
-		        ADD  EBP, 4
+		        ADD  EDX, 4
 		        ADD  ESP, 4
 		        ADD  ECX, 4
 
-		        CMP  EBP, FinA
+		        CMP  EDX, FinA
 		        JNE  @LOOPA
             @final:
-		        MOV EBX, &aEBX
-		        MOV EDI, &aEDI
-		        MOV ESI, &aESI
-		        MOV ESP, &aESP
-		        MOV EBP, &aEBP
+		        MOV EBX, aEBX
+		        MOV EDI, aEDI
+		        MOV ESI, aESI
+		        MOV ESP, aESP
+		        MOV EDX, aEDX
             end;
         end;
         target.assign(bmf);
@@ -191,6 +190,28 @@ procedure spawn(const cmd:string);
 begin
     if (fork = 0) then begin
 	    execlp(PChar(cmd), PChar(cmd), nil, 0);
+    end;
+end;
+
+function CopyFile(const Source, Destination: string): Boolean;
+var
+    SourceStream: TFileStream;
+begin
+    Result := false;
+    if not FileExists(Destination) then begin
+        SourceStream := TFileStream.Create(Source, fmOpenRead);
+        try
+            with TFileStream.Create(Destination, fmCreate) do begin
+                try
+                    CopyFrom(SourceStream, 0);
+                finally
+                    Free;
+                end;
+            end;
+        finally
+            SourceStream.free;
+        end;
+        Result := true;
     end;
 end;
 

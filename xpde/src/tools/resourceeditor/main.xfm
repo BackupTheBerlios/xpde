@@ -1,0 +1,36 @@
+object MainForm: TMainForm
+  Left = 242
+  Top = 233
+  Width = 696
+  Height = 480
+  Caption = 'Resource Editor'
+  Color = clGray
+  FormStyle = fsMDIForm
+  Menu = MainMenu
+  Position = poDefault
+  WindowState = wsMaximized
+  PixelsPerInch = 84
+  TextHeight = 20
+  TextWidth = 7
+  object MainMenu: TMainMenu
+    Left = 532
+    Top = 44
+    object File1: TMenuItem
+      Caption = '&File'
+      object Open1: TMenuItem
+        Caption = '&Open...'
+        OnClick = Open1Click
+      end
+    end
+  end
+  object OpenDialog: TOpenDialog
+    DefaultExt = '.RES'
+    Filter = 'Resource Files (*.res)|*.res|All files (*.*)|*'
+    FilterIndex = 0
+    Height = 0
+    Title = 'Open resource file'
+    Width = 0
+    Left = 532
+    Top = 140
+  end
+end

@@ -1,0 +1,32 @@
+object ResourceFileFrm: TResourceFileFrm
+  Left = 331
+  Top = 391
+  Width = 378
+  Height = 248
+  VertScrollBar.Range = 19
+  ActiveControl = tvEntries
+  Caption = 'ResourceFileFrm'
+  Color = clBackground
+  FormStyle = fsMDIChild
+  Position = poDefault
+  OnClose = FormClose
+  PixelsPerInch = 84
+  TextHeight = 20
+  TextWidth = 7
+  object tvEntries: TTreeView
+    Left = 0
+    Top = 0
+    Width = 378
+    Height = 229
+    Align = alClient
+    Columns = <>
+    TabOrder = 0
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 229
+    Width = 378
+    Height = 19
+    Panels = <>
+  end
+end

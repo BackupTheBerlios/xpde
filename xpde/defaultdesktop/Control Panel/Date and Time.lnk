@@ -1,0 +1,5 @@
+[Shortcut]
+Caption=Date and Time
+Command=%APPLETS%xpsu root "%APPS%stub.sh %APPLETS%DateTimeProps"
+Startin=
+

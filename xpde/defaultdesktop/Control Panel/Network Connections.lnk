@@ -1,0 +1,5 @@
+[Shortcut]
+Caption=Network Connections
+Command=%APPLETS%networkstatus -i eth0
+Startin=
+

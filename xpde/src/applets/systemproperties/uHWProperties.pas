@@ -3,8 +3,10 @@ unit uHWProperties;
 interface
 
 uses
-  SysUtils, Types, Classes, Variants, QTypes, QGraphics, QControls, QForms,
-  QDialogs, QStdCtrls, SysProvider, QComCtrls, QExtCtrls, QImgList;
+  SysUtils, Types, Classes, Variants,
+  QTypes, QGraphics, QControls, QForms,
+  QDialogs, QStdCtrls, SysProvider,
+  QComCtrls, QExtCtrls, QImgList, uQXPComCtrls;
 
 type
   TfrmProp = class(TForm)
@@ -111,7 +113,7 @@ begin
 end;
 
 Procedure TfrmProp.CreateXPList;
-var hs: THeaderSection;
+var hs: qcomctrls.THeaderSection;
     grf:TGraphic;
 begin
         xpl:=TXPListView.Create(self);

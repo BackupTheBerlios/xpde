@@ -30,8 +30,6 @@ type
     N4: TMenuItem;
     AboutXPdeManagementConsole1: TMenuItem;
     AboutDeviceManager1: TMenuItem;
-    PA1: TPanel;
-    TV1: TTreeView;
     Imgl1: TImageList;
     XPPopup1: TXPPopupMenu;
     UpdateDriver1: TMenuItem;
@@ -41,12 +39,23 @@ type
     Scanforhardwarechanges1: TMenuItem;
     N6: TMenuItem;
     Properties1: TMenuItem;
+    StatusBar1: TStatusBar;
+    ToolBar1: TToolBar;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    ToolButton3: TToolButton;
+    ToolButton4: TToolButton;
+    ToolButton5: TToolButton;
+    ToolButton6: TToolButton;
+    Panel1: TPanel;
+    TV1: TTreeView;
+    ImageList1: TImageList;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Exit1Click(Sender: TObject);
     procedure Properties1Click(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure TV1DblClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     Function  CallProperties(Sender: TfrmProp; devinfo:string; fi:PPci_Info; sp:TSysProvider; absindex:integer):boolean;
     { Private declarations }
@@ -70,6 +79,7 @@ var i,j,x,xx,ui,fde:integer;
     isdupdev:boolean;
     stusb,stoth:TStrings; // check for duplicates in devices
 begin
+
         isdupdev:=false;
         ui:=-1;
         stusb:=TStringList.Create;
@@ -246,7 +256,7 @@ begin
         no:=tv1.Selected;
 
         if not no.HasChildren then begin
-        frmProp:=TFrmProp.Create(Nil);
+        frmProp:=TFrmProp.Create(application);
         try
         if CallProperties(frmProp,tv1.Selected.Text,fi,sp,0) then
         frmProp.ShowModal;
@@ -256,16 +266,16 @@ begin
         End;
 end;
 
+procedure TfrmSystem.TV1DblClick(Sender: TObject);
+begin
+        Properties1Click(Sender);
+end;
+
 procedure TfrmSystem.FormCreate(Sender: TObject);
 begin
     //These lines are here to set the font of the menubar
     font.name:='';
     parentfont:=true;
-end;
-
-procedure TfrmSystem.TV1DblClick(Sender: TObject);
-begin
-        Properties1Click(Sender);
 end;
 
 end.

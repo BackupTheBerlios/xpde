@@ -44,7 +44,7 @@ ExeDescription=
 DynamicLoader=/lib/ld-linux.so.2
 
 [Directories]
-OutputDir=
+OutputDir=$(HOME)/xpde/bin/applets
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
@@ -62,5 +62,13 @@ UseLauncher=0
 DebugCWD=
 
 [Excluded Packages]
-/home/linda/My_Documents/Kylix_Downloads/SDL_Apps/SDLAppSuite-0-2-0/bplFileNameContainerDT.so.0.1=Filename Containers
+/home/ttm/xpde/bin/bplXPStyle.so=XPStyle component
+/home/ttm/xpde/bin/bplXPColorSelect.so=XPColorSelect components
+/home/ttm/xpde/bin/bplXPCommctrls.so=XPCommctrls unit
+/home/ttm/xpde/bin/bplXPShellControls.so=XPShell Controls
+/home/ttm/xpde/bin/bplXPTrayIcon.so=XPde Tray Icon component
+
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=$(HOME)/xpde/bin/applets
 

@@ -194,9 +194,9 @@ end;
 
 procedure TSystemPropertiesDlg.Button10Click(Sender: TObject);
 begin
-        frmSystem:=TFrmSystem.Create(self);
+        frmSystem:=TFrmSystem.Create(application);
         try
-        frmSystem.ShowModal;
+            frmSystem.ShowModal;
         finally
         frmSystem.Free;
         End;

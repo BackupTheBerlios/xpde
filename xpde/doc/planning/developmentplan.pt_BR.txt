@@ -1,0 +1,492 @@
+PLANO DE DESENVOLVIMENTO FINAL 3.0
+--------------------------
+
+
+PROPÓSITO
+-------
+O propósito deste projeto é criar um desktop semelhante ao Windows XP para sistemas Linux/x86. Isso significa que qualquer característica que não 
+está implementada no Windows XP, NÃO será implementada no XPde. Se você quiser criar um projeto baseado nesse, não há problema. A 
+razão pela qual expõe-se claramente isso é de que não há necessidade de outro desktop gráfico para competir com KDE e GNOME. Este projeto é 
+desenvolvido apenas para ajudar usuários Windows a migrarem para o Linux, nada mais. 
+
+MINI-FAQ
+-------
+
+P. Por que você está usando Kylix? Não é software livre!!!
+R. Em minha opinão, o Kylix é a melhor ferramenta de desenvolvimento para Linux já criada. Começei minha carreira usando C++, e agora, em meu 
+trabalho, uso PHP na maioria dos casos, mas acredite, o Kylix não é apenas uma linguagem baseada em Pascal. É uma plataforma completa de 
+desenvolvimento dotados de uma biblioteca de classes poderosa e um compilador muito veloz. É por isso que eu iniciei esse projeto usando o Kylix, 
+porque na minha opinião, é a melhor ferramenta para esta tarefa. Eu sei que não é "de graça", mas você poderá fazer o download do Kylix Open Edition 
+para desenvolver projetos sob licença GPL como este. Convido-o a tentar. Manteremos este projeto completamente compatível com o Kylix Open Edition. 
+
+P. Será portado para outros sistemas operacionais?
+R. Não.
+
+P. Por quê?
+R. Porque o Kylix roda apenas no Linux/x86. Não é possível portar esse programa para outra plataforma se a Borland não o fizer primeiro. E também, o 
+objetivo deste projeto é enfocado apenas em uma coisa: Prover um Linux Desktop com a interface do Windows XP. 
+
+P. Por que você não se junta ao fvwm, qvwm, @#!wm?? Eles estão fazendo um ótimo trabalho! Olhe para as telas desses desktops!
+R. Bem, eu já vi muitos gerenciadores de janelas/ambientes desktop desde que eu me iniciei em Linux. Nenhum deles pode ser comparado com esse projeto. 
+Não estou dizendo que este projeto é o melhor, apenas tem um propósito diferente e mais importante, baseando numa tecnologia completamente diferente. 
+
+
+PROJETO
+-------
+Este projeto é divido em vários sub-projetos, e cada um é um projeto em si. 
+
+Obs: Todos os códigos abaixo devem ser lidos como um pseudo-código e não têm a pretensão de funcionar - nem mesmo foi testado, é apenas um guia para 
+desenvolvimento futuro. 
+
+Controles e Componentes
+----------------------
+Um projeto como este requer todo controle no modo em que os widgets se formam e se comportam. Algumas coisas podem ser feitas apenas ajustando a 
+interface Qt do Kylix para nível baixo. Mas há outras coisas que requerem um novo controle/componente. Esta é a lista inicial de componentes que nós 
+precisamos criar.
+
+
+
+   XPToolsAPI
+   
+     Este é a parte principal do desktop, não exatamente um componente, mas evoluirá a medida que o projeto cresça. É uma interface que fornece 
+métodos para interagir com o desktop. O desktop e a barra de tarefas serão implementadas baseadas nas interfaces. Então será fácil de se criar 
+plug-ins e aumentar o projeto. 
+
+
+   XPStyle
+   
+   A ferramenta Qt desenha objetos da mesma maneira que o XP faz. Este estilo deve extrair todas as informações de aparência (cores, fontes, etc) do 
+registro para ser compartilhada por todos os programas e permitir a configuração externa através de temas e caixas de diálogo. Deve suportar estilos 
+de outras tecnologias dessa forma:  Um estilo deve ser um pacote compilado, este pacote contém um objeto que implementa a interface IXPStyle, na 
+inicialização do pacote, deve registrar-se o estilo através de XPToolsAPI para indicar que está disponível no sistema. Em princípio, os estilos serão 
+de base binária, mas como é possível aprimorar sempre, podemos fazer um estilo que leia um arquivo XML com operações de desenho. Os temas do Metacity 
+podem ser usados como base de trabalho. Exemplo:
+
+
+IXPStyle=interface			['{88F313AD-73E0-D611-98A9-000244219999}']
+			procedure Configure;				//Shows a dialog box to configure the style
+			procedure Draw3dRect(const ARect:TRect);
+			procedure Draw3dLine(const p1,p2:TPoint);
+			procedure DrawButton(ACanvas:TCanvas;AButton:TObject);
+			procedure DrawMenuItem(ACanvas:TCanvas;AItem:TMenuItem);
+			.......
+			.......
+			.......
+		end;
+
+		TMyStyle=class(TInterfacedObject, IXPStyle)
+			//Here goes all the methods!!
+		end;
+
+		initialization
+			XPToolsAPI.registerStyle('MyStyle', TMyStyle.create);
+
+
+
+   O primeiro estilo a ser criado deve ser o Clássico, e o segundo a ser criado deve ser o Luna XP. Provavelmente estilos poderiam ser criados com o 
+Kylix C++. Seria legal disponibilizarmos amostrar para que os designers e programadores criassem mais temas.  Uma super-super implementação seria o 
+desenvolvimento da incorporação das interfaces usando perl, php, python, etc, etc, etc.   
+
+ 
+   ShellTreeView & ShellListView & ShellCombobox
+   
+   
+      Estes controles serão necessários para o Gerenciador de Arquivos, para os diálogos e para o Desktop em si. O objetivo é permitir a mesma 
+funcionalidade que o Windows fornece: Ícones embutidos, Arrastar e soltar, operações de editar, copiar, colar, deletar, multi-seleção, etc. Todas as 
+informações sobre ícones deve ser extraídas do registro e compartilhada por todos os programas. Cada item poderia ter ser acessado com outro botão do 
+mouse mostrando um submenu com as operações disponíveis. Estas operações serão guardadas no registro e os softwares compatíveis com o XPde poderiam 
+ter todo benefício (Descompactadores, Editores de texto, etc). O ShellListView deve ser capaz simular o espaço que será usado na barra de tarefa, 
+através das propriedades cliente. O ShellComboBox é apenas um componente para mostrar itens do sistema (Meus Documentos, Meu computador, e assim por 
+diante). 
+
+     Antes de criarmos este projeto, precisamos definir qual a hierarquia dos itens (reais e virtuais) um usuário pode explorar. Por exemplo, "Meu 
+computador" não é um item real, mas a pasta "Meus Documentos" é. Um item especial será o "Ambiente de Rede" o qual extrai toda a informação de um 
+sistema de arquivos virtual. Isto precisa ser analisado cuidadosamente antes que o projeto se inicie, para que todos os controles "Shell" possam ser 
+desenvolvidos sob um sistema de arquivos virtual, não um sistema de arquivos baseado em arquivos. Estes componentes seão parte principal do 
+Gerenciador de Arquivos.  O XPToolsAPI poderá ser usado para registrar novos sistemas de arquivos para extender o gerenciador e diálogos ao mesmo 
+tempo. 
+
+
+    OutlookBar            
+      
+    
+    Uma barra que mostra elementos como o Outlook. Muito útil para diálogos ou para um clone do Outlook. Seria bom procurar por algum componente 
+Delphi freeware e ver se começamos a escrever o código. Abrir/Salvar/Diálogo de Imagens. Diálogos baseados em ShellListView e OutlookBar BrowseDialog. 
+Diálogo para procurar por um diretório.
+
+ XPMainMenu & XPPopupMenu
+ 
+ Componentes de menus para desenhar-se e comportar-se como no Windows XP, e mais importante: Integrar os efeitos dissolver e Fade do XP. O PopupMenu 
+deve criar um menu como o menu iniciar do XP. (Multi-coluna, itens personalizados, etc) e cada menu tem que ter a capacidade de poder ser clicado com 
+o outro botão do mouse (geralmente o direito) para que suas propriedades sejam mostradas. 
+
+   
+       XPTaskbar
+       
+       Este componente deve ser capaz de se comportar como uma barra de tarefas e deve funcionar em qualquer posição (em baixo, na esquerda, na 
+direito, no topo). Este componente deve conter diversas "zonas", e cada zona é de um tipo de controle. Por exemplo, o botão Iniciar, os aplicativos 
+abertos, a bandeja do sistema. Este componente não define as "zonas" por si mesmo, é apenas um recipiente algumas propriedades de barra de tarefas 
+comum (alinhar, sempre acima, auto-esconder, etc).             
+
+Desktop
+-------
+  
+  Este projeto irá usar um ShellListView para mostrar ao usuários o conteúdo de um diretório e permitir que eles interajam com os itens do desktop 
+(arquivos, pastas, atalhos, itens do sistema). Usará também o componente XPPopupMenu para mostrar uma lista de operações comuns.  
+  
+  
+Gerenciador de Janelas & Barra de Tarefas
+------------------------
+
+  Parecem duas coisas diferentes, mas de fato, são muito similares. O gerenciador de Ganelas é responsável em mapear cada janela dentro de um quadro, 
+a ser movido ou ter seu tamanho alterado e a barra de tarefa é responsável por mapear cada aplicação ativa e permitir sua alternação. É por isso que 
+são praticamente o mesmo programa.
+
+Gerenciador de Janelas
+
+    O gerenciador de janelas será baseado no código do Metacity (até mudança posterior) porque o código do Metacity é baseado em GTK e proporciona 
+poucas operações de baixo nível. O código é bem similar ao qual devemos escrever. Pouca coisa de Xlib e muito código de alto nível. Devemos criar uma 
+versão que produza a interface nativa classica do Windows XP, e depois disso, precisamos incorporar os temas. Faremos assim para deixar o tema 
+clássico o mais veloz porque será código primário, e somente depois adicionaremos suporte à temas através de XML ou de outra forma. 
+           
+  
+Barra de Tarefas
+  
+  
+ Esta parte usará o componente XPTaskbar. Será criada uma zona do Menu Iniciar, uma zona para o Quick Launch e uma zona para a Bandeja do Sistema. 
+Terá que ser adaptado para possuir mais zonas como no XP (pastas, etc.). O Menu Iniciar será criado usando-se o componente XPPopupMenu e será 
+responsável em ler o conteúdo do diretório do Menu Iniciar, buscando recursivamente por elementos (pastas, atalhos, arquivos, etc). Será também 
+responsável para conter a Bandeja do Sistema com o relógio e a possibilidade de configurá-los. A barra de tarefas poderá ser configurada através de um 
+diálogo e estas configurações serão guardadas no registro.
+
+
+Gerenciador de Arquivos & Navegador para Internet
+-------------------------------  
+
+Estas duas tarefas são o mesmo programa. Um navegador para internet é apenas um gerenciador de arquivos dotado de um módulo para navegar na internet, 
+então concluímos que o Gerenciador de Arquivos deve ser projetado como uma estrutura que irá aclopar módulos para interagir com arquivos de sistemas 
+(NFS, SMB, FTP, WEBDAV, ZIP, etc) ou conteúdos personalizados (internet, diretórios especiais, etc). Basicamente, iremos usar os componentes Shell 
+para criar um gerenciador de arquivos padrão que carregará módulos especiais para a leitura de respectivos arquivos de sistema. Devemos definir qual 
+será o formato da interface do arquivo de sistemas virtual. Deve ser muito parecida com o FTP (getdircontents, getcurrentdir, delete, etc.)
+
+Módulos a serem criados:
+NFS - módulo para explorar e interagir com redes Linux
+SMB - módulo para explorar e interagir com redes Windows.
+FTP -  módulo para explorar e interagir com FTPs
+ZIP -  módulo para explorar e interagir com arquivos ZIP
+DAV - módulo para explorar e interagir com servidores WebDav
+Internet - módulo para explorar a internet e deve ser baseado num browser existente (ie. Mozilla ou outros). Além disso, deve encapsular o navegador 
+permitindo futuras mudanças na interface.
+specialdirs - módulo para definir políticas de segurança tais como definir quais usuários possam acessar tal pasta ou tal arquivo, ou mostrar o 
+diretório do sistema ou de fontes, ver arquivos escondidos, visualizar preferências de outros usuários e até interagir com controles do Painel de 
+Controle. 
+
+
+Todos os módulos devem possui interface capaz de interagir com o Gerenciador de Arquivos (criar botões, criar barras de ferramentas, itens de menu, 
+barras de status).
+
+
+
+Painel de Controle 
+-------------
+   
+   O Painel de Controle não é uma tarefa em si, mas apenas um diretório especial que comportará vários arquivos .cpl. Esses arquivos são executáveis e 
+controlam todo o aspecto ambiental do desktop. Cada applet/controle pode ter diferentes partes dentro de si, como por exemplo, mudar a resolução da 
+tela ou selecionar um tema. 
+
+Applets/Controle a Criar      
+   
+   Acessibilidade
+   Adicionar Hardware
+   Adicionar ou Remover Programas
+   Ferramentas de Administração
+   Date e Hora
+   Vídeo
+   Opções de pastas
+   Fontes
+   Joysticks
+   Opções da internet
+   Teclado
+   Mouse
+   Conexões de Rede
+   Opções de modem e telefone
+   Energia
+   Impressoras e faxes
+   Opções de Região e Linguagem
+   Scanners e Câmeras
+   Tarefas agendadas
+   Som e componentes de áudio
+   Reconhecimento de voz
+   Sistema
+   Barra de tarefas e Menu Iniciar
+   Contas de usuários
+   
+  Muitos desses controles dependerão do tipo da distribuição Linux em questão, então será certo a criação de várias versões para cada distribuição 
+Linux. Veremos.O ícone do controle será extraído e utilizado de um arquivo com o mesmo nome mas com extensão .png (outros tamanhos serão suportados 
+também),  por exemplo: 
+
+desk.cpl
+desk_48x48.png
+desk_32x32.png
+desk_16x16.png
+
+Temas
+------
+
+Um tema será composto por:
+Estilo Visual
+Decorações do Gerenciador de Arquivos
+Ícones do Sistema
+Sons do sistema
+Cursores do sistema
+Papel de Parede
+
+
+
+Ferramentas
+-------------
+
+
+Este projeto é responsável pela criação de pequenos aplicativos instalados com o Windows XP. Aqui está a lista:
+
+Acessórios
+	Acessibilidade
+		Assistente de Acessibilidade
+		Lente magnética
+		Narrador
+		Teclado na tela
+		Gerenciador de utilidades
+	Comunicações
+		Hiperterminal
+		Conexões de rede
+		Assistente de conexão de redes
+		Configuração de redes
+		Conexão remota de computadores
+	Entretenimento
+		Gravador de som
+		Controle de volume
+		Mídia player
+	Ferramentas do sistema
+		Backup
+		Mapa de caracteres
+		Limpeza de disco
+		Desfragmentador de disco
+		Assistente de transferência e configuração de arquivos
+		Tarefas agendadas
+		Informações do sistema
+		Restauração do Sistema
+	Catálogo de endereços
+	Calculadora
+	Linha de comando
+	Bloco de notas
+	Paint
+	Tour do XPde
+	WordPad
+
+É claro que nem todos poderão ser criados ao mesmo tempo ou funcionar a mesma coisa, mas precisamos criar novas aplicações ou reutilizar outras 
+existentes, como o Bloco de Notas. 
+
+
+Progresso temporal do projeto
+---------------------
+
+Quando um projeto como esse começa, é muito difícil conseguir programadores envolvidos nele, e porque também Kylix não é a ferramente mais usada no 
+mundo da programação em Linux, portanto devemos priorizar as funcionalidades mais atrativas em favor das mais uteis. Isto fará com que mais 
+desenvolvedores engressem nesse projeto, porque eles verão o progresso do projeto. Aqui está uma lista de progresso temporal do projeto. Sinta-se a 
+vontate para comentar ou fazer uma sugestão.
+
+O design gráfico do projeto será preparada durante todas as fases do projeto. É por isso que não estão incluídos ainda em nenhum lançamento. 
+Basicamente é composto por duas principais áreas:
+
+- Criação de ícones
+  Criação de todos os tipos de ícones para o desktop e os programas.
+ 
+- Desing gráfico
+  Criar todas as imagens necessárias para o desktop e os programas.
+-----------------------------------------------------------------
+  
+  Acho que devemos promover a habilidade de gerenciar arquivos e um Gerenciador de Arquivos é a parte principal de um desktop. Quando esta parte 
+estiver terminada, poderíamos colocar mais screenshots no site.
+ *ShellTreeView & ShellListView & ShellCombobox
+ *Gerenciador de Arquivos
+------------------------------------------------------------------
+Testar o componente ShellListView e anunciar um desktop completo e operacional. 
+*Desktop
+--------------------------------------------------------
+Fazer todos os objetos de janelas parecerem como o Windows XP e permití-los de criar aplicações com estilo do XP.
+*XPStyle
+--------------------------------------------------------
+Remover as dependências do Metacity para permitir integração do gerenciador de janelas com o desktop e produtividade total para o ambiente.
+*Gerenciador de Janelas
+*XPTaskbar
+*Barra de tarefas
+--------------------------------------------------------
+Permitir que se ajuste as configurações mais comuns. Terminar esses applets:
+*Barra de tarefas e Menu iniciar
+*Contas de usuários
+*Data e hora
+*Configurações de Vídeo
+*Opções de linguagem e regionais (também mudará a linguagem do ambiente)
+------------------------------------------------------- 
+LANÇAR XPDE 0.2
+--------------------------------------------------------
+Finalizar operações comuns de usuários:
+*Navegador
+*Módulo NFS
+*Módulo SMB
+*Módulo Specialdirs
+*Módulo de Opções da Internet
+--------------------------------------------------------
+Dar à todas as aplicações, aparência do Windows XP:
+*OutlookBar
+*Diálogos Abrir/Salvar/Imagens
+*BrowseDialog
+--------------------------------------------------------
+Incluir as ferramentas mais utilizadas:
+*Catálogo de endereços
+*Calculadora
+*Linha de Comando
+*Bloco de Notas
+*Paint
+*WordPad
+--------------------------------------------------------
+LANÇAR XPDE 0.3
+--------------------------------------------------------
+Incluir todos os efeitos do Windows XP:
+*XPMainMenu & XPPopupMenu
+--------------------------------------------------------
+To release the screenshots everybody will be waiting:
+Lançar os screenshots que todos estão esperando!
+*Estrutura dos temas
+*Reproduzir o tema LunaXP
+--------------------------------------------------------
+To give more exploring capabilities:
+Dar mais capacidade de exploração:
+*Módulo FTP
+*Módulo ZIP
+*Módulo DAV
+--------------------------------------------------------
+Adicionar mais applets ao painel de controle:
+
+*Opçoes da pasta
+*Fontes
+*Teclado
+*Mouse
+*Controle de volume
+--------------------------------------------------------
+RELEASE XPDE 0.4
+--------------------------------------------------------
+To add something that could be useful to novice user, but is dependant from the Linux distribution:
+Adicionar algo que será útil ao usuário leigo, mas dependendo da distribuição Linux:
+*Conexões da rede
+*Assistente de conexão à redes
+*Novo assistente de conexão
+--------------------------------------------------------
+Adicionar mais um programa bastante utilizado:
+*Mídia Player (baseado no mplayer??)
+--------------------------------------------------------
+*Um ou dois meses para fase beta. Testar, consertar bugs e lançar versão 1.0
+--------------------------------------------------------
+RELEASE XPDE 1.0
+--------------------------------------------------------
+O resto em nenhuma ordem especial. Ainda é cedo planejar esses:
+
+*Adiconar ou Remover Programas
+*Acessibilidade
+*Adicionar Hardware
+*Ferramentas administrativas
+*Joysticks
+*Conexões de rede
+*Opções de telefone e modem
+*Energia
+*Impressoras e faxes
+*Scanners e Câmeras
+*Tarefas agendadas
+*Sons e componentes de áudio
+*reconhecimento de voz
+*Sistema
+*Assistente de acessibilidade
+*Lente
+*Narrador
+*Teclado On-screen
+*Gerenciador de Utilidades
+*Hiperterminal
+*Conexão de desktop remota
+*Gravador de som
+*Backup
+*Mapa de caracteres
+*Limpeza de disco
+*Desfragmentador de disco
+*Assistente de transferência de arquivos e configurações
+*Informação do sistema
+*Restauração do sistema
+*Tour do XPde
+
+Grupo de desenvolvimento
+----
+
+Cada membro do grupo terá uma ou mais funções. Estas são as posições a serem preenchidas:
+
+Programador Principal
+  Alguém totalmente comprometido com o projeto. Com pelo menos 10 horas livres por semana.
+ 
+Gerente de Projeto
+  Alguém disposto a coordenar o grupo de programadores e ser responsável por tarefas
+ 
+Programadores gerais
+  Alguém disposto a contribuir com a programação.
+  
+Documentador
+  Alguém disposto a escrever documentação (bons conhecimentos de inglês)
+
+Tradutor
+  Alguém disposto a traduzir o software e a documentação para outra língua.
+
+Testador
+  Alguém disposto a se tornar parte do time de Controle de Qualidade.
+
+Gerente de Suporte
+  Alguém disposto a dar suporte para usuários em fóruns, listas e newsgroups, etc.
+  
+Designer gráfico
+  Alguém disposto a dar uma imagem corporativa ao projeto, criando ícones, gráficos, etc.
+  
+Escritor de conteúdo
+  Alguém disposto a evangelizar o uso do desktop escrevendo revisões técnicas, artigos, ou ser editor do website. 
+  
+Gerente de Lançamento
+  Alguém responsável em agrupar todas as partes do projeto e lançar novas versões, coordenar a distribuição, pacotes, FTPs, etc.
+  
+ Cada membro terá um email *****@xpde.com para ser reconhecido como membro do projeto a ser usado exclusivamente para o projeto em si. Uso indevido 
+poderá acarretar em expulsão do projeto. 
+As seguintes ferramentas serão usadas:
+-Kylix 3 (Delphi)
+-Kylix 3 (Builder), provavelmente para o gerenciador de janelas
+-CVS para guardar os fontes e permitir desenvolvimento imeditado, provavelmente hospedado em Sunsite.dk
+-DocBook para criar documentação
+-XXE (http://www.xmlmind.com/xmleditor/), o mais fácil e melhor editor XML que eu conheço (desenvolvido em Java)
+-DCL (http://dcl.sourceforge.net) software de tickets para gerenciar trabalho em grupo
+-Mantis (http://mantisbt.sourceforce.net), um software de rastreamento de bugs muito bom
+-Kylix documentador (encontrar um bom, deve ser tipo estilo doc-o-matic (http://www.doc-o-matic.com/))
+-Kylix formatador de código (encontrar um bom, para fazer todos os códigos aparentarem o mesmo estilo
+-Kylix localizador (encontrar um bom, mas eu acho que teremos que criar nosso próprio)
+
+Os seguintes serviços serão estabelecidos e deverão ser mantidos:
+-Listagem e procura de bugs (http://bugs.xpde.com)
+-Tiquetagem  (http://dcl.xpde.com)
+-Canal IRC (irc://irc.freenode.net/xpde)
+-Lista de discussão (mailto:development-subscribe@xpde.com)
+-Fóruns  (http://www.xpde.com/modules.php?name=Forums)
+-Perguntas e respostas (http://www.xpde.com/modules.php?name=FAQ)
+-Servidor CVS  (cvs.xpde.berlios.de)
+
+Os seguintes serviços serão disponibilizados no futuro:
+-Newsgroups
+
+Depois do lançamento do próximo plano de desenvolvimento, eu darei os critérios de programação, e o trabalho começará.
+
+Para se juntar ao grupo, por favor mande um email para info@xpde.com escrevendo por que você quer fazer parte deste projeto e o que você quer fazer. 
+Se você acha que não conhece Kylix suficiente ou que sua contribuição será muito pouca, não hesite em me contatar. Talvez sua ajuda é mais valiosa do 
+que você pensa.
+
+Saudações.

@@ -69,6 +69,7 @@ type
         procedure setFrame(AFrameClass: TFormClass);
         procedure SetActiveClient(const Value: TWMClient);
     public
+        function hasborder(xwindow:window):boolean;
         procedure grabDisplay;
         procedure ungrabDisplay;
         procedure install;
@@ -116,6 +117,7 @@ type
         FWindowManager: TXPWindowManager;
         FWindowState: TWindowState;
         minimizedstate: TWindowState;
+        framed: boolean;
         procedure SetWindowManager(const Value: TXPWindowManager);
         procedure SetWindowState(const Value: TWindowState);
     public
@@ -126,6 +128,7 @@ type
         procedure map;
         procedure focus;
         procedure createFrame;
+        function hasBorder:boolean;
         procedure getIcons;
         function isKDETray:boolean;
         procedure getSizeHints;
@@ -141,6 +144,7 @@ type
         function getWindow: Window;
         procedure updateactivestate;
         function isactive:boolean;
+        function isframed: boolean;
         procedure activate(restore:boolean=true);
         function getTitle: widestring;
         property WindowManager:TXPWindowManager read FWindowManager write SetWindowManager;
@@ -724,7 +728,7 @@ begin
     xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleconfigurerequest %s',[xlibinterface.formatwindow(xwindow)]));
     {$endif}
     c:=findclient(xwindow);
-    if (not(assigned(c))) then begin
+    if (not(assigned(c))) or (not c.framed) then begin
         xwcm := event.xconfigurerequest.value_mask and (CWX or CWY or CWWidth or CWHeight or CWBorderWidth);
 
         xwc.x := event.xconfigurerequest.x;
@@ -792,14 +796,15 @@ begin
     {$endif}
     c:=findclient(xwindow);
     if assigned(c) then begin
-        if (c.isactive) then c.focus
+        if (c.isactive) then c.focus;
+        result:=0;
     end
     else begin
         {$ifdef DEBUG}
         xlibinterface.outputDebugString(iWARNING,format('Not client found to focus %s',[xlibinterface.formatwindow(xwindow)]));
         {$endif}
+        result:=1;
     end;
-    result:=0;
 end;
 
 function TXPWindowManager.handleFocusInOut(var event:XEvent): integer;
@@ -1338,6 +1343,48 @@ begin
     if assigned(FActiveClient) then FActiveClient.close;
 end;
 
+function TXPWindowManager.hasborder(xwindow: window): boolean;
+const
+    MwmHintsDecorations=1 shl 1;
+    MwmDecorAll =  1;
+    MwmDecorBorder= 1 shl 1;
+    MwmDecorHandle = 1 shl 2;
+    MwmDecorTitle  = 1 shl 3;
+    MwmDecorMenu   = 1 shl 4;
+    MwmDecorMinimize = 1 shl 5;
+    MwmDecorMaximize = 1 shl 6;
+    PropMotifWmHintsElements=3;
+type
+  TMwmHints=record
+    flags:integer;
+    functions:integer;
+    decorations:integer;
+  end;
+var
+  atype: Atom;
+  format: integer;
+  nitems:integer;
+  bytes_after:integer;
+  icons:PPixmap;
+  apixmap: Pixmap;
+  mask: Pixmap;
+  err, res: integer;
+
+  prop: TAtom;
+  data: ^TMWMhints;
+
+begin
+    result:=true;
+  prop := XInternAtom(Application.Display, '_MOTIF_WM_HINTS', 0);
+  res := XGetWindowProperty (application.Display, xwindow, prop, 0, 20,  0, prop, @atype, @format, @nitems, @bytes_after, @data);
+
+  if (res=success) and (nitems >= PropMotifWmHintsElements) then begin
+    if ((data^.decorations and mwmDecorBorder)=mwmDecorBorder) then result:=true
+    else result:=false;
+    XFree (data);
+  end;
+end;
+
 { TWMClient }
 
 function send_xmessage(w:Window;a:Atom;x:Atom):integer;
@@ -1375,6 +1422,9 @@ end;
 procedure TWMClient.bringtofront;
 begin
     if not assigned(frame) then exit;
+    if not framed then begin
+        XMapRaised(application.display,xwindow);
+    end;
     frame.BringToFront;
     xptaskbar.bringtofront;
     fwindowmanager.activeclient:=self;
@@ -1634,6 +1684,7 @@ constructor TWMClient.Create(AWindow: Window;
   AWindowManager: TXPWindowManager);
 begin
     inherited Create;
+    framed:=true;
     inresize:=false;
     minimizedstate:=wsNormal;
     FWindowState:=wsNormal;
@@ -1644,6 +1695,7 @@ begin
     FWindowManager:=AWindowManager;
 
     //Grab the three mouse buttons
+
       XGrabButton (FWindowManager.FDisplay, 1, 0, awindow, 0,
                      ButtonPressMask or ButtonReleaseMask or
                      PointerMotionMask or PointerMotionHintMask,
@@ -1677,6 +1729,8 @@ var
     fbs: TRect;
     co: TPoint;
 begin
+    hasBorder;
+    
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iMETHOD,'TWMClient.createframe');
     {$endif}
@@ -1696,8 +1750,11 @@ begin
     xlibinterface.outputDebugString(iINFO,format('attr.override_redirect:%d',[attr.override_redirect]));
     {$endif}
 
+
     if (attr.override_redirect<>0) then begin
+        {$ifdef DEBUG}
       xlibinterface.outputdebugstring(iINFO,format('Deciding not to manage override_redirect window %s',[xlibinterface.formatwindow(xwindow)]));
+      {$endif}
       FWindowManager.ungrabDisplay;
       exit;
     end;
@@ -1775,13 +1832,16 @@ begin
 
         (frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
 
-        frame.show;
+        if framed then begin
+            frame.show;
 
-        bringtofront;
+            bringtofront;
+        end;
 
         XPTaskbar.addtask(self);
 
         XPTaskbar.activatetask(self);
+
 
     	if (attr.map_state = IsViewable) then inc(FUnmapcounter,1)
         else begin
@@ -1789,8 +1849,9 @@ begin
     //		if (assigned(hints)) and  ((hints.flags and StateHint)<>0) then c.setWindowState(hints.initial_state);
     	end;
 
+        if framed then reparent;
 
-        reparent;
+
         {$ifdef DEBUG}
         xlibinterface.outputDebugString(iINFO,format('Resizing window to (%d,%d)',[attr.width,attr.height]));
         xlibinterface.outputDebugString(iINFO,format('Frame size (%d,%d)',[frame.width,frame.height]));
@@ -1805,7 +1866,6 @@ begin
 
 	XSync(FWindowManager.FDisplay, 0);
     FWindowManager.ungrabDisplay;
-
 
 end;
 
@@ -1855,9 +1915,10 @@ end;
 
 procedure TWMClient.focus;
 begin
-    if not assigned(frame) then exit;
     {$ifdef DEBUG}
-    xlibinterface.outputDebugString(iMETHOD,'TWMClient.focus '+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+    if assigned(frame) then begin
+        xlibinterface.outputDebugString(iMETHOD,'TWMClient.focus '+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+    end;
     {$endif}
     XSetInputFocus (WindowManager.Display,xwindow, RevertToPointerRoot, CurrentTime);
 end;
@@ -1940,12 +2001,63 @@ begin
 
 end;
 
+function TWMClient.hasBorder: boolean;
+const
+    MwmHintsDecorations=1 shl 1;
+    MwmDecorAll =  1;
+    MwmDecorBorder= 1 shl 1;
+    MwmDecorHandle = 1 shl 2;
+    MwmDecorTitle  = 1 shl 3;
+    MwmDecorMenu   = 1 shl 4;
+    MwmDecorMinimize = 1 shl 5;
+    MwmDecorMaximize = 1 shl 6;
+    PropMotifWmHintsElements=3;
+type
+  TMwmHints=record
+    flags:integer;
+    functions:integer;
+    decorations:integer;
+  end;
+var
+  atype: Atom;
+  format: integer;
+  nitems:integer;
+  bytes_after:integer;
+  icons:PPixmap;
+  apixmap: Pixmap;
+  mask: Pixmap;
+  err, res: integer;
+
+  prop: TAtom;
+  data: ^TMWMhints;
+
+begin
+    result:=true;
+  prop := XInternAtom(Application.Display, '_MOTIF_WM_HINTS', 0);
+  res := XGetWindowProperty (application.Display, xwindow, prop, 0, 20,  0, prop, @atype, @format, @nitems, @bytes_after, @data);
+
+  if (res=success) and (nitems >= PropMotifWmHintsElements) then begin
+    if ((data^.decorations and mwmDecorAll)=mwmDecorAll) then result:=true
+    else begin
+        if ((data^.decorations and mwmDecorBorder)=mwmDecorBorder) then result:=true
+        else result:=false;
+    end;
+    XFree (data);
+  end;
+  framed:=result;
+end;
+
 function TWMClient.isactive: boolean;
 begin
     if assigned(FWindowManager.ActiveClient) then begin
         result:=(FWindowManager.ActiveClient=self);
     end
     else result:=false;
+end;
+
+function TWMClient.isframed: boolean;
+begin
+    result:=framed;
 end;
 
 function TWMClient.isKDETray: boolean;
@@ -2075,18 +2187,21 @@ begin
 	p_attr.event_mask := ChildMask or ButtonPressMask or ExposureMask or EnterWindowMask;
 
 
-    parent:=QWidget_winID(frame.Handle);
 
-    fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
-    co:=(frame as TWindowsClassic).getorigin;
+    if isframed then begin
+        parent:=QWidget_winID(frame.Handle);
 
-	XAddToSaveSet(FWindowManager.Fdisplay, xwindow);
-	XSetWindowBorderWidth(FWindowManager.Fdisplay, xwindow, 0);
-    XChangeWindowAttributes(FWindowManager.Fdisplay,parent,CWOverrideRedirect or CWEventMask, @p_attr);
+        fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
+        co:=(frame as TWindowsClassic).getorigin;
 
-	// Hmm, why resize this?
-    XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
-	XReparentWindow(FWindowManager.Fdisplay, xwindow, parent, co.x, co.y);
+    	XAddToSaveSet(FWindowManager.Fdisplay, xwindow);
+    	XSetWindowBorderWidth(FWindowManager.Fdisplay, xwindow, 0);
+        XChangeWindowAttributes(FWindowManager.Fdisplay,parent,CWOverrideRedirect or CWEventMask, @p_attr);
+
+    	// Hmm, why resize this?
+        XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
+    	XReparentWindow(FWindowManager.Fdisplay, xwindow, parent, co.x, co.y);
+    end;
 
     setMapState(NormalState);
 end;

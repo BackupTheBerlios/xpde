@@ -83,6 +83,7 @@ type
 
     IXPTaskBar=interface
     ['{7E36AA90-A6E6-D611-9051-000244219999}']
+        procedure updatetask(const task:IWMClient);
         procedure addtask(const task:IWMClient);
         procedure activatetask(const task:IWMClient);
         procedure removetask(const task:IWMClient);

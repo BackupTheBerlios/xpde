@@ -764,6 +764,7 @@ begin
         if assigned(c) then begin
             XGetWMName(FDisplay, xwindow, @name);
             (c.frame as TWindowsClassic).setTitle(PChar(name.value));
+            XPTaskBar.updatetask(c);
         end
         else begin
             {$ifdef DEBUG}

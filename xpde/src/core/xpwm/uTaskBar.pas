@@ -111,6 +111,7 @@ type
     procedure ShowMenu;
     procedure updatetaskswidth;
     procedure createTask(const client:IWMClient);
+    procedure updatetask(const task:IWMClient);
     procedure activatetask(const task:IWMClient);
     procedure removeTask(const client:IWMClient);
     procedure updatetraysize;
@@ -120,6 +121,7 @@ type
 
   TXPTaskBar=class(TInterfacedObject, IXPTaskBar)
         procedure addtask(const task:IWMClient);
+        procedure updatetask(const task:IWMClient);
         procedure activatetask(const task:IWMClient);
         procedure removetask(const task:IWMClient);
         function getRect:TRect;
@@ -566,6 +568,7 @@ begin
                     end;
                 end;
                 t.Down:=true;
+                break;
             end;
         end;
     end;
@@ -663,6 +666,36 @@ begin
     updatetraysize;
     lbTimer.Font.size:=8;
     lbTimer.Font.size:=9;
+end;
+
+procedure TXPTaskBar.updatetask(const task: IWMClient);
+begin
+    taskbar.updatetask(task);
+end;
+
+procedure TTaskBar.updatetask(const task: IWMClient);
+var
+    t: TToolButton;
+    i:integer;
+    w: TWindow;
+    k: integer;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TTaskBar.updatetask');
+    {$endif}
+    w:=task.getwindow;
+    for i := 0 to tbTasks.ControlCount - 1 do begin
+        if (tbTasks.Controls[I] is TToolButton) then begin
+            t:=(tbTasks.Controls[I] as TToolButton);
+            if cardinal(t.tag)=w then begin
+                {$ifdef DEBUG}
+                xlibinterface.outputDebugString(iINFO,'updatetask found');
+                {$endif}
+                t.Caption:=task.getTitle;
+                break;
+            end;
+        end;
+    end;
 end;
 
 initialization

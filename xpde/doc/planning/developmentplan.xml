@@ -38,12 +38,12 @@
         <para>A. IMO, Kylix is the best Linux development tool created ever, I
         started my career using C++, and right now, in my job I use mainly
         PHP, but believe me, Kylix is not only a pascal based language,
-        it&#39;s a full development platform which a powerful class library
-        and a lightnning fast compiler. That&#39;s why I started this project
-        with Kylix, because is the best tool (IMO) for this job. I know
-        it&#39;s not free, but you can download Kylix Open Edition for free to
-        develop GPL projects like this, I invite you to give it a try, we will
-        take care this project is fully compilable with Kylix Open Edition.</para>
+        it&#39;s a full development platform with a powerful class library and
+        a lightnning fast compiler. That&#39;s why I started this project with
+        Kylix, because is the best tool (IMO) for this job. I know it&#39;s
+        not free, but you can download Kylix Open Edition for free to develop
+        GPL projects like this, I invite you to give it a try, we will take
+        care this project is fully compilable with Kylix Open Edition.</para>
       </listitem>
 
       <listitem>
@@ -63,6 +63,15 @@
         to port this program to another systems if Borland doesn&#39;t port
         Kylix first. And also, this project is focused on one thing, provide
         Linux &#34;Desktop&#34; users with Windows XP interface.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>Q. Why don&#39;t you use FreePascal?</emphasis></para>
+      </listitem>
+
+      <listitem>
+        <para>A. IMO, FreePascal is not powerful enough to create this project
+        in a reasonable time frame</para>
       </listitem>
 
       <listitem>
@@ -87,6 +96,11 @@
     pseudocode, is not intended to work and it&#39;s not tested at all,
     it&#39;s just a guideline to future development.</remark></para>
 
+    <para><remark>Note: Before start a task, we must stop and think about it,
+    what is the best way to implement it, how are we going to divide the
+    development and so on, this development plan only provide the basics for
+    the development, is not an in-depth analysis.</remark></para>
+
     <para>This project is divided in several subprojects, and each one is a
     project by itself:</para>
 
@@ -100,13 +114,39 @@
       create:</para>
 
       <sect3>
+        <title>XPShell</title>
+
+        <para>This is the core of the project, it is responsible to load the
+        desktop, the taskbar and the window manager as packages and implement
+        the XPToolsAPI interface to allow each part interact with the desktop.
+        Also, applets will be packages that will use the XPToolsAPI to
+        customize the several aspects of the desktop. This will require two
+        things:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Reestructure the current environment to be organized in
+            loadable packages instead of single executables</para>
+          </listitem>
+
+          <listitem>
+            <para>Create good quality and fault tolerant code, a general
+            exception manager is required to log exceptions and allow users
+            send us feedback.</para>
+          </listitem>
+        </itemizedlist>
+      </sect3>
+
+      <sect3>
         <title>XPToolsAPI</title>
 
-        <para>This is the main part of the desktop, is not exactly a
-        component, but it will be growing as the project grows, it&#39;s an
-        interface which provide methods to interact with the desktop. The
-        desktop and taskbar will be implemented also based on interfaces so it
-        will be easy create plug-ins and to scale the project.</para>
+        <para>This is the API available to every part of the desktop, with
+        this API, every module will be able to, for example, create shortcuts,
+        change the desktop preferences, get information about desktop size,
+        etc. It will be growing as the project grows and it must be designed
+        in a modular way, separating similar tasks by smaller interfaces.
+        Basically must provide most of the system functions you can find on
+        the Windows API.</para>
       </sect3>
 
       <sect3>
@@ -150,13 +190,10 @@ initialization
         <para>The first style to be created must be the XP classic style and
         the second the Luna XP style. Probably styles could be created with
         Kylix C++, it would be nice to provide samples of both to encourage
-        theme designers create more.</para>
-
-        <para>As a goodie, we can create a style which reads from an XML file,
-        operations to perform on each drawing method.</para>
-
-        <para>As a super-super-goodie, we can incorporate interfaces to create
-        those themes using perl, php, python, etc, etc, etc.... ;-)</para>
+        theme designers create more. As a goodie, we can create a style which
+        reads from an XML file, operations to perform on each drawing method.
+        As a super-super-goodie, we can incorporate interfaces to create those
+        themes using perl, php, python, etc, etc, etc.... ;-)</para>
       </sect3>
 
       <sect3>
@@ -205,7 +242,7 @@ initialization
       <sect3>
         <title>BrowseDialog</title>
 
-        <para>Dialog to browse for a directory</para>
+        <para>Dialog to browse for a directory.</para>
       </sect3>
 
       <sect3>
@@ -237,7 +274,9 @@ initialization
       <para>This project will use a ShellListView to show the user desktop
       directory contents and allow them to interact with the desktop items
       (files, folders, shortcuts, system items). It will also use the
-      XPPopupMenu component to show a list of common operations.</para>
+      XPPopupMenu component to show a list of common operations. It must
+      design and implement an interface called IXPDesktop to allow other
+      modules interact with it.</para>
     </sect2>
 
     <sect2>
@@ -247,7 +286,9 @@ initialization
       Window Manager is responsible to &#34;map&#34; each client window inside
       a frame to be moved/resized and the taskbar is responsible to
       &#34;map&#34; each client window inside it to allow the user change the
-      active tasks, that&#39;s why are same program. </para>
+      active tasks, that&#39;s why are same program. It must design and
+      implement two interfaces called IXPWindowManager and IXPTaskbar to allow
+      other modules interact with it.</para>
 
       <sect3>
         <title>Window Manager</title>
@@ -260,7 +301,8 @@ initialization
         interface in a native way, after that, we must incorporate themes.
         This is done this way to let the classic theme be the fastest because
         it will be native code and after that add theme support through XML or
-        any other way.</para>
+        any other way. Before start this task, we need to make a list of all
+        the features this Window Manager must have.</para>
       </sect3>
 
       <sect3>
@@ -274,7 +316,9 @@ initialization
         directory recursively searching for elements (folders, links, files),
         etc. Also it will be responsible to hold the tray icon zone with the
         system clock and allow to configure it. The taskbar can be configured
-        through a dialog and those settings will be stored on the registry.</para>
+        through a dialog and those settings will be stored on the registry.
+        Before start this task, we need to make a list of all the features
+        this Taskbar must have.</para>
       </sect3>
     </sect2>
 
@@ -463,7 +507,7 @@ desk_16x16.png</programlisting>
     <sect2>
       <title>Themes</title>
 
-      <para>A theme will be composed of:</para>
+      <para>A theme will be composed by:</para>
 
       <itemizedlist>
         <listitem>
@@ -496,7 +540,8 @@ desk_16x16.png</programlisting>
       <title>Tools</title>
 
       <para>This project is responsible to provide the applications installed
-      by default by Windows XP, here it&#39;s the list:</para>
+      by default by Windows XP, each project must be considered a separate
+      project and must be analyzed before start, here it&#39;s the list:</para>
 
       <itemizedlist>
         <listitem>
@@ -651,6 +696,472 @@ desk_16x16.png</programlisting>
   <sect1>
     <title>Project Timeline</title>
 
-    <para></para>
+    <para>When a project like this starts, it&#39;s very strange to get a lot
+    of developers involved with it, and also Kylix is not the most used Linux
+    development tool, so we must prioritize the most attractive features over
+    the most functional ones, this will make more developers join, because
+    they will see the development progress. So here is my proposed time lime,
+    feel free to send me any comment and suggestion:</para>
+
+    <para>The graphic design is a task is going to last all the project,
+    that&#39;s why it&#39;s not included on any release, basically is composed
+    by two main areas:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Icon Design: Create all kind of icons needed for the desktop and
+        programs</para>
+      </listitem>
+
+      <listitem>
+        <para>Graphic Design: Create all images needed for the desktop and
+        programs</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The translation process must be the last task to be performed before
+    a release, so the work on this project must follow these basic steps:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Develop</para>
+      </listitem>
+
+      <listitem>
+        <para>Translation and Test</para>
+      </listitem>
+
+      <listitem>
+        <para>Fix bugs</para>
+      </listitem>
+
+      <listitem>
+        <para>Release</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>We must have clear the goals of each release, we must make more
+    stable the current code before start develop features of the next release.</para>
+
+    <sect2>
+      <title>XPde 0.2</title>
+
+      <para>I think we must give first the ability to manage the files, and a
+      File Manager is a key piece of an environment, when this part is
+      finished, we could post a lot of new screenshots:<itemizedlist><listitem><para>XPShell
+      &#38; XPToolsAPI</para></listitem><listitem><para>ShellTreeView &#38;
+      ShellListView &#38; ShellCombobox</para></listitem><listitem><para>File
+      Manager</para></listitem></itemizedlist>To test the ShellListView
+      component and to announce the desktop is full working, let&#39;s finish
+      the desktop:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Desktop</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>To make all widgets look as Windows XP and to allow create
+      applications with XP look, let&#39;s finish the XPStyle</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>XPStyle</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>To remove dependencies of Metacity, to allow window manager
+      integration with the desktop and full productivity with the environment:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Window Manager</para>
+        </listitem>
+
+        <listitem>
+          <para>XPTaskbar</para>
+        </listitem>
+
+        <listitem>
+          <para>Taskbar</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>To allow configure the most common settings, finish this desktop
+      applets:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Taskbar and Start Menu</para>
+        </listitem>
+
+        <listitem>
+          <para>User Accounts</para>
+        </listitem>
+
+        <listitem>
+          <para>Date and Time</para>
+        </listitem>
+
+        <listitem>
+          <para>Display</para>
+        </listitem>
+
+        <listitem>
+          <para>Regional and Language Options (this will be also used to
+          change the language of the environment)</para>
+        </listitem>
+      </itemizedlist>
+    </sect2>
+
+    <sect2>
+      <title>XPde 0.3</title>
+
+      <para>To start finishing most common user operations:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Internet Browser</para>
+        </listitem>
+
+        <listitem>
+          <para>nfs module</para>
+        </listitem>
+
+        <listitem>
+          <para>smb module</para>
+        </listitem>
+
+        <listitem>
+          <para>specialdirs modules</para>
+        </listitem>
+
+        <listitem>
+          <para>Internet Options applet</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>To give all applications complete Windows XP interface:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>OutlookBar</para>
+        </listitem>
+
+        <listitem>
+          <para>Open/Save/Picture Dialog</para>
+        </listitem>
+
+        <listitem>
+          <para>BrowseDialog</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>To include the most used tools:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Address Book</para>
+        </listitem>
+
+        <listitem>
+          <para>Calculator</para>
+        </listitem>
+
+        <listitem>
+          <para>Command Prompt</para>
+        </listitem>
+
+        <listitem>
+          <para>Notepad</para>
+        </listitem>
+
+        <listitem>
+          <para>Paint</para>
+        </listitem>
+
+        <listitem>
+          <para>WordPad</para>
+        </listitem>
+      </itemizedlist>
+    </sect2>
+
+    <sect2>
+      <title>XPde 0.4</title>
+
+      <para>To include all Windows XP effects:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>XPMainMenu &#38; XPPopupMenu</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>To release the screenshots everybody will be waiting:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Theme engine</para>
+        </listitem>
+
+        <listitem>
+          <para>Design LunaXP theme</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>To give more exploring capabilities:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>ftp module</para>
+        </listitem>
+
+        <listitem>
+          <para>zip module</para>
+        </listitem>
+
+        <listitem>
+          <para>dav module</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>To add more applets to the control panel:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Folder Options</para>
+        </listitem>
+
+        <listitem>
+          <para>Fonts</para>
+        </listitem>
+
+        <listitem>
+          <para>Keyboard</para>
+        </listitem>
+
+        <listitem>
+          <para>Mouse</para>
+        </listitem>
+
+        <listitem>
+          <para>Volume Control</para>
+        </listitem>
+      </itemizedlist>
+    </sect2>
+
+    <sect2>
+      <title>XPde 1.0</title>
+
+      <para>To add something that could be useful to novice users, but is
+      dependant from the Linux distribution:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Network Connections</para>
+        </listitem>
+
+        <listitem>
+          <para>Network Setup Wizard</para>
+        </listitem>
+
+        <listitem>
+          <para>New Connection Wizard</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>To add another really used tool:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Media Player (based on mplayer??)</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>And finally, two months or so in beta phase, to test, bug fixing,
+      releasing...</para>
+    </sect2>
+
+    <sect2>
+      <title>The rest</title>
+
+      <para>The rest of tasks must be made in no special order, I think is too
+      early to plan this.</para>
+    </sect2>
+  </sect1>
+
+  <sect1>
+    <title>Team</title>
+
+    <para>Each member of the development team will have one function (or
+    more), these are the positions to fill:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Core developer</para>
+
+        <para>Someone fully committed to the project, with at least 10 hours
+        free per week ;-)</para>
+      </listitem>
+
+      <listitem>
+        <para>Project Manager</para>
+
+        <para>Someone willing to coordinate a team of developers and to be
+        responsible of some task</para>
+      </listitem>
+
+      <listitem>
+        <para>Developer</para>
+
+        <para>Someone willing to collaborate writting code</para>
+      </listitem>
+
+      <listitem>
+        <para>Doc Writer</para>
+
+        <para>Someone willing to write documentation (good english knowledge
+        required)</para>
+      </listitem>
+
+      <listitem>
+        <para>Translator</para>
+
+        <para>Someone willing to translate software/documentation to another
+        language</para>
+      </listitem>
+
+      <listitem>
+        <para>Tester</para>
+
+        <para>Someone willing to become part of the QA team</para>
+      </listitem>
+
+      <listitem>
+        <para>Support Manager</para>
+
+        <para>Someone willing to support users on forums, mail lists,
+        newsgroups and so on</para>
+      </listitem>
+
+      <listitem>
+        <para>Graphic Designer</para>
+
+        <para>Someone willing to give a corporate image to the project by
+        designing icons, graphics, etc</para>
+      </listitem>
+
+      <listitem>
+        <para>Content Writer</para>
+
+        <para>Someone willing to evangelize the use of the environment by
+        writting technical reviews, articles, or to be an editor on the
+        website</para>
+      </listitem>
+
+      <listitem>
+        <para>Release Manager</para>
+
+        <para>Someone reponsible to stick together all the project pieces to
+        create a release, coordinate distribution, mirroring, etc</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>Each member will get an *****@xpde.com pop address to be recognized
+    as a member of the team and to be used exclusively for the development,
+    unauthorized use could lead to get out of the team.</para>
+
+    <para>The following tools will be used:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Kylix 3 (Delphi)</para>
+      </listitem>
+
+      <listitem>
+        <para>CVS to store sources and allow concurrent development</para>
+      </listitem>
+
+      <listitem>
+        <para>DocBook to create documentation</para>
+      </listitem>
+
+      <listitem>
+        <para>XXE (http://www.xmlmind.com/xmleditor/), the best and easiest
+        XML editor I know (developed in Java)</para>
+      </listitem>
+
+      <listitem>
+        <para>DCL (http://dcl.sourceforge.net), a ticketing software to manage
+        group work</para>
+      </listitem>
+
+      <listitem>
+        <para>Mantis (http://mantisbt.sourceforce.net), a really good
+        bugtracking software</para>
+      </listitem>
+
+      <listitem>
+        <para>Kylix documentor (still to find a good one, it must be ala
+        doc-o-matic style (http://www.doc-o-matic.com/))</para>
+      </listitem>
+
+      <listitem>
+        <para>Kylix code formatter (still to find a good one) to make all
+        sources look the same style</para>
+      </listitem>
+
+      <listitem>
+        <para>Kylix localizator (currently in development)</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The following services has been setup and must be mantained:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Bugtracking (http://bugs.xpde.com)</para>
+      </listitem>
+
+      <listitem>
+        <para>Ticketing (http://dcl.xpde.com)</para>
+      </listitem>
+
+      <listitem>
+        <para>IRC Channel (irc://irc.freenode.net/xpde)</para>
+      </listitem>
+
+      <listitem>
+        <para>Mail list (mailto:development-subscribe@xpde.com)</para>
+      </listitem>
+
+      <listitem>
+        <para>Forums (http://www.xpde.com/modules.php?name=Forums)</para>
+      </listitem>
+
+      <listitem>
+        <para>FAQ (http://www.xpde.com/modules.php?name=FAQ)</para>
+      </listitem>
+
+      <listitem>
+        <para>CVS server (cvs.xpde.berlios.de)</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The following services will be available in the future:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Newsgroup(s)</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The coding guidelines must be released in short and to join the
+    group, please, e-mail to info@xpde.com telling why do you want to become
+    part of this project and what you want to do. If you think you don&#39;t
+    know enough Kylix or your contribution is very small, don&#39;t hesitate
+    to send me a mail, maybe your help is more valuable than you think.</para>
+
+    <para>Regards.</para>
   </sect1>
 </article>

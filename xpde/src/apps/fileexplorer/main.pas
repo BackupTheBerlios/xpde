@@ -30,7 +30,8 @@ uses
   QControls, QForms, QDialogs,
   QStdCtrls, QComCtrls, uXPAPI,
   uExplorerAPI, QExtCtrls,
-  QMenus, QImgList, QButtons;
+  QMenus, QImgList, QButtons,
+  uQXPComCtrls;
 
 type
   TExplorerForm = class(TForm)
@@ -110,6 +111,7 @@ type
     procedure SpeedButton3Click(Sender: TObject);
     procedure pmItemPropertiesPopup(Sender: TObject);
     procedure About1Click(Sender: TObject);
+    procedure Copy1Click(Sender: TObject);
   private
     { Private declarations }
     FVerbs: TList;
@@ -541,6 +543,11 @@ end;
 procedure TExplorerForm.About1Click(Sender: TObject);
 begin
     XPAPI.showaboutdlg('XPde File Explorer');
+end;
+
+procedure TExplorerForm.Copy1Click(Sender: TObject);
+begin
+    XPExplorer.copycurrentselectiontoclipboard;
 end;
 
 end.

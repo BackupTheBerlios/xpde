@@ -503,7 +503,7 @@ var
     copydlg:TForm;
 begin
     if verb=iCopy then begin
-        XPExplorer.copytoclipboard(getUniqueID);
+        XPExplorer.copycurrentselectiontoclipboard;
     end;
 
     if verb=iPaste then begin

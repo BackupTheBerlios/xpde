@@ -26,7 +26,8 @@ interface
 
 uses
     uExplorerAPI, QGraphics, QImgList ,
-    Classes, uProgressDlg, QForms;
+    Classes, uProgressDlg, QForms,
+    QDialogs, uQXPComCtrls;
 
 type
     TXPExplorer=class(TInterfacedObject, IXPExplorer)
@@ -38,6 +39,7 @@ type
         function ClipboardEmpty:boolean;
         function getClipboard:TStringList;
         procedure clearclipboard;
+        procedure copycurrentselectiontoclipboard;
         procedure copytoclipboard(const item:string); overload;
         procedure copytoclipboard(const items:TStrings); overload;
         function createNewProgressDlg(const title:string):TForm;
@@ -129,6 +131,35 @@ procedure TXPExplorer.updateProgressDlg(const dialog: TForm;
   const progress, max: integer; const str, status, eta: string);
 begin
     (dialog as TProgressDlg).updateDialog(progress,max,str,status,eta);
+end;
+
+procedure TXPExplorer.copycurrentselectiontoclipboard;
+var
+    f: IXPVirtualFile;
+    li: TListItem;
+    i:longint;
+    s: TStringList;
+begin
+    with explorerform do begin
+        s:=TStringList.create;
+        try
+            if ExplorerForm.lvItems.Focused then begin
+                for i:=0 to lvItems.items.count-1 do begin
+                    li:=lvItems.Items[i];
+                    if li.Selected then begin
+                        f:=IXPVirtualFile(li.data);
+                        s.add(f.getUniqueID);
+                    end;
+                end;
+                copytoclipboard(s);
+            end
+            else begin
+                showmessage('not ready yet!');
+            end;
+        finally
+            s.free;
+        end;
+    end;
 end;
 
 initialization

@@ -62,6 +62,7 @@ type
         function getClipboard:TStringList;
         function ClipboardEmpty:boolean;
         procedure clearclipboard;
+        procedure copycurrentselectiontoclipboard;
         procedure copytoclipboard(const item:string); overload;
         procedure copytoclipboard(const items:TStrings); overload;
         function createNewProgressDlg(const title:string):TForm;

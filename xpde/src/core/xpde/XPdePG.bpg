@@ -9,9 +9,10 @@ MAKE = make -$(MAKEFLAGS) -f$**
 DCC =dcc $<
 #------------------------------------------------------------------------------
 PROJECTS = bplXPRegistry.so bplXPCommon.so bplXPAPI.so bplXPMenus.so \
-  bplXPStyle.so bplXPColorSelect.so bplXPShellControls.so bplXPCommctrls.so \
-  taskmanager networkstatus controlpanel notepad networkproperties fileexplorer \
-  mouse keyboard desk regional appexec DateTimeProps xpsu XPwm XPde
+  bplXPTrayIcon.so bplXPStyle.so bplXPColorSelect.so bplXPShellControls.so \
+  bplXPCommctrls.so taskmanager networkstatus controlpanel notepad \
+  networkproperties fileexplorer mouse keyboard desk regional appexec \
+  DateTimeProps xpsu XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -86,6 +87,9 @@ DateTimeProps: ../../applets/DateTimeProps/DateTimeProps.dpr
 	$(DCC)
 
 xpsu: ../../applets/xpsu/xpsu.dpr
+	$(DCC)
+
+bplXPTrayIcon.so: ../../components/trayicon/XPTrayIcon.dpk
 	$(DCC)
 
 

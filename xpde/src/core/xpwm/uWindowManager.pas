@@ -539,6 +539,7 @@ end;
 constructor TXPWindowManager.Create;
 begin
     inherited;
+    FActiveClient:=nil;    
     FServerGrabCount:=0;
     FDisplay:=nil;
     FRoot:=none;
@@ -626,11 +627,13 @@ begin
 end;
 
 function TXPWindowManager.handleConfigureNotify(var event:XEvent): integer;
+{$ifdef DEBUG}
 var
     xwindow: window;
+{$endif}
 begin
     {$ifdef DEBUG}
-    xwindow:=event.xconfigure.xwindow;    
+    xwindow:=event.xconfigure.xwindow;
     xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleconfigurenotify %s',[xlibinterface.formatwindow(xwindow)]));
     {$endif}
     result:=1;
@@ -1032,7 +1035,7 @@ begin
     ev.xwindow := FRoot;
     ev.message_type := Atoms[atom_manager];
     ev.format := 32;
-    ev.data.l[0] := manager_timestamp;
+    ev.data.l[0] := longint(manager_timestamp);
     ev.data.l[1] := wm_sn_atom;
 
     {$ifdef DEBUG}
@@ -1204,7 +1207,8 @@ end;
 procedure TWMClient.close;
 var
     i,n,found:integer;
-	protocols : array of Atom;
+	protocols : PAtom;
+    init: PAtom;
 begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iMETHOD,'TWMClient.close '+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
@@ -1212,10 +1216,16 @@ begin
 
 	found := 0;
     if (XGetWMProtocols(FWindowManager.FDisplay, xwindow, @protocols, @n)<>0) then begin
-            for i:=0 to n-1 do begin
-                if (protocols[i] = FWindowManager.Atoms[atom_wm_delete_window]) then inc(found);
+            init:=protocols;
+            try
+                for i:=0 to n-1 do begin
+                    if (protocols^ = FWindowManager.Atoms[atom_wm_delete_window]) then inc(found);
+                    inc(protocols);
+                end;
+            finally
+                protocols:=init;
+		    	XFree(protocols);
             end;
-			XFree(protocols);
     end;
 
     if found<>0 then begin
@@ -1676,7 +1686,10 @@ end;
 
 function TWMClient.isactive: boolean;
 begin
-    result:=(FWindowManager.ActiveClient=self);
+    if assigned(FWindowManager.ActiveClient) then begin
+        result:=(FWindowManager.ActiveClient=self);
+    end
+    else result:=false;
 end;
 
 procedure TWMClient.map;

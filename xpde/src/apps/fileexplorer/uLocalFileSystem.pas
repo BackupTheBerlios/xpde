@@ -26,8 +26,8 @@ interface
 
 uses
     Classes, SysUtils, QGraphics,
-    uExplorerAPI, QDialogs, uXPAPI, uXPStyleConsts,
-    QForms, Libc, uLNKFile;
+    uExplorerAPI, QDialogs, uXPAPI, uXPStyleConsts, QForms, Libc, uLNKFile,
+    uSmbClient, uSelectUser;
 
 type
 
@@ -124,6 +124,17 @@ type
         function getIcon: integer; override;
     end;
 
+   TDevice=class(TFolder)
+    private
+        name:string;
+        FIcon: integer;
+    public
+        function getDisplayName: string; override;
+        constructor Create(const APath:string; const AName:string; icon: integer=-1); reintroduce;
+        function getIcon: integer; override;
+    end;
+
+//**************************************************
 
     TMyDocuments=class(TFolder)
     public
@@ -138,7 +149,7 @@ type
     public
         function getDisplayName: string; override;
         constructor Create; reintroduce;
-        function getUniqueID:string; override;        
+        function getUniqueID:string; override;
         function getIcon: integer; override;
         procedure getVerbItems(const verbs:TStrings); override;
     end;
@@ -148,15 +159,6 @@ type
         function getDisplayName: string; override;
     end;
 
-    TDevice=class(TFolder)
-    private
-        name:string;
-        FIcon: integer;
-    public
-        function getDisplayName: string; override;
-        constructor Create(const APath:string; const AName:string; icon: integer=-1); reintroduce;
-        function getIcon: integer; override;
-    end;
 
     TFloppy=class(TDevice)
     public
@@ -192,38 +194,10 @@ type
     public
         procedure getColumns(const columns:TStrings); override;
         function getDisplayName: string; override;
-        function getUniqueID:string; override;        
+        function getUniqueID:string; override;
         constructor Create; reintroduce;
         function getIcon: integer; override;
         procedure getVerbItems(const verbs:TStrings); override;
-    end;
-
-    {
-    TControlPanel=class(TLocalFile)
-    private
-        children: TInterfaceList;
-    public
-        function hasChild: boolean; override;
-        function getDisplayName: string; override;
-        procedure getVerbItems(const verbs:TStrings); override;
-        function getChildren: TInterfaceList; override;
-        function getIcon: integer; override;
-        constructor Create;
-        destructor Destroy;override;
-    end;
-    }
-
-    TMyNetworkPlaces=class(TLocalFile)
-    private
-        children: TInterfaceList;
-    public
-        function hasChild: boolean; override;
-        function getDisplayName: string; override;
-        function locationExists(const location:string):boolean; override;
-        function getChildren: TInterfaceList; override;
-        constructor Create;
-        destructor Destroy;override;
-        function getIcon: integer; override;
     end;
 
     TRecycleBin=class(TLocalFile)
@@ -232,7 +206,7 @@ type
     public
         function hasChild: boolean; override;
         function getDisplayName: string; override;
-        function locationExists(const location:string):boolean; override;        
+        function locationExists(const location:string):boolean; override;
         function getChildren: TInterfaceList; override;
         constructor Create;
         procedure getVerbItems(const verbs:TStrings); override;
@@ -283,9 +257,103 @@ type
         destructor Destroy;override;
     end;
 
+   TMyNetworkPlaces=class(TLocalFile)
+    private
+        children: TInterfaceList;
+        Scan : boolean;
+        Count : integer;
+    public
+        constructor Create;
+        function ScanNetwork: boolean;
+        function hasChild: boolean; override;
+        function getDisplayName: string; override;
+        function locationExists(const location:string):boolean; override;
+        function getChildren: TInterfaceList; override;
+        destructor Destroy;override;
+        function getIcon: integer; override;
+//        procedure getVerbItems(const verbs:TStrings); override;
+//        procedure getColumns(const columns: TStrings); override;
+    end;
+
+// ************************************************************
+   TSmbShare = class(TDevice)
+    private
+        IsMount : boolean;
+        SrName : string;
+        smbUser: string;
+        smbPassword: string;
+    public
+       constructor Create(const APath:string; const AName:string; const SName:string; icon: integer=-1);
+       destructor Destroy; override;
+       function Mount: boolean;
+       function Umount: boolean;
+       function getChildren: TInterfaceList; override;
+       function hasChild: boolean; override;
+       function getIcon: integer;  override;
+//       procedure getVerbItems(const verbs:TStrings); override;
+    end;
+
+   TSmbServer = class(TLocalFile)
+    private
+        WgName,SrName:string;
+        FIcon: integer;
+        children: TInterfaceList;
+        Scan : boolean;
+        Count : integer;
+    public
+        constructor Create(const WName:string; const AName:string);
+        function ScanServer : boolean;
+        function hasChild: boolean; override;
+        function getDisplayName: string; override;
+        function getChildren: TInterfaceList; override;
+        destructor Destroy;override;
+        function getIcon: integer; override;
+//        procedure getVerbItems(const verbs:TStrings); override;
+    end;
+
+   TSmbWorkGroup=class(TLocalFile)
+    private
+        name:string;
+        FIcon: integer;
+        children: TInterfaceList;
+        Count : integer;
+        // При ╕н╕ц╕ал╕зац╕╖ False, якщо ╕стина то сканувати
+        // мережу не ма╓ потреби, так само ╕ для шари ╕ мережевого оточення
+        // або перев╕ряти к╕льк╕сть робочих груп, сервер╕в, ресурс╕в
+        // вказати пароль та користувача для сервераб ресурсуб робочо╖ групи.
+        Scan : boolean;
+    public
+        constructor Create(const AName:string);
+        function ScanWorkGroup : boolean;
+        function hasChild: boolean; override;
+        function getDisplayName: string; override;
+        function locationExists(const location:string):boolean; override;
+        function getChildren: TInterfaceList; override;
+        destructor Destroy;override;
+        function getIcon: integer; override;
+//        procedure getVerbItems(const verbs:TStrings); override;
+    end;
+
+
+{   TSmbNetwork=class(TLocalFile)
+    private
+        children: TInterfaceList;
+        Scan : boolean;
+    public
+        constructor Create;
+        function ScanNetwork: boolean;
+        function hasChild: boolean; override;
+        function getDisplayName: string; override;
+        function locationExists(const location:string):boolean; override;
+        function getChildren: TInterfaceList; override;
+        destructor Destroy;override;
+        function getIcon: integer; override;
+    end;
+}
+
 var
     imDESKTOP: integer=-1;
-    imHOME: integer=-1;    
+    imHOME: integer=-1;
     imMYDOCUMENTS: integer=-1;
     imMYCOMPUTER: integer=-1;
     imMYNETWORKPLACES: integer=-1;
@@ -296,6 +364,8 @@ var
     imCDDRIVE: integer=-1;
     imCONTROLPANEL: integer=-1;
     imNOICON: integer=-1;
+    imLOCALNETWORK: integer=-1;
+    imNETWORKRESOURCE: integer=-1;
 
 const
     bufsize=32768;
@@ -863,8 +933,8 @@ begin
     if not result then result:=FileExists(location);
     if not result then begin
         if (location='%MYHOME%') then result:=true;
-        if (location='%CONTROLPANEL%') then result:=true;        
-        if (location='%MYCOMPUTER%') then result:=true;        
+        if (location='%CONTROLPANEL%') then result:=true;
+        if (location='%MYCOMPUTER%') then result:=true;
     end;
 end;
 
@@ -1051,45 +1121,6 @@ end;
 function TDevice.getIcon: integer;
 begin
     result:=FIcon;
-end;
-
-{ TMyNetworkPlaces }
-
-constructor TMyNetworkPlaces.Create;
-begin
-
-end;
-
-destructor TMyNetworkPlaces.Destroy;
-begin
-
-  inherited;
-end;
-
-function TMyNetworkPlaces.getChildren: TInterfaceList;
-begin
-    result:=nil;
-end;
-
-function TMyNetworkPlaces.getDisplayName: string;
-begin
-    result:='My Network Places';
-end;
-
-function TMyNetworkPlaces.getIcon: integer;
-begin
-    result:=imMYNETWORKPLACES;
-end;
-
-function TMyNetworkPlaces.hasChild: boolean;
-begin
-    result:=false;
-end;
-
-function TMyNetworkPlaces.locationExists(const location: string): boolean;
-begin
-    if (location='%MYNETWORKPLACES%') then result:=true
-    else result:=false;
 end;
 
 { TRecycleBin }
@@ -1493,6 +1524,371 @@ begin
     end;
 end;
 
+
+{ TMyNetworkPlaces }
+
+
+// **************************** SMB **********************************
+
+constructor TSmbShare.Create(const APath:string; const AName:string; const SName:string; icon: integer=-1);
+begin
+ IsMount := False;
+ smbLoadUserData(smbUser, smbPassword);
+ SrName := SName;
+ inherited Create(APath, AName, icon);
+end;
+
+destructor TSmbShare.Destroy;
+begin
+//Delete Folder FPath
+ if IsMount then smbumount(FPath);
+ inherited Destroy;
+end;
+
+function TSmbShare.Mount  : boolean;
+var
+  ShareName, CmdStr : string;
+begin
+ if not fileexists(FPath) then forcedirectories(FPath);
+ ShareName := '//' + SrName + '/'+ name;
+ CmdStr := ShareName + ' ' + FPath + ' -o username=' + smbUser+'%'+smbPassword;
+ if smbmount(CmdStr)=0 then begin
+  IsMount := True;
+  result := true;
+ end
+  else begin
+   IsMount := false;
+   result := false;
+ end;
+end;
+
+function TSmbShare.Umount : boolean;
+begin
+ if smbumount(FPath)=0 then begin
+  IsMount := False;
+  result := true;
+ end
+  else begin
+   IsMount := True;
+   result := False;
+ end;
+end;
+
+function TSmbShare.getChildren: TInterfaceList;
+ var
+  smbOk : boolean;
+  mrResult : integer;
+begin
+  smbOk := false;
+  if not isMount then begin
+    repeat
+     if not Mount then  begin
+       mrResult := dlgSelectUser.SelectUser(smbUser, smbPassword);
+       if mrResult = mrCancel then smbOk := true;
+     end
+       else begin
+         if children <> nil then children.free;
+         children:=TInterfaceList.create;
+         children.add(TFolder.create(FPath));
+         smbOk := true;
+       end;
+    until smbOk;
+  end;
+
+  result := children;
+end;
+
+
+function TSmbShare.hasChild: boolean;
+begin
+ result:= true;
+end;
+
+function TSmbShare.getIcon: integer;
+begin
+  result:=imNETWORKRESOURCE;
+end;
+
+{procedure TSmbShare.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('-');
+        add('Copy');
+        add('-');
+        add('Mount');
+        add('Umount');
+        add('-');
+        add('Properties');
+    end;
+end;
+}
+
+// *********************************
+constructor TSmbServer.Create(const WName:string; const AName:string);
+begin
+  WgName := WName;
+  SrName := AName;
+  Scan := false;
+  inherited create;
+end;
+
+destructor TSmbServer.Destroy;
+begin
+  children.free;
+  inherited;
+end;
+
+function TSmbServer.ScanServer : boolean;
+ var
+  ResName : TStringList;
+  i : integer;
+  NetPath, ResPath : string;
+begin
+  if not Scan then begin
+  if children = nil then children:=TInterfaceList.create;
+   if children <> nil then children.free;
+    children:=TInterfaceList.create;
+    ResName := TStringList.Create;
+    NetPath := XPAPI.getsysinfo(siNetworkDir);
+    ResPath := '';
+ // переда╓мо назву Server
+    smbScanResourse(getDisplayName, Count, ResName);
+    if Count > 0 then begin
+      i := Count;
+      while i > 0 do begin
+       ResPath := NetPath + WgName + '/' + SrName + '/' + ResName.Strings[i-1];
+       children.add(TSmbShare.create(ResPath, ResName.Strings[i-1],SrName, -1));
+       ResPath := '';
+       i := i-1;
+      end;
+      Scan := true;
+    end;
+  result := true;
+  ResName.Destroy;
+ end
+end;
+
+function TSmbServer.getChildren: TInterfaceList;
+begin
+// якщо TSmbShare нема╓ то  result:=nil ╕накше;
+    ScanServer;
+    result:= children;
+end;
+
+function TSmbServer.hasChild: boolean;
+begin
+ result:= true
+end;
+
+function TSmbServer.getDisplayName: string;
+begin
+   result:= SrName;
+end;
+
+function TSmbServer.getIcon: integer;
+begin
+// Зм╕нити рисунок
+   result:=imMYCOMPUTER;
+end;
+
+{procedure TSmbServer.getVerbItems(const verbs:TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('-');
+        add('Rescan');
+        add('-');
+        add('Properties');
+    end;
+end;
+}
+
+// ***********************************
+
+constructor TSmbWorkGroup.Create(const AName:string);
+begin
+  Name := AName;
+  Scan := false;
+  Count := 0;
+  inherited create;
+end;
+
+destructor TSmbWorkGroup.Destroy;
+begin
+  children.free;
+  inherited;
+end;
+
+function TSmbWorkGroup.ScanWorkGroup : boolean;
+ var
+  SrvName : TStringList;
+  i : integer;
+begin
+  if not Scan then begin
+//   if children = nil then children:=TInterfaceList.create;
+   if children <> nil then children.free;
+    children:=TInterfaceList.create;
+    SrvName := TStringList.Create;
+// переда╓мо назву WorkGroup
+    smbScanWorkgroup(getDisplayName, Count, SrvName);
+    if Count > 0 then begin
+     i := Count;
+      while i > 0 do begin
+       children.add(TSmbServer.create(Name, SrvName.Strings[i-1]));
+       i := i-1;
+      end;
+     Scan := true;
+    end;
+  result := true;
+  SrvName.Destroy;
+ end
+end;
+
+
+function TSmbWorkGroup.getChildren: TInterfaceList;
+begin
+// виклика╓ться TSmbServShare
+  ScanWorkGroup;
+  result:= children;;
+end;
+
+function TSmbWorkGroup.getDisplayName: string;
+begin
+  result:= name;
+end;
+
+function TSmbWorkGroup.getIcon: integer;
+begin
+// Зм╕нити рисунок
+   result:=imLOCALNETWORK;
+end;
+
+function TSmbWorkGroup.hasChild: boolean;
+begin
+ result:= true
+end;
+
+function TSmbWorkGroup.locationExists(const location: string): boolean;
+begin
+    if (location='%MYNETWORKPLACES%') then result:=true
+    else result:=false;
+end;
+
+{
+procedure TSmbWorkGroup.getVerbItems(const verbs: TStrings);
+begin
+   with verbs do begin
+       clear;
+       add('Explore');
+       add('Open');
+       add('Find...');
+       add('-');
+       add('Rescan');
+       add('-');
+       add('Properties');
+   end;
+end;
+}
+
+// ************************
+
+constructor TMyNetworkPlaces.Create;
+begin
+    Scan := false;
+    Count := 0;
+    inherited create;
+end;
+
+function TMyNetworkPlaces.ScanNetwork: boolean;
+ var
+  wgName : TStringList;
+  i : integer;
+begin
+ if not Scan then begin
+   if children <> nil then
+   children.free;
+  children:=TInterfaceList.create;
+  wgName := TStringList.Create;
+  smbScanNetwork(Count, wgName);
+  if Count > 0 then begin
+  i := Count;
+   while i > 0 do begin
+    children.add(TSmbWorkGroup.create(wgName.Strings[i-1]));
+    i := i-1;
+   end;
+   Scan := true;
+  end;
+  result := true;
+  wgName.Destroy;
+ end;
+end;
+
+destructor TMyNetworkPlaces.Destroy;
+begin
+  children.free;
+  inherited;
+end;
+
+function TMyNetworkPlaces.getChildren: TInterfaceList;
+begin
+// Доробити з цим досить багато повязано Виклика╓ться при зм╕н╕ для onChange;
+    ScanNetwork;
+    result:= children;
+end;
+
+function TMyNetworkPlaces.getDisplayName: string;
+begin
+    result:='My Network Places';
+end;
+
+function TMyNetworkPlaces.getIcon: integer;
+begin
+    result:=imMYNETWORKPLACES;
+end;
+
+function TMyNetworkPlaces.hasChild: boolean;
+begin
+  result:= true
+end;
+
+function TMyNetworkPlaces.locationExists(const location: string): boolean;
+begin
+    if (location='%MYNETWORKPLACES%') then result:=true
+    else result:=false;
+end;
+
+{procedure TMyNetworkPlaces.getVerbItems(const verbs:TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('-');
+        add('Rescan');
+        add('-');
+        add('Properties');
+    end;
+end;
+}
+
+//procedure TMyNetworkPlaces.getColumns(const columns: TStrings);
+//begin
+//    columns.clear;
+//    columns.add('WorkGroup');
+//    columns.add('Comments');
+//end;
+
+
+// *******************************************************
+
 initialization
     bmp:=TBitmap.create;
     try
@@ -1531,6 +1927,12 @@ initialization
 
         bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+gNOICON);
         imNOICON:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'network_local.png');
+        imLOCALNETWORK:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'folder.png');
+        imNETWORKRESOURCE:=XPExplorer.registerImage(bmp);
     finally
         bmp.free;
     end;

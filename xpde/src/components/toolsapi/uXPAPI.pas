@@ -37,8 +37,8 @@ type
     siUserDir,                                                                  //User directory
     siUsername,                                                                 //User name
     siMyDocuments,                                                              //User Documents
-    siControlPanel,                                                              //Control Panel    
-    siMiscDir,                                                              //User Documents        
+    siControlPanel,                                                             //Control Panel
+    siMiscDir,                                                                  //User Documents
     siAppDir,                                                                   //Where the executable resides
     siAppsDir,                                                                  //Where the apps reside    
     siAppletsDir,                                                               //Where the applets reside
@@ -49,7 +49,9 @@ type
     siSystemDir,                                                                //System icons directory
     siSmallSystemDir,                                                           //Small system icons directory
     siMediumSystemDir,                                                          //Small system icons directory
-    siApplicationsDir);                                                         //Application icons directory
+    siApplicationsDir,                                                          //Application icons directory
+    siNetworkDir,                                                               //Network directory
+    siTempDir);                                                                 //Temp files directory
 
     IWMClient=interface
     ['{8225D62E-CEE8-D611-927C-000244219999}']

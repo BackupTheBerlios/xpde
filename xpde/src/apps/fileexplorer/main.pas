@@ -92,6 +92,7 @@ type
     pmItemProperties: TPopupMenu;
     About1: TMenuItem;
     dummy1: TMenuItem;
+    SMBoptiond1: TMenuItem;
     procedure tvItemsExpanding(Sender: TObject; Node: TTreeNode;
       var AllowExpansion: Boolean);
     procedure tvItemsEditing(Sender: TObject; Node: TTreeNode;
@@ -114,6 +115,7 @@ type
     procedure About1Click(Sender: TObject);
     procedure Copy1Click(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
+    procedure SMBoptiond1Click(Sender: TObject);
   private
     { Private declarations }
     FVerbs: TList;
@@ -140,6 +142,8 @@ var
   ExplorerForm: TExplorerForm;
 
 implementation
+
+uses uSmbOption;
 
 {$R *.xfm}
 
@@ -314,11 +318,15 @@ procedure TExplorerForm.tvItemsChange(Sender: TObject; Node: TTreeNode);
 var
     f: IXPVirtualFile;
 begin
+    tvItems.Cursor :=crHourGlass;
+    lvItems.Cursor :=crHourGlass;
     f:=IXPVirtualFile(node.data);
     caption:=f.getDisplayName;
     updateMenus(f);
     updateListView(f);
     updateStatusBar(f);
+    lvItems.Cursor :=crDefault;
+    tvItems.Cursor :=crDefault;
 end;
 
 procedure TExplorerForm.FormShow(Sender: TObject);
@@ -517,6 +525,7 @@ var
     f: IXPVirtualFile;
     n: TTreeNode;
 begin
+    tvItems.Cursor := crHourGlass;
     tvItems.Selected.expand(false);
     f:=IXPVirtualFile(item.data);
     n:=f.getNode as TTreeNode;
@@ -527,6 +536,7 @@ begin
     else begin
         f.doubleclick;
     end;
+    tvItems.Cursor := crDefault;    
 end;
 
 procedure TExplorerForm.sbUpClick(Sender: TObject);
@@ -730,6 +740,11 @@ begin
     finally
         s.free;
     end;
+end;
+
+procedure TExplorerForm.SMBoptiond1Click(Sender: TObject);
+begin
+ smbOption.showmodal;
 end;
 
 end.

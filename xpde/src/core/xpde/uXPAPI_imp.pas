@@ -41,7 +41,7 @@ type
     function GetAppDir: string;
     function GetDesktopDir: string;
     function GetMyDocumentsDir: string;
-    function GetControlPanelDir: string;    
+    function GetControlPanelDir: string;
     function GetThemesDir: string;
     function GetCurrentThemeDir: string;
 
@@ -56,6 +56,9 @@ type
     function GetSmallSystemDir: string;
     function GetMediumSystemDir: string;
     function GetMiscDir: string;
+
+    function GetNetworkDir: string;
+    function GetTempDir: string;
     public
         timer: TTimer;
         defaultcursor: QCursorH;
@@ -460,6 +463,8 @@ begin
         siMediumSystemDir: result:=GetMediumSystemDir;
         siMiscDir: result:=GetMiscDir;
         siApplicationsDir: result:=CurrentThemeDir+'/applications/';
+        siNetworkDir: result:= GetNetworkDir;
+        siTempDir: result:= GetTempDir;
     end;
 end;
 
@@ -532,7 +537,7 @@ end;
 
 function TXPAPI.getVersionString: string;
 begin
-    result:='Version 0.2.2 (Build 20030302.xpdeclient)';
+    result:='Version 0.3 (Build 20030401.xpdeclient)';
 end;
 
 function TXPAPI.GetCurrentThemeSmallDir: string;
@@ -571,6 +576,19 @@ function TXPAPI.GetMediumSystemDir: string;
 begin
     result:=GetCurrentThemeMediumDir+'system/';
 end;
+
+function TXPAPI.GetNetworkDir: string;
+begin
+    result:=userdir+'/.xpde/SmbNetwork/';
+    if not fileexists(result) then forcedirectories(result);
+end;
+
+function TXPAPI.GetTempDir: string;
+begin
+    result:=userdir+'/.xpde/Temp/';
+    if not fileexists(result) then forcedirectories(result);
+end;
+
 
 initialization
     XPAPI:=TXPAPI.create;

@@ -72,8 +72,8 @@ end;
 
 function _get_tmp_fname:String;
 begin
-        Result:='/tmp/'+FormatDateTime('XPdeTM_NewTask.hh.mm.ss.ms',Now)+
-        Format('.%d.%d.%d',[Random($FFFF),Random($FFFF),Random($FFFF)]);
+        Result:='/tmp/'+FormatDateTime('XPdeTMN-hh-mm-ss-ms',Now)+
+        Format('.%d',[Random($FFFF)]);
 end;
 
 procedure TCreateNewTaskDlg.Button1Click(Sender: TObject);
@@ -87,6 +87,7 @@ begin
         raise Exception.Create('You must specify command !')
         end else begin
         cmnd:=_get_tmp_fname;
+        sleep(50);
 
         ss:=ComboBox1.Text;
         ssi:=ss+' 2> '+cmnd+' &'; // We check just for errors !
@@ -99,9 +100,11 @@ begin
         except
         fcmnd_tstr.Free;
         raise
-        Exception.Create('TaskManager error : TM01001 !'+#13#10+'Please report bug at http://bugs.xpde.com .');
+        Exception.Create('TaskManager error : TM01001 !'+#13#10+'Please report bug at http://bugs.xpde.com .'+#13#10+'Couldn''t load temp file.');
         exit;
         End;
+
+        DeleteFile(cmnd);
 
         try
         err_cmd:=fcmnd_tstr.Strings[0];
@@ -114,7 +117,6 @@ begin
         Exception.Create(err_cmd);
 
         fcmnd_tstr.Free;
-        DeleteFile(cmnd);
         WindowsTaskManagerDlg.Fill_Processes;
         WindowsTaskManagerDlg.Fill_Applications;
         Close;

@@ -230,8 +230,8 @@ var tmpstr,tmpstr_stat:TStrings;
 function _get_tmp_fname:String;
 begin
         Randomize;
-        Result:='/tmp/'+FormatDateTime('XPdeTaskManager.hh.mm.ss.ms',Now)+
-        Format('.%d.%d.%d',[Random($FFFF),Random($FFFF),Random($FFFF)]);
+        Result:='/tmp/'+FormatDateTime('XPdeTM-hh-mm-ss-ms',Now)+
+        Format('.%d',[Random($FFFF)]);
 end;
 
 function _cut_left(const SUBSTR, FROMSTR:string):string;
@@ -286,7 +286,7 @@ Begin
         if not FileExists(tmpfile__) then
                 raise Exception.Create(
                 'Error : Could not execute ps !'+#13#10+
-                'Check your writing rights in the current directory.');
+                'Check your permissions in the current directory.');
         tmpstr.LoadFromFile(tmpfile__);
         DeleteFile(tmpfile__);
 End;
@@ -322,6 +322,7 @@ Begin
         procs[i][1]:=ssa[1];
         ListView1.Items.Add.Subitems.Add(procs[i][1]);
         ListView1.Items.Item[i].Caption:=procs[i][0];
+        Application.ProcessMessages;
         End;
         ListView1.Items.EndUpdate;
         tmpstr.Free;
@@ -350,6 +351,7 @@ Begin
         End;
 
                 for i:=1 to tmpstr.Count-1 do begin
+                        Application.ProcessMessages;                
                 ss:='';
                 ss:=tmpstr.Strings[i];
                 ss:=trimleft(ss);
@@ -1481,6 +1483,7 @@ Begin
                                 Lusers.Items.Item[i].SubItems.Add(us_idle);
                                 Lusers.Items.Item[i].SubItems.Add(us_cli);
                                 inc(i);
+                                Application.ProcessMessages;
                         End;
                         jj:=0;
                         End;

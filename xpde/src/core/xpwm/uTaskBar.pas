@@ -669,11 +669,19 @@ procedure TTaskBar.updatetraysize;
 var
     wi: integer;
 begin
-    wi:=(pnTray.ControlCount*20);
-    pnTimer.width:=wi+50;
-    pnTray.width:=wi;
-    pnTimer.invalidate;
-    pnTimer.update;
+    if pnTray.controlcount=0 then begin
+        pnTimer.width:=50;
+        pnTray.width:=50;
+        pnTimer.invalidate;
+        pnTimer.update;
+    end
+    else begin
+        wi:=(pnTray.ControlCount*20);
+        pnTimer.width:=wi+42;
+        pnTray.width:=wi;
+        pnTimer.invalidate;
+        pnTimer.update;
+    end;
 end;
 
 procedure TTaskBar.FormShow(Sender: TObject);

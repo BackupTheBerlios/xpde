@@ -1,32 +1,28 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,1649,72,1680,0,0
-File_1=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,1,41,30,0,0
-File_2=SourceModule,'/home/ttm/kylix3/source/clx/QForms.pas',0,1,282,1,303,0,0
-File_3=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,255,49,279,1,0
-File_4=SourceModule,'/home/ttm/kylix3/source/rtl/linux/Xlib.pas',0,1,1327,32,1349,0,0
-File_5=SourceModule,'/home/ttm/xpde/src/core/xpwm/uActiveTasks.pas',0,1,75,25,93,1,0
-File_6=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,281,1,306,1,0
-File_7=SourceModule,'/home/ttm/xpde/src/common/uXPPNG.pas',0,1,264,32,273,0,0
-File_8=SourceModule,'/home/ttm/kylix3/source/rtl/common/Classes.pas',0,1,62,1,83,0,0
+File_0=SourceModule,'/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas',0,1,962,55,978,1,1
+File_1=SourceModule,'/home/ttm/kylix3/source/clx/QGraphics.pas',0,1,3257,1,3273,0,0
+File_2=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,1649,72,1680,0,0
+File_3=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,1,41,30,0,0
+File_4=SourceModule,'/home/ttm/kylix3/source/clx/QForms.pas',0,1,282,1,303,0,0
+File_5=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,255,49,279,1,0
+File_6=SourceModule,'/home/ttm/kylix3/source/rtl/linux/Xlib.pas',0,1,1327,32,1349,0,0
+File_7=SourceModule,'/home/ttm/xpde/src/core/xpwm/uActiveTasks.pas',0,1,75,25,93,1,0
+File_8=SourceModule,'/home/ttm/xpde/src/common/uXPPNG.pas',0,1,264,32,273,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas
-Module1=/home/ttm/kylix3/source/clx/QGraphics.pas
+Module0=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
+Module1=/home/ttm/xpde/src/core/xpde/XPde.dpr
 Count=2
 EditWindowCount=1
 PackageWindowCount=9
 
-[/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas]
+[/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[/home/ttm/kylix3/source/clx/QGraphics.pas]
-ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
 [/home/ttm/xpde/src/core/xpde/XPde.dpr]
+ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
@@ -128,22 +124,24 @@ FormOnTop=0
 
 [EditWindow0]
 ViewCount=2
-CurrentView=0
+CurrentView=1
 View0=0
 View1=1
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
 Visible=1
-State=0
-Left=205
-Top=175
+State=2
+Left=201
+Top=152
 Width=1079
 Height=753
-MaxLeft=-1
-MaxTop=-1
-ClientWidth=1079
-ClientHeight=753
+MaxLeft=1
+MaxTop=135
+MaxWidth=1286
+MaxHeight=851
+ClientWidth=1286
+ClientHeight=851
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
@@ -153,17 +151,17 @@ BottomPanelClients=MessageView@EditWindow0
 BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
-Module=/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas
-CursorX=55
-CursorY=978
-TopLine=962
+Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
+CursorX=1
+CursorY=1
+TopLine=1
 LeftCol=1
 
 [View1]
-Module=/home/ttm/kylix3/source/clx/QGraphics.pas
-CursorX=1
-CursorY=3273
-TopLine=3257
+Module=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
+CursorX=57
+CursorY=684
+TopLine=668
 LeftCol=1
 
 [PackageWindow0]
@@ -390,10 +388,10 @@ ClientHeight=87
 
 [ProjectManager]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=373
-Top=395
+Left=369
+Top=372
 Width=535
 Height=368
 MaxLeft=-1
@@ -442,8 +440,8 @@ HiddenCategories=
 Create=1
 Visible=1
 State=0
-Left=6
-Top=147
+Left=2
+Top=124
 Width=190
 Height=336
 MaxLeft=-1
@@ -461,11 +459,11 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=653
+Height=751
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=653
+ClientHeight=751
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
@@ -476,11 +474,11 @@ Visible=1
 State=0
 Left=12
 Top=0
-Width=1067
+Width=1274
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1067
+ClientWidth=1274
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443
@@ -490,5 +488,5 @@ Dockable=1
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=10
+ActiveProject=23
 

@@ -9,10 +9,9 @@ MAKE = make -$(MAKEFLAGS) -f$**
 DCC =dcc $<
 #------------------------------------------------------------------------------
 PROJECTS = bplXPRegistry.so bplXPCommon.so bplXPAPI.so bplXPMenus.so \
-  bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
-  bplXPShellControls.so bplXPCommctrls.so taskmanager networkstatus controlpanel \
-  notepad networkproperties fileexplorer mouse keyboard desk regional appexec \
-  DateTimeProps xpsu XPwm XPde
+  bplXPStyle.so bplXPColorSelect.so bplXPShellControls.so bplXPCommctrls.so \
+  taskmanager networkstatus controlpanel notepad networkproperties fileexplorer \
+  mouse keyboard desk regional appexec DateTimeProps xpsu XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -21,12 +20,6 @@ taskmanager: ../../apps/taskmanager/taskmanager.dpr
 	$(DCC)
 
 bplXPColorSelect.so: ../../components/colorselect/XPColorSelect.dpk
-	$(DCC)
-
-bplXPLocalizator.so: ../../components/localization/XPLocalizator.dpk
-	$(DCC)
-
-bplXPLocalizatorIDE.so: ../../components/localization/XPLocalizatorIDE.dpk
 	$(DCC)
 
 bplXPMenus.so: ../../components/menu/XPMenus.dpk

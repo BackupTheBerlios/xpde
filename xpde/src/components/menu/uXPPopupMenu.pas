@@ -23,7 +23,7 @@
 unit uXPPopupMenu;
 
 interface
-
+            
 uses
   SysUtils, Types, Classes,
   QGraphics, QControls, QForms,

@@ -59,6 +59,7 @@ type
         procedure setupErrorHandler;
         procedure setupAtoms;
         procedure createExistingWindows;
+        procedure setupKeyboardGrab;
         procedure setupDisplay;
         function set_wm_icon_size_hint: integer;
         function set_wm_check_hint: integer;
@@ -74,9 +75,11 @@ type
         function getDesktopClientRect:TRect;
         function findClient(w: Window):TWMClient;
         function createNewClient(w:Window):TWMClient;
+        procedure closeActiveWindow;
         //**********************************
         function handleButtonPress(var event:XEvent):integer;
         function handleButtonRelease(var event:XEvent):integer;
+        function handleKeyRelease(var event:XEvent):integer;        
         function handleMotionNotify(var event:XEvent):integer;
         function handleEnterNotify(var event:XEvent):integer;
         function handleLeaveNotify(var event:XEvent):integer;
@@ -524,6 +527,26 @@ begin
         unmapnotify: result:=(xpwindowmanager.handleUnmapNotify(event^)=1);
         enternotify: result:=(xpwindowmanager.handleenternotify(event^)=1);
         buttonpress: result:=(xpwindowmanager.handlebuttonpress(event^)=1);
+        {
+        keypress: begin
+            //showmessage('bbb');
+            //result:=0;//result:=(xpwindowmanager.handlekeyrelease(event^)=1);
+            //result:=true;
+            //result:=false;
+            result:=true;
+        end;
+        }
+        keyrelease: begin
+            //showmessage('aaa');
+            //result:=0;//result:=(xpwindowmanager.handlekeyrelease(event^)=1);
+            //result:=true;
+            //result:=false;
+            if (event^.xkey.keycode=XKeysymToKeycode(qtdisplay, xk_f4)) then begin
+                XPWindowManager.closeactivewindow;
+                result:=true;
+            end
+            else result:=oldevent(event);
+        end;
         configurerequest: result:=(xpwindowmanager.handleConfigurerequest(event^)=1);
         configurenotify: result:=(xpwindowmanager.handleConfigurenotify(event^)=1);
         else result:=oldevent(event);
@@ -812,7 +835,16 @@ begin
            xlibinterface.outputDebugString(iINFO,format('Removing client %s',[xlibinterface.formatwindow(xwindow)]));
            {$endif}
             clients.Remove(c);
-            if c=FActiveClient then ActiveClient:=nil;
+            if c=FActiveClient then begin
+                ActiveClient:=nil;
+                {
+                if Clients.count>=1 then begin
+                    writeln('000');
+                    ActiveClient:=clients[0];
+                    writeln('111');
+                end;
+                }
+            end;
             c.free;
         end
         else c.UnmapCounter:=c.UnmapCounter-1;
@@ -838,6 +870,7 @@ begin
     FDisplay := application.Display;
     setupErrorHandler;
     setupSignals;
+    setupKeyboardGrab;
     setupAtoms;
     setupDisplay;
     createExistingWindows;
@@ -1181,20 +1214,45 @@ begin
     xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.createNewClient');
     {$endif}
     result:=TWMClient.create(w,self);
-    clients.add(result);
+    clients.insert(0,result);
 end;
 
 procedure TXPWindowManager.SetActiveClient(const Value: TWMClient);
 var
     old: TWMClient;
+    idx: integer;
 begin
     //Here
     if FActiveClient<>Value then begin
         old:=FActiveClient;
         FActiveClient := Value;
         if assigned(old) then old.updateactivestate;
-        if assigned(FActiveClient) then FActiveClient.updateactivestate;
+        if assigned(FActiveClient) then begin
+            FActiveClient.updateactivestate;
+            if clients.count>1 then begin
+                clients.Remove(FActiveClient);
+                clients.Insert(0,FActiveClient);
+            end;
+        end;
     end;
+end;
+
+procedure TXPWindowManager.setupKeyboardGrab;
+begin
+//    showmessage(inttostr(XGrabKey(FDisplay,XK_F6,AnyModifier,FRoot,0,grabmodeasync,grabmodesync)));
+//    showmessage(inttostr(XGrabKeyboard(FDisplay,FRoot,1,grabmodeasync,grabmodesync,0)));
+//    xgrabkeyboard(qtdisplay,xdefaultrootwindow(qtdisplay),1,grabmodeasync,grabmodeasync,0);
+      XGrabKey(qtdisplay,XKeysymToKeycode(qtdisplay,XK_F4),Mod1Mask,xdefaultrootwindow(qtdisplay),1,grabmodeasync,grabmodeasync);
+end;
+
+function TXPWindowManager.handleKeyRelease(var event: XEvent): integer;
+begin
+    showmessage('here');
+end;
+
+procedure TXPWindowManager.closeActiveWindow;
+begin
+    if assigned(FActiveClient) then FActiveClient.close;
 end;
 
 { TWMClient }

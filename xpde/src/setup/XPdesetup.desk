@@ -19,7 +19,7 @@ EditWindowCount=1
 [/home/ttm/xpde/src/setup/main.pas]
 ModuleType=SourceModule
 FormState=1
-FormOnTop=0
+FormOnTop=1
 
 [/home/ttm/xpde/src/setup/uPersonalizeDlg.pas]
 ModuleType=SourceModule
@@ -155,7 +155,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=Height
+SelectedItem=Caption
 ExpandedItems=
 HiddenCategories=
 

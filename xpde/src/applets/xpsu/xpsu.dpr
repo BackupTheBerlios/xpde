@@ -1,3 +1,25 @@
+{ *************************************************************************** }
+{                                                                             }
+{ This file is part of the XPde project                                       }
+{                                                                             }
+{ Copyright (c) 2002 José León Serna <ttm@xpde.com>                           }
+{                                                                             }
+{ This program is free software; you can redistribute it and/or               }
+{ modify it under the terms of the GNU General Public                         }
+{ License as published by the Free Software Foundation; either                }
+{ version 2 of the License, or (at your option) any later version.            }
+{                                                                             }
+{ This program is distributed in the hope that it will be useful,             }
+{ but WITHOUT ANY WARRANTY; without even the implied warranty of              }
+{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           }
+{ General Public License for more details.                                    }
+{                                                                             }
+{ You should have received a copy of the GNU General Public License           }
+{ along with this program; see the file COPYING.  If not, write to            }
+{ the Free Software Foundation, Inc., 59 Temple Place - Suite 330,            }
+{ Boston, MA 02111-1307, USA.                                                 }
+{                                                                             }
+{ *************************************************************************** }
 program xpsu;
 
 uses
@@ -29,6 +51,8 @@ var
     tmp_dir: PChar;
     xauth: PChar;
     xauth_env: PChar;
+    ld_library_path: PChar;
+    ld_library_path_env: PChar;
     allowchoose: boolean;
 
 function forkpty(__amaster: PInteger; __name: PChar; __termp: PTermIos; __winp: PWinSize): Integer; cdecl; external libutilmodulename name 'forkpty';
@@ -178,7 +202,7 @@ begin
 	        cmd.add('/bin/su');
 	        if (conf.login_shell<>0) then cmd.add('-');
 	        cmd.add(conf.user);
-	        if (conf.keep_env<>0) then cmd.add('-p');
+            if (conf.keep_env<>0) then cmd.add('-p');
 
 	        cmd.add('-c');
 	        cmd.add(conf.command);
@@ -266,7 +290,7 @@ end;
 begin
   application.Initialize;
   SetXPStyle(application);
-  
+
   tmp_dir:=strdup('/tmp/xpsu-XXXXXX');
 
   xauth := nil;
@@ -277,7 +301,7 @@ begin
   conf.command := nil;                                                          // xpsu
 
   conf.login_shell := 0;
-  conf.keep_env := 0;
+  conf.keep_env := 1;
   conf.grab := 1;
 
   allowchoose:=false;
@@ -317,8 +341,11 @@ begin
 
   xauth := strdup(PChar(format('%s/.Xauthority',[conf.dir])));
   xauth_env := getenv ('XAUTHORITY');
+  ld_library_path:= strdup('$LD_LIBRARY_PATH:/home/ttm/xpde');
 
+  setenv ('LD_LIBRARY_PATH', ld_library_path, 1);
   setenv ('XAUTHORITY', xauth, 1);
+
 
 
             // ask for password

@@ -1,6 +1,6 @@
 object TaskBar: TTaskBar
-  Left = 235
-  Top = 727
+  Left = 245
+  Top = 771
   Width = 676
   Height = 31
   HorzScrollBar.Range = 118
@@ -14,7 +14,7 @@ object TaskBar: TTaskBar
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnPaint = FormPaint
-  PixelsPerInch = 96
+  PixelsPerInch = 90
   object imgProgramFolder: TImage
     Left = 476
     Top = 15
@@ -127,7 +127,6 @@ object TaskBar: TTaskBar
   object Timer1: TTimer
     Enabled = False
     Interval = 50
-    OnTimer = Timer1Timer
     Left = 240
     Top = 4
   end

@@ -27,18 +27,22 @@ package XPwm;
 requires
   rtl,
   visualclx,
-  XPAPI,
+  vcl,
   XPRegistry,
+  XPAPI,
   XPMenus,
   XPStyle,
   XPLocalizator,
   XPShellControls,
-  XPCommon,
   XPCommctrls;
 
 contains
+  uWindowManager in 'uWindowManager.pas',
   uRun in 'uRun.pas' {RunDlg},
   uSpecial in 'uSpecial.pas',
-  uTaskBar in 'uTaskBar.pas' {TaskBar};
+  uTaskBar in 'uTaskBar.pas' {TaskBar},
+  uDisplay in 'uDisplay.pas',
+  uGlobal in 'uGlobal.pas',
+  uTitle in 'uTitle.pas' {TitleForm};
 
 end.

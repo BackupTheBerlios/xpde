@@ -33,7 +33,8 @@ uses
   uSpecial, QComCtrls, QImgList,
   uXPStyleConsts, Qt, QActnList,
   uQXPComCtrls, uXPPopupMenu, uRun,
-  uXPAPI, uLNKFile, uXPStyle, uXPLocalizator, uXPDictionary;
+  uXPAPI, uLNKFile, uXPStyle,
+  uXPLocalizator, uXPDictionary;
 
 type
   TTaskBar = class(TForm)
@@ -79,9 +80,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure btnTimerTimer(Sender: TObject);
     procedure pbLinePaint(Sender: TObject);
-    procedure sbExplorerClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
     procedure ToolButton1MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure startmenuHide(Sender: TObject);
@@ -95,19 +94,15 @@ type
     { Private declarations }
   public
     { Public declarations }
-    activetasks:TList;
+    activetasks:TList;                                                          //TToolButton list for active tasks    
+    //Menu related functions
     procedure ShowMenu;
-    procedure updatetaskbar;
-    procedure enumerateTasks(Display: PDisplay; Screen: Integer; Start: TWindow);
-    function addwindow(w:TWindow):boolean;
     procedure createTask(w:TWindow;title:string);
-    function GetParent(display:PDisplay;w:TWindow):TWindow;
   end;
 
   TXPTaskBar=class(TInterfacedObject, IXPTaskBar)
-  end;
-
-  TXPWindowManager=class(TInterfacedObject, IXPWindowManager)
+        procedure addtask(task:IWMClient);
+        procedure removetask(task:IWMClient);
   end;
 
 var
@@ -132,20 +127,8 @@ begin
   Result := UT.tm_sec;
 end;
 
-function eventLoop(var ev: XEvent):integer;cdecl;
-begin
-    if ev.xtype=propertynotify then begin
-                taskbar.updatetaskbar;
-    end;
-    result:=0;
-end;
-
 procedure TTaskBar.FormCreate(Sender: TObject);
 var
-	attr:XSetWindowAttributes;
-    dpy: PDisplay;
-    scr:integer;
-    root:TWindow;
     b:TBitmap;
 begin
     XPAPI.setdefaultcursor;
@@ -191,18 +174,6 @@ begin
     top:=screen.Height-height;
     width:=screen.width;
 
-    updatetaskbar;
-
-
-    dpy:=application.Display;
-
-    scr := XDefaultScreen(dpy);
-    root := XRootWindow(dpy, scr);
-
-    attr.event_mask := ChildMask;
-
-    XChangeWindowAttributes(dpy, root, CWEventMask, @attr);
-    qt_set_x11_event_filter(@eventLoop);
 end;
 
 procedure TTaskBar.FormPaint(Sender: TObject);
@@ -262,57 +233,8 @@ begin
     end;
 end;
 
-procedure TTaskBar.updatetaskbar;
-var
-    i:longint;
-    dpy: PDisplay;
-    scr: integer;
-    bw: integer;
-    t:TToolButton;
-    r:integer;
-    act: TWindow;
-begin
-    if not inupdate then begin
-        inupdate:=true;
-//    timer1.Enabled:=false;
-    try
-    dpy:=application.display;
-    scr:=xdefaultScreen(dpy);
-    activetasks.clear;
-    enumerateTasks(application.Display,scr,XRootWindow(dpy,scr));
-    for i := tbTasks.ControlCount - 1 downto 0 do begin
-        if (tbTasks.Controls[I] is TToolButton) then begin
-            t:=(tbTasks.Controls[I] as TToolButton);
-            if (activetasks.IndexOf(t)=-1) then begin
-                t.free;
-            end;
-        end;
-    end;
-
-
-    XGetInputFocus(application.Display, @act, @r);
-    for i:=activetasks.count-1 downto 0 do begin
-        t:=activetasks[i];
-        if cardinal(t.Tag)=act then begin
-            t.Down:=true;
-        end
-        else t.down:=false;
-    end;
-
-    if tbTasks.buttoncount>0 then begin
-        bw:=trunc((tbTasks.clientWidth-2) / (tbTasks.buttoncount));
-        if bw>163 then bw:=163;
-        if bw<>tbTasks.buttonwidth then tbTasks.ButtonWidth:=bw;
-    end;
-    tbTasks.ButtonHeight:=22;
-    finally
-        inupdate:=false;
-    end;
-end;
-end;
-
-
 procedure TTaskBar.createTask(w:TWindow;title:string);
+{
 var
     t: TToolButton;
     found: boolean;
@@ -325,7 +247,9 @@ var
     b: TBitmap;
 
     par: TWindow;
+}
 begin
+(*
     found:=false;
     for i := 0 to tbTasks.ControlCount - 1 do begin
         if (tbTasks.Controls[I] is TToolButton) then begin
@@ -343,6 +267,7 @@ begin
         t:=TToolButton.create(tbTasks);
         t.Caption:=title;
         t.Hint:=title;
+        {
         hints := XGetWMHints (application.display, w);
         if hints<>nil then begin
             if (hints^.icon_window<>0) and (hints^.icon_pixmap<>0) then begin
@@ -369,23 +294,10 @@ begin
                 finally
                     b.free;
                 end;
-            end
-            else begin
-                        par:=GetParent(application.display,w);
-                        if par<>XRootWindow(application.display,xdefaultscreen(application.display)) then begin
-
-                            b:=TBitmap.create;
-                            try
-                                QPixmap_grabWindow(b.handle,par,4,4,17,17);
-                                t.Bitmap.assign(b);
-                                t.bitmap.transparent:=true;
-                            finally
-                                b.free;
-                            end;
-                        end;
             end;
             XFree(hints);
         end;
+        }
 
         t.showhint:=true;
         t.Tag:=w;
@@ -396,49 +308,13 @@ begin
         activetasks.add(t);
 
     end;
-end;
-
-procedure TTaskBar.sbExplorerClick(Sender: TObject);
-begin
-    updatetaskbar;
-end;
-
-procedure TTaskBar.enumerateTasks(Display: PDisplay; Screen: Integer; Start: TWindow);
-type
-   AChildren = array[0..0] of Window;
-   PChildren = ^AChildren;
-
-var
-  stat: TStatus;
-  n: Integer;
-  num: Cardinal;
-  root: Window;
-  parent: Window;
-  Children: PChildren;
-begin
-    stat := XQueryTree(Display, start, @root, @parent, @children, @num);
-
-   if (stat = 1) then begin
-      // List each descendent
-      for n := num-1 downto 0 do begin
-        if not addwindow(Children^[n]) then EnumerateTasks(display,screen,Children^[n]);
-      end;
-
-      if (children <> Nil) then begin
-         XFree(Children);
-      end;
-   end;
+*)    
 end;
 
 procedure TTaskBar.FormDestroy(Sender: TObject);
 begin
     activetasks.free;
-    menuPaths.free;    
-end;
-
-procedure TTaskBar.Timer1Timer(Sender: TObject);
-begin
-    updatetaskbar;
+    menuPaths.free;
 end;
 
 procedure TTaskBar.ToolButton1MouseUp(Sender: TObject;
@@ -449,46 +325,6 @@ begin
     w:=(Sender as TToolButton).tag;
     XSetInputFocus(application.display,w,RevertToNone,CurrentTime);
     XRaiseWindow(application.display,w);
-end;
-
-function TTaskBar.GetParent(display:PDisplay;w: TWindow): TWindow;
-type
-   AChildren = array[0..0] of Window;
-   PChildren = ^AChildren;
-var
-  num: Cardinal;
-  root: Window;
-  Children: PChildren;
-begin
-    XQueryTree(Display, w, @root, @result, @children, @num);
-    XFree(Children);
-end;
-
-function TTaskBar.addwindow(w: TWindow):boolean;
-var
-    ev: XEvent;
-    display: PDisplay;
-    Title: PChar;
-    attr:XWindowAttributes;
-begin
-    display:=application.display;
-    result:=false;
-
-    if (XFetchName(Display, w, @Title) = 1) or (XGetIconName(Display, w, @Title) = 1) then begin
-        result:=true;
-        if w<>QWidget_winId(tbTasks.handle) then begin
-            if (XCheckTypedWindowEvent(display, w, DestroyNotify, @ev))=0 then begin
-                if (XGetWindowAttributes(Display, w, @attr)<>0) then begin
-                    if (attr.override_redirect=0) then begin
-                        if (attr.map_state = IsViewable) then begin
-                            createTask(w,title);
-                            XFree(Title);
-                        end;
-                    end;
-                end;
-            end;
-        end;
-    end;
 end;
 
 procedure TTaskBar.startmenuHide(Sender: TObject);
@@ -628,9 +464,21 @@ begin
     XPAPI.ShellExecute(XPAPI.getsysinfo(siAppdir)+'/taskmanager',false);
 end;
 
+
+{ TXPTaskBar }
+
+procedure TXPTaskBar.addtask(task: IWMClient);
+begin
+    taskbar.createTask(task.getWindow,task.getTitle);
+end;
+
+procedure TXPTaskBar.removetask(task: IWMClient);
+begin
+
+end;
+
 initialization
   XPTaskBar:=TXPTaskbar.create;
-  XPWindowManager:=TXPWindowManager.create;
   Application.CreateForm(TTaskBar, TaskBar);
   Application.CreateForm(TRunDlg, RunDlg);
 

@@ -114,11 +114,11 @@ type
     procedure Paint_PB2;
     procedure Paint_PB3;
     procedure Paint_PB4;
-    procedure Paint_PB5;        
-    Procedure MemInfo(kind_:integer; memfile_:string);
+    procedure Paint_PB5;
+    Procedure MemInfo;
     Procedure AverageLoad(avg_file:string);
     Procedure Fill_Net_Devices;
-    Procedure Find_Lusers; // ;)    
+    Procedure Find_Lusers; // ;)
     { Private declarations }
   public
     Procedure Fill_Applications;
@@ -146,6 +146,7 @@ var tmpstr,tmpstr_stat:TStrings;
     num_forks:string; // num of forks since boot
     CPUuser_, CPUsyst_:longint;
     diff_user,diff_syst:longint;
+    sysinf_:_sysinfo; // Libc sysinfo
     swp_total,swp_used,swp_free:single;
     um_y:integer; // user_matrix position
     um_x:integer; // syst_matrix position
@@ -345,6 +346,7 @@ end;
 procedure TWindowsTaskManagerDlg.FormShow(Sender: TObject);
 var j,jj:integer;
 begin
+
         for j:=0 to PB2.Width do
         user_matrix [j]:=PB2.Height;
 
@@ -364,6 +366,8 @@ begin
         um_x:=0;
         du_y:=0;
 
+        Libc.sysinfo(sysinf_);
+
         Timer3.Enabled:=false;
         ListView1.Columns[0].Width:=ListView1.Width div 4;
         ListView1.Columns[1].Width:=(ListView1.Width div 2)+(ListView1.Width div 8);
@@ -376,8 +380,7 @@ begin
         Fill_Applications;
         Timer1.Interval:=PRIO_NORMAL;
         Fill_Processes;
-        MemInfo(1,'/proc/meminfo');
-        MemInfo(2,'/proc/meminfo');
+        MemInfo;
         AverageLoad('/proc/loadavg');
         Read_Net('/proc/net/dev');
         Fill_Net_Devices;
@@ -429,7 +432,7 @@ end;
 
 procedure TWindowsTaskManagerDlg.Button1Click(Sender: TObject);
 var i:integer;
-    ss,cmd:string;
+    ss:string;
 begin
         Timer1.Enabled:=false;
         // WE STOP TIMER SINCE WE DON'T WANT CLEARED ListView in a moment ;)
@@ -438,8 +441,7 @@ begin
         for i:=0 to ListView1.Items.Count-1 do begin
         if ListView1.Items.Item[i].Checked then begin
         ss:=ListView1.Items.Item[i].Caption;
-        cmd:='kill -SIGTERM '+ss; // ANY BETTER IDEA ?
-        if Libc.system(PChar(cmd))<>0 then
+        if Libc.kill(StrToInt(ss),SIGTERM)<>0 then
         raise Exception.Create('Cannot kill process PID '+ss+' !');
         End;
         End;
@@ -455,23 +457,25 @@ end;
 
 procedure TWindowsTaskManagerDlg.Button7Click(Sender: TObject);
 var i:integer;
-    ss,cmd:string;
+    ss:string;
 begin
         Timer1.Enabled:=false;
         // WE STOP TIMER SINCE WE DON'T WANT CLEARED TreeView in a moment ;)
         if MessageDlg('Kill selected tasks ?',mtConfirmation,[mbYes,mbNo],0,mbNo)=mrYes
         then begin
         i:=treeview2.Selected.AbsoluteIndex;
-        try
-        ss:=TreeView2.Items.Item[i].SubItems.Strings[3];
-        cmd:='kill -SIGTERM '+ss; // ANY BETTER IDEA ?
-        // yes , I'll rewrite this part soon and use libc.kill
-        if Libc.system(PChar(cmd))<>0 then
-        raise Exception.Create('Cannot kill process PID '+ss+' !');
-        except
+        if i=-1 then begin
         raise Exception.Create('You must select process !');
+        Timer1.Enabled:=true;
+        exit;
         End;
+        
+        ss:=TreeView2.Items.Item[i].SubItems.Strings[3];
+        ss:=trim(ss);
+        if Libc.kill(StrToInt(ss),SIGTERM)<>0 then
+        raise Exception.Create('Cannot kill process PID '+ss+' !');
         end;
+
         Fill_Processes;
         // Back timer
         Timer1.Enabled:=true;
@@ -571,8 +575,7 @@ End;
 procedure TWindowsTaskManagerDlg.Timer2Timer(Sender: TObject);
 begin
 Read_Stats('/proc/stat');
-MemInfo(1,'/proc/meminfo');
-MemInfo(2,'/proc/meminfo');
+MemInfo;
 AverageLoad('/proc/loadavg');
 Read_Net('/proc/net/dev');
 end;
@@ -1155,123 +1158,18 @@ Paint_PB2;
 Paint_PB3;
 Paint_PB4;
 Paint_PB5;
+Libc.sysinfo(sysinf_);
 end;
 
-Procedure TWindowsTaskManagerDlg.MemInfo(kind_:integer; memfile_:string);
-var tmpstr_mem:TStrings;
-    fi:TextFile;
-    sbuf,ss:string;
-    i,j,x:integer;
-    results:Array[1..7] of string;
-    swp_,memo_:single;
+Procedure TWindowsTaskManagerDlg.MemInfo;
 Begin
-// kind_ -> 1=Physical memory ; 2=swap
-        tmpstr_mem:=TStringList.Create;
-        try
-        AssignFile(fi,memfile_);
-        Reset(fi);
-        while not eof(fi) do begin
-        readln(fi,sbuf);
-        tmpstr_mem.Add(sbuf);
-        End;
-        CloseFile(fi);
-        // PARSE STRINGS, OUR RESULT IS AT LINE kind_ so
-        sbuf:=tmpstr_mem.Strings[kind_];
-        x:=0;
-
-        for i:=0 to length(sbuf) do begin
-
-        j:=pos(':',sbuf);
-        // CUTOFF "Mem:"
-        if j<>0 then begin
-        sbuf:=copy(sbuf,j+1,length(sbuf)-(j-1));
-        ss:=sbuf+' ';
-        ss:=trimleft(ss);
-        End;
-
-        j:=pos(' ',ss);
-        if j<>0 then begin
-        inc(x);
-        results[x]:=copy(ss,1,j-1);
-        ss:=copy(ss,j,length(ss)-(j-1));
-        ss:=trimleft(ss);
-        case kind_ of
-               1: case x of
-                      1:Begin
-                        results[x]:=trim(results[x]);
-                        try
-                        memo_:=StrToFloat(results[x]);
-                        except
-                        memo_:=0;
-                        end;
-                        Lab10.Caption:=FloatToStrF(memo_ / 1024,ffFixed,12,1);
-                        End;
-                        3:Begin
-                        results[x]:=trim(results[x]);
-                        try
-                        memo_:=StrToFloat(results[x]);
-                        except
-                        memo_:=0;
-                        end;
-                        Lab11.Caption:=FloatToStrF(memo_ / 1024,ffFixed,12,1);
-                        StatusBar1.Panels[2].Text:='Free Memory (K): '+FloatToStrF(memo_ / 1024,ffFixed,12,1);
-                        End;
-                      6:Begin
-                        results[x]:=trim(results[x]);
-                        try
-                        memo_:=StrToFloat(results[x]);
-                        except
-                        memo_:=0;
-                        end;
-                        Lab12.Caption:=FloatToStrF(memo_ / 1024,ffFixed,12,1);
-                        End;
-                End; // CASE x
-
-              2:case x of
-                        1:Begin
-                          results[x]:=trim(results[x]);
-                          try
-                          swp_:=StrToFloat(results[x]);
-                          swp_:=swp_ / 1024; // give kb
-                          except
-                          swp_:=0;
-                          End;
-                          swp_total:=swp_;
-                          Lab4.Caption:=FloatToStrF(swp_total,ffFixed,12,1);                          
-                          // SWAP total
-                          End;
-                        2:Begin
-                          results[x]:=trim(results[x]);
-                          try
-                          swp_:=StrToFloat(results[x]);
-                          swp_:=swp_ / 1024; // give kb
-                          except
-                          swp_:=0;
-                          End;
-                          swp_used:=swp_;
-                          Lab6.Caption:=FloatToStrF(swp_used,ffFixed,12,1);
-                          End;
-                        3:Begin
-                          results[x]:=trim(results[x]);
-                          try
-                          swp_:=StrToFloat(results[x]);
-                          swp_:=swp_ / 1024; // give kb
-                          except
-                          swp_:=0;
-                          End;
-                          swp_free:=swp_;
-                          Lab5.Caption:=FloatToStrF(swp_free,ffFixed,12,1);
-                          End;
-                        End; // CASE x
-        End; // CASE kind_
-        End;
-        End;
-
-        finally
-
-
-        tmpstr_mem.Free;
-        End;
+Lab4.Caption:=IntToStr(longint(sysinf_.totalswap) div 1024);
+Lab5.Caption:=IntToStr(longint(sysinf_.freeswap) div 1024);
+Lab6.Caption:=IntToStr((longint(sysinf_.totalswap) div 1024) - (longint(sysinf_.freeswap) div 1024));
+Lab10.Caption:=IntToStr(longint(sysinf_.totalram) div 1024);
+Lab11.Caption:=IntToStr(longint(sysinf_.freeram) div 1024);
+Lab12.Caption:=IntToStr(longint(sysinf_.bufferram) div 1024);
+StatusBar1.Panels[2].Text:='Free Memory (K): '+IntToStr(longint(sysinf_.freeram) div 1024);
 End;
 
 procedure TWindowsTaskManagerDlg.FormResize(Sender: TObject);
@@ -1314,7 +1212,8 @@ Begin
 
         j:=pos('/',results[4]);
         ss:=copy(results[4],1,j-1);
-        sbuf:=copy(results[4],j+1,length(results[4]));
+//        sbuf:=copy(results[4],j+1,length(results[4]));
+        sbuf:=IntToStr(sysinf_.procs);
         StatusBar1.Panels[0].Text:='Processes: '+sbuf;
         Lab22.Caption:=ss;
         Lab23.Caption:=sbuf;
@@ -1415,9 +1314,6 @@ var i,x,jj:integer;
     tmpfile_,sbuf,ss:string;
     lusers_:Array[0..100] of String;
     username_,us_id,us_cli,us_idle:string;
-    neki:Double;
-    uzer:rusage;
-    luzer:rlimit;
 Begin
         Lusers.Items.Clear;
         tmp_users:=TStringList.Create;

@@ -26,7 +26,7 @@ interface
 
 uses
   SysUtils, Types, Classes, uXPCommon, 
-  QGraphics, QControls, QForms, //uXPAPI,
+  QGraphics, QControls, QForms, uXPAPI,
   QDialogs, QExtCtrls, Qt, uRegistry,
   QStdCtrls, uXPStyleConsts;
 
@@ -622,8 +622,8 @@ begin
   selectedbitmap.width:=w;
   selectedbitmap.height:=h;
 
-  if assigned(original) then original.free;
   original:=TBitmap.create;
+
   f:=TPicture.create;
   try
     f.LoadFromFile(imgfile);
@@ -642,7 +642,7 @@ begin
   if lnk then begin
     b:=TBitmap.create;
     try
-//        b.loadfromfile(XPAPI.bitmapsdir+sSHORTCUT);
+        b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+sSHORTCUT);
         b.transparent:=false;
         original.canvas.draw(0,original.height-b.height-1,b);
         original.Transparent:=false;

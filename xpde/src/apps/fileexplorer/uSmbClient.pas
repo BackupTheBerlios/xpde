@@ -152,8 +152,6 @@ begin
 end;
 
 function smbumount(const ResPath : string): integer;
-var
- cmdstr : string;
 begin
   ShowMessage(umntsmb+' '+ResPath);
   result := libc.System(PChar(umntsmb+' '+ResPath));

@@ -16,7 +16,15 @@ uses
   uSmbOption in 'uSmbOption.pas' {smbOption},
   uSelectUser in 'uSelectUser.pas' {dlgSelectUser},
   uConfirmFileReplace in 'uConfirmFileReplace.pas' {ConfirmFileReplaceDlg},
-  uConfirmFolderReplace in 'uConfirmFolderReplace.pas' {ConfirmFolderReplaceDlg};
+  uConfirmFolderReplace in 'uConfirmFolderReplace.pas' {ConfirmFolderReplaceDlg},
+  uSelUserGroup in '../../components/selectuser/uSelUserGroup.pas' {SelectUserGroup},
+  uLocation in '../../components/selectuser/uLocation.pas' {LocationDlg},
+  uObjectTypes in '../../components/selectuser/uObjectTypes.pas' {ObjTypesDlg},
+  uResString in '../../components/selectuser/uResString.pas',
+  uXPuserUtils in '../../components/userlib/uXPuserUtils.pas',
+  uExplorerUtil in 'uExplorerUtil.pas',
+  uPropeties in 'uPropeties.pas' {PropetiesDlg},
+  uSecurityAdv in 'uSecurityAdv.pas' {SecurityDlg};
 
 {$R *.res}
 

@@ -8,8 +8,8 @@ endif
 MAKE = make -$(MAKEFLAGS) -f$**
 DCC =dcc $<
 #------------------------------------------------------------------------------
-PROJECTS = bplXPCommon.so bplXPAPI.so bplXPMenus.so bplXPStyle.so \
-  bplXPRegistry.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
+PROJECTS = bplXPCommon.so bplXPRegistry.so bplXPAPI.so bplXPMenus.so \
+  bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
   bplXPShellControls.so bplXPCommctrls.so desk.cpl XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)

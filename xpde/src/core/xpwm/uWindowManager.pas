@@ -526,9 +526,9 @@ begin
   if (extra)
     g_free (extra);
 }
-    {$ifdef DEBUG}
+//    {$ifdef DEBUG}
     xlibinterface.outputDebugString(iEVENT,name+' '+extra);
-    {$endif}
+//    {$endif}
 end;
 
 function eventhandler(event: PXEvent):boolean;cdecl;
@@ -537,12 +537,27 @@ begin
     spewEvent(xpwindowmanager.display,event^);
     {$endif}
     case event.xtype of
-        maprequest: result:=(xpwindowmanager.handleMapRequest(event^)=1);
-        propertynotify: result:=(xpwindowmanager.handlePropertyNotify(event^)=1);
+        maprequest: begin
+//            spewEvent(application.display,event^);
+            result:=(xpwindowmanager.handleMapRequest(event^)=1);
+        end;
+        propertynotify: begin
+//            spewEvent(application.display,event^);
+            result:=(xpwindowmanager.handlePropertyNotify(event^)=1);
+        end;
 //        destroynotify: result:=(xpwindowmanager.handleDestroyNotify(event^)=1);
-        unmapnotify: result:=(xpwindowmanager.handleUnmapNotify(event^)=1);
-        enternotify: result:=(xpwindowmanager.handleenternotify(event^)=1);
-        buttonpress: result:=(xpwindowmanager.handlebuttonpress(event^)=1);
+        unmapnotify: begin
+//            spewEvent(application.display,event^);
+            result:=(xpwindowmanager.handleUnmapNotify(event^)=1);
+        end;
+        enternotify: begin
+//            spewEvent(application.display,event^);
+            result:=(xpwindowmanager.handleenternotify(event^)=1);
+        end;
+        buttonpress: begin
+//            spewEvent(application.display,event^);
+            result:=(xpwindowmanager.handlebuttonpress(event^)=1);
+        end;
         {
         keypress: begin
             //showmessage('bbb');
@@ -588,9 +603,17 @@ begin
             }
             else result:=oldevent(event);
         end;
-        configurerequest: result:=(xpwindowmanager.handleConfigurerequest(event^)=1);
-        configurenotify: result:=(xpwindowmanager.handleConfigurenotify(event^)=1);
-        else result:=oldevent(event);
+        configurerequest: begin
+//            spewEvent(application.display,event^);
+            result:=(xpwindowmanager.handleConfigurerequest(event^)=1);
+        end;
+        configurenotify: begin
+//            spewEvent(application.display,event^);
+            result:=(xpwindowmanager.handleConfigurenotify(event^)=1);
+        end;
+        else begin
+            result:=oldevent(event);
+        end;
     end;
 end;
 
@@ -833,7 +856,7 @@ begin
     xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handlemaprequest %s',[xlibinterface.formatwindow(xwindow)]));
     {$endif}
     c:=findclient(xwindow);
-    if assigned(c) then c.restore
+    if assigned(c) then c.activate
     else begin
         createNewClient(xwindow);
     end;
@@ -2278,9 +2301,18 @@ begin
     if (FWindowState<>Value) then begin
       FWindowState := Value;
       case FWindowState of
-        wsNormal: restore;
-        wsMinimized: minimize;
-        wsMaximized: maximize;
+        wsNormal: begin
+            restore;
+            setmapstate(NormalState);
+        end;
+        wsMinimized: begin
+            minimize;
+            setmapstate(IconicState);
+        end;
+        wsMaximized: begin
+            maximize;
+            setmapstate(NormalState);
+        end;
       end;
     end;
 end;

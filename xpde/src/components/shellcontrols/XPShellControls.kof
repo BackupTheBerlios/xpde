@@ -46,7 +46,7 @@ DynamicLoader=/lib/ld-linux.so.2
 [Directories]
 OutputDir=
 UnitOutputDir=
-PackageDLLOutputDir=
+PackageDLLOutputDir=$(HOME)/xpde
 PackageDCPOutputDir=
 SearchPath=
 Packages=baseclx:visualclx:dataclx:netdataclx:netclx:indy:proide:websnapclx:dclXPde:dclXPStyle:xmlrtl:webdsnapclx:visualdbclx:xmlide
@@ -62,9 +62,15 @@ UseLauncher=0
 DebugCWD=
 
 [HistoryLists\hlOutputDirectorry]
-Count=4
-Item0=/home/ttm/xpde/
-Item1=../../../
-Item2=/home/ttm/xpde
-Item3=/home/ttm/xpde/system/
+Count=5
+Item0=$(HOME)/xpde
+Item1=/home/ttm/xpde/
+Item2=../../../
+Item3=/home/ttm/xpde
+Item4=/home/ttm/xpde/system/
+
+[HistoryLists\hlBPLOutput]
+Count=2
+Item0=$(HOME)/xpde
+Item1=/home/ttm/xpde
 

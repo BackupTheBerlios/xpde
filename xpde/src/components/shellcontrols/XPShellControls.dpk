@@ -30,7 +30,8 @@ requires
   visualclx,
   XPRegistry,
   XPStyle,
-  XPCommon;
+  XPCommon,
+  XPAPI;
 
 contains
   uSysListView in 'uSysListView.pas',

@@ -27,7 +27,7 @@ interface
 uses
     Classes, SysUtils, QGraphics,
     uExplorerAPI, QDialogs, uXPAPI,
-    QForms, Libc;
+    QForms, Libc, uLNKFile;
 
 type
 
@@ -656,11 +656,16 @@ end;
 procedure TFile.getColumnData(const columns: TStrings);
 var
     f: extended;
+    l: TLNKFile;
 begin
     columns.clear;
-    if assigned(parent) then begin
-        if (parent is TControlPanel) then begin
-            columns.add('descrip');
+    if assigned(parent) and (parent is TControlPanel) then begin
+        l:=TLNKFile.Create(nil);
+        try
+            l.loadfromfile(FPath);
+            columns.add(l.Comment);
+        finally
+            l.free;
         end;
     end
     else begin
@@ -1040,7 +1045,7 @@ procedure TControlPanel.getColumns(const columns: TStrings);
 begin
     columns.clear;
     columns.add('Name');
-    columns.add('Description');
+    columns.add('Comments');
 end;
 
 function TControlPanel.getDisplayName: string;

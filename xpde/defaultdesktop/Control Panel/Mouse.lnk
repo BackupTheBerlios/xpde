@@ -1,5 +1,6 @@
 [Shortcut]
 Caption=Mouse
+Comments=Customize your mouse settings, such as the button configuration, double-click speed, mouse pointers, and motion speed.
 Command=%APPLETS%mouse
 Startin=
 

@@ -75,7 +75,7 @@ begin
         FIcon:=ini.ReadString('Shortcut','Icon','');
         FCommand:=ini.ReadString('Shortcut','Command','');
         FStartin:=ini.ReadString('Shortcut','Startin','');
-        FComment:=ini.ReadString('Shortcut','Comment','');
+        FComment:=ini.ReadString('Shortcut','Comments','');
     finally
         ini.free;
     end;
@@ -91,7 +91,7 @@ begin
         ini.WriteString('Shortcut','Icon',FIcon);
         ini.WriteString('Shortcut','Command',FCommand);
         ini.WriteString('Shortcut','Startin',FStartin);
-        ini.WriteString('Shortcut','Comment',FComment);
+        ini.WriteString('Shortcut','Comments',FComment);
         ini.UpdateFile;
     finally
         ini.free;

@@ -61,9 +61,3 @@ Launcher=/usr/X11R6/bin/xterm -T KylixDebuggerOutput -e bash -i -c %debuggee%
 UseLauncher=0
 DebugCWD=
 
-[HistoryLists\hlOutputDirectorry]
-Count=3
-Item0=$(HOME)/xpde/bin/applets
-Item1=$(HOME)/xpde/bin
-Item2=$(HOME)/xpde
-

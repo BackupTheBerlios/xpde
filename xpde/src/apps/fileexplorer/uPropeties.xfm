@@ -1,0 +1,984 @@
+object PropetiesDlg: TPropetiesDlg
+  Left = 389
+  Top = 206
+  Width = 360
+  Height = 436
+  HorzScrollBar.Range = 355
+  VertScrollBar.Range = 431
+  ActiveControl = btnOk
+  Caption = 'Properties'
+  Color = clBackground
+  Constraints.MaxHeight = 436
+  Constraints.MaxWidth = 360
+  Constraints.MinHeight = 436
+  Constraints.MinWidth = 360
+  Font.Color = clBlack
+  Font.Height = 11
+  Font.Name = 'Helvetica'
+  Font.Pitch = fpVariable
+  Font.Style = []
+  ParentFont = False
+  Position = poDesktopCenter
+  Scaled = False
+  Visible = True
+  WindowState = wsMinimized
+  PixelsPerInch = 78
+  object btnOk: TButton
+    Left = 117
+    Top = 408
+    Width = 75
+    Height = 23
+    Caption = 'Ok'
+    Default = True
+    TabOrder = 0
+    OnClick = btnOkClick
+  end
+  object btnCancel: TButton
+    Left = 197
+    Top = 408
+    Width = 75
+    Height = 23
+    Caption = 'Cancel'
+    TabOrder = 1
+    OnClick = btnCancelClick
+  end
+  object btnApply: TButton
+    Left = 277
+    Top = 408
+    Width = 75
+    Height = 23
+    Caption = 'Apply'
+    TabOrder = 2
+    OnClick = btnApplyClick
+  end
+  object PageControl: TPageControl
+    Left = 6
+    Top = 8
+    Width = 349
+    Height = 393
+    ActivePage = tbshSecurity
+    TabOrder = 3
+    object tbshGeneralFile: TTabSheet
+      Caption = 'General'
+      ImageIndex = 4
+      object imgFileImage: TImage
+        Left = 16
+        Top = 14
+        Width = 32
+        Height = 32
+        AutoSize = True
+        Center = True
+        Transparent = True
+      end
+      object imgOpenWith: TImage
+        Left = 186
+        Top = 87
+        Width = 24
+        Height = 24
+      end
+      object edPathFile: TEdit
+        Left = 96
+        Top = 22
+        Width = 233
+        Height = 21
+        TabOrder = 17
+      end
+      object Panel6: TPanel
+        Left = 8
+        Top = 56
+        Width = 321
+        Height = 2
+        BevelInner = bvLowered
+        BevelOuter = bvNone
+        TabOrder = 0
+      end
+      object Label28: TLabel
+        Left = 8
+        Top = 67
+        Width = 53
+        Height = 13
+        Caption = 'Type of file:'
+      end
+      object Label29: TLabel
+        Left = 8
+        Top = 134
+        Width = 43
+        Height = 13
+        Caption = 'Location:'
+      end
+      object Label30: TLabel
+        Left = 8
+        Top = 158
+        Width = 22
+        Height = 13
+        Caption = 'Size:'
+      end
+      object Label31: TLabel
+        Left = 8
+        Top = 182
+        Width = 58
+        Height = 13
+        Caption = 'Size on disk:'
+      end
+      object Label32: TLabel
+        Left = 8
+        Top = 246
+        Width = 43
+        Height = 13
+        Caption = 'Modified:'
+      end
+      object lbModifiedFile: TLabel
+        Left = 96
+        Top = 246
+        Width = 63
+        Height = 13
+        Caption = 'lbModifiedFile'
+      end
+      object lbSizeOnDiskFile: TLabel
+        Left = 96
+        Top = 182
+        Width = 61
+        Height = 13
+        Caption = 'lbSizeOnDisk'
+      end
+      object lbSizeFile: TLabel
+        Left = 96
+        Top = 158
+        Width = 27
+        Height = 13
+        Caption = 'lbSize'
+      end
+      object lbLocationFile: TLabel
+        Left = 96
+        Top = 134
+        Width = 63
+        Height = 13
+        Caption = 'lbLocationFile'
+      end
+      object lbTypeFile: TLabel
+        Left = 79
+        Top = 67
+        Width = 44
+        Height = 13
+        Caption = 'lbTypeFile'
+      end
+      object Panel7: TPanel
+        Left = 8
+        Top = 208
+        Width = 321
+        Height = 2
+        BevelInner = bvLowered
+        BevelOuter = bvNone
+        TabOrder = 1
+      end
+      object Label38: TLabel
+        Left = 8
+        Top = 222
+        Width = 40
+        Height = 13
+        Caption = 'Created:'
+      end
+      object lbCreatedFile: TLabel
+        Left = 96
+        Top = 222
+        Width = 60
+        Height = 13
+        Caption = 'lbCreatedFile'
+      end
+      object Label40: TLabel
+        Left = 8
+        Top = 318
+        Width = 49
+        Height = 13
+        Caption = 'Attributes:'
+      end
+      object chbxReadOnlyFile: TCheckBox
+        Left = 80
+        Top = 310
+        Width = 73
+        Height = 30
+        Caption = 'Read-only'
+        TabOrder = 19
+        OnClick = chbxReadOnlyFileClick
+      end
+      object chbxHiddenFile: TCheckBox
+        Left = 160
+        Top = 310
+        Width = 57
+        Height = 30
+        Caption = 'Hidden'
+        TabOrder = 20
+        OnClick = chbxHiddenFileClick
+      end
+      object btnAdvancedFile: TButton
+        Left = 238
+        Top = 315
+        Width = 91
+        Height = 23
+        Caption = 'Advanced...'
+        TabOrder = 25
+      end
+      object Panel8: TPanel
+        Left = 8
+        Top = 296
+        Width = 321
+        Height = 2
+        BevelInner = bvLowered
+        BevelOuter = bvNone
+        TabOrder = 2
+      end
+      object Panel9: TPanel
+        Left = 8
+        Top = 120
+        Width = 321
+        Height = 2
+        BevelInner = bvLowered
+        BevelOuter = bvNone
+        TabOrder = 3
+      end
+      object Label41: TLabel
+        Left = 8
+        Top = 94
+        Width = 51
+        Height = 13
+        Caption = 'Open with:'
+      end
+      object lbOpenWith: TLabel
+        Left = 79
+        Top = 94
+        Width = 57
+        Height = 13
+        Caption = 'lbOpenWith:'
+      end
+      object Label33: TLabel
+        Left = 8
+        Top = 270
+        Width = 46
+        Height = 13
+        Caption = 'Accessed:'
+      end
+      object lbAccessedFile: TLabel
+        Left = 96
+        Top = 270
+        Width = 66
+        Height = 13
+        Caption = 'lbAccessedFile'
+      end
+      object btnChangeOpen: TButton
+        Left = 236
+        Top = 89
+        Width = 91
+        Height = 23
+        Caption = 'Change ...'
+        TabOrder = 18
+        OnClick = btnChangeOpenClick
+      end
+    end
+    object tbshGeneralFolder: TTabSheet
+      Caption = 'General'
+      object imgFolder: TImage
+        Left = 16
+        Top = 19
+        Width = 32
+        Height = 32
+        AutoSize = True
+        Center = True
+        Stretch = True
+        Transparent = True
+      end
+      object Panel1: TPanel
+        Left = 8
+        Top = 61
+        Width = 321
+        Height = 2
+        BevelInner = bvLowered
+        BevelOuter = bvNone
+        TabOrder = 0
+      end
+      object Panel2: TPanel
+        Left = 8
+        Top = 205
+        Width = 321
+        Height = 2
+        BevelInner = bvLowered
+        BevelOuter = bvNone
+        TabOrder = 1
+      end
+      object Panel3: TPanel
+        Left = 8
+        Top = 247
+        Width = 321
+        Height = 2
+        BevelInner = bvLowered
+        BevelOuter = bvNone
+        TabOrder = 2
+      end
+      object edPathFolder: TEdit
+        Left = 96
+        Top = 27
+        Width = 233
+        Height = 21
+        TabOrder = 3
+      end
+      object Label2: TLabel
+        Left = 8
+        Top = 75
+        Width = 24
+        Height = 13
+        Caption = 'Type:'
+      end
+      object Label3: TLabel
+        Left = 8
+        Top = 99
+        Width = 43
+        Height = 13
+        Caption = 'Location:'
+      end
+      object Label4: TLabel
+        Left = 8
+        Top = 123
+        Width = 22
+        Height = 13
+        Caption = 'Size:'
+      end
+      object Label5: TLabel
+        Left = 8
+        Top = 147
+        Width = 58
+        Height = 13
+        Caption = 'Size on disk:'
+      end
+      object Label6: TLabel
+        Left = 8
+        Top = 171
+        Width = 45
+        Height = 13
+        Caption = 'Contains:'
+      end
+      object lbType: TLabel
+        Left = 96
+        Top = 75
+        Width = 29
+        Height = 13
+        Caption = 'lbType'
+      end
+      object lbLocation: TLabel
+        Left = 96
+        Top = 99
+        Width = 48
+        Height = 13
+        Caption = 'lbLocation'
+      end
+      object Label7: TLabel
+        Left = 8
+        Top = 216
+        Width = 1
+        Height = 13
+      end
+      object Label8: TLabel
+        Left = 8
+        Top = 221
+        Width = 40
+        Height = 13
+        Caption = 'Created:'
+      end
+      object Label9: TLabel
+        Left = 8
+        Top = 266
+        Width = 49
+        Height = 13
+        Caption = 'Attributes:'
+      end
+      object chbReadOnlyFolder: TCheckBox
+        Left = 96
+        Top = 258
+        Width = 100
+        Height = 30
+        Caption = 'Read-only'
+        TabOrder = 11
+      end
+      object chbHiddenFolder: TCheckBox
+        Left = 96
+        Top = 282
+        Width = 100
+        Height = 30
+        Caption = 'Hidden'
+        TabOrder = 12
+      end
+      object btnAdvancedFolder: TButton
+        Left = 216
+        Top = 266
+        Width = 115
+        Height = 23
+        Caption = 'Advanced...'
+        TabOrder = 14
+      end
+      object lbCreated: TLabel
+        Left = 96
+        Top = 221
+        Width = 45
+        Height = 13
+        Caption = 'lbCreated'
+      end
+      object lbSize: TLabel
+        Left = 96
+        Top = 123
+        Width = 27
+        Height = 13
+        Caption = 'lbSize'
+      end
+      object lbSizeOndisk: TLabel
+        Left = 96
+        Top = 147
+        Width = 59
+        Height = 13
+        Caption = 'lbSizeOndisk'
+      end
+      object lbContains: TLabel
+        Left = 96
+        Top = 171
+        Width = 50
+        Height = 13
+        Caption = 'lbContains'
+      end
+    end
+    object tbshSharingSimpl: TTabSheet
+      Caption = 'Sharing'
+      ImageIndex = 1
+      object GroupBox1: TGroupBox
+        Left = 8
+        Top = 10
+        Width = 329
+        Height = 129
+        Caption = 'Local sharing and security'
+        TabOrder = 0
+        object chbxPrivate: TCheckBox
+          Left = 64
+          Top = 98
+          Width = 185
+          Height = 25
+          Caption = 'Make this folder private'
+          TabOrder = 0
+        end
+        object Label21: TLabel
+          Left = 64
+          Top = 24
+          Width = 247
+          Height = 26
+          Caption = 
+            'To share this folder with other of this computer only, drag it t' +
+            'o the Shared Documents folder.'
+          WordWrap = True
+        end
+        object Label23: TLabel
+          Left = 64
+          Top = 68
+          Width = 249
+          Height = 26
+          Caption = 
+            'To make this folder and subfolder private so that only you have ' +
+            'access, select the following check box.'
+          WordWrap = True
+        end
+      end
+      object GroupBox2: TGroupBox
+        Left = 8
+        Top = 146
+        Width = 329
+        Height = 169
+        Caption = 'Network sharing and security'
+        TabOrder = 1
+        object chbxShareFolder: TCheckBox
+          Left = 66
+          Top = 68
+          Width = 185
+          Height = 29
+          Caption = 'Share this folder on the network'
+          TabOrder = 0
+          OnClick = chbxShareFolderClick
+        end
+        object chbxAllowUse: TCheckBox
+          Left = 66
+          Top = 132
+          Width = 223
+          Height = 30
+          Caption = 'Allow network users to change my files'
+          Enabled = False
+          TabOrder = 4
+        end
+        object edShareName: TEdit
+          Left = 130
+          Top = 106
+          Width = 183
+          Height = 21
+          Enabled = False
+          TabOrder = 1
+        end
+        object Label1: TLabel
+          Left = 66
+          Top = 108
+          Width = 54
+          Height = 13
+          Caption = 'Share name'
+        end
+        object Label22: TLabel
+          Left = 64
+          Top = 24
+          Width = 258
+          Height = 39
+          Caption = 
+            'To share this folder with both network user and other users of t' +
+            'his computer, select the first check box below and type a share ' +
+            'name'
+          WordWrap = True
+        end
+      end
+    end
+    object tbshSharing: TTabSheet
+      Caption = 'Sharing'
+      ImageIndex = 2
+      object Image2: TImage
+        Left = 16
+        Top = 16
+        Width = 32
+        Height = 32
+        AutoSize = True
+        Center = True
+        Picture.Data = {
+          07544269746D61703A0C0000424D360C00000000000036000000280000002000
+          0000200000000100180000000000000C0000120B0000120B0000000000000000
+          0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFF000000000000000000000000000000000000FFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFF000000000000000000000000000000000000000000
+          0000000000004C4444474040000000000000000000000000000000000000FFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFF000000000000000000000000000000000000000000000000000000
+          0000003F3A3AB7A8A8C4B4B4948484554C4C0000000000000000000000000000
+          00000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFF0000003223199A6F56B58D7CB99386B68F81BB9687AB86705D4130
+          000000898080DAD6D6EDE9E9E1D9D9C4B5B5988484685A5A0000000000000000
+          00000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFF0000007A5844D2AE99EFDFDBD8C7C8E4D6D6E5D8D8F2EAEAFEFAF9EFD9CD
+          9774629A9595C9C7C7E4E0E0EAE5E5E6DFDFDAD0D0C1B1B19F89896F5E5E1B17
+          17000000000000000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFF83624ECBA08EFDEBE8FFF1EEFFF2EDFFF2EEFFF2EDFFF1ECFFEEEAFFF6F4
+          F8E2DAB59F92AFAEAED2CFCFE6E2E2E6E0E0E1D9D9DBD2D2D3C7C7C0AFAFA590
+          907E6C6C302929000000000000000000000000000000000000FFFFFFFFFFFFFF
+          FFFFBB8E77CCA5A1FFE7E2FEE2DDFEE3DDFEE3DCFFE4DDFDE2DCFFE9E3F2D5CF
+          FAE0DDE6C3B6A89D98BEBBBBDFDADAE7E1E1D4C8C8D9CFCFD3C7C7CEC1C1CBBE
+          BEBEACACAB95958471714F4444000000000000000000000000000000FFFFFFFF
+          FFFFB58378B68682F8D4CCFFDBD2FED9D0FFD9D1FDD8D0BD8E89D0A49EF5CEC7
+          D8ADA7AA7874BA9F91AFABABCFC8C8BBA9A9B6A2A2AA9494BBA9A9C0B1B1BAA9
+          A9B9A8A8BBAAAAB9A6A6AB9595927D7D665757000000000000000000FFFFFFFF
+          FFFFAA726B9B625DB57D77FACBC0FFD1C7FFD3C9ECBBB3A068649B615DE5B4AB
+          DCABA2B67F7AD0AA9BACA9A9BFB4B4D1C4C4E2DADACEC1C1B19C9CA79191B19E
+          9EB2A0A0AA9797AC9898B7A3A3B09C9CA891919D8686000000000000FFFFFFFF
+          FFFFA567629E605A9D605AE2A9A1FFD0C6FFD5CBE3ADA8A96D6CA76B68BA7F79
+          E4ABA0CF948BE5B4A6908787B2A3A3DED6D6E0D7D7D2C6C6C4B5B5B4A1A1A48C
+          8CB2A1A1AB9797A38E8EAB9797B29D9DAC9696A48C8C000000000000FFFFFFFF
+          FFFFA4625A9F5C56CC8C86FCC4BAFBC0B6DDA19AC38481AB6B69AF6E6DAC6C6B
+          B97872B57169C992857C6C6C9E8A8AB8A5A5C8B9B9D0C3C3C2B2B2B4A0A0A68F
+          8FB2A1A1AB9898A79292B19E9EA995959681816D5D5D000000FFFFFFFFFFFFFF
+          FFFFC0786EE8A095FFBDB1FFBFB3D18D86A76260AC6765AE6A67AE6A67AE6A67
+          AF6B68A15952C18E82877878AB9999B7A4A4B5A2A2B09B9BB09B9BAF9A9AA590
+          90A799999587878E8282000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFC68074E7A095FFC3B6FFBFB2E1A097B97A76B87975BC7D78BC7D78B87A76
+          B87A77AC635DBE998E908A823AA84F3DAD5186AE85C2B2B2C1B1B1B8A5A5A08B
+          8B655656000000000000000000000000000000000000000000FFFFFFFFFFFFFF
+          FFFFD8A79AC6857DF3BEB5FFC8BCFFCCC0EBB4ACCB9591CF9995CF9994C8938F
+          C6908DC9877DA9958F5D9C6600B32D00AF2900AB251BAB3669B471B5BEADCDC0
+          C0C5B5B5B3A0A07E6C6C302929000000000000000000000000000000FFFFFFFF
+          FFFFECD5C8DEA69CD6ABA9E6BCB8F4C9C2F5C9C3D9AFACD6ADAAD7ADABD7AFAE
+          D9A7A2CFAEA5A08E8D40AF5D00BC3500B73000B32C00AD2700A72200A11E46AE
+          5597C098DAD0D0D5CACAC0AFAF9A86864E4343000000000000000000FFFFFFFF
+          FFFFFFFFFFF2DDD3EFC4BCE6C6C4EAD1D0EED5D2EAD2D0E8D0CEE8CFCDEDC8C3
+          E4C6BDAB9998AC99992BBD5900C43C00BF3700BA3200B42C00AE2700A82300A1
+          1E009A1A1E9E3077BC7DCBD6C7E3DCDCCCBFBF7E6F6F000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFF2E3DCF6D4CDFAD5CEF8DCD8FAE2DEF9D9D3F6D7D1E4CFC8
+          B1A3A3B3A0A0AE999900D44F00CC4400C63E00C13800BB3200B52D00AE2800A7
+          2300A01E00981900911400890E5EAF63E0E4DCB6AAAA000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFF7EDE7F5E5DEF1D2C9F0D8D1E8CFC6CBC6C1000000
+          BEAFAFB6A3A38CA48B00DC5700D65000CE4400C83E00C23800BC3200B42D00AD
+          2800A523009E1D009618008E1200860C8AC18CB6ABAB000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA49898
+          C4B4B4B6A3A376AF8500E45F00E05B00D74F00CF4400C93D00C23700BA3200B2
+          2C00AB2700A221009B1C009216008A108AC38EA89898000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB5A9A9
+          C3B3B3B8A5A552BD7A00EC6600E76200E25D00D95000CF4300C83C00C03600B8
+          3100B02B00A725009F1F00961A008E13B5D4B69A8E8E000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBEB2B2
+          C2B1B1B5A2A233D67A00F46E00EF6900E96400E35E00DB5400CF4400C53A00BD
+          3500B42F00AC2900A322009A1D009216B5D6B7887A7A000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000C9BDBD
+          C0B0B0B4A0A021E97D00FB7500F67000F06A00E96400E25D00DB5600D24D00C4
+          3D00B83200B02C00A625009E1F009519E2E8E07B6969000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000D0C4C4
+          BEADADB09C9C14FF8307FF7D00FC7600F67000EF6900E86200E05B00D85300D0
+          4B00C33E00B33000AA2800A12200971BF1EDED6A5B5B000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB2AAAAD5C9C9
+          BCAAAA97AA972CFF9019FF8607FF7D00FB7500F46E00EC6700E45F00DC5700D4
+          4F00CB4600C03C00AD2B00A324009A1DDDD5D5544848000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC4BCBCD0C4C4
+          BEADAD8FB49945FF9D2DFF9116FF8403FE7A00F87300F06A00E86200DF5A00D7
+          5200CE4900C54100B83500A5263AAE50E0D8D8554848000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD0C8C8CEC0C0
+          BEADAD8BC6A05DFFAA40FF9B24FF8C0BFF7F00FB7600F36D00EA6500E15C00D9
+          5400D04B00C74300BE3A00AB2A39AE50D7CDCD473C3C000000000000FFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDAD2D2CFC2C2
+          BAA8A896C6A770FFB44FFFA22EFF9112FF8301FD7800F56F00EC6700E35E00DA
+          5500D24D00C84400C03B00B43055B768CEC1C1000000000000FFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFDED7D7CBBEBE
+          C3B4B4AB9E9A8FC6A26AE2A03BF89417FF8502FE7900F67000ED6800E45F00DB
+          5600D24D00C94400C03C00B73375C484CFC2C2000000000000FFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE1DADADDD4D4
+          C9BBBBC9BABACCBFBFC5B5B5C1B1B1B1AFA789BA9956C6833EC97620D56900DB
+          5600D24D00C94500C03C00B73382CB91B7A5A5000000000000FFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE5DEDEDED7D7
+          DAD1D1D7CCCCD2C6C6CFC2C2CEC2C2D2C6C6D6CBCBDFD7D7DBD1D1D7CDCDCEC1
+          C1A6C3AA80C39162BB7859BA70DADFD7AD9E9E000000000000FFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFD2C6C6CCBFBFC3B6B6BFB0B0BCACACB9A7A7BEADADC5B6B6CBBD
+          BDDCD3D3E8E2E2F6F3F3F0ECECF7F5F59B8787000000000000FFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB5A1A1AE9B9BA792
+          92A28C8CA18989A38B8BBAA7A7A992927D6B6B000000000000FFFFFFFFFFFFFF
+          FFFF}
+        Transparent = True
+      end
+      object Label15: TLabel
+        Left = 80
+        Top = 16
+        Width = 249
+        Height = 39
+        Caption = 
+          'You can share this folder with other user on your network. To en' +
+          'able sharing for this folder, click Share this folder'
+        WordWrap = True
+      end
+      object rbtnDoNotShare: TRadioButton
+        Left = 40
+        Top = 72
+        Width = 145
+        Height = 17
+        Caption = 'Do not share this folder'
+        Checked = True
+        TabOrder = 2
+        OnClick = rbtnDoNotShareClick
+      end
+      object pnShareFolder: TPanel
+        Left = 8
+        Top = 104
+        Width = 329
+        Height = 225
+        BevelInner = bvRaised
+        BevelOuter = bvLowered
+        Enabled = False
+        TabOrder = 1
+        object Label16: TLabel
+          Left = 16
+          Top = 24
+          Width = 57
+          Height = 13
+          Caption = 'Share name:'
+        end
+        object Label17: TLabel
+          Left = 16
+          Top = 56
+          Width = 48
+          Height = 13
+          Caption = 'Comment:'
+        end
+        object Label18: TLabel
+          Left = 16
+          Top = 88
+          Width = 46
+          Height = 13
+          Caption = 'User limit:'
+        end
+        object edComment: TEdit
+          Left = 96
+          Top = 53
+          Width = 217
+          Height = 21
+          TabOrder = 4
+        end
+        object rbtnMaximum: TRadioButton
+          Left = 96
+          Top = 88
+          Width = 113
+          Height = 17
+          Caption = 'Maximum allowed'
+          Checked = True
+          TabOrder = 5
+          OnClick = rbtnMaximumClick
+        end
+        object rbtnAllowNumber: TRadioButton
+          Left = 96
+          Top = 112
+          Width = 145
+          Height = 17
+          Caption = 'Allow this number of user:'
+          TabOrder = 6
+          OnClick = rbtnAllowNumberClick
+        end
+        object spedNumAllow: TSpinEdit
+          Left = 254
+          Top = 110
+          Width = 59
+          Height = 21
+          Enabled = False
+          TabOrder = 7
+        end
+        object Label19: TLabel
+          Left = 16
+          Top = 152
+          Width = 203
+          Height = 26
+          Caption = 
+            'To set permissions for users who acces this folder over the netw' +
+            'ork, click Permissions.'
+          WordWrap = True
+        end
+        object Label20: TLabel
+          Left = 16
+          Top = 192
+          Width = 144
+          Height = 26
+          Caption = 'To configure setting for offline access, click  Caching'
+          WordWrap = True
+        end
+        object btnPermission: TButton
+          Left = 234
+          Top = 153
+          Width = 81
+          Height = 23
+          Caption = 'Permissions'
+          TabOrder = 10
+        end
+        object btnCaching: TButton
+          Left = 234
+          Top = 192
+          Width = 81
+          Height = 23
+          Caption = 'Caching'
+          TabOrder = 11
+        end
+        object cbxShareName: TComboBox
+          Left = 96
+          Top = 20
+          Width = 217
+          Height = 21
+          ItemHeight = 15
+          TabOrder = 3
+        end
+      end
+      object rbtnShareFolderRadioButton2: TRadioButton
+        Left = 40
+        Top = 96
+        Width = 113
+        Height = 17
+        Caption = 'Share this folder'
+        TabOrder = 3
+        OnClick = rbtnShareFolderRadioButton2Click
+      end
+    end
+    object tbshSecurity: TTabSheet
+      Caption = 'Security'
+      ImageIndex = 3
+      object Label10: TLabel
+        Left = 8
+        Top = 8
+        Width = 99
+        Height = 13
+        Caption = 'Group or user names:'
+      end
+      object Label11: TLabel
+        Left = 8
+        Top = 192
+        Width = 75
+        Height = 13
+        Caption = 'Permissions for '
+      end
+      object Label12: TLabel
+        Left = 8
+        Top = 330
+        Width = 158
+        Height = 26
+        Caption = 'For special permissions or for advanced settings, click Advanced'
+        WordWrap = True
+      end
+      object btnAdvanced: TButton
+        Left = 237
+        Top = 333
+        Width = 97
+        Height = 23
+        Caption = 'Advanced'
+        TabOrder = 3
+        OnClick = btnAdvancedClick
+      end
+      object lvUserList: TListView
+        Left = 8
+        Top = 32
+        Width = 325
+        Height = 121
+        ColumnClick = False
+        ColumnMove = False
+        Columns = <
+          item
+            Tag = 0
+            Width = 160
+          end
+          item
+            Tag = 0
+            Width = 160
+          end>
+        RowSelect = True
+        ReadOnly = True
+        TabOrder = 4
+        ViewStyle = vsReport
+        OnItemClick = lvUserListItemClick
+      end
+      object btnAddUserGroup: TButton
+        Left = 176
+        Top = 160
+        Width = 75
+        Height = 23
+        Caption = 'Add'
+        TabOrder = 5
+        OnClick = btnAddUserGroupClick
+      end
+      object btnRemoveUserGroup: TButton
+        Left = 259
+        Top = 160
+        Width = 75
+        Height = 23
+        Caption = 'Remove'
+        TabOrder = 6
+        OnClick = btnRemoveUserGroupClick
+      end
+      object Label13: TLabel
+        Left = 240
+        Top = 192
+        Width = 25
+        Height = 13
+        Caption = 'Allow'
+      end
+      object Label14: TLabel
+        Left = 299
+        Top = 192
+        Width = 24
+        Height = 13
+        Caption = 'Deny'
+      end
+      object Panel5: TPanel
+        Left = 8
+        Top = 208
+        Width = 325
+        Height = 113
+        BevelInner = bvLowered
+        BevelOuter = bvNone
+        Color = clWhite
+        Font.Color = clBlack
+        Font.Height = 11
+        Font.Name = 'Helvetica'
+        Font.Pitch = fpVariable
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 9
+        object Label24: TLabel
+          Left = 16
+          Top = 40
+          Width = 23
+          Height = 13
+          Caption = 'Read'
+        end
+        object Label25: TLabel
+          Left = 16
+          Top = 64
+          Width = 24
+          Height = 13
+          Caption = 'Write'
+        end
+        object Label26: TLabel
+          Left = 16
+          Top = 88
+          Width = 37
+          Height = 13
+          Caption = 'Execute'
+        end
+        object Label27: TLabel
+          Left = 16
+          Top = 16
+          Width = 68
+          Height = 13
+          Caption = 'All permissions'
+        end
+        object chbxAllAllow: TCheckBox
+          Left = 239
+          Top = 8
+          Width = 17
+          Height = 30
+          TabOrder = 4
+          OnClick = chbxAllAllowClick
+        end
+        object chbxReadAllow: TCheckBox
+          Left = 239
+          Top = 32
+          Width = 17
+          Height = 30
+          TabOrder = 5
+          OnClick = chbxReadAllowClick
+        end
+        object chbxWriteAllow: TCheckBox
+          Left = 239
+          Top = 56
+          Width = 17
+          Height = 30
+          TabOrder = 6
+          OnClick = chbxWriteAllowClick
+        end
+        object chbxExecAllow: TCheckBox
+          Left = 239
+          Top = 80
+          Width = 17
+          Height = 30
+          TabOrder = 7
+          OnClick = chbxExecAllowClick
+        end
+        object chbxAllDeny: TCheckBox
+          Left = 295
+          Top = 8
+          Width = 17
+          Height = 30
+          TabOrder = 8
+          OnClick = chbxAllDenyClick
+        end
+        object chbxReadDeny: TCheckBox
+          Left = 295
+          Top = 32
+          Width = 17
+          Height = 30
+          TabOrder = 9
+          OnClick = chbxReadDenyClick
+        end
+        object chbxWriteDeny: TCheckBox
+          Left = 295
+          Top = 56
+          Width = 17
+          Height = 30
+          TabOrder = 10
+          OnClick = chbxWriteDenyClick
+        end
+        object chbxExecDeny: TCheckBox
+          Left = 295
+          Top = 80
+          Width = 17
+          Height = 30
+          TabOrder = 11
+          OnClick = chbxExecDenyClick
+        end
+      end
+    end
+  end
+end

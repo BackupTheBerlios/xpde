@@ -1,0 +1,146 @@
+object SecurityDlg: TSecurityDlg
+  Left = 419
+  Top = 276
+  Width = 480
+  Height = 325
+  HorzScrollBar.Range = 473
+  VertScrollBar.Range = 320
+  ActiveControl = btnCancel
+  Caption = 'Advanced Security Settings'
+  Color = clBackground
+  Position = poDesktopCenter
+  Scaled = False
+  WindowState = wsMinimized
+  OnCreate = FormCreate
+  PixelsPerInch = 78
+  object btnCancel: TButton
+    Left = 319
+    Top = 297
+    Width = 74
+    Height = 23
+    Caption = 'Cancel'
+    TabOrder = 2
+    OnClick = btnCancelClick
+  end
+  object btnApply: TButton
+    Left = 399
+    Top = 297
+    Width = 74
+    Height = 23
+    Caption = 'Apply'
+    Enabled = False
+    TabOrder = 3
+    OnClick = btnApplyClick
+  end
+  object PageControl1: TPageControl
+    Left = 8
+    Top = 8
+    Width = 465
+    Height = 281
+    ActivePage = TabSheet1
+    TabOrder = 0
+    object TabSheet1: TTabSheet
+      Caption = 'Owner'
+      object Label1: TLabel
+        Left = 8
+        Top = 16
+        Width = 320
+        Height = 13
+        Caption = 
+          'You can take ownership of object if your the appropriate permiss' +
+          'ions.'
+      end
+      object Label2: TLabel
+        Left = 8
+        Top = 40
+        Width = 126
+        Height = 13
+        Caption = 'Current owner of this item:'
+      end
+      object edOwner: TEdit
+        Left = 8
+        Top = 56
+        Width = 345
+        Height = 21
+        ReadOnly = True
+        TabOrder = 0
+      end
+      object lstUser: TListView
+        Left = 8
+        Top = 88
+        Width = 440
+        Height = 130
+        ColumnClick = False
+        ColumnMove = False
+        ColumnResize = False
+        Columns = <
+          item
+            AllowClick = False
+            AllowResize = False
+            Caption = 'Name'
+            Tag = 0
+            Width = 420
+          end>
+        Images = ImageList1
+        RowSelect = True
+        ReadOnly = True
+        TabOrder = 1
+        ViewStyle = vsReport
+        OnItemClick = lstUserItemClick
+      end
+      object chRecursive: TCheckBox
+        Left = 16
+        Top = 224
+        Width = 257
+        Height = 20
+        Caption = 'Replace owner on subdiretories'
+        TabOrder = 4
+      end
+    end
+  end
+  object btnOk: TButton
+    Left = 239
+    Top = 297
+    Width = 74
+    Height = 23
+    Caption = 'Ok'
+    TabOrder = 1
+    OnClick = btnOkClick
+  end
+  object ImageList1: TImageList
+    Left = 8
+    Top = 296
+    Bitmap = {
+      494D474C01000100100000001000000001000000424D36030000000000003600
+      0000280000001000000010000000010018000000000000030000120B0000120B
+      00000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFF0804B40808E61814FF2020FF5228FF2924FF2020
+      FF1010FF0804BDFFFFFFFFFFFF086508088D00109110189110187D2008147B20
+      1CE6181CF62928FF2928FF292CFF2024FF201CFF000052FFFFFF08891010A510
+      18FF1820FF205AFF5A31FF291871833124AC623CFF3934FF3938FF3134FF6A3C
+      FF201CE6FFFFFFFFFFFFFFFFFF208D2031C23131FF3131F62939FF3120BE3129
+      30C55A59C55A55F65250CD5A5DFF4A48CD080852FFFFFFFFFFFFFFFFFF108118
+      7BCE7B52CA4A7BE67352D24A83F673105041392CDE6265D59C7DFF5250F61810
+      A4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF29A1206AE2626ACE626AE66229A129FF
+      FFFF181C735A61FF6A79E64140D5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFF39B64A9CEEAC41BA52FFFFFF5A658BD5E2FFB4D6FFEEF2FFC5E2FFD5D6
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8399CDD5DEFFB4D2FFE6E6FF8BAADEBD
+      CEFFA4C6FFD5E6FFACD2FFDEEAFFB4DEFFCDDAFFFFFFFFFFFFFFFFFFFF83AAFF
+      CDDEFFACCEFFDEEAFFB4DAFFBDD2FF8BB6FFC5DAFFA4CAFFDEEEFFACDAFFDEEE
+      FFB4E2FF8B85BDFFFFFFFFFFFFB4CEFF94BEF6C5DEFFA4DAFFA4BEFF527DBDBD
+      D6FF94C2FFBDD2FF5A85C54A69CD41659C6285DE526D94FFFFFF9444837B9DFF
+      B4DEFF8BC2FFB4A1D5393462001CA44A79CDBDD2FF3161E60820A40018620814
+      73000C31080820FFFFFF6A10088B3C398B99C5B485CD8B2818621C2910309429
+      59EE3965CD2959EE2950AC314CC529447B293C62000820FFFFFFFFFFFFB45D52
+      EE8594E66962DE7D83AC59528350AC5A89FFA4AEFF7391FF9CA5FF738DEEACA5
+      E6394873FFFFFFFFFFFFFFFFFFB44441DEA19CFFC6D5D5AAA4FFBECDBD898352
+      48736281CDC5C2FF9CAEDE8B99EE41507BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFB47973F6AABDAC7173FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFF424D7E000000000000003E0000002800000010000000
+      10000000010001000000000040000000120B0000120B00000200000002000000
+      FFFFFF00000000000000000000000000000070100000FFFD000090400000D210
+      000000000000000000000000000000000000D0100000FFFD0000FFFF00000000
+      000000000000D210}
+  end
+end

@@ -7,7 +7,8 @@ uses
   uResources in 'uResources.pas',
   uResourceFileFrm in 'uResourceFileFrm.pas' {ResourceFileFrm},
   uResourceAPI in 'uResourceAPI.pas',
-  uStringEditor in 'uStringEditor.pas' {StringEditor};
+  uStringEditor in 'uStringEditor.pas' {StringEditor},
+  uFormEditor in 'uFormEditor.pas';
 
 {$R *.res}
 

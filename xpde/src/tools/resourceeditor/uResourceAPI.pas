@@ -32,7 +32,10 @@ type
         FOnDestroy: TNotifyEvent;
         procedure SetOnDestroy(const Value: TNotifyEvent);
     public
-       procedure edit(const entry:TResourceEntry);virtual;abstract;
+       entry: TResourceEntry;
+       procedure loadeditor; virtual; abstract;
+       procedure savefromeditor; virtual; abstract;
+       procedure edit(const anentry:TResourceEntry);virtual;abstract;
        destructor Destroy;override;
        property OnDestroy: TNotifyEvent read FOnDestroy write SetOnDestroy;
     end;

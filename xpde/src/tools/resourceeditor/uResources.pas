@@ -133,7 +133,6 @@ begin
     end;
 end;
 
-//Return all the resource names in strings
 function TResourceFile.getIsModified: boolean;
 var
     i:longint;
@@ -147,6 +146,7 @@ begin
     end;
 end;
 
+//Return all the resource names in strings
 procedure TResourceFile.getResourceNames(strings: TStrings);
 var
     i:longint;

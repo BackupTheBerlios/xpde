@@ -28,37 +28,46 @@ uses
   SysUtils, Types, Classes,
   Variants, QTypes, QGraphics,
   QControls, QForms, QDialogs,
-  QStdCtrls, uResources, uResourceAPI;
+  QStdCtrls, uResources, uFormEditor,
+  uResourceAPI, QGrids;
 
 type
   TStringResourceEditor=class;
 
   //The form to edit strings
   TStringEditor = class(TForm)
-    meStrings: TMemo;
+    sgStrings: TStringGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure meStringsChange(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure sgStringsSetEditText(Sender: TObject; ACol, ARow: Integer;
+      const Value: WideString);
   private
     { Private declarations }
-    editor: TStringResourceEditor;                                              //The editor
-    loading:boolean;                                                            //A simple switch
+    editor: TResourceEditor;                                              //The editor
   public
     { Public declarations }
-    procedure loadfromentry;                                                    //Load the strings into the memo
-    procedure savetoentry;                                                      //Save the memo strings to the stream
+    procedure loadfromstrings(strings:TStrings);
   end;
 
   TStringResourceEditor=class(TResourceEditor)
   private
        stringeditor: TStringEditor;                                             //The form
-       entry: TResourceEntry;
   public
-       procedure edit(const entry:TResourceEntry);override;                     //Creates the string editor form
+       procedure loadeditor; override;
+       procedure savefromeditor; override;
+       procedure edit(const anentry:TResourceEntry);override;                     //Creates the string editor form
        destructor Destroy;override;                                             //Closes and saves
   end;
 
-var
-  StringEditor: TStringEditor;
+  TFormResourceEditor=class(TResourceEditor)
+  private
+       stringeditor: TStringEditor;                                             //The form
+  public
+       procedure loadeditor; override;
+       procedure savefromeditor; override;
+       procedure edit(const anentry:TResourceEntry);override;                     //Creates the string editor form
+       destructor Destroy;override;                                             //Closes and saves
+  end;
 
 implementation
 
@@ -69,21 +78,21 @@ implementation
 destructor TStringResourceEditor.Destroy;
 begin
     //When the editor must close, saves the data to the entry if modified and releases the form
-    if entry.Modified then stringeditor.savetoentry;
+    if entry.Modified then savefromeditor;
     stringeditor.release;
     stringeditor:=nil;
     inherited;
 end;
 
-procedure TStringResourceEditor.edit(const entry: TResourceEntry);
+procedure TStringResourceEditor.edit(const anentry: TResourceEntry);
 begin
     if not assigned(stringeditor) then begin
         //Create the editor and setup all is needed
         stringeditor:=TStringEditor.create(nil);
         stringeditor.editor:=self;
-        stringeditor.caption:=stringeditor.caption+' - '+entry.resourcename;
-        self.entry:=entry;
-        stringeditor.loadfromentry;
+        stringeditor.caption:=stringeditor.caption+' - '+anentry.resourcename;
+        entry:=anentry;
+        loadeditor;
 
     end;
 end;
@@ -95,10 +104,18 @@ begin
     editor.free;
 end;
 
-//It must support unicode!!!
-procedure TStringEditor.loadfromentry;
+procedure TStringEditor.FormResize(Sender: TObject);
+var
+    w: integer;
+begin
+    w:=(clientwidth - 2) - sgStrings.ColWidths[0];
+    sgStrings.ColWidths[1]:=w;
+end;
+
+procedure TStringResourceEditor.loadeditor;
 var
     b: byte;
+    strings: TStringList;
     line:string;
     function readString(length:integer):string;
     var
@@ -107,41 +124,33 @@ var
     begin
         result:='';
         for k:=0 to length-1 do begin
-            editor.entry.data.Read(c,1); //#0
-            editor.entry.data.Read(c,1);
+            entry.data.Read(c,1); //#0
+            entry.data.Read(c,1);
             result:=result+c;
         end;
-        editor.entry.data.Read(c,1); //#0
+        entry.data.Read(c,1); //#0
     end;
 begin
-    loading:=true;
+    strings:=TStringList.create;
     try
-        meStrings.lines.clear;
-        editor.entry.data.Position:=0;
+        entry.data.Position:=0;
         line:='';
-        while editor.entry.data.position<editor.entry.data.size do begin
-            editor.entry.data.Read(b,1);
+        while entry.data.position<entry.data.size do begin
+            entry.data.Read(b,1);
             if b=0 then break;
             //b= size of the string to read *2 (unicode)
             line:=readstring(b);
-            meStrings.lines.add(line);
+            strings.add(line+'='+line);
         end;
-        editor.entry.data.Position:=0;
-        meStrings.modified:=false;
+        entry.data.Position:=0;
+        stringeditor.loadfromstrings(strings);
     finally
-        loading:=false;
+        strings.free;
     end;
+    entry.Modified:=false;
 end;
 
-procedure TStringEditor.meStringsChange(Sender: TObject);
-begin
-    //If not loading and the memo changes, then, the entry must be marked as modified
-    if not loading then begin
-        editor.entry.Modified:=true;
-    end;
-end;
-
-procedure TStringEditor.savetoentry;
+procedure TStringResourceEditor.savefromeditor;
 var
     i:integer;
     line:string;
@@ -149,23 +158,98 @@ var
     d: char;
     k: integer;
 begin
-    editor.entry.data.Clear;
-    for i:=0 to meStrings.Lines.count-1 do begin
-        line:=meStrings.lines[i];
+    entry.data.Clear;
+    for i:=0 to stringeditor.sgStrings.rowcount-1 do begin
+        line:=stringeditor.sgStrings.cells[1,i];
         c:=length(line);
-        editor.entry.data.Write(c,1);
+        entry.data.Write(c,1);
         for k:=1 to length(line) do begin
             d:=#0;
-            editor.entry.data.Write(d,1);
+            entry.data.Write(d,1);
             d:=line[k];
-            editor.entry.data.Write(d,1);
+            entry.data.Write(d,1);
         end;
         d:=#0;
-        editor.entry.data.Write(d,1);
+        entry.data.Write(d,1);
+    end
+end;
+
+{ TFormResourceEditor }
+
+destructor TFormResourceEditor.Destroy;
+begin
+    //When the editor must close, saves the data to the entry if modified and releases the form
+    if entry.Modified then savefromeditor;
+    stringeditor.release;
+    stringeditor:=nil;
+    inherited;
+end;
+
+procedure TFormResourceEditor.edit(const anentry: TResourceEntry);
+begin
+    if not assigned(stringeditor) then begin
+        //Create the editor and setup all is needed
+        stringeditor:=TStringEditor.create(nil);
+        stringeditor.editor:=self;
+        stringeditor.caption:=stringeditor.caption+' - '+anentry.resourcename;
+        entry:=anentry;
+        loadeditor;
     end;
+end;
+
+procedure TStringEditor.loadfromstrings(strings: TStrings);
+var
+    i:longint;
+begin
+    sgStrings.RowCount:=strings.count;
+    for i:=0 to strings.count-1 do begin
+        sgStrings.Cells[0,i]:=strings.names[i];
+        sgStrings.Cells[1,i]:=strings.values[strings.names[i]];
+    end;
+end;
+
+procedure TFormResourceEditor.loadeditor;
+var
+    str: TStringList;
+begin
+    str:=TStringList.create;
+    try
+        GetFormRes(entry,str);
+        stringeditor.loadfromstrings(str);
+    finally
+        str.free;
+    end;
+    entry.Modified:=false;
+end;
+
+procedure TFormResourceEditor.savefromeditor;
+var
+    str: TStringList;
+    i:integer;
+    name:string;
+    value:string;
+begin
+    str:=TStringList.create;
+    try
+        for i:=0 to stringeditor.sgStrings.rowcount-1 do begin
+            name:=stringeditor.sgStrings.cells[0,i];
+            value:=stringeditor.sgStrings.cells[1,i];
+            str.add(name+'='+value);
+        end;
+        SetFormRes(entry, str);
+    finally
+        str.free;
+    end;
+end;
+
+procedure TStringEditor.sgStringsSetEditText(Sender: TObject; ACol,
+  ARow: Integer; const Value: WideString);
+begin
+    editor.entry.Modified:=true;
 end;
 
 initialization
     ResourceAPI.registerEditor('string',TStringResourceEditor);
+    ResourceAPI.registerEditor('RCDATA',TFormResourceEditor);
 
 end.

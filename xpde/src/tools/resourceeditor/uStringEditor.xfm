@@ -1,32 +1,31 @@
 object StringEditor: TStringEditor
-  Left = 408
-  Top = 386
+  Left = 491
+  Top = 414
   Width = 444
   Height = 264
-  ActiveControl = meStrings
+  ActiveControl = sgStrings
   Caption = 'String Editor'
   Color = clBackground
   FormStyle = fsMDIChild
   Position = poDefault
   OnClose = FormClose
+  OnResize = FormResize
   PixelsPerInch = 84
-  TextHeight = 20
+  TextHeight = 16
   TextWidth = 7
-  object meStrings: TMemo
+  object sgStrings: TStringGrid
     Left = 0
     Top = 0
     Width = 444
     Height = 264
     Align = alClient
-    Font.Color = clBlack
-    Font.Height = 12
-    Font.Name = 'adobe-courier'
-    Font.Pitch = fpFixed
-    Font.Style = []
-    ParentFont = False
-    ScrollBars = ssBoth
+    ColCount = 2
+    DefaultColWidth = 150
+    DefaultRowHeight = 20
+    FixedRows = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing, goThumbTracking]
+    ScrollBars = ssVertical
     TabOrder = 0
-    WordWrap = False
-    OnChange = meStringsChange
+    OnSetEditText = sgStringsSetEditText
   end
 end

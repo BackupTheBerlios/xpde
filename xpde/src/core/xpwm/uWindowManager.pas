@@ -79,7 +79,7 @@ type
         //**********************************
         function handleButtonPress(var event:XEvent):integer;
         function handleButtonRelease(var event:XEvent):integer;
-        function handleKeyRelease(var event:XEvent):integer;        
+        function handleKeyRelease(var event:XEvent):integer;
         function handleMotionNotify(var event:XEvent):integer;
         function handleEnterNotify(var event:XEvent):integer;
         function handleLeaveNotify(var event:XEvent):integer;
@@ -845,7 +845,9 @@ end;
 function TXPWindowManager.handleUnmapNotify(var event:XEvent): integer;
 var
     c: TWMClient;
+    p: TWMCLient;
     xwindow: window;
+    i: integer;
 begin
     xwindow:=event.xunmap.xwindow;
     {$ifdef DEBUG}
@@ -862,15 +864,17 @@ begin
            xlibinterface.outputDebugString(iINFO,format('Removing client %s',[xlibinterface.formatwindow(xwindow)]));
            {$endif}
             clients.Remove(c);
+
             if c=FActiveClient then begin
-                ActiveClient:=nil;
-                {
                 if Clients.count>=1 then begin
-                    writeln('000');
-                    ActiveClient:=clients[0];
-                    writeln('111');
-                end;
-                }
+                    p:=clients[0];
+                    if assigned(p) then begin
+                        p.activate;
+                    end
+                    else ActiveClient:=nil;
+
+                end
+                else ActiveClient:=nil;
             end;
             c.free;
         end
@@ -1256,12 +1260,11 @@ begin
         if assigned(old) then old.updateactivestate;
         if assigned(FActiveClient) then begin
             FActiveClient.updateactivestate;
-            {
+
             if clients.count>1 then begin
-                clients.Remove(FActiveClient);
-                clients.Insert(0,FActiveClient);
+                if (clients.Remove(FActiveClient)<>-1) then clients.Insert(0,FActiveClient);
             end;
-            }
+
         end;
     end;
 end;

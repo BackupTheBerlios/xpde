@@ -44,9 +44,9 @@ const
     gSHORTCUT='shortcut.png';
     gFOLDER='folder.png';
     gMYDOCUMENTS='folder2.png';
-    gMYCOMPUTER='computer.png';
+    gMYCOMPUTER='mycomputer.png';
     gMYHOME='folder_home.png';
-    gMYNETWORKPLACES='package_network.png';
+    gMYNETWORKPLACES='network.png';
     gRECYCLEBINEMPTY='trashcan_empty.png';
     gFOLDERSMALL='foldersmall.png';
     gSHORTCUTSMALL='shortcutsmall.png';

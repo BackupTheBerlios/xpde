@@ -27,7 +27,7 @@ interface
 uses
   Xlib,SysUtils, Types,
   Classes, QGraphics, uXPStyleConsts,
-  QControls, QForms, QDialogs,
+  QControls, QForms, QDialogs, resample,
   QButtons, QStdCtrls, uWindowManager,
   QExtCtrls, Qt;
 
@@ -55,6 +55,9 @@ type
       public
         { Public declarations }
         client:TWMClient;
+        mini_icon_a: TBitmap;
+        mini_icon_i: TBitmap;
+        mini_icon_s: TBitmap;                
         gradbmp: TBitmap;
         lastRect: TRect;                                                        //To hold the last rect drawn to prevent repaint the gradient
 
@@ -86,6 +89,7 @@ type
         procedure setTitle(ATitle:widestring);
         function getTitle:widestring;
         procedure updateActiveState;
+        procedure setupIcons;
   end;
 
 var
@@ -152,6 +156,18 @@ procedure TWindowsClassic.FormCreate(Sender: TObject);
 var
     co: TPoint;
 begin
+    mini_icon_a:=TBitmap.create;
+    mini_icon_a.width:=16;
+    mini_icon_a.height:=16;
+
+    mini_icon_i:=TBitmap.create;
+    mini_icon_i.width:=16;
+    mini_icon_i.height:=16;
+
+    mini_icon_s:=TBitmap.create;
+    mini_icon_s.width:=16;
+    mini_icon_s.height:=16;
+
     resizetype:=0;
     client:=nil;
     lbTitle.font.color:=clSilver;
@@ -544,7 +560,16 @@ procedure TWindowsClassic.paintTitle;
             gradbmp.canvas.brush.color:=endcolor;
             gradbmp.canvas.fillrect(rect(limit-step,0,limit,lbottom));
             imgIcon.picture.Graphic.Transparent:=true;
-            gradbmp.Canvas.Draw(0,0,imgIcon.picture.graphic);
+
+//            gradbmp.Canvas.StretchDraw(rect(1,1,17,17),imgIcon.picture.graphic);
+            if client.isactive then begin
+                mini_icon_a.Transparent:=false;
+                gradbmp.Canvas.Draw(1,1,mini_icon_a);
+            end
+            else begin
+                mini_icon_i.Transparent:=false;
+                gradbmp.Canvas.Draw(1,1,mini_icon_i);
+            end;
         end;
         canvas.Draw(arect.Left,arect.top,gradbmp);
     end;
@@ -567,6 +592,8 @@ end;
 
 procedure TWindowsClassic.FormDestroy(Sender: TObject);
 begin
+    mini_icon_a.free;
+    mini_icon_i.free;    
     gradbmp.free;
 end;
 
@@ -603,7 +630,72 @@ begin
     end;
 
     lbTitle.Caption:=wc;
-    
+
+end;
+
+procedure TWindowsClassic.setupIcons;
+var
+    s: TBitmap;
+    m: TBitmap;
+    x,y: integer;
+begin
+    s:=TBitmap.create;
+    try
+        s.Canvas.Brush.Color:=$6b2408;
+        s.canvas.pen.color:=$6b2408;
+        s.width:=imgIcon.picture.bitmap.width;
+        s.height:=imgIcon.picture.bitmap.height;
+        s.Canvas.Draw(0,0,imgIcon.picture.bitmap);
+        strecth(s,mini_icon_a,resampleFilters[1].filter,resamplefilters[1].width);
+    finally
+        s.free;
+    end;
+
+    s:=TBitmap.create;
+    try
+        s.Canvas.Brush.Color:=clGray;
+        s.canvas.pen.color:=clGray;
+        s.width:=imgIcon.picture.bitmap.width;
+        s.height:=imgIcon.picture.bitmap.height;
+        s.Canvas.Draw(0,0,imgIcon.picture.bitmap);
+        strecth(s,mini_icon_i,resampleFilters[1].filter,resamplefilters[1].width);
+    finally
+        s.free;
+    end;
+
+    m:=TBitmap.create;
+    try
+
+        m.width:=16;
+        m.height:=16;
+        m.Canvas.Brush.Color:=clFuchsia;
+        m.canvas.pen.color:=clFuchsia;
+        m.Canvas.StretchDraw(rect(0,0,16,16),imgIcon.Picture.Bitmap);
+
+        strecth(imgIcon.picture.bitmap,mini_icon_s,resampleFilters[1].filter,resamplefilters[1].width);
+
+        m.SaveToFile('/home/ttm/t.bmp');
+        for y:=0 to 15 do begin
+            for x:=0 to 15 do begin
+                if m.Canvas.Pixels[x,y]=clFuchsia then begin
+                    mini_icon_s.Canvas.Pixels[x,y]:=clFuchsia;
+                end;
+            end;
+        end;
+
+        {
+        s.Canvas.Brush.Color:=clFuchsia;
+        s.canvas.pen.color:=clFuchsia;
+        s.width:=imgIcon.picture.bitmap.width;
+        s.height:=imgIcon.picture.bitmap.height;
+        s.Canvas.Draw(0,0,imgIcon.picture.bitmap);
+        s.Canvas.StretchDraw(rect(0,0,16,16),imgIcon.Picture.Bitmap);
+
+        mini_icon_s.Assign(s);
+        }
+    finally
+        m.free;
+    end;
 end;
 
 initialization

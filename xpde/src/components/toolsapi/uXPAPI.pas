@@ -68,6 +68,7 @@ type
         function isactive:boolean;
         procedure activate;
         function getTitle: widestring;
+        function getBitmap: TBitmap;
         function getWindow: Window;
     end;
 

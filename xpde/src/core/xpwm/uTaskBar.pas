@@ -309,7 +309,7 @@ begin
         t.Caption:=client.gettitle;
         t.Hint:=client.gettitle;
         t.OnMouseUp:=toolbutton1mouseup;
-        t.Bitmap.Assign(emptytask.picture.graphic);
+        t.Bitmap.Assign(client.getbitmap);
         t.showhint:=false;
         t.Tag:=w;
         t.allowallup:=true;

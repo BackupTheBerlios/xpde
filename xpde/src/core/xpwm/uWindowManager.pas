@@ -27,8 +27,8 @@ unit uWindowManager;
 
 interface
 
-uses QForms, SysUtils, Types,
-     Classes, Qt, Libc, XLib,
+uses QForms, SysUtils, Types, QGraphics,
+     Classes, Qt, Libc, XLib, Xpm,
      uWMConsts, uXPAPI, QDialogs;
 
 type
@@ -123,6 +123,7 @@ type
         procedure map;
         procedure focus;
         procedure createFrame;
+        procedure getIcons;
         procedure getSizeHints;
         procedure minimize;
         procedure maximize;
@@ -142,6 +143,7 @@ type
         property Wnd: Window read xwindow write xwindow;
         property WindowState: TWindowState read FWindowState write SetWindowState;
         constructor Create(AWindow:Window; AWindowManager:TXPWindowManager);
+        function getBitmap: TBitmap;
         destructor Destroy;override;
     end;
 
@@ -1523,6 +1525,8 @@ var
 	hints: PXWMHints;
     sizehints: PXSizeHints;
 	name:XTextProperty;
+    data: PChar;
+    str: TMemoryStream;
 //    nw,nh: longint;
 //    state: variant;
     fbs: TRect;
@@ -1592,6 +1596,19 @@ begin
     frame:=TWindowsClassic.create(application);
     (frame as TWindowsClassic).setclient(self);
 
+    if ((hints^.flags and IconPixmapHint)=IconPixmapHint) then begin
+        XpmCreateBufferFromPixmap(FWindowManager.Display,data, hints^.icon_pixmap,hints^.icon_mask,nil);
+        str:=TMemoryStream.create;
+        try
+            str.Write(data^,strlen(data));
+            str.position:=0;
+            (frame as TWindowsClassic).imgIcon.Picture.bitmap.LoadFromStream(str);
+        finally
+            str.free;
+        end;
+    end;
+    (frame as TWindowsClassic).setupIcons;
+
 //    (frame as TWindowsClassic).setclientarea(Rect(attr.x,attr.y,attr.x+attr.width,attr.y+attr.height));
 //   (frame as TWindowsClassic).setclientarea(Rect(sizehints.x,sizehints.y,sizehints.x+sizehints.width,sizehints.y+sizehints.height));
     {$ifdef DEBUG}
@@ -1636,6 +1653,8 @@ begin
 
     (frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
 
+//    getIcons;
+
     frame.show;
 
     bringtofront;
@@ -1655,6 +1674,10 @@ begin
     nw:=c.width;
     nh:=c.height;
 }
+
+
+
+//*********************************
 
 
     {$ifdef DEBUG}
@@ -1725,6 +1748,52 @@ begin
     xlibinterface.outputDebugString(iMETHOD,'TWMClient.focus '+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
     {$endif}
     XSetInputFocus (WindowManager.Display,xwindow, RevertToPointerRoot, CurrentTime);
+end;
+
+function TWMClient.getBitmap: TBitmap;
+begin
+    result:=(frame as TWindowsClassic).mini_icon_s;
+end;
+
+procedure TWMClient.getIcons;
+var
+  atype: Atom;
+  format: integer;
+  nitems:integer;
+  bytes_after:integer;
+  icons:PPixmap;
+  apixmap: Pixmap;
+  mask: Pixmap;
+  err, result: integer;
+begin
+{
+static void
+get_kwm_win_icon (MetaDisplay *display,
+                  Window       xwindow,
+                  Pixmap      *pixmap,
+                  Pixmap      *mask)
+}
+
+  apixmap := None;
+  mask := None;
+
+  result := XGetWindowProperty (FWindowManager.FDisplay, xwindow, FWindowManager.Atoms[atom_kwm_win_icon],
+			       0, MaxInt,  0, FWindowManager.Atoms[atom_kwm_win_icon], @atype, @format, @nitems, @bytes_after, @icons);
+
+                  
+  if (atype <> FWindowManager.Atoms[atom_kwm_win_icon]) then begin
+      XFree (icons);
+      exit;
+  end;
+
+  apixmap := icons^;
+  inc(PChar(icons),4);
+  mask := icons^;
+  dec(PChar(icons),4);
+
+
+  XFree (icons);
+
 end;
 
 procedure TWMClient.getSizeHints;

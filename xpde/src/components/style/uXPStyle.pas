@@ -211,8 +211,8 @@ begin
                 else begin
                     p:=TXPPNG.create;
                     try
-                        p.BackgroundColor:=brush.color;
                         p.Assign(m.bitmap);
+                        p.BackgroundColor:=brush.color;
                         p.paintToCanvas(canvas,cRect.left+2,gy);
                         //draw(cRect.left+2,gy,m.bitmap);
                     finally

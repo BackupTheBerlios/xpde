@@ -1,8 +1,9 @@
 object MainForm: TMainForm
-  Left = 242
-  Top = 233
+  Left = 210
+  Top = 177
   Width = 696
   Height = 480
+  VertScrollBar.Range = 276
   Caption = 'Resource Editor'
   Color = clGray
   FormStyle = fsMDIForm
@@ -12,6 +13,23 @@ object MainForm: TMainForm
   PixelsPerInch = 84
   TextHeight = 20
   TextWidth = 7
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 431
+    Width = 696
+    Height = 19
+    Panels = <>
+  end
+  object ToolBar1: TToolBar
+    Left = 0
+    Top = 0
+    Width = 696
+    Height = 29
+    Caption = 'ToolBar1'
+    Color = clBackground
+    ParentColor = False
+    TabOrder = 1
+  end
   object MainMenu: TMainMenu
     Left = 532
     Top = 44

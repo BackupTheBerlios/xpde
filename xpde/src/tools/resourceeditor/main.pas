@@ -6,7 +6,7 @@ uses
   SysUtils, Types, Classes,
   Variants, QTypes, QGraphics,
   QControls, QForms, 
-  QDialogs, QStdCtrls, QMenus;
+  QDialogs, QStdCtrls, QMenus, QComCtrls, QExtCtrls;
 
 type
   TMainForm = class(TForm)
@@ -14,6 +14,8 @@ type
     File1: TMenuItem;
     Open1: TMenuItem;
     OpenDialog: TOpenDialog;
+    StatusBar1: TStatusBar;
+    ToolBar1: TToolBar;
     procedure Open1Click(Sender: TObject);
   private
     { Private declarations }

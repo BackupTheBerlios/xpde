@@ -1214,7 +1214,7 @@ begin
     xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.createNewClient');
     {$endif}
     result:=TWMClient.create(w,self);
-    clients.insert(0,result);
+    clients.add(result);
 end;
 
 procedure TXPWindowManager.SetActiveClient(const Value: TWMClient);
@@ -1229,10 +1229,12 @@ begin
         if assigned(old) then old.updateactivestate;
         if assigned(FActiveClient) then begin
             FActiveClient.updateactivestate;
+            {
             if clients.count>1 then begin
                 clients.Remove(FActiveClient);
                 clients.Insert(0,FActiveClient);
             end;
+            }
         end;
     end;
 end;

@@ -146,9 +146,9 @@ LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=0
+BottomPanelSize=85
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
+BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
@@ -159,9 +159,9 @@ LeftCol=1
 
 [View1]
 Module=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
-CursorX=12
-CursorY=2047
-TopLine=2026
+CursorX=14
+CursorY=1237
+TopLine=1208
 LeftCol=1
 
 [PackageWindow0]
@@ -459,26 +459,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=745
+Height=751
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=745
+ClientHeight=751
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=0
+Visible=1
 State=0
-Left=-2
-Top=-631
-Width=443
+Left=12
+Top=0
+Width=1274
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=443
+ClientWidth=1274
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443

@@ -18,6 +18,7 @@ mkdir "/opt/xpde/share/icons"
 mkdir "/opt/xpde/themes"
 
 cp -r themes/default /opt/xpde/themes
+cp -r defaultdesktop /opt/xpde
 cp -r doc/* /opt/xpde/share/doc
 cp *.so* /opt/xpde/bin
 cp XPde /opt/xpde/bin

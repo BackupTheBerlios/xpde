@@ -27,7 +27,7 @@ unit uXPAPI;
 
 interface
 
-uses Classes, QExtCtrls, QForms,
+uses Classes, QExtCtrls, QForms, QMenus,
      SysUtils, QGraphics, Types, Qt,
      XLib;
 
@@ -69,6 +69,7 @@ type
         procedure activate(restore:boolean=true);
         function getTitle: widestring;
         function getBitmap: TBitmap;
+        function getSystemMenu: TPopupMenu;
         function getWindow: Window;
     end;
 

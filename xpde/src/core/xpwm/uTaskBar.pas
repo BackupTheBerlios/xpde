@@ -293,6 +293,7 @@ begin
             if cardinal(t.tag)=w then begin
                 t.caption:=client.gettitle;
                 t.hint:=client.getTitle;
+                t.PopupMenu:=client.getSystemMenu;
                 activetasks.add(t);
                 found:=true;
                 break;
@@ -303,6 +304,7 @@ begin
         t:=TToolButton.create(tbTasks);
         t.Caption:=client.gettitle;
         t.Hint:=client.gettitle;
+        t.PopupMenu:=client.getSystemMenu;
         t.OnMouseUp:=toolbutton1mouseup;
         t.Bitmap.Assign(client.getbitmap);
         t.showhint:=false;

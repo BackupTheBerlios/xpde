@@ -29,7 +29,7 @@ interface
 
 uses QForms, SysUtils, Types, QGraphics,
      Classes, Qt, Libc, XLib, Xpm, uActiveTasks,
-     uWMConsts, uXPAPI, QDialogs;
+     uWMConsts, uXPAPI, QDialogs, QMenus;
 
 type
     TWMClient=class;
@@ -148,6 +148,7 @@ type
         property WindowState: TWindowState read FWindowState write SetWindowState;
         constructor Create(AWindow:Window; AWindowManager:TXPWindowManager);
         function getBitmap: TBitmap;
+        function getSystemMenu: TPopupMenu;
         function getIcon: TBitmap;
         destructor Destroy;override;
     end;
@@ -1899,6 +1900,11 @@ end;
 procedure TWMClient.getSizeHints;
 begin
 
+end;
+
+function TWMClient.getSystemMenu: TPopupMenu;
+begin
+    result:=(frame as TWindowsClassic).PopupMenu1;
 end;
 
 function TWMClient.getTitle: widestring;

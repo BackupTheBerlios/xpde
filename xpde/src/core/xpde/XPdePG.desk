@@ -1,7 +1,7 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,1743,1,1755,0,0
-File_1=SourceModule,'/home/ttm/t.txt',0,1,860,43,898,0,0
-File_2=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,691,27,704,1,0
+File_0=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,1,1,1,1,1
+File_1=SourceModule,'/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas',0,1,1609,13,1625,1,0
+File_2=SourceModule,'/home/ttm/t.txt',0,1,860,43,898,0,0
 File_3=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,77,9,94,0,0
 File_4=SourceModule,'/home/ttm/tray2/Unit1.pas',0,1,10,55,41,0,0
 File_5=SourceModule,'/home/ttm/kylix3/source/rtl/linux/Xlib.pas',0,1,1900,1,1921,0,0
@@ -10,17 +10,13 @@ File_7=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,1,38,8,0,0
 File_8=SourceModule,'/home/ttm/xpde/src/apps/notepad/main.pas',0,1,1,1,1,1,1
 
 [Modules]
-Module0=/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas
+Module0=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
 Count=1
 EditWindowCount=1
 PackageWindowCount=9
 
-[/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas]
+[/home/ttm/xpde/src/core/xpwm/uWindowManager.pas]
 ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[/home/ttm/xpde/src/core/xpde/XPde.dpr]
 FormState=0
 FormOnTop=0
 
@@ -120,6 +116,10 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
+[/home/ttm/xpde/src/core/xpde/XPde.dpr]
+FormState=0
+FormOnTop=0
+
 [EditWindow0]
 ViewCount=1
 CurrentView=0
@@ -128,28 +128,30 @@ CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
 Visible=1
-State=0
-Left=205
-Top=175
+State=2
+Left=201
+Top=152
 Width=1079
 Height=753
-MaxLeft=-1
-MaxTop=-1
-ClientWidth=1079
-ClientHeight=753
+MaxLeft=1
+MaxTop=135
+MaxWidth=1286
+MaxHeight=828
+ClientWidth=1286
+ClientHeight=828
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=85
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
 
 [View0]
-Module=/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas
-CursorX=13
-CursorY=1625
-TopLine=1609
+Module=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
+CursorX=34
+CursorY=1290
+TopLine=1278
 LeftCol=1
 
 [PackageWindow0]
@@ -376,10 +378,10 @@ ClientHeight=87
 
 [ProjectManager]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=373
-Top=395
+Left=369
+Top=372
 Width=535
 Height=368
 MaxLeft=-1
@@ -407,8 +409,8 @@ ClientHeight=60
 Create=1
 Visible=1
 State=0
-Left=24
-Top=580
+Left=8
+Top=488
 Width=190
 Height=412
 MaxLeft=-1
@@ -420,8 +422,8 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=BorderIcons
-ExpandedItems=Constraints
+SelectedItem=
+ExpandedItems=
 HiddenCategories=
 
 [ObjectTree]
@@ -447,26 +449,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=653
+Height=745
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=653
+ClientHeight=745
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=12
-Top=0
-Width=1067
+Left=-2
+Top=-631
+Width=443
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1067
+ClientWidth=443
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443
@@ -476,5 +478,5 @@ Dockable=1
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=10
+ActiveProject=23
 

@@ -1288,9 +1288,12 @@ begin
     xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.createNewClient');
     {$endif}
     result:=TWMClient.create(w,self);
-    clients.insert(0,result);
-    //Ensures the grabs are not overriden
-    setupKeyboardGrab;
+    if assigned(result) then begin
+        clients.insert(0,result);
+        //Ensures the grabs are not overriden
+        setupKeyboardGrab;
+        result.focus;
+    end;
 end;
 
 procedure TXPWindowManager.SetActiveClient(const Value: TWMClient);

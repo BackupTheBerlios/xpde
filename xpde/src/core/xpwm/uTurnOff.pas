@@ -75,6 +75,7 @@ end;
 
 procedure TTurnoff.restartClick(Sender: TObject);
 begin
+	if Libc.system('reboot')<>-1 then
         Libc.system('shutdown -t3 -r now');
 end;
 

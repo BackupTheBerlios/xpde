@@ -10,7 +10,7 @@ uses
 {$R *.res}
 begin
   tm_version:='0.1';
-  tm_build:='10232002'; // BUILD FORMAT -> MMDDYYYY
+  tm_build:='20021027'; // BUILD FORMAT -> YYYYMMDD
   Application.Initialize;
   SetXPStyle(application);  
   Application.CreateForm(TWindowsTaskManagerDlg, WindowsTaskManagerDlg);

@@ -97,6 +97,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnStartStateChanged(Sender: TObject; State: TToggleState);
     procedure btnTimerTimer(Sender: TObject);
+    procedure tbTasksMouseEnter(Sender: TObject);
   private
     menupaths: TStringList;
     procedure OnMenuItemClick(Sender: TObject);
@@ -760,6 +761,11 @@ procedure TTaskBar.btnTimerTimer(Sender: TObject);
 begin
     btnStart.Down:=false;
     btnTimer.Enabled:=false;    
+end;
+
+procedure TTaskBar.tbTasksMouseEnter(Sender: TObject);
+begin
+    screen.cursor:=cursor;
 end;
 
 initialization

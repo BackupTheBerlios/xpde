@@ -13,6 +13,7 @@ object TaskBar: TTaskBar
   Visible = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnMouseEnter = tbTasksMouseEnter
   OnPaint = FormPaint
   OnShow = FormShow
   PixelsPerInch = 90
@@ -76,6 +77,7 @@ object TaskBar: TTaskBar
     ShowHint = True
     TabOrder = 0
     OnDblClick = pnTimerDblClick
+    OnMouseEnter = tbTasksMouseEnter
     object pnTray: TPanel
       Left = 3
       Top = 3
@@ -120,6 +122,7 @@ object TaskBar: TTaskBar
     PopupMenu = propertiesmenu
     ShowCaptions = True
     TabOrder = 1
+    OnMouseEnter = tbTasksMouseEnter
   end
   object Panel1: TPanel
     Left = 0
@@ -130,6 +133,7 @@ object TaskBar: TTaskBar
     BevelOuter = bvNone
     Color = 13554646
     TabOrder = 2
+    OnMouseEnter = tbTasksMouseEnter
     object btnStart: TBitBtn
       HelpType = htContext
       Left = 2

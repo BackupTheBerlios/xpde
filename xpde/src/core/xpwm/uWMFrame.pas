@@ -90,6 +90,10 @@ type
         brBottomRight: TRect;
         brBottom: TRect;
         brBottomLeft: TRect;
+
+        brBottomRight2: TRect;
+        brBottomLeft2: TRect;
+
         brLeft: TRect;
         moving: boolean;
         resizetype: integer;
@@ -216,7 +220,7 @@ begin
     btnMinimize.left:=btnMaximize.left-16;
 
     brBottomRight.left:=clientwidth-13;
-    brBottomRight.top:=clientheight-13;
+    brBottomRight.top:=clientheight-4;
     brBottomRight.right:=clientwidth;
     brBottomRight.bottom:=clientheight;
 
@@ -256,12 +260,22 @@ begin
     brLeft.bottom:=clientheight-13;
 
     brBottomLeft.left:=0;
-    brBottomLeft.top:=clientheight-13;
+    brBottomLeft.top:=clientheight-4;
     brBottomLeft.right:=13;
     brBottomLeft.bottom:=clientheight;
 
+    brBottomRight2.left:=clientwidth-4;
+    brBottomRight2.top:=clientheight-13;
+    brBottomRight2.right:=clientwidth;
+    brBottomRight2.bottom:=clientheight;
+
+    brBottomLeft2.left:=0;
+    brBottomLeft2.top:=clientheight-13;
+    brBottomLeft2.right:=3;
+    brBottomLeft2.bottom:=clientheight;
+
     brBottom.left:=13;
-    brBottom.top:=clientheight-13;
+    brBottom.top:=clientheight-4;
     brBottom.right:=clientwidth-13;
     brBottom.bottom:=clientheight;
 
@@ -288,7 +302,7 @@ begin
                 oy:=y;
             end;
         end
-        else if (ptInRect(Point(x,y),brBottomRight)) then begin
+        else if (ptInRect(Point(x,y),brBottomRight)) or (ptInRect(Point(x,y),brBottomRight2)) then begin
             resizetype:=rtBottomRight;
         end
         else if (ptInRect(Point(x,y),brTopLeft)) or (ptInRect(Point(x,y),brTopLeft2)) then begin
@@ -303,7 +317,7 @@ begin
         else if (ptInRect(Point(x,y),brTopRight)) or (ptInRect(Point(x,y),brTopRight2)) then begin
             resizetype:=rtTopRight;
         end
-        else if (ptInRect(Point(x,y),brBottomLeft)) then begin
+        else if (ptInRect(Point(x,y),brBottomLeft))  or (ptInRect(Point(x,y),brBottomLeft2)) then begin
             resizetype:=rtBottomLeft;
         end
         else if (ptInRect(Point(x,y),brTop)) then begin
@@ -431,13 +445,13 @@ begin
             
         end
         else begin
-            if (ptInRect(Point(x,y),brBottomRight)) or (ptInRect(Point(x,y),brTopLeft)) or (ptInRect(Point(x,y),brTopLeft2)) then begin
+            if (ptInRect(Point(x,y),brBottomRight)) or (ptInRect(Point(x,y),brTopLeft)) or (ptInRect(Point(x,y),brBottomRight2))  or (ptInRect(Point(x,y),brTopLeft2)) then begin
                 screen.cursor:=crSizeNWSE;
             end
             else if (ptInRect(Point(x,y),brRight)) or (ptInRect(Point(x,y),brLeft)) then begin
                 screen.cursor:=crSizeWE;
             end
-            else if (ptInRect(Point(x,y),brTopRight)) or (ptInRect(Point(x,y),brTopRight2)) or  (ptInRect(Point(x,y),brBottomLeft)) then begin
+            else if (ptInRect(Point(x,y),brTopRight)) or (ptInRect(Point(x,y),brTopRight2)) or  (ptInRect(Point(x,y),brBottomLeft)) or  (ptInRect(Point(x,y),brBottomLeft2)) then begin
                 screen.cursor:=crSizeNESW;
             end
             else if (ptInRect(Point(x,y),brTop)) or  (ptInRect(Point(x,y),brBottom)) then begin

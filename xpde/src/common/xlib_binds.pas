@@ -141,7 +141,218 @@ Const
        XkbKeypadMask = 1 shl 3;
        {$EXTERNALSYM XkbKeypadMask}
        XkbAllRequiredTypes = $f;
-       {$EXTERNALSYM XkbAllRequiredTypes}       
+       {$EXTERNALSYM XkbAllRequiredTypes}
+
+  { Keyboard Components Mask:
+         - Specifies the components that follow a GetKeyboardByNameReply        }
+
+     XkbClientMapMask = 1 shl 0;
+     {$EXTERNALSYM XkbClientMapMask}
+     XkbServerMapMask = 1 shl 1;
+     {$EXTERNALSYM XkbServerMapMask}
+     XkbCompatMapMask = 1 shl 2;
+     {$EXTERNALSYM XkbCompatMapMask}
+     XkbIndicatorMapMask = 1 shl 3;
+     {$EXTERNALSYM XkbIndicatorMapMask}
+     XkbNamesMask = 1 shl 4;
+     {$EXTERNALSYM XkbNamesMask}
+     XkbGeometryMask = 1 shl 5;
+     {$EXTERNALSYM XkbGeometryMask}
+     XkbControlsMask = 1 shl 6;
+     {$EXTERNALSYM XkbControlsMask}
+     XkbAllComponentsMask = $7f;
+     {$EXTERNALSYM XkbAllComponentsMask}
+
+
+  {
+         State detail mask:
+          - The 'changed' field of StateNotify events reports which of
+            the keyboard state components have changed.
+          - Used as an event detail mask to limit the conditions under
+            which StateNotify events are reported.
+        }
+     XkbModifierStateMask = 1 shl 0;
+     {$EXTERNALSYM XkbModifierStateMask}
+     XkbModifierBaseMask = 1 shl 1;
+     {$EXTERNALSYM XkbModifierBaseMask}
+     XkbModifierLatchMask = 1 shl 2;
+     {$EXTERNALSYM XkbModifierLatchMask}
+     XkbModifierLockMask = 1 shl 3;
+     {$EXTERNALSYM XkbModifierLockMask}
+     XkbGroupStateMask = 1 shl 4;
+     {$EXTERNALSYM XkbGroupStateMask}
+     XkbGroupBaseMask = 1 shl 5;
+     {$EXTERNALSYM XkbGroupBaseMask}
+     XkbGroupLatchMask = 1 shl 6;
+     {$EXTERNALSYM XkbGroupLatchMask}
+     XkbGroupLockMask = 1 shl 7;
+     {$EXTERNALSYM XkbGroupLockMask}
+     XkbCompatStateMask = 1 shl 8;
+     {$EXTERNALSYM XkbCompatStateMask}
+     XkbGrabModsMask = 1 shl 9;
+     {$EXTERNALSYM XkbGrabModsMask}
+     XkbCompatGrabModsMask = 1 shl 10;
+     {$EXTERNALSYM XkbCompatGrabModsMask}
+     XkbLookupModsMask = 1 shl 11;
+     {$EXTERNALSYM XkbLookupModsMask}
+     XkbCompatLookupModsMask = 1 shl 12;
+     {$EXTERNALSYM XkbCompatLookupModsMask}
+     XkbPointerButtonMask = 1 shl 13;
+     {$EXTERNALSYM XkbPointerButtonMask}
+     XkbAllStateComponentsMask = $3fff;
+     {$EXTERNALSYM XkbAllStateComponentsMask}
+  {
+         Controls detail masks:
+          The controls specified in XkbAllControlsMask:
+          - The 'changed' field of ControlsNotify events reports which of
+            the keyboard controls have changed.
+          - The 'changeControls' field of the SetControls request specifies
+            the controls for which values are to be changed.
+          - Used as an event detail mask to limit the conditions under
+            which ControlsNotify events are reported.
+
+          The controls specified in the XkbAllBooleanCtrlsMask:
+          - The 'enabledControls' field of ControlsNotify events reports the
+            current status of the boolean controls.
+          - The 'enabledControlsChanges' field of ControlsNotify events reports
+            any boolean controls that have been turned on or off.
+          - The 'affectEnabledControls' and 'enabledControls' fields of the
+            kbSetControls request change the set of enabled controls.
+          - The 'accessXTimeoutMask' and 'accessXTimeoutValues' fields of
+            an XkbControlsRec specify the controls to be changed if the keyboard
+            times out and the values to which they should be changed.
+          - The 'autoCtrls' and 'autoCtrlsValues' fields of the PerClientFlags
+            request specifies the specify the controls to be reset when the
+            client exits and the values to which they should be reset.
+          - The 'ctrls' field of an indicator map specifies the controls
+            that drive the indicator.
+          - Specifies the boolean controls affected by the SetControls and
+            LockControls key actions.
+        }
+     XkbRepeatKeysMask = 1 shl 0;
+     {$EXTERNALSYM XkbRepeatKeysMask}
+     XkbSlowKeysMask = 1 shl 1;
+     {$EXTERNALSYM XkbSlowKeysMask}
+     XkbBounceKeysMask = 1 shl 2;
+     {$EXTERNALSYM XkbBounceKeysMask}
+     XkbStickyKeysMask = 1 shl 3;
+     {$EXTERNALSYM XkbStickyKeysMask}
+     XkbMouseKeysMask = 1 shl 4;
+     {$EXTERNALSYM XkbMouseKeysMask}
+     XkbMouseKeysAccelMask = 1 shl 5;
+     {$EXTERNALSYM XkbMouseKeysAccelMask}     
+     XkbAccessXKeysMask = 1 shl 6;
+     {$EXTERNALSYM XkbAccessXKeysMask}
+     XkbAccessXTimeoutMask = 1 shl 7;
+     {$EXTERNALSYM XkbAccessXTimeoutMask}
+     XkbAccessXFeedbackMask = 1 shl 8;
+     {$EXTERNALSYM XkbAccessXFeedbackMask}
+     XkbAudibleBellMask = 1 shl 9;
+     {$EXTERNALSYM XkbAudibleBellMask}
+     XkbOverlay1Mask = 1 shl 10;
+     {$EXTERNALSYM XkbOverlay1Mask}
+     XkbOverlay2Mask = 1 shl 11;
+     {$EXTERNALSYM XkbOverlay2Mask}
+     XkbIgnoreGroupLockMask = 1 shl 12;
+     {$EXTERNALSYM XkbIgnoreGroupLockMask}
+     XkbGroupsWrapMask = 1 shl 27;
+     {$EXTERNALSYM XkbGroupsWrapMask}
+     XkbInternalModsMask = 1 shl 28;
+     {$EXTERNALSYM XkbInternalModsMask}
+     XkbIgnoreLockModsMask = 1 shl 29;
+     {$EXTERNALSYM XkbIgnoreLockModsMask}
+     XkbPerKeyRepeatMask = 1 shl 30;
+     {$EXTERNALSYM XkbPerKeyRepeatMask}
+     XkbControlsEnabledMask = 1 shl 31;
+     {$EXTERNALSYM XkbControlsEnabledMask}
+     XkbAccessXOptionsMask = XkbStickyKeysMask or XkbAccessXFeedbackMask;
+     {$EXTERNALSYM XkbAccessXOptionsMask}
+     XkbAllBooleanCtrlsMask = $00001FFF;
+     {$EXTERNALSYM XkbAllBooleanCtrlsMask}
+     XkbAllControlsMask = $F8001FFF;
+     {$EXTERNALSYM XkbAllControlsMask}
+     XkbAllControlEventsMask = XkbAllControlsMask;
+     {$EXTERNALSYM XkbAllControlEventsMask}
+  {
+         AccessX Options Mask
+          - The 'accessXOptions' field of an XkbControlsRec specifies the
+            AccessX options that are currently in effect.
+          - The 'accessXTimeoutOptionsMask' and 'accessXTimeoutOptionsValues'
+            fields of an XkbControlsRec specify the Access X options to be
+            changed if the keyboard times out and the values to which they
+            should be changed.
+        }
+     XkbAX_SKPressFBMask = 1 shl 0;
+     {$EXTERNALSYM XkbAX_SKPressFBMask}
+     XkbAX_SKAcceptFBMask = 1 shl 1;
+     {$EXTERNALSYM XkbAX_SKAcceptFBMask}
+     XkbAX_FeatureFBMask = 1 shl 2;
+     {$EXTERNALSYM XkbAX_FeatureFBMask}
+     XkbAX_SlowWarnFBMask = 1 shl 3;
+     {$EXTERNALSYM XkbAX_SlowWarnFBMask}
+     XkbAX_IndicatorFBMask = 1 shl 4;
+     {$EXTERNALSYM XkbAX_IndicatorFBMask}
+     XkbAX_StickyKeysFBMask = 1 shl 5;
+     {$EXTERNALSYM XkbAX_StickyKeysFBMask}
+     XkbAX_TwoKeysMask = 1 shl 6;
+     {$EXTERNALSYM XkbAX_TwoKeysMask}
+     XkbAX_LatchToLockMask = 1 shl 7;
+     {$EXTERNALSYM XkbAX_LatchToLockMask}
+     XkbAX_SKReleaseFBMask = 1 shl 8;
+     {$EXTERNALSYM XkbAX_SKReleaseFBMask}
+     XkbAX_SKRejectFBMask = 1 shl 9;
+     {$EXTERNALSYM XkbAX_SKRejectFBMask}
+     XkbAX_BKRejectFBMask = 1 shl 10;
+     {$EXTERNALSYM XkbAX_BKRejectFBMask}
+     XkbAX_DumbBellFBMask = 1 shl 11;
+     {$EXTERNALSYM XkbAX_DumbBellFBMask}
+     XkbAX_FBOptionsMask = $F3F;
+     {$EXTERNALSYM XkbAX_FBOptionsMask}
+     XkbAX_SKOptionsMask = $0C0;
+     {$EXTERNALSYM XkbAX_SKOptionsMask}
+     XkbAX_AllOptionsMask = $FFF;
+     {$EXTERNALSYM XkbAX_AllOptionsMask}
+
+  {      XkbUseCoreKbd is used to specify the core keyboard without having
+         			to look up its X input extension identifier.
+         XkbUseCorePtr is used to specify the core pointer without having
+        			to look up its X input extension identifier.
+         XkbDfltXIClass is used to specify "don't care" any place that the
+        			XKB protocol is looking for an X Input Extension
+        			device class.
+         XkbDfltXIId is used to specify "don't care" any place that the
+        			XKB protocol is looking for an X Input Extension
+        			feedback identifier.
+         XkbAllXIClasses is used to get information about all device indicators,
+        			whether they're part of the indicator feedback class
+        			or the keyboard feedback class.
+         XkbAllXIIds is used to get information about all device indicator
+        			feedbacks without having to list them.
+         XkbXINone is used to indicate that no class or id has been specified.
+         XkbLegalXILedClass(c)  True if 'c' specifies a legal class with LEDs
+         XkbLegalXIBellClass(c) True if 'c' specifies a legal class with bells
+         XkbExplicitXIDevice(d) True if 'd' explicitly specifies a device
+         XkbExplicitXIClass(c)  True if 'c' explicitly specifies a device class
+         XkbExplicitXIId(c)     True if 'i' explicitly specifies a device id
+         XkbSingleXIClass(c)    True if 'c' specifies exactly one device class,
+                                including the default.
+         XkbSingleXIId(i)       True if 'i' specifies exactly one device
+        	                      identifier, including the default.
+        }
+     XkbUseCoreKbd = $0100;
+     {$EXTERNALSYM XkbUseCoreKbd}
+     XkbUseCorePtr = $0200;
+     {$EXTERNALSYM XkbUseCorePtr}
+     XkbDfltXIClass = $0300;
+     {$EXTERNALSYM XkbDfltXIClass}
+     XkbDfltXIId = $0400;
+     {$EXTERNALSYM XkbDfltXIId}
+     XkbAllXIClasses = $0500;
+     {$EXTERNALSYM XkbAllXIClasses}
+     XkbAllXIIds = $0600;
+     {$EXTERNALSYM XkbAllXIIds}
+     XkbXINone = $ff00;
+     {$EXTERNALSYM XkbXINone}
 
 
 type  _XkbStateRec = record
@@ -557,6 +768,8 @@ Function XkbAllocKeyboard:XkbDescPtr; cdecl; varargs;
 Procedure XkbFreeKeyboard(xkbpointer:XkbDescPtr; which_:longint; rtrnstatus:bool); cdecl;
 {$EXTERNALSYM XkbFreeKeyboard}
 
+Function XkbGetKeyboard(Display:PDisplay; which_:longint; deviceSpec:longint):XkbDescPtr; cdecl;
+{$EXTERNALSYM XkbGetKeyboard}
 Function XkbGetState(Display:PDisplay; i:plongint; xkbstat_:XkbStatePtr):PStatus; cdecl;
 {$EXTERNALSYM XkbGetState}
 Function XkbSetDetectableAutoRepeat(Display:PDisplay; detectable:bool; supported:bool):bool; cdecl;
@@ -580,12 +793,18 @@ Function XkbAllocIndicatorMaps(desc:XkbDescPtr):PStatus; cdecl; varargs;
 Procedure XkbFreeIndicatorMaps(desc:XkbDescPtr); cdecl; varargs;
 {$EXTERNALSYM XkbFreeIndicatorMaps}
 
+Function XkbVirtualModsToReal(desc:XkbDescPtr; mask:integer; rtrnmask:plongint):bool; cdecl; varargs;
+{$EXTERNALSYM XkbVirtualModsToReal}
+
+Function XkbLockModifiers(Display:PDisplay; deviceSpec:longint; affect:longint; values:longint):bool; cdecl;
+{$EXTERNALSYM XkbLockModifiers}
 
 implementation
 function XSetPointerMapping; external xpbind name 'XSetPointerMapping';
 
 Function XkbAllocKeyboard; external xpbind name 'XkbAllocKeyboard';
 Procedure XkbFreeKeyboard; external xpbind name 'XkbFreeKeyboard';
+Function XkbGetKeyboard; external xpbind name 'XkbGetKeyboard';
 Function XkbGetState; external xpbind name 'XkbGetState';
 Function XkbSetDetectableAutoRepeat; external xpbind name 'XkbSetDetectableAutoRepeat';
 Function XkbGetDetectableAutoRepeat; external xpbind name 'XkbGetDetectableAutoRepeat';
@@ -597,7 +816,10 @@ Function XkbGetControls; external xpbind name 'XkbGetControls';
 Function XkbSetControls; external xpbind name 'XkbSetControls';
 Function XkbAllocIndicatorMaps; external xpbind name 'XkbAllocIndicatorMaps';
 Procedure XkbFreeIndicatorMaps; external xpbind name 'XkbFreeIndicatorMaps';
-
+Function XkbVirtualModsToReal; external xpbind name 'XkbVirtualModsToReal';
+Function XkbLockModifiers; external xpbind name 'XkbLockModifiers';
 end.
+
+
 
 

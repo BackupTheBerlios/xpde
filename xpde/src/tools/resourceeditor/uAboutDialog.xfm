@@ -1,0 +1,59 @@
+object AboutDlg: TAboutDlg
+  Left = 284
+  Top = 117
+  Width = 225
+  Height = 174
+  HorzScrollBar.Range = 209
+  VertScrollBar.Range = 168
+  Caption = 'Info about ResourceEditor'
+  Color = clBackground
+  Position = poScreenCenter
+  PixelsPerInch = 89
+  TextHeight = 15
+  TextWidth = 7
+  object Label1: TLabel
+    Left = 9
+    Top = 9
+    Width = 184
+    Height = 16
+    AutoSize = False
+    Caption = 'XPde ResourceEditor'
+    WordWrap = True
+  end
+  object Label3: TLabel
+    Left = 9
+    Top = 42
+    Width = 192
+    Height = 16
+    AutoSize = False
+    Caption = 'Copyright '#169' 2003 XPde Team'
+    WordWrap = True
+  end
+  object Label5: TLabel
+    Left = 8
+    Top = 83
+    Width = 105
+    Height = 22
+    AutoSize = False
+    Caption = 'Developed by:'
+    WordWrap = True
+  end
+  object Label6: TLabel
+    Left = 8
+    Top = 104
+    Width = 201
+    Height = 25
+    AutoSize = False
+    Caption = 'ttm@xpde.com && jens@xpde.com'
+    WordWrap = True
+  end
+  object Button1: TButton
+    Left = 130
+    Top = 145
+    Width = 75
+    Height = 23
+    Caption = 'OK'
+    ModalResult = 1
+    TabOrder = 4
+  end
+end

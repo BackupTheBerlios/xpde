@@ -1,0 +1,298 @@
+object GenerateSharedResourcesDlg: TGenerateSharedResourcesDlg
+  Left = 412
+  Top = 259
+  Width = 517
+  Height = 383
+  HorzScrollBar.Range = 471
+  VertScrollBar.Range = 373
+  ActiveControl = edResFile
+  Caption = 'Generate shared resources'
+  Color = clBackground
+  Font.Color = clBlack
+  Font.Height = 10
+  Font.Name = 'tahoma'
+  Font.Pitch = fpVariable
+  Font.Style = []
+  ParentFont = False
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  PixelsPerInch = 89
+  TextHeight = 14
+  TextWidth = 5
+  object sbExe: TSpeedButton
+    Left = 448
+    Top = 44
+    Width = 23
+    Height = 22
+    Caption = '...'
+    OnClick = sbExeClick
+  end
+  object sbResbind: TSpeedButton
+    Left = 448
+    Top = 108
+    Width = 23
+    Height = 22
+    Caption = '...'
+    OnClick = sbResbindClick
+  end
+  object sbResFile: TSpeedButton
+    Left = 448
+    Top = 12
+    Width = 23
+    Height = 22
+    Caption = '...'
+    OnClick = sbResFileClick
+  end
+  object meOperations: TMemo
+    Left = 12
+    Top = 140
+    Width = 453
+    Height = 189
+    BorderStyle = bsNone
+    Color = clBackground
+    ReadOnly = True
+    TabOrder = 10
+  end
+  object Label1: TLabel
+    Left = 12
+    Top = 48
+    Width = 84
+    Height = 14
+    Caption = 'Source-Executable'
+  end
+  object edExe: TEdit
+    Left = 112
+    Top = 44
+    Width = 333
+    Height = 22
+    TabOrder = 1
+    OnChange = edExeChange
+  end
+  object Label2: TLabel
+    Left = 12
+    Top = 82
+    Width = 44
+    Height = 14
+    Caption = 'Language'
+  end
+  object cbLocales: TComboBox
+    Left = 112
+    Top = 76
+    Width = 333
+    Height = 22
+    Style = csDropDownList
+    Font.Color = clBlack
+    Font.Height = 12
+    Font.Name = 'adobe-courier'
+    Font.Pitch = fpFixed
+    Font.Style = []
+    Items.Strings = (
+      'Afrikaans     [af_ZA]  SOUTH AFRICA'
+      'Arabic        [ar_AE]  UNITED ARAB EMIRATES'
+      'Arabic        [ar_BH]  BAHRAIN'
+      'Arabic        [ar_DZ]  ALGERIA'
+      'Arabic        [ar_EG]  EGYPT'
+      'Arabic        [ar_IN]  INDIA'
+      'Arabic        [ar_IQ]  IRAQ'
+      'Arabic        [ar_JO]  JORDAN'
+      'Arabic        [ar_KW]  KUWAIT'
+      'Arabic        [ar_LB]  LEBANON'
+      'Arabic        [ar_LY]  LIBYAN ARAB JAMAHIRIYA'
+      'Arabic        [ar_MA]  MOROCCO'
+      'Arabic        [ar_OM]  OMAN'
+      'Arabic        [ar_QA]  QATAR'
+      'Arabic        [ar_SA]  SAUDI ARABIA'
+      'Arabic        [ar_SD]  SUDAN'
+      'Arabic        [ar_SY]  SYRIAN ARAB REPUBLIC'
+      'Arabic        [ar_TN]  TUNISIA'
+      'Arabic        [ar_YE]  YEMEN'
+      'Byelorussian  [be_BY]  BELARUS'
+      'Bulgarian     [bg_BG]  BULGARIA'
+      'Bengali       [bn_IN]  INDIA'
+      'Catalan       [ca_ES]  SPAIN'
+      'Czech         [cs_CZ]  CZECH REPUBLIC'
+      'Danish        [da_DK]  DENMARK'
+      'German        [de_AT]  AUSTRIA'
+      'German        [de_BE]  BELGIUM'
+      'German        [de_CH]  SWITZERLAND'
+      'German        [de_DE]  GERMANY'
+      'German        [de_LU]  LUXEMBOURG'
+      'Greek         [el_GR]  GREECE'
+      'English       [en_AU]  AUSTRALIA'
+      'English       [en_BE]  BELGIUM'
+      'English       [en_BW]  BOTSWANA'
+      'English       [en_CA]  CANADA'
+      'English       [en_GB]  UNITED KINGDOM'
+      'English       [en_HK]  HONG KONG'
+      'English       [en_IE]  IRELAND'
+      'English       [en_IN]  INDIA'
+      'English       [en_NZ]  NEW ZEALAND'
+      'English       [en_PH]  PHILIPPINES'
+      'English       [en_SG]  SINGAPORE'
+      'English       [en_US]  UNITED STATES'
+      'English       [en_ZA]  SOUTH AFRICA'
+      'English       [en_ZW]  ZIMBABWE'
+      'Spanish       [es_AR]  ARGENTINA'
+      'Spanish       [es_BO]  BOLIVIA'
+      'Spanish       [es_CL]  CHILE'
+      'Spanish       [es_CO]  COLOMBIA'
+      'Spanish       [es_CR]  COSTA RICA'
+      'Spanish       [es_DO]  DOMINICAN REPUBLIC'
+      'Spanish       [es_EC]  ECUADOR'
+      'Spanish       [es_ES]  SPAIN'
+      'Spanish       [es_GT]  GUATEMALA'
+      'Spanish       [es_HN]  HONDURAS'
+      'Spanish       [es_Mx]  MEXICO'
+      'Spanish       [es_NI]  NICARAGUA'
+      'Spanish       [es_PA]  PANAMA'
+      'Spanish       [es_PE]  PERU'
+      'Spanish       [es_PR]  PUERTO RICO'
+      'Spanish       [es_PY]  PARAGUAY'
+      'Spanish       [es_SV]  REPUBLIC OF EL SALVADOR'
+      'Spanish       [es_US]  UNITED STATES'
+      'Spanish       [es_UY]  URUGUAY'
+      'Spanish       [es_VE]  VENEZUELA'
+      'Estonian      [et_EE]  ESTONIA'
+      'Basque        [eu_ES]  SPAIN'
+      'Persian       [fa_IN]  INDIA'
+      'Persian       [fa_IR]  IRAN (ISLAMIC REPUBLIC OF)'
+      'Finnish       [fi_FI]  FINLAND'
+      'Faroese       [fo_FO]  FAROE ISLAND'
+      'French        [fr_BE]  BELGIUM'
+      'French        [fr_CA]  CANADA'
+      'French        [fr_CH]  SWITZERLAND'
+      'French        [fr_FR]  FRANCE'
+      'French        [fr_LU]  LUXEMBOURG'
+      'Irish         [ga_IE]  IRELAND'
+      'Galician      [gl_ES]  SPAIN'
+      'Manx Gaelic   [gv_GB]  UNITED KINGDOM'
+      'Hebrew        [he_IL]  ISRAEL'
+      'Hindi         [hi_IN]  INDIA'
+      'Croatian      [hr_HR]  CROATIA'
+      'Hungarian     [hu_HU]  HUNGARY'
+      'Indonesian    [id_ID]  INDONESIA'
+      'Icelandic     [is_IS]  ICELAND'
+      'Italian       [it_CH]  SWITZERLAND'
+      'Italian       [it_IT]  ITALY'
+      'Japanese      [ja_JP]  JAPAN'
+      'Greenlandic   [kl_GL]  GREENLAND'
+      'Konkani       [kok_IN] INDIA'
+      'Korean        [ko_KR]  KOREA, REPUBLIC OF'
+      'Cornish       [kw_GB]  UNITED KINGDOM'
+      'Lithuanian    [lt_LT]  LITHUANIA'
+      'Lativian      [lv_LV]  LATVIA'
+      
+        'Macedonian    [mk_MK]  MACEDONIA, THE FORMER YUGSOLAV REPUBLIC O' +
+        'F'
+      'Marathi       [mr_IN]  INDIA'
+      'Malay         [ms_MY]  MALAYSIA'
+      'Maltese       [mt_MT]  MALTA'
+      'Dutch         [nl_BE]  BELGIUM'
+      'Dutch         [nl_NL]  NETHERLANDS'
+      'Norwegian     [no_NO]  NORWAY'
+      'Polish        [pl_PL]  POLAND'
+      'Portuguese    [pt_BR]  BRAZIL'
+      'Portuguese    [pt_PT]  PORTUGAL'
+      'Romanian      [ro_RO]  ROMANIA'
+      'Russian       [ru_RU]  RUSSIAN FEDERATION'
+      'Russian       [ru_UA]  UKRAINE'
+      'SerboCroatian [sh_YU]  YUGOSLAVIA'
+      'Slovakian     [sk_SK]  SLOVAKIA'
+      'Slovenian     [sl_SI]  SLOVENIA'
+      'Albanian      [sq_AL]  ALBANIA'
+      'Serbian       [sr_YU]  YUGOSLAVIA'
+      'Swedish       [sv_FI]  FINLAND'
+      'Swedish       [sv_SE]  SWEDEN'
+      'Tamil         [ta_IN]  INDIA'
+      'Telugu        [te_IN]  INDIA'
+      'Thai          [th_TH]  THAILAND'
+      'Turkish       [tr_TR]  TURKEY'
+      'Ukrainian     [uk_UA]  UKRAINE'
+      'Vietnamese    [vi_VN]  VIETNAM'
+      'Chinese       [zh_CN]  CHINA'
+      'Chinese       [zh_HK]  HONG KONG'
+      'Chinese       [zh_SG]  SINGAPORE'
+      'Chinese       [zh_TW]  TAIWAN, PROVINCE OF CHINA')
+    ParentFont = False
+    TabOrder = 2
+    OnChange = cbLocalesChange
+  end
+  object Label3: TLabel
+    Left = 12
+    Top = 112
+    Width = 73
+    Height = 14
+    Caption = 'Resbind location'
+  end
+  object edResbind: TEdit
+    Left = 112
+    Top = 108
+    Width = 333
+    Height = 22
+    TabOrder = 3
+    Text = '$HOME/kylix3/bin/resbind'
+    OnChange = edResbindChange
+  end
+  object btnOK: TButton
+    Left = 158
+    Top = 348
+    Width = 75
+    Height = 25
+    Caption = '&OK'
+    Default = True
+    ModalResult = 1
+    TabOrder = 4
+    OnClick = btnOKClick
+  end
+  object btnCancel: TButton
+    Left = 246
+    Top = 348
+    Width = 75
+    Height = 25
+    Caption = '&Cancel'
+    ModalResult = 2
+    TabOrder = 5
+  end
+  object Label4: TLabel
+    Left = 12
+    Top = 16
+    Width = 93
+    Height = 14
+    Caption = 'Resource-File (*.res)'
+  end
+  object edResFile: TEdit
+    Left = 112
+    Top = 12
+    Width = 333
+    Height = 22
+    TabOrder = 0
+    OnChange = edResFileChange
+  end
+  object OpenExe: TOpenDialog
+    FilterIndex = 0
+    Options = [ofFileMustExist, ofEnableSizing, ofHideReadOnly]
+    Height = 0
+    Width = 0
+    Left = 64
+    Top = 224
+  end
+  object OpenResbind: TOpenDialog
+    Filter = 'resbind|resbind|All files (*)|*'
+    FilterIndex = 0
+    Options = [ofFileMustExist, ofEnableSizing, ofHideReadOnly]
+    Height = 0
+    Width = 0
+    Left = 176
+    Top = 216
+  end
+  object OpenResFile: TOpenDialog
+    DefaultExt = '.res'
+    Filter = 'Resource Files (*.res)|*.res|All files (*.*)|*'
+    FilterIndex = 0
+    Options = [ofFileMustExist, ofEnableSizing, ofHideReadOnly]
+    Height = 0
+    Width = 0
+    Left = 112
+    Top = 280
+  end
+end

@@ -137,7 +137,7 @@ var
 
 
 implementation
-uses Libc,StrUtils;
+uses Libc,StrUtils,hwinfo;
 {$R *.xfm}
 
 Procedure Read_Net(netfile:string);
@@ -375,6 +375,8 @@ Begin
         if ss='ppp' then Result:='Modem Connection'
         else
         if ss='ipp' then Result:='ISDN Connection'
+        else
+        if ss='vmn' then Result:='VMWare Virtual Connection'
         else
         Result:='Unknown Interface';
         End;
@@ -705,15 +707,48 @@ procedure TConnectionStatusDlg.FormShow(Sender: TObject);
 begin
 lbSent.Caption:=FloatToStrF(net_info[device_number].packets_out,ffFixed,12,0);
 lbReceive.Caption:=FloatToStrF(net_info[device_number].packets_in,ffFixed,12,0);
+// is_CablePlugged
+
+  if copy(net_info[device_number].device,1,3)='eth' then begin
+        if hwinfo.Is_CablePlugged(net_info[device_number].device) then
+        lbStatus.Caption:='Connected'
+        else
+        lbStatus.Caption:='Disconnected';
+  end else
+  if (copy(net_info[device_number].device,1,3)='ppp') or (copy(net_info[device_number].device,1,3)='ipp') then begin
+        if hwinfo.IsRouteFor(net_info[device_number].device) then
+        lbStatus.Caption:='Connected'
+        else
+        lbStatus.Caption:='Disconnected';
+  end else
+  if copy(net_info[device_number].device,1,3)='vmn' then begin // vmware
+  if   (net_info[device_number].bytes_in<>0) and (net_info[device_number].bytes_out<>0) then
+        lbStatus.Caption:='Connected'
+        else
+        lbStatus.Caption:='Disconnected';
+   end else
+   if net_info[device_number].device='lo' then
+        lbStatus.Caption:='Connected'
+        else
+        lbStatus.Caption:='Disconnected';
+
+
+  (*
 if (net_info[device_number].bytes_in<>0) and (net_info[device_number].bytes_out<>0) then
         lbStatus.Caption:='Connected'
         else
         lbStatus.Caption:='Disconnected';
+        *)
+
+
         lbDuration.Caption:=TimeToStr(now);
 
         if net_info[device_number].device='lo' then
         lbSpeed.Caption:='Loop' else
-        if copy(net_info[device_number].device,1,3)='eth' then
+        if (copy(net_info[device_number].device,1,3)='eth')
+                or
+           (copy(net_info[device_number].device,1,3)='vmn')
+         then
         lbSpeed.Caption:='10/100Mbps' else
         if copy(net_info[device_number].device,1,3)='ppp' then
         lbSpeed.Caption:='56k' else

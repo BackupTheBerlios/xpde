@@ -5,7 +5,9 @@ uses
   QForms,
   uXPStyle,
   uConnectionStatus in 'uConnectionStatus.pas' {ConnectionStatusDlg},
-  uNetworkConnectionDetails in 'uNetworkConnectionDetails.pas' {NetworkConnectionDetailsDlg};
+  uNetworkConnectionDetails in 'uNetworkConnectionDetails.pas' {NetworkConnectionDetailsDlg},
+  hwinfo in '../../common/hwinfo.pas',
+  xpclasses in '../../common/xpclasses.pas';
 
 {$R *.res}
 var ipar,lista__:integer;

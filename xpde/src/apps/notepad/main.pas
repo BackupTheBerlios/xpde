@@ -221,6 +221,9 @@ end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
+    //These lines are here to set the font of the menubar
+    font.name:='';
+    parentfont:=true;
 if ParamCount = 1 then
  begin
   if FileExists(ParamStr(1)) then

@@ -137,10 +137,40 @@ begin
             end;
         end
         else begin
-            brush.Style:=bsSolid;
-            brush.color:=dclBtnFace;
-            pen.color:=dclBtnShadow;
-            rectangle(r);
+            pen.mode:=pmCopy; 
+            if raised then begin
+                //Top Left
+                pen.color:=clWhite;
+                moveto(r.left,r.top);
+                lineto(r.right-1,r.top);
+                moveto(r.left,r.top);
+                lineto(r.left,r.bottom-1);
+                //Bottom Right
+                pen.color:=dclBtnShadow;
+                moveto(r.right-1,r.top);
+                lineto(r.right-1,r.bottom);
+                moveto(r.left,r.bottom-1);
+                lineto(r.right,r.bottom-1);
+            end
+            else begin
+                //Top Left
+                pen.color:=dclBtnShadow;
+                moveto(r.left,r.top);
+                lineto(r.right-1,r.top);
+                moveto(r.left,r.top);
+                lineto(r.left,r.bottom-1);
+                //Bottom Right
+                pen.color:=clWhite;
+                moveto(r.right-1,r.top);
+                lineto(r.right-1,r.bottom);
+                moveto(r.left,r.bottom-1);
+                lineto(r.right,r.bottom-1);
+            end;
+            if fill then begin
+                brush.Style:=bsSolid;
+                inflaterect(r,-1,-1);
+                fillrect(r);
+            end;
         end;
     end;
 end;

@@ -61,13 +61,6 @@ Launcher=/usr/X11R6/bin/xterm -T KylixDebuggerOutput -e bash -i -c %debuggee%
 UseLauncher=0
 DebugCWD=
 
-[HistoryLists\hlSearchPath]
-Count=4
-Item0=/home/vallon11/xpde/src/components/menu:/home/vallon11/xpde/src/components/style
-Item1=/home/vallon11/xpde/src/components/menu
-Item2=/home/vallon11/xpde/src/components/style:/home/vallon11/xpde/src/components/menu
-Item3=/home/vallon11/xpde/src/components/style
-
 [HistoryLists\hlOutputDirectorry]
 Count=1
 Item0=$(HOME)/xpde

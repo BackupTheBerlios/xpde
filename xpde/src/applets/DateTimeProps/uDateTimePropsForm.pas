@@ -62,6 +62,7 @@ type
     procedure gridDateSelectCell(Sender: TObject; ACol, ARow: Integer;
       var CanSelect: Boolean);
     procedure pbClockPaint(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private-Deklarationen }
     m_bInitList : boolean;
@@ -367,6 +368,12 @@ begin
  alpha := - (m_iSec / 60 * 2 * pi - pi / 2);
  DrawPointer( alpha, iXMid+iOfs*4, iYMid+iOfs*4, iRadius-8, 0);
  end;
+end;
+
+procedure TDateTimePropsFm.FormCreate(Sender: TObject);
+begin
+    font.Name:='';
+    parentfont:=true;
 end;
 
 end.

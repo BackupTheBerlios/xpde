@@ -1608,7 +1608,13 @@ end;
 
 procedure TWindowsTaskManagerDlg.FormCreate(Sender: TObject);
 begin
-        Randomize;
+    //These lines are here to set the font of the menubar
+    font.name:='';
+    parentfont:=true;
+
+    FormResize(self);
+
+    Randomize;
 end;
 
 end.

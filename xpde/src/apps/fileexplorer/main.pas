@@ -6,7 +6,9 @@ uses
   SysUtils, Types, Classes,
   Variants, QTypes, QGraphics,
   QControls, QForms, QDialogs,
-  QStdCtrls, QComCtrls, uExplorerAPI, QExtCtrls, QMenus, QImgList, QButtons;
+  QStdCtrls, QComCtrls,
+  uExplorerAPI, QExtCtrls,
+  QMenus, QImgList, QButtons;
 
 type
   TForm1 = class(TForm)
@@ -43,6 +45,7 @@ type
       var AllowEdit: Boolean);
     procedure tvItemsChange(Sender: TObject; Node: TTreeNode);
     procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -193,6 +196,13 @@ end;
 procedure TForm1.FormShow(Sender: TObject);
 begin
     updateall;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+    //These lines are here to set the font of the menubar
+    font.name:='';
+    parentfont:=true;
 end;
 
 end.

@@ -1,6 +1,6 @@
 object DateTimePropsFm: TDateTimePropsFm
-  Left = 383
-  Top = 408
+  Left = 386
+  Top = 437
   ActiveControl = PageControl1
   AutoScroll = False
   Caption = 'Properties of Date and Time'
@@ -9,6 +9,7 @@ object DateTimePropsFm: TDateTimePropsFm
   Color = clBackground
   Position = poScreenCenter
   Scaled = False
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 90
   object PageControl1: TPageControl
@@ -42,11 +43,17 @@ object DateTimePropsFm: TDateTimePropsFm
           Left = 152
           Top = 24
           Width = 60
-          Height = 26
+          Height = 23
+          Font.Color = clBlack
+          Font.Height = 11
+          Font.Name = 'tahoma'
+          Font.Pitch = fpVariable
+          Font.Style = []
           Max = 2099
           Min = 1980
           TabOrder = 1
           Value = 1980
+          ParentFont = False
           Wrap = True
           OnChanged = spinYearChanged
         end

@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 421
-  Top = 274
+  Left = 424
+  Top = 303
   Width = 696
   Height = 480
   ActiveControl = Memo
@@ -47,6 +47,7 @@ object MainForm: TMainForm
     OnChange = MemoChange
   end
   object MainMenu: TMainMenu
+    Color = clBackground
     Left = 192
     Top = 24
     object FileMNU: TMenuItem

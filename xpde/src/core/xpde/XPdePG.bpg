@@ -10,9 +10,9 @@ DCC =dcc $<
 #------------------------------------------------------------------------------
 PROJECTS = bplXPRegistry.so bplXPCommon.so bplXPAPI.so bplXPMenus.so \
   bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
-  bplXPShellControls.so bplXPCommctrls.so taskmanager controlpanel notepad \
-  networkstatus networkproperties fileexplorer mouse keyboard desk regional \
-  appexec XPwm XPde
+  bplXPShellControls.so bplXPCommctrls.so taskmanager networkstatus controlpanel \
+  notepad networkproperties fileexplorer mouse keyboard desk regional appexec \
+  DateTimeProps xpsu XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -87,6 +87,12 @@ fileexplorer: ../../apps/fileexplorer/fileexplorer.dpr
 	$(DCC)
 
 desk: ../../applets/desk/desk.dpr
+	$(DCC)
+
+DateTimeProps: ../../applets/DateTimeProps/DateTimeProps.dpr
+	$(DCC)
+
+xpsu: ../../applets/xpsu/xpsu.dpr
 	$(DCC)
 
 

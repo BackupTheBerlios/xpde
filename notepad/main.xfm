@@ -1,0 +1,244 @@
+object frmMain: TfrmMain
+  Left = 248
+  Top = 168
+  Width = 696
+  Height = 480
+  VertScrollBar.Range = 19
+  ActiveControl = Memo
+  Caption = 'XPde Notepad'
+  Color = clBackground
+  Menu = MainMenu
+  Position = poDesktopCenter
+  Scaled = False
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  PixelsPerInch = 75
+  object Memo: TMemo
+    Left = 0
+    Top = 0
+    Width = 696
+    Height = 436
+    Align = alClient
+    ScrollBars = ssBoth
+    TabOrder = 0
+    WantTabs = True
+  end
+  object StatusBar: TStatusBar
+    Left = 0
+    Top = 436
+    Width = 696
+    Height = 19
+    Panels = <>
+    SimplePanel = True
+  end
+  object MainMenu: TMainMenu
+    Color = clBackground
+    Left = 24
+    Top = 24
+    object mnuFile: TMenuItem
+      Caption = '&File'
+      object mnuFileNew: TMenuItem
+        AutoHotkeys = maManual
+        Caption = '&New'
+        ShortCut = 16462
+        OnClick = mnuFileNewClick
+      end
+      object mnuFileOpen: TMenuItem
+        AutoHotkeys = maManual
+        Caption = '&Open...'
+        ShortCut = 16463
+        OnClick = mnuFileOpenClick
+      end
+      object mnuFileSave: TMenuItem
+        AutoHotkeys = maManual
+        Caption = '&Save'
+        ShortCut = 16467
+        OnClick = mnuFileSaveClick
+      end
+      object mnuFileSaveAs: TMenuItem
+        AutoHotkeys = maManual
+        Caption = 'Save &As...'
+        OnClick = mnuFileSaveAsClick
+      end
+      object N5: TMenuItem
+        AutoHotkeys = maManual
+        Caption = '-'
+      end
+      object mnuFilePageSetup: TMenuItem
+        AutoHotkeys = maManual
+        Caption = '&Page Se&tup...'
+        OnClick = mnuFilePageSetupClick
+      end
+      object mnuFilePrint: TMenuItem
+        AutoHotkeys = maManual
+        Caption = '&Print'
+        ShortCut = 16464
+        OnClick = mnuFilePrintClick
+      end
+      object N1: TMenuItem
+        AutoHotkeys = maManual
+        Caption = '-'
+      end
+      object mnuFileExit: TMenuItem
+        AutoHotkeys = maManual
+        Caption = 'E&xit'
+        OnClick = mnuFileExitClick
+      end
+    end
+    object mnuEdit: TMenuItem
+      Caption = '&Edit'
+      object mnuEditUndo: TMenuItem
+        Action = EditUndo
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object mnuEditCut: TMenuItem
+        Action = EditCut
+      end
+      object mnuEditCopy: TMenuItem
+        Action = EditCopy
+      end
+      object mnuEditPaste: TMenuItem
+        Action = EditPaste
+      end
+      object mnuEditDelete: TMenuItem
+        Action = EditDelete
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
+      object mnuEditFind: TMenuItem
+        Caption = '&Find...'
+        ShortCut = 16454
+        OnClick = mnuEditFindClick
+      end
+      object mnuEditFindNext: TMenuItem
+        Caption = 'Find &Next'
+        ShortCut = 4146
+        OnClick = mnuEditFindNextClick
+      end
+      object mnuEditReplace: TMenuItem
+        Caption = '&Replace...'
+        ShortCut = 16456
+        OnClick = mnuEditReplaceClick
+      end
+      object mnuEditGoTo: TMenuItem
+        Caption = '&Go To...'
+        ShortCut = 16455
+        OnClick = mnuEditGoToClick
+      end
+      object N6: TMenuItem
+        Caption = '-'
+      end
+      object mnuEditSelectAll: TMenuItem
+        Action = EditSelectAll
+      end
+      object mnuEditTimeDate: TMenuItem
+        Caption = '&Time/Date'
+        ShortCut = 4148
+        OnClick = mnuEditTimeDateClick
+      end
+    end
+    object mnuFormat: TMenuItem
+      Caption = 'F&ormat'
+      object mnuFormatWordWrap: TMenuItem
+        Caption = '&Word Wrap'
+        Checked = True
+        OnClick = mnuFormatWordWrapClick
+      end
+      object mnuFormatSetFont: TMenuItem
+        Caption = '&Font...'
+        OnClick = mnuFormatSetFontClick
+      end
+    end
+    object mnuHelp: TMenuItem
+      Caption = '&Help'
+      object mnuHelpAbout: TMenuItem
+        Caption = '&About Notepad'
+        OnClick = mnuHelpAboutClick
+      end
+    end
+  end
+  object FindDialog: TFindDialog
+    Title = 'Find'
+    OnFind = FindDialogFind
+    Left = 24
+    Top = 64
+  end
+  object ReplaceDialog: TReplaceDialog
+    Title = 'Replace'
+    OnReplace = ReplaceDialogReplace
+    Left = 56
+    Top = 64
+  end
+  object SaveDialog: TSaveDialog
+    FilterIndex = 0
+    Height = 0
+    Title = 'Save'
+    Width = 0
+    Left = 24
+    Top = 104
+  end
+  object OpenDialog: TOpenDialog
+    FilterIndex = 0
+    Height = 0
+    Width = 0
+    Left = 56
+    Top = 104
+  end
+  object FontDialog: TFontDialog
+    Font.Color = clBlack
+    Font.Height = 12
+    Font.Name = 'helvetica'
+    Font.Pitch = fpVariable
+    Font.Style = []
+    Left = 88
+    Top = 104
+  end
+  object ActionList: TActionList
+    Left = 24
+    Top = 144
+    object EditCopy: TEditCopy
+      Category = 'Edit'
+      Caption = '&Copy'
+      Hint = 'Copy'
+      ImageIndex = 1
+      ShortCut = 16451
+    end
+    object EditPaste: TEditPaste
+      Category = 'Edit'
+      Caption = '&Paste'
+      Hint = 'Paste'
+      ImageIndex = 2
+      ShortCut = 16470
+    end
+    object EditSelectAll: TEditSelectAll
+      Category = 'Edit'
+      Caption = 'Select &All'
+      Hint = 'Select All'
+      ShortCut = 16449
+    end
+    object EditUndo: TEditUndo
+      Category = 'Edit'
+      Caption = '&Undo'
+      Hint = 'Undo'
+      ImageIndex = 3
+      ShortCut = 16474
+    end
+    object EditDelete: TEditDelete
+      Category = 'Edit'
+      Caption = '&Delete'
+      Hint = 'Delete'
+      ImageIndex = 5
+      ShortCut = 4103
+    end
+    object EditCut: TEditCut
+      Category = 'Edit'
+      Caption = 'Cu&t'
+      Hint = 'Cut'
+      ImageIndex = 0
+      ShortCut = 16472
+    end
+  end
+end

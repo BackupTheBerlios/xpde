@@ -314,6 +314,18 @@ end;
 
 procedure TfrmMain.mnuFileNewClick(Sender: TObject);
 begin
+    if Memo.Modified then begin
+        mr := MessageDlg(CurrentFileName + SavePrompt,
+            mtWarning, [mbYes, mbNo, mbCancel], 0, mbYes);
+
+        if mr = mrYes then begin
+            if FileExists(CurrentFileName) then
+                mnuFileSave.Click();
+        end
+        else
+                mnuFileSaveAs.Click();
+     end;
+
     Memo.Clear();
     CurrentFileName := Untitled;
     frmMain.Caption := Untitled + CaptionText;

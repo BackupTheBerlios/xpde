@@ -11,7 +11,8 @@ DCC =dcc $<
 PROJECTS = bplXPCommon.so bplXPRegistry.so bplXPAPI.so bplXPMenus.so \
   bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
   bplXPShellControls.so bplXPCommctrls.so taskmanager controlpanel notepad \
-  networkstatus networkproperties mouse appexec bpldesk.so XPwm XPde
+  networkstatus networkproperties mouse keyboard regional appexec bpldesk.so XPwm \
+  XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -77,6 +78,12 @@ mouse: ../../applets/mouse/mouse.dpr
 	$(DCC)
 
 controlpanel: ../../apps/controlpanel/controlpanel.dpr
+	$(DCC)
+
+keyboard: ../../applets/keyboard/keyboard.dpr
+	$(DCC)
+
+regional: ../../applets/regional/regional.dpr
 	$(DCC)
 
 

@@ -42,6 +42,20 @@ type
     siSystemDir,                                                                //System icons directory
     siApplicationsDir);                                                         //Application icons directory
 
+    IXPDesktop=interface
+    ['{BCE03A86-A6E6-D611-9051-000244219999}']
+        procedure customize;
+        procedure applychanges;
+    end;
+
+    IXPWindowManager=interface
+    ['{12C4C48B-A6E6-D611-9051-000244219999}']
+    end;
+
+    IXPTaskBar=interface
+    ['{7E36AA90-A6E6-D611-9051-000244219999}']
+    end;
+
     //XP API interface
     IXPAPI=interface
     ['{6681BE0D-8BDE-D611-9A9F-000244219999}']
@@ -58,6 +72,9 @@ type
 
 var
     XPAPI:IXPAPI=nil;                                                           //Global API variable
+    XPDesktop:IXPDesktop=nil;                                                   //Global Desktop variable
+    XPWindowManager:IXPWindowManager=nil;                                       //Global WindowManager variable
+    XPTaskBar:IXPTaskBar=nil;                                                   //Global TaskBar variable
 
 implementation
 

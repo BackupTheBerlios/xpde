@@ -1,8 +1,8 @@
 object ActiveTasksDlg: TActiveTasksDlg
   Left = 192
   Top = 103
-  Width = 330
-  Height = 107
+  Width = 338
+  Height = 134
   HorzScrollBar.Range = 305
   Color = clBackground
   FormStyle = fsStayOnTop
@@ -15,7 +15,7 @@ object ActiveTasksDlg: TActiveTasksDlg
   PixelsPerInch = 90
   object Label1: TLabel
     Left = 17
-    Top = 77
+    Top = 104
     Width = 288
     Height = 15
     Anchors = [akLeft, akBottom]

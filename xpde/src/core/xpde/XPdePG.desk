@@ -6,26 +6,31 @@ File_3=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.xfm',0,1,1,1,1,0,0
 File_4=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMConsts.pas',0,1,56,22,80,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/core/xpwm/uActiveTasks.pas
+Module0=/home/ttm/xpde/src/core/xpwm/uWMFrame.pas
 Module1=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-Module2=/home/ttm/xpde/src/components/style/uXPStyleConsts.pas
-Module3=/home/ttm/xpde/src/components/style/uXPStyle.pas
-Module4=/home/ttm/kylix3/source/rtl/common/Classes.pas
-Module5=/home/ttm/xpde/src/common/uXPPNG.pas
-Module6=/home/ttm/kylix3/source/rtl/linux/Xlib.pas
-Module7=/home/ttm/xpde/src/core/xpwm/uWMFrame.pas
+Module2=/home/ttm/xpde/src/core/xpwm/uActiveTasks.pas
+Module3=/home/ttm/xpde/src/components/style/uXPStyleConsts.pas
+Module4=/home/ttm/xpde/src/components/style/uXPStyle.pas
+Module5=/home/ttm/kylix3/source/rtl/common/Classes.pas
+Module6=/home/ttm/xpde/src/common/uXPPNG.pas
+Module7=/home/ttm/kylix3/source/rtl/linux/Xlib.pas
 Module8=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
 Module9=/home/ttm/xpde/src/core/xpde/XPde.dpr
 Count=10
 EditWindowCount=1
 PackageWindowCount=9
 
-[/home/ttm/xpde/src/core/xpwm/uActiveTasks.pas]
+[/home/ttm/xpde/src/core/xpwm/uWMFrame.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
 [/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=1
+
+[/home/ttm/xpde/src/core/xpwm/uActiveTasks.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=1
@@ -51,11 +56,6 @@ FormState=0
 FormOnTop=0
 
 [/home/ttm/kylix3/source/rtl/linux/Xlib.pas]
-ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/core/xpwm/uWMFrame.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
@@ -168,7 +168,7 @@ FormOnTop=0
 
 [EditWindow0]
 ViewCount=10
-CurrentView=4
+CurrentView=2
 View0=0
 View1=1
 View2=2
@@ -211,16 +211,16 @@ LeftCol=1
 
 [View1]
 Module=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
-CursorX=13
-CursorY=1263
-TopLine=1247
+CursorX=1
+CursorY=1762
+TopLine=1741
 LeftCol=1
 
 [View2]
 Module=/home/ttm/xpde/src/core/xpwm/uWMFrame.pas
-CursorX=21
-CursorY=620
-TopLine=616
+CursorX=33
+CursorY=785
+TopLine=777
 LeftCol=1
 
 [View3]
@@ -232,16 +232,16 @@ LeftCol=1
 
 [View4]
 Module=/home/ttm/xpde/src/core/xpwm/uActiveTasks.pas
-CursorX=1
-CursorY=86
-TopLine=82
+CursorX=84
+CursorY=141
+TopLine=120
 LeftCol=1
 
 [View5]
 Module=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-CursorX=37
-CursorY=85
-TopLine=43
+CursorX=1
+CursorY=715
+TopLine=705
 LeftCol=1
 
 [View6]
@@ -485,8 +485,8 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=3
-Top=28
+Left=-3
+Top=23
 Width=1273
 Height=87
 MaxLeft=-1

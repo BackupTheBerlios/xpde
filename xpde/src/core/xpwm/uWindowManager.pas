@@ -130,6 +130,7 @@ type
         procedure getSizeHints;
         procedure minimize;
         procedure maximize;
+        procedure sendsyntheticConfigureNotify;
         procedure restore;
         procedure setMapState(state:integer);
         procedure beginresize;
@@ -1240,7 +1241,7 @@ begin
     xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.createNewClient');
     {$endif}
     result:=TWMClient.create(w,self);
-    clients.add(result);
+    clients.insert(0,result);
 end;
 
 procedure TXPWindowManager.SetActiveClient(const Value: TWMClient);
@@ -2021,6 +2022,29 @@ begin
             FWindowState:=wsNormal;
         end;
     end;
+end;
+
+procedure TWMClient.sendsyntheticConfigureNotify;
+var
+    c: XConfigureEvent;
+    fbs: TRect;
+    co: TPoint;
+begin
+    fbs:=(frame as TWindowsClassic).getframebordersizes;
+    co:=(frame as TWindowsClassic).getorigin;
+
+    c.xtype := ConfigureNotify;
+    c.send_event := 1;
+    c.event := xwindow;
+    c.xwindow := xwindow;
+    c.x := frame.left+co.X;
+    c.y := frame.top+co.y;
+    c.width := frame.width-(fbs.Left+fbs.right);
+    c.height := frame.height-(fbs.bottom+co.y);
+    c.border_width := 0;
+    c.above := None;
+    c.override_redirect := 0;
+    XSendEvent( qtdisplay, c.event, 1, StructureNotifyMask, @c );
 end;
 
 procedure TWMClient.setMapState(state: integer);

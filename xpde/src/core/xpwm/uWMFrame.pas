@@ -63,6 +63,10 @@ type
     procedure FormDblClick(Sender: TObject);
     procedure imgIconClick(Sender: TObject);
     procedure FormClick(Sender: TObject);
+    procedure btnCloseMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure FormShow(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
     private
         { Private declarations }
       public
@@ -457,7 +461,7 @@ begin
         btnMaximizeClick(btnMaximize);
     end
     else begin
-
+        client.sendsyntheticConfigureNotify;
     end;
 end;
 
@@ -757,6 +761,22 @@ begin
     if ptinrect(point(ox,oy),rect(1,1,17,17)) then begin
         PopupMenu1.Popup(mouse.CursorPos.x,mouse.cursorpos.y);
     end;
+end;
+
+procedure TWindowsClassic.btnCloseMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+    client.activate;
+end;
+
+procedure TWindowsClassic.FormShow(Sender: TObject);
+begin
+//    client.sendsyntheticConfigureNotify;
+end;
+
+procedure TWindowsClassic.FormActivate(Sender: TObject);
+begin
+    client.sendsyntheticConfigureNotify;
 end;
 
 initialization

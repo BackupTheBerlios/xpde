@@ -4,8 +4,8 @@ object TaskBar: TTaskBar
   ActiveControl = btnStart
   AutoScroll = False
   BorderStyle = fbsNone
-  ClientHeight = 50
-  ClientWidth = 676
+  ClientHeight = 77
+  ClientWidth = 684
   Color = clBackground
   FormStyle = fsStayOnTop
   PopupMenu = propertiesmenu
@@ -63,10 +63,10 @@ object TaskBar: TTaskBar
       FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF00}
   end
   object pnTimer: TPanel
-    Left = 623
+    Left = 631
     Top = 2
     Width = 53
-    Height = 48
+    Height = 75
     Align = alRight
     Alignment = taRightJustify
     BevelInner = bvLowered
@@ -79,7 +79,7 @@ object TaskBar: TTaskBar
       Left = 3
       Top = 3
       Width = 3
-      Height = 42
+      Height = 69
       Align = alLeft
       BevelOuter = bvNone
       BorderWidth = 2
@@ -103,8 +103,8 @@ object TaskBar: TTaskBar
   object tbTasks: TToolBar
     Left = 59
     Top = 2
-    Width = 564
-    Height = 48
+    Width = 572
+    Height = 75
     Align = alClient
     AutoSize = True
     Caption = 'tbTasks'
@@ -122,7 +122,7 @@ object TaskBar: TTaskBar
     Left = 0
     Top = 2
     Width = 59
-    Height = 48
+    Height = 75
     Align = alLeft
     BevelOuter = bvNone
     Color = 13554646
@@ -154,7 +154,7 @@ object TaskBar: TTaskBar
   object topPanel: TPanel
     Left = 0
     Top = 0
-    Width = 676
+    Width = 684
     Height = 2
     Align = alTop
     BevelOuter = bvNone
@@ -162,7 +162,7 @@ object TaskBar: TTaskBar
     object pbLine: TPaintBox
       Left = 0
       Top = 0
-      Width = 676
+      Width = 684
       Height = 2
       Align = alClient
       OnPaint = pbLinePaint

@@ -97,11 +97,13 @@ begin
     app.font.height:=iDefaultFontHeight;
 
     //Sets the palette
-
     app.Palette.SetColor(cgActive,crBackground,dclBtnFace);
     app.Palette.SetColor(cgActive,crHighlight,dclHighlight);
     app.Palette.SetColor(cgActive,crButton,dclBtnFace);
     app.Palette.SetColor(cgInactive,crButton,dclBtnFace-1);
+
+    //Sets some effects
+    app.Effects:=app.Effects+[UIEffect_UI_FadeMenu,UIEffect_UI_AnimateCombo, UIEffect_UI_FadeTooltip];
 
     //Sets the paint events
     app.Style.BeforeDrawmenuItem:=self.beforedrawmenuitem;

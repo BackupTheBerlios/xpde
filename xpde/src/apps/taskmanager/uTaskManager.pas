@@ -401,20 +401,20 @@ Begin
         jj:=Pos('\',procs[i][4]);
 
                 if jj<>0 then begin
-                // WE FOUND A CHILD PROCESS
+                // WE FOUND A CILD PROCESS
                 procs[i][4]:=copy(procs[i][4],jj+2,length(procs[i][4])-(jj+1));
                 procs[i][4]:=trimleft(procs[i][4]);
                 TreeView2.Items.AddChild(tnode,procs[i][4]);
-                TreeView2.Items.Item[i-1].SubItems.Add(procs[i][1]);
-                TreeView2.Items.Item[i-1].SubItems.Add(procs[i][2]);
-                TreeView2.Items.Item[i-1].SubItems.Add(procs[i][3]);
-                TreeView2.Items.Item[i-1].SubItems.Add(procs[i][0]);
+                TreeView2.Items.Item[TreeView2.Items.Count-1].SubItems.Add(procs[i][1]);
+                TreeView2.Items.Item[TreeView2.Items.Count-1].SubItems.Add(procs[i][2]);
+                TreeView2.Items.Item[TreeView2.Items.Count-1].SubItems.Add(procs[i][3]);
+                TreeView2.Items.Item[TreeView2.Items.Count-1].SubItems.Add(procs[i][0]);
                 end else begin
                 tnode:=TreeView2.Items.Add(Nil,procs[i][4]);
-                TreeView2.Items.Item[i-1].SubItems.Add(procs[i][1]);
-                TreeView2.Items.Item[i-1].SubItems.Add(procs[i][2]);
-                TreeView2.Items.Item[i-1].SubItems.Add(procs[i][3]);
-                TreeView2.Items.Item[i-1].SubItems.Add(procs[i][0]);
+                TreeView2.Items.Item[TreeView2.Items.Count-1].SubItems.Add(procs[i][1]);
+                TreeView2.Items.Item[TreeView2.Items.Count-1].SubItems.Add(procs[i][2]);
+                TreeView2.Items.Item[TreeView2.Items.Count-1].SubItems.Add(procs[i][3]);
+                TreeView2.Items.Item[TreeView2.Items.Count-1].SubItems.Add(procs[i][0]);
                 End;
                 End;
                 TreeView2.Items.EndUpdate;

@@ -71,6 +71,7 @@ type
     procedure fillTexts;
     procedure setCurrentStep(const step:integer);
     procedure installscript;
+    procedure installindm;
   end;
 
 var
@@ -218,6 +219,7 @@ begin
                 tmStars.Enabled:=true;
                 installscript;
             end;
+            installindm;
             tmTexts.Enabled:=false;
             tmStars.Enabled:=false;
             showmessage('Installation finished');
@@ -295,6 +297,43 @@ begin
         showmessage('Cannot find install script: '+script);
         application.terminate;
     end;
+end;
+
+procedure TBackForm.installindm;
+var
+    kdm: string;
+    thefile:TStringList;
+    i: integer;
+    line: string;
+begin
+    kdm:='/etc/opt/kde3/share/config/kdm/kdmrc';  //SuSE 8.2
+
+    if fileexists(kdm) then begin
+        writeln('SuSE 8.2 - kdmrc found!');
+        thefile:=TStringList.create;
+        try
+            thefile.LoadFromFile(kdm);
+            for i:=0 to thefile.Count-1 do begin
+                line:=thefile[i];
+                if pos(ansilowercase('SessionTypes='),ansilowercase(line))<>0 then begin
+                    writeln('SessionTypes line found!');
+                    if (pos(ansilowercase('XPde'),ansilowercase(line))=0) then begin
+                        writeln('Adding XPde to the SessionTypes list!');
+                        line:=line+',XPde';
+                        thefile[i]:=line;
+                        thefile.SaveToFile(kdm);
+                    end
+                    else begin
+                        writeln('SessionTypes already contained XPde!');
+                    end;
+                    break;
+                end;
+            end;
+        finally
+            thefile.free;
+        end;
+    end;
+
 end;
 
 end.

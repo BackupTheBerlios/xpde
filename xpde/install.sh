@@ -28,6 +28,7 @@ cp DateTimeProps /opt/xpde/bin/applets
 cp appexec /opt/xpde/bin/applets
 cp networkstatus /opt/xpde/bin/applets
 cp networkproperties /opt/xpde/bin/applets
+cp systemproperties /opt/xpde/bin/applets
 cp xpsu /opt/xpde/bin/applets
 cp mouse /opt/xpde/bin/applets
 cp keyboard /opt/xpde/bin/applets
@@ -37,6 +38,8 @@ cp desk /opt/xpde/bin/applets
 cp taskmanager /opt/xpde/bin/apps
 cp notepad /opt/xpde/bin/apps
 cp calculator /opt/xpde/bin/apps
+cp fontview /opt/xpde/bin/apps
+cp regedit /opt/xpde/bin/apps
 cp fileexplorer /opt/xpde/bin/apps
 
 echo "Installation completed";

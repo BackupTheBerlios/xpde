@@ -1,8 +1,8 @@
 object MainForm: TMainForm
-  Left = 246
-  Top = 148
-  Width = 900
-  Height = 582
+  Left = 492
+  Top = 3
+  Width = 778
+  Height = 255
   BorderStyle = fbsNone
   Caption = 'MainForm'
   Color = clSilver
@@ -17,8 +17,8 @@ object MainForm: TMainForm
   object ListBox: TListBox
     Left = 128
     Top = 28
-    Width = 754
-    Height = 539
+    Width = 632
+    Height = 212
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Color = clBlack
     Font.Height = 14

@@ -399,7 +399,6 @@ end;
 
 procedure TMainForm.initTheme;
 begin
-
         shortcut1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siMiscDir)+gSHORTCUTSMALL);
         folder1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSmallSystemDir)+'folder.png');
 end;

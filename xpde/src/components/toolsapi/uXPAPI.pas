@@ -60,6 +60,7 @@ type
         procedure maximize;
         procedure restore;
         procedure close;
+        procedure map;
         procedure bringtofront;
         procedure updateactivestate;
         function isactive:boolean;

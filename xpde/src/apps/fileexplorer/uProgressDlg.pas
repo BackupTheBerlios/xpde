@@ -15,8 +15,9 @@ type
     lbFile: TLabel;
     lbStatus: TLabel;
     pbProgress: TProgressBar;
-    Button1: TButton;
+    btnCancel: TButton;
     lbETA: TLabel;
+    procedure btnCancelClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,6 +42,11 @@ begin
     lbETA.caption:=eta;
     pbProgress.Max:=max;
     pbProgress.Position:=progress;
+end;
+
+procedure TProgressDlg.btnCancelClick(Sender: TObject);
+begin
+    tag:=1;
 end;
 
 end.

@@ -27,7 +27,7 @@ interface
 uses
     Classes, SysUtils, QGraphics,
     uExplorerAPI, QDialogs, uXPAPI,
-    QForms;
+    QForms, Libc;
 
 type
 
@@ -103,6 +103,7 @@ type
         function getChildren: TInterfaceList; override;
         procedure getStatusData(const status:TStrings);override;
         procedure getColumnData(const columns:TStrings); override;
+        procedure executeVerb(const verb:integer); override;
         procedure getVerbItems(const verbs:TStrings); override;
         function getDisplayName: string; override;
         function getIcon: integer; override;
@@ -221,15 +222,25 @@ type
     TFileCopier=class(TObject)
     public
         sourcepaths: TStringList;
+        basepaths: TStringList;
         sources: TStringList;
         target: string;
         copydlg: TForm;
         currentfile: string;
         currentsource: string;
         currenttarget: string;
-        procedure copyFile(const source:string; const target:string);
-        procedure OnFileProgress(const position:integer; const size:integer);
+
+        starttime: integer;
+        currenttime: integer;
+        currentsize: integer;
+        totalsize: integer;
+        eta: string;
+        lasteta: integer;
+        procedure copyFile(const source:string; const target, basepath:string);
+        procedure OnFileProgress;
+        procedure fillArchives(const dirname:string; list:TStrings; paths: TStrings; const basepath:string);
         procedure fillSources;
+        procedure calculatesize;
         procedure start;
         constructor Create;
         destructor Destroy;override;
@@ -249,12 +260,22 @@ var
     imNOICON: integer=-1;
 
 const
-    bufsize=16384;    
+    bufsize=32768;
+
 
 implementation
 
 var
     bmp: TBitmap;
+
+function getTickCount:integer;
+var
+    tv: timeval;
+    tz: timezone;
+begin
+    gettimeofday(tv,tz);
+    result:=tv.tv_sec;
+end;
 
 function removeTrailingSlash(const str:string):string;
 begin
@@ -345,6 +366,31 @@ destructor TFolder.Destroy;
 begin
     children.free;
   inherited;
+end;
+
+procedure TFolder.executeVerb(const verb: integer);
+var
+    f: TFileCopier;
+    copydlg:TForm;
+begin
+    if verb=iCopy then begin
+        XPExplorer.copycurrentselectiontoclipboard;
+    end;
+
+    if verb=iPaste then begin
+        copydlg:=XPExplorer.createNewProgressDlg('Copying...');
+        copydlg.show;
+        f:=TFileCopier.create;
+        try
+            f.copydlg:=copydlg;
+            f.target:=extractfilepath(FPath);
+            f.sourcepaths.assign(XPExplorer.getClipboard);
+            f.start;
+        finally
+            copydlg.free;
+            f.free;
+        end;
+    end;
 end;
 
 function TFolder.getChildren: TInterfaceList;
@@ -507,7 +553,7 @@ begin
     end;
 
     if verb=iPaste then begin
-        copydlg:=XPExplorer.createNewProgressDlg('Copying....');
+        copydlg:=XPExplorer.createNewProgressDlg('Copying...');
         copydlg.show;
         f:=TFileCopier.create;
         try
@@ -988,7 +1034,22 @@ end;
 
 { TFileCopier }
 
-procedure TFileCopier.copyFile(const source, target: string);
+procedure TFileCopier.calculatesize;
+var
+    source: string;
+    i: integer;
+    statbuff: _stat;
+begin
+    XPExplorer.updateProgressDlg(copydlg,0,0,'','','Calculating size...');
+    totalsize:=0;
+    for i:=0 to sources.count-1 do begin
+        source:=sources[i];
+        stat(PChar(source), statbuff);
+        totalsize:=totalsize+statbuff.st_size;
+    end;
+end;
+
+procedure TFileCopier.copyFile(const source, target, basepath: string);
 var
     s: TFileStream;
     t: TFileStream;
@@ -999,8 +1060,8 @@ var
     buf: array [0..bufsize-1] of byte;
     rsize: integer;
 begin
-    sourcename:=extractfilename(source);
-    currentfile:=sourcename;
+    sourcename:=copy(source,length(basepath)+1,length(source));
+    currentfile:=extractfilename(sourcename);
 
     currenttarget:=extractdirname(target);
     currentsource:=extractdirname(extractfilepath(source));
@@ -1019,13 +1080,16 @@ begin
     end;
 
     s:=TFileStream.Create(source, fmOpenRead);
+    ForceDirectories(extractfilepath(targetname));
     t:=TFileStream.Create(targetname, fmOpenWrite or fmCreate);
     try
         while t.size<s.size do begin
             rsize:=s.Read(buf,sizeof(buf));
             t.Write(buf,rsize);
-            OnFileProgress(t.size,s.size);
+            currentsize:=currentsize+rsize;
+            OnFileProgress;
             application.processmessages;
+            if copydlg.tag=1 then break;
         end;
     finally
         t.free;
@@ -1037,13 +1101,46 @@ constructor TFileCopier.Create;
 begin
     sources:=TStringList.create;
     sourcepaths:=TStringList.create;
+    basepaths:=TStringList.create;
 end;
 
 destructor TFileCopier.Destroy;
 begin
+    basepaths.free;
     sourcepaths.free;
     sources.free;
     inherited;
+end;
+
+procedure TFileCopier.fillArchives(const dirname: string; list: TStrings; paths: TStrings; const basepath:string);
+var
+    f: TSearchRec;
+    a: TFile;
+    b: TFolder;
+    ss: TStringList;
+    locfile: TLocalFile;
+    i: integer;
+    aDir: string;
+begin
+    aDir:=addTrailingSlash(dirname);
+
+    if Findfirst(aDir+'*',faHidden or faAnyFile or faSysFile or faDirectory,f)=0 then begin
+        try
+            repeat
+                if (f.name='.') or (f.name='..') then continue;
+
+                if ((faDirectory and f.Attr)=faDirectory) then begin
+                    fillarchives(f.PathOnly+f.Name,list,paths,basepath);
+                end
+                else begin
+                    list.add(f.PathOnly+f.Name);
+                    paths.add(basepath);
+                end;
+            until (findnext(f)<>0);
+        finally
+            findclose(f);
+        end;
+    end;
 end;
 
 procedure TFileCopier.fillSources;
@@ -1054,17 +1151,46 @@ begin
     for i:=0 to sourcepaths.count-1 do begin
         path:=sourcepaths[i];
         if DirectoryExists(path) then begin
+            fillarchives(path,sources,basepaths,extractfilepath(path));        
         end
         else if fileexists(path) then begin
             sources.add(path);
+            basepaths.add(extractfilepath(path));
         end
         else showmessage(path);
     end;
 end;
 
-procedure TFileCopier.OnFileProgress(const position, size: integer);
+procedure TFileCopier.OnFileProgress;
+var
+    spent: integer;
+    totaltime: extended;
+    seconds: integer;
+    minutes: integer;
 begin
-    XPExplorer.updateProgressDlg(copydlg,position,size,currentfile,format('Copying from ''%s'' to ''%s''',[currentsource,currenttarget]),'');
+    currenttime:=gettickcount;
+    spent:=currenttime-starttime;
+    if (spent>5) then begin
+        totaltime:=totalsize;
+        totaltime:=totaltime*spent;
+        totaltime:=totaltime / currentsize;
+
+        seconds:=round(totaltime)-spent;
+
+        if seconds<lasteta then begin
+            lasteta:=seconds;
+            if seconds>60 then begin
+                minutes:=seconds div 60;
+                seconds:=seconds mod 60;
+                eta:=format('%d Minutes and %d Seconds Remaining',[minutes,seconds]);
+            end
+            else begin
+                eta:=inttostr(seconds)+' Seconds Remaining';
+            end;
+        end;
+    end;
+
+    XPExplorer.updateProgressDlg(copydlg,currentsize,totalsize,currentfile,format('Copying from ''%s'' to ''%s''',[currentsource,currenttarget]),eta);
 end;
 
 procedure TFileCopier.start;
@@ -1072,10 +1198,16 @@ var
     i:longint;
     source: string;
 begin
+    currentsize:=0;
+    lasteta:=high(integer);
+    eta:='';
     fillsources;
+    calculatesize;
+    starttime:=gettickcount;
     for i:=0 to sources.count-1 do begin
         source:=sources[i];
-        copyFile(source,target);
+        copyFile(source,target, basepaths[i]);
+        if copydlg.tag=1 then break;
     end;
 end;
 

@@ -1,7 +1,7 @@
 object ProgressDlg: TProgressDlg
-  Left = 307
-  Top = 279
-  ActiveControl = Button1
+  Left = 758
+  Top = 450
+  ActiveControl = btnCancel
   AutoScroll = False
   BorderStyle = fbsDialog
   Caption = 'ProgressDlg'
@@ -1245,35 +1245,37 @@ object ProgressDlg: TProgressDlg
   object lbFile: TLabel
     Left = 11
     Top = 61
-    Width = 20
+    Width = 60
     Height = 18
-    Caption = '%s'
+    Caption = '               '
     Masked = True
     Transparent = True
   end
   object lbStatus: TLabel
     Left = 11
     Top = 77
-    Width = 20
+    Width = 60
     Height = 18
-    Caption = '%s'
+    Caption = '               '
     Masked = True
     Transparent = True
   end
-  object Button1: TButton
+  object btnCancel: TButton
     Left = 304
     Top = 102
     Width = 58
     Height = 23
+    Cancel = True
     Caption = 'Cancel'
     TabOrder = 2
+    OnClick = btnCancelClick
   end
   object lbETA: TLabel
     Left = 11
     Top = 117
-    Width = 20
+    Width = 60
     Height = 18
-    Caption = '%s'
+    Caption = '               '
     Masked = True
     Transparent = True
   end

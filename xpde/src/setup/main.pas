@@ -219,6 +219,8 @@ begin
                 tmStars.Enabled:=true;
                 installscript;
             end;
+            inc(curstep);
+            setCurrentStep(curstep);
             installindm;
             tmTexts.Enabled:=false;
             tmStars.Enabled:=false;
@@ -305,6 +307,8 @@ var
     thefile:TStringList;
     i: integer;
     line: string;
+    wmsession: string;
+    gdm:string;
 begin
     kdm:='/etc/opt/kde3/share/config/kdm/kdmrc';  //SuSE 8.2
 
@@ -332,8 +336,52 @@ begin
         finally
             thefile.free;
         end;
-    end;
+    end
+    else writeln ('kdmrc not found!');
 
+    wmsession:='/etc/X11/wmsession.d';      //Mandrake 9.1
+
+    if directoryexists(wmsession) then begin
+        writeln('Mandrake 9.1 - wmsession dir found!');
+        thefile:=TStringList.create;
+        try
+            thefile.add('NAME=XPde');
+            thefile.add('EXEC=/usr/local/bin/XPde');
+            thefile.add('DESC=XPde Desktop Environment');
+            thefile.add('SCRIPT:');
+            thefile.add('exec /usr/local/bin/XPde');
+
+            if fileexists(wmsession+'/08XPde') then begin
+                writeln('Session file (08XPde) already exists, created new one!');
+            end;
+
+            thefile.SaveToFile(wmsession+'/08XPde');
+        finally
+            thefile.free;
+        end;
+    end
+    else writeln ('wmsession dir not found!');
+
+    gdm:='/etc/X11/gdm/Sessions';           //RedHat 9.0
+
+    if directoryexists(gdm) then begin
+        writeln('RedHat 9.0 - gdm sessions dir found!');
+        thefile:=TStringList.create;
+        try
+            thefile.add('/usr/local/bin/XPde');
+
+            if fileexists(gdm+'/XPde') then begin
+                writeln('Session file (XPde) already exists, created new one!');
+            end;
+
+            thefile.SaveToFile(gdm+'/XPde');
+            libc.system('chmod +x /etc/X11/gdm/Sessions/XPde')
+        finally
+            thefile.free;
+        end;
+    end
+    else writeln ('gdm sessions dir not found!');
+    
 end;
 
 end.

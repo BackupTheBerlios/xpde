@@ -8,7 +8,7 @@ endif
 MAKE = make -$(MAKEFLAGS) -f$**
 DCC =dcc $<
 #------------------------------------------------------------------------------
-PROJECTS = bplXPCommon.so bplXPRegistry.so bplXPAPI.so bplXPMenus.so \
+PROJECTS = bplXPRegistry.so bplXPCommon.so bplXPAPI.so bplXPMenus.so \
   bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
   bplXPShellControls.so bplXPCommctrls.so taskmanager controlpanel notepad \
   networkstatus networkproperties mouse keyboard regional appexec bpldesk.so XPwm \

@@ -62,12 +62,7 @@ UseLauncher=0
 DebugCWD=
 
 [HistoryLists\hlOutputDirectorry]
-Count=3
-Item0=$(HOME)/xpde/bin
-Item1=$(HOME)/xpde/bin/applets
-Item2=$(HOME)/xpde/bin/apps
-
-[HistoryLists\hlBPLOutput]
-Count=1
-Item0=$(HOME)/xpde/bin
+Count=2
+Item0=$(HOME)/xpde/bin/applets
+Item1=$(HOME)/xpde/bin/apps
 

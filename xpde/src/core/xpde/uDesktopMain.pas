@@ -31,7 +31,7 @@ uses
   QStdCtrls, QMenus, uXPPopupMenu,
   QExtCtrls,uSysListView, uSysListItem,
   uXPAPI, uXPStyleConsts, uRegistry, uXPAPI_imp,
-  uLNKFile, uCreateShortcut,
+  uLNKFile, uCreateShortcut, uMouseAPI,
   uLNKProperties, Qt, uXPDictionary, uXPLocalizator, uXPStyle;
 
 type

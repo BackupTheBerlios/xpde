@@ -24,7 +24,7 @@ unit uXPStyle;
 
 interface
 uses
-    Classes, QForms, QGraphics,
+    Classes, QForms, QGraphics, uMouseAPI,
     Types, QMenus, Qt, uXPStyleConsts,
     QDialogs, QStyle, QControls, uXPPopupMenu,
     QStdCtrls, Sysutils;
@@ -73,6 +73,9 @@ begin
     if not (assigned(st)) then st:=TXPStyle.create(app);
 
     st.setXPStyle(app);
+
+    readMousePropertiesFromRegistry;
+    applyMouseProperties;
 
 end;
 

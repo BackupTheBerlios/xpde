@@ -28,7 +28,9 @@ package XPStyle;
 requires
   rtl,
   visualclx,
-  XPMenus;
+  XPMenus,
+  XPCommon,
+  XPRegistry;
 
 contains
   uXPStyle in 'uXPStyle.pas',

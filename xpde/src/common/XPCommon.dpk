@@ -27,10 +27,12 @@ package XPCommon;
 
 requires
   rtl,
-  visualclx;
+  visualclx,
+  XPRegistry;
 
 contains
   uXPCommon in 'uXPCommon.pas',
-  distro in 'distro.pas';
+  distro in 'distro.pas',
+  uMouseAPI in 'uMouseAPI.pas';
 
 end.

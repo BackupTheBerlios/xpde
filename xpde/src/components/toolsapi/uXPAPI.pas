@@ -36,6 +36,8 @@ type
     TSysInfo=(
     siUserDir,                                                                  //User directory
     siUsername,                                                                 //User name
+    siMyDocuments,                                                              //User Documents
+    siMiscDir,                                                              //User Documents        
     siAppDir,                                                                   //Where the executable resides
     siAppsDir,                                                                  //Where the apps reside    
     siAppletsDir,                                                               //Where the applets reside
@@ -44,6 +46,8 @@ type
     siCurrentThemeDir,                                                          //Current theme directory
     siFileTypesDir,                                                             //File types directory
     siSystemDir,                                                                //System icons directory
+    siSmallSystemDir,                                                           //Small system icons directory
+    siMediumSystemDir,                                                          //Small system icons directory
     siApplicationsDir);                                                         //Application icons directory
 
     IWMClient=interface

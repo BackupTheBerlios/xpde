@@ -40,14 +40,21 @@ type
         FUserName: string;
     function GetAppDir: string;
     function GetDesktopDir: string;
+    function GetMyDocumentsDir: string;
     function GetThemesDir: string;
     function GetCurrentThemeDir: string;
+
     function GetIconsDir: string;
     function GetBitmapsDir: string;
     function GetSystemDir: string;
     function GetBaseDir: string;
     function GetAppletsDir: string;
     function GetAppsDir: string;
+    function GetCurrentThemeSmallDir: string;
+    function GetCurrentThemeMediumDir: string;
+    function GetSmallSystemDir: string;
+    function GetMediumSystemDir: string;
+    function GetMiscDir: string;
     public
         timer: TTimer;
         defaultcursor: QCursorH;
@@ -75,7 +82,9 @@ type
         property Desktopdir:string read GetDesktopDir;
         property ThemesDir:string read GetThemesDir;
         property SystemDir:string read GetSystemDir;
+        property SmallSystemDir:string read GetSmallSystemDir;
         property CurrentThemeDir:string read GetCurrentThemeDir;
+        property CurrentThemeSmallDir:string read GetCurrentThemeSmallDir;
         property IconsDir:string read GetIconsDir;
         property BitmapsDir:string read GetBitmapsDir;
         constructor Create;
@@ -214,7 +223,6 @@ end;
 
 function TXPAPI.GetSystemDir: string;
 begin
-
     result:=CurrentThemeDir+'system/';
 end;
 
@@ -430,13 +438,17 @@ begin
         siUserDir: result:=UserDir;
         siUsername: result:=UserName;
         siAppDir: result:=AppDir;
-        siAppsDir: result:=AppsDir;        
+        siAppsDir: result:=AppsDir;
         siAppletsDir: result:=AppletsDir;
         siDesktopDir: result:=DesktopDir;
         siThemesDir: result:=ThemesDir;
         siCurrentThemeDir: result:=CurrentThemeDir;
         siFileTypesDir: result:=CurrentThemeDir+'/filetypes/';
         siSystemDir: result:=GetSystemDir;
+        siMyDocuments: result:=GetMyDocumentsDir;
+        siSmallSystemDir: result:=GetSmallSystemDir;
+        siMediumSystemDir: result:=GetMediumSystemDir;
+        siMiscDir: result:=GetMiscDir;
         siApplicationsDir: result:=CurrentThemeDir+'/applications/';
     end;
 end;
@@ -508,6 +520,37 @@ end;
 function TXPAPI.getVersionString: string;
 begin
     result:='Version 0.2.1 (Build 20030226.xpdeclient)';
+end;
+
+function TXPAPI.GetCurrentThemeSmallDir: string;
+begin
+    result:=ThemesDir+'default/16x16/';
+end;
+
+function TXPAPI.GetSmallSystemDir: string;
+begin
+    result:=CurrentThemeSmallDir+'system/';
+end;
+
+function TXPAPI.GetMyDocumentsDir: string;
+begin
+    result:=userdir+'/.xpde/My Documents/';
+    if not fileexists(result) then forcedirectories(result);
+end;
+
+function TXPAPI.GetMiscDir: string;
+begin
+    result:=ThemesDir+'default/misc/';
+end;
+
+function TXPAPI.GetCurrentThemeMediumDir: string;
+begin
+    result:=ThemesDir+'default/24x24/';
+end;
+
+function TXPAPI.GetMediumSystemDir: string;
+begin
+    result:=GetCurrentThemeMediumDir+'system/';
 end;
 
 initialization

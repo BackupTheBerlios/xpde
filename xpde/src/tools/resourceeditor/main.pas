@@ -32,7 +32,7 @@ uses
   SysUtils, Types, Classes,
   Variants, QTypes, QGraphics,
   QControls, QForms, uResourceAPI,
-  QDialogs, QStdCtrls, QMenus,
+  QDialogs, QStdCtrls, QMenus, uNew,
   QComCtrls, QExtCtrls, uResources;
 
 type
@@ -48,10 +48,12 @@ type
     Exit1: TMenuItem;
     SaveDialog: TSaveDialog;
     Save1: TMenuItem;
+    New1: TMenuItem;
     procedure Open1Click(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
     procedure Saveas1Click(Sender: TObject);
     procedure Save1Click(Sender: TObject);
+    procedure New1Click(Sender: TObject);
   private
     { Private declarations }
     ResourceFileFrm : TResourceFileFrm;
@@ -168,6 +170,17 @@ procedure TMainForm.Save1Click(Sender: TObject);
 begin
     if ActiveMDIChild is TResourceFileFrm then begin
         (ActiveMDIChild as TResourceFileFrm).save;
+    end;
+end;
+
+procedure TMainForm.New1Click(Sender: TObject);
+begin
+    with TNewTranslationDlg.create(application) do begin
+        try
+            showmodal;
+        finally
+            free;
+        end;
     end;
 end;
 

@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 223
-  Top = 282
+  Left = 209
+  Top = 174
   Width = 696
   Height = 480
   VertScrollBar.Range = 48
@@ -11,11 +11,11 @@ object MainForm: TMainForm
   Position = poDefault
   WindowState = wsMaximized
   PixelsPerInch = 84
-  TextHeight = 18
-  TextWidth = 8
+  TextHeight = 20
+  TextWidth = 7
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 433
+    Top = 431
     Width = 696
     Height = 19
     Panels = <>
@@ -35,6 +35,10 @@ object MainForm: TMainForm
     Top = 44
     object File1: TMenuItem
       Caption = '&File'
+      object New1: TMenuItem
+        Caption = '&New...'
+        OnClick = New1Click
+      end
       object Open1: TMenuItem
         Caption = '&Open...'
         OnClick = Open1Click

@@ -1,0 +1,58 @@
+INSTALAÇÃO
+-------
+Para instalar o XPde, siga os seguintes passos:
+
+1 DESCOMPACTANDO A APLICACÃO
+
+-Vá ao seu diretório de usuário
+
+-Digite: tar xvzf xpdeXXXXXXX.tar.gz (XXXXXXXX=versão atual)
+
+-Isto criará dois diretórios
+ .xpde
+ xpde
+
+-Um arquivo chamado
+ .xinitrcXPDE
+
+Edite esse arquivo chamado .xinitrcXPDE e mude a seguinte linha:
+
+export LD_LIBRARY_PATH=/home/ttm/xpde
+
+para
+
+export LD_LIBRARY_PATH=/home/seudiretóriodeusuário/xpde
+
+e copie o arquivo .xinitrcXPDE com o nome de .xinitrc
+
+cp .xinitrcXPDE .xinitrc
+
+2 INSTALANDO FONTES TRUETYPE
+
+O XPde usa as fontes True Type padrão do Windows XP: Tahoma e MS Sans Serif.
+Você poderá obter essas fontes de sua instalação do Windows ou pela internet.
+Estes arquivos não são incluídos com o programa.
+Quando você conseguir as fontes, copie-as para dentro do diretório xpde/fonts,
+e no mesmo diretório, haverá um comando chamado makefonts o qual você poderá
+executar. Este comando criará os arquivos necessários para o XWindow usá-las.
+Em qualquer distribuição Linux atual, você terá que editar seu arquivo
+/etc/X11/XF86Config e adicionar uma linha FontPath:
+
+ FontPath     "/home/seudiretóriodeusuário/xpde/fonts"
+
+Reinicialize o XWindow.
+
+
+Estas fontes são de propriedade da Microsoft Corp., portanto você deve ser
+licenciado para usá-las.
+
+
+3 RODANDO O XWINDOWS
+
+Você terá que iniciar o ambiente gráfico usando o command startx. Isto irá
+rodar o ambiente de trabalho e o gerenciador de janelas, que também tem uma
+barra de tarefas.
+
+Não sabemos se isso irá funcionar em cada distribuicao Linux, portanto por
+favor, não hesite em contatar-nos se tiver problemas. 
+

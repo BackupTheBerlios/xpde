@@ -596,8 +596,8 @@ End;
 
 function _get_tmp_fname:String;
 begin
-        Result:='/tmp/'+FormatDateTime('XPdeTaskManager.hh.mm.ss.ms',Now)+
-        Format('.%d.%d.%d',[Random($FFFF),Random($FFFF),Random($FFFF)]);
+        Result:='/tmp/XPdeNet-'+FormatDateTime('hh-mm-ss-ms',Now)+
+        Format('.%d',[Random($FFFF)]);
 end;
 
 Procedure Get_Info_From_Netstat(device:string);

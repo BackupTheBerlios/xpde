@@ -226,7 +226,7 @@ var tmpstr,tmpstr_stat:TStrings;
 
 function _get_tmp_fname:String;
 begin
-        Result:='/tmp/'+FormatDateTime('XPdeTM-hh-mm-ss-ms',Now)+
+        Result:='/tmp/XPdeTM-'+FormatDateTime('hh-mm-ss-ms',Now)+
         Format('.%d',[Random($FFFF)]);
 end;
 
@@ -349,6 +349,7 @@ Begin
         Get_PIDS_Apps(pidcmd);
         except
         tmpstr.Free;
+        writeln('ERROR READING processes !');
         exit;
         End;
 

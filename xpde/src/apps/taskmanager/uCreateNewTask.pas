@@ -72,7 +72,7 @@ end;
 
 function _get_tmp_fname:String;
 begin
-        Result:='/tmp/'+FormatDateTime('XPdeTMN-hh-mm-ss-ms',Now)+
+        Result:='/tmp/XPdeTMN-'+FormatDateTime('hh-mm-ss-ms',Now)+
         Format('.%d',[Random($FFFF)]);
 end;
 

@@ -1,0 +1,7 @@
+[Shortcut]
+Caption=System
+Icon=kcontrol.png
+Comments=See information about your computer system, and change settings for hardware, performance, and automatic updates.
+Command=%APPLETS%systemproperties
+Startin=
+

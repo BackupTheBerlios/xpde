@@ -321,15 +321,15 @@ end;
 procedure TExplorerForm.FormCreate(Sender: TObject);
 begin
     sbBack.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'back.png');
-    sbNext.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'next.png');
+    sbNext.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'forward.png');
     sbUp.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'up.png');
-    sbSearch.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'search.png');
-    sbFolders.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'folders.png');
-    sbMove.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'moveto.png');
-    sbCopy.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'copyto.png');
-    sbStop.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'cancel.png');
-    sbUndo.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'refresh.png');
-    sbView.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'view.png');                            
+    sbSearch.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'find.png');
+    sbFolders.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'folder.png');
+//    sbMove.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'moveto.png');
+//    sbCopy.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'copyto.png');
+    sbStop.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'stop.png');
+    sbUndo.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'reload.png');
+    sbView.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'view_folders.png');                            
 
     //These lines are here to set the font of the menubar
     font.name:='';

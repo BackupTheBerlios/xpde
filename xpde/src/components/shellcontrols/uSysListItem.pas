@@ -615,18 +615,15 @@ var
 begin
   if assigned(background) then background.free;
   background:=TBitmap.create;
-
   if assigned(mask) then mask.free;
   mask:=TBitmap.create;
   mask.PixelFormat:=pf1bit;
-
   if assigned(selectedbitmap) then selectedbitmap.free;
   selectedbitmap:=TBitmap.create;
   selectedbitmap.width:=w;
   selectedbitmap.height:=h;
 
   original:=TBitmap.create;
-
   f:=TPicture.create;
   try
     f.LoadFromFile(imgfile);
@@ -645,7 +642,7 @@ begin
   if lnk then begin
     b:=TBitmap.create;
     try
-        b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+gSHORTCUT);
+        b.loadfromfile(XPAPI.getSysInfo(siMiscDir)+gSHORTCUT);
         b.transparent:=false;
         original.canvas.draw(0,original.height-b.height-1,b);
         original.Transparent:=false;
@@ -657,10 +654,12 @@ begin
 
   createMask;
 
+
   FTransparent:=true;
   masked:=true;
 
   MaskedBitmap(original,selectedbitmap);
+
 
   selectedbitmap.transparent:=false;
   selectedbitmap.transparent:=true;
@@ -668,7 +667,7 @@ begin
   if lnk then begin
     b:=TBitmap.create;
     try
-        b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+gSHORTCUT);
+        b.loadfromfile(XPAPI.getSysInfo(siMiscDir)+gSHORTCUT);
         b.transparent:=false;
         selectedbitmap.canvas.draw(0,original.height-b.height-1,b);
     finally

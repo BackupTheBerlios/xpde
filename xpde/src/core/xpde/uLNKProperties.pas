@@ -268,7 +268,7 @@ begin
 
                    b:=TBitmap.create;
                    try
-                       b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+gSHORTCUT);
+                       b.loadfromfile(XPAPI.getSysInfo(siMiscDir)+gSHORTCUT);
                        b.transparent:=false;
                        imgicon.picture.bitmap.canvas.draw(0,imgicon.picture.bitmap.height-b.height-1,b);
                    finally

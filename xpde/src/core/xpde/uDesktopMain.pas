@@ -181,6 +181,7 @@ begin
             end;
         end;
     end;
+
     result:=desktop.addItem(caption,iconfile,islnk);
     if assigned(result) then begin
         result.data:=fullpath;
@@ -399,8 +400,8 @@ end;
 procedure TMainForm.initTheme;
 begin
 
-        shortcut1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gSHORTCUTSMALL);
-        folder1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gFOLDERSMALL);
+        shortcut1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siMiscDir)+gSHORTCUTSMALL);
+        folder1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSmallSystemDir)+'folder.png');
 end;
 
 { TXPDesktop }

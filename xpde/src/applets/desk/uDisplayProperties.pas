@@ -170,20 +170,20 @@ var
     method:integer;
     b:TBitmap;
 begin
-    image5.Picture.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gDESKTOPPROPERTIESMONITOR);
+    image5.Picture.LoadFromFile(XPAPI.getSysInfo(siMiscDir)+gDESKTOPPROPERTIESMONITOR);
     b:=TBitmap.create;
     try
-        b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gNONE);
+        b.LoadFromFile(XPAPI.getSysInfo(siMiscDir)+gNONE);
         b.width:=imgList.Width;
         b.height:=imgList.height;
         imgList.AddMasked(b,clFuchsia);
 
-        b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gBMP);
+        b.LoadFromFile(XPAPI.getSysInfo(siMiscDir)+gBMP);
         b.width:=imgList.Width;
         b.height:=imgList.height;
         imgList.AddMasked(b,clFuchsia);
 
-        b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gJPG);
+        b.LoadFromFile(XPAPI.getSysInfo(siMiscDir)+gJPG);
         b.width:=imgList.Width;
         b.height:=imgList.height;
         imgList.Add(b,b);

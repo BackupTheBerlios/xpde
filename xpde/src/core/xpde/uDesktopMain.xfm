@@ -1,23 +1,24 @@
 object MainForm: TMainForm
-  Left = 195
-  Top = 168
-  Width = 982
-  Height = 686
+  Left = 298
+  Top = 270
+  Width = 648
+  Height = 367
   BorderStyle = fbsNone
   Caption = 'MainForm'
   Color = clSilver
   Visible = True
+  WindowState = wsMaximized
   OnActivate = FormActivate
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 90
-  TextHeight = 18
-  TextWidth = 8
+  TextHeight = 20
+  TextWidth = 7
   object ListBox: TListBox
     Left = 128
     Top = 28
-    Width = 836
-    Height = 643
+    Width = 502
+    Height = 324
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Color = clBlack
     Font.Height = 14

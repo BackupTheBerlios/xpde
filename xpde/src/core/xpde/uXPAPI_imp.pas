@@ -287,7 +287,7 @@ var
 begin
     bmp:=TBitmap.create;
     try
-        bmp.LoadFromFile(getSysInfo(siSystemDir)+gDEFAULTCURSOR);
+        bmp.LoadFromFile(getSysInfo(siMiscDir)+gDEFAULTCURSOR);
         defaultcursor:=setcursor(bmp);
     finally
         bmp.free;
@@ -300,7 +300,7 @@ var
 begin
     bmp:=TBitmap.create;
     try
-        bmp.LoadFromFile(getSysInfo(siSystemDir)+gWAITCURSOR);
+        bmp.LoadFromFile(getSysInfo(siMiscDir)+gWAITCURSOR);
         defaultcursor:=setcursor(bmp);
     finally
         bmp.free;

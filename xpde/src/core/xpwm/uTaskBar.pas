@@ -149,26 +149,45 @@ begin
 end;
 
 procedure TTaskBar.FormCreate(Sender: TObject);
-var
-    b:TBitmap;
+    procedure loadMenuBitmap(target:TBitmap;const img:string);
+    var
+        b:TBitmap;
+        c:TBitmap;
+    begin
+        b:=TBitmap.create;
+        c:=TBitmap.create;
+        try
+            c.width:=32;
+            c.height:=32;
+            c.Canvas.Brush.color:=clFuchsia;
+            c.Canvas.FillRect(rect(0,0,32,32));
+            b.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+img);
+            c.Canvas.Draw(4,4,b);
+            c.transparent:=true;
+            target.assign(c);
+    finally
+        c.free;
+        b.free;
+    end;
+    end;
 begin
     XPIPC.OnNotification:=IPCNotification;
     
     XPAPI.setdefaultcursor;
 
     //*****************************************************
-    btnStart.Glyph.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+gSTARTBUTTON);
-    imgProgramFolder.picture.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gPROGRAMFOLDER);
-    startmenu.backbitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSTARTMENU);
+    btnStart.Glyph.LoadFromFile(XPAPI.getsysinfo(siMiscDir)+gSTARTBUTTON);
+    startmenu.backbitmap.loadfromfile(XPAPI.getsysinfo(siMiscDir)+gSTARTMENU);
+    imgProgramFolder.picture.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'programs_develop.png');
     //*****************************************************
-    Programs1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gPROGRAMS);
-    Documents1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gDOCUMENTS);
-    Settings1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gSETTINGS);
-    Search1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gSEARCH);
-    HelpandSupport1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gHELPANDSUPPORT);
-    Run1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gRUN);
-    LogOffAdministrator1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gLOGOFF);
-    TurnOffComputer1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gTURNOFF);
+    loadMenuBitmap(programs1.bitmap,'programs_develop.png');
+    loadMenuBitmap(documents1.bitmap,'programs_productivity.png');
+    loadMenuBitmap(settings1.bitmap,'programs_system.png');
+    loadMenuBitmap(search1.bitmap,gSearch);
+    loadMenuBitmap(helpandsupport1.bitmap,'help.png');
+    loadMenuBitmap(run1.bitmap,'reload.png');
+    loadMenuBitmap(logoffadministrator1.bitmap,'stop.png');
+    loadMenuBitmap(turnoffcomputer1.bitmap,'power_off.png');
     //*****************************************************
 
 
@@ -380,20 +399,20 @@ begin
                     if trim(l.caption)<>'' then d.caption:=l.Caption
                     else d.caption:=changefileext(files[i],'');
 
-                    iconfile:=XPAPI.getsysinfo(siSystemDir)+gNOICONSMALL;
+                    iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png';
                     if trim(l.icon)<>'' then begin
                         if (fileexists(l.icon)) then iconfile:=l.icon
                         else begin
                             if (fileexists(XPAPI.getsysinfo(siSystemDir)+l.Icon)) then begin
                                 iconfile:=XPAPI.getsysinfo(siSystemDir)+l.Icon;
                             end
-                            else iconfile:=XPAPI.getsysinfo(siSystemDir)+gNOICONSMALL;
+                            else iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png'
                         end;
                     end
                     else begin
                         iconfile:=XPAPI.getsysinfo(siSystemDir)+changefileext(files[i],'.ico');
                         if not fileexists(iconfile) then begin
-                            iconfile:=XPAPI.getsysinfo(siSystemDir)+gNOICONSMALL;
+                            iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png'
                         end;
                     end;
                     
@@ -402,7 +421,7 @@ begin
                         f.graphic.width:=16;
                         f.graphic.height:=16;
                     except
-                        iconfile:=XPAPI.getsysinfo(siSystemDir)+gNOICONSMALL;
+                        iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png';
                         f.LoadFromFile(iconfile);
                         f.graphic.width:=16;
                         f.graphic.height:=16;

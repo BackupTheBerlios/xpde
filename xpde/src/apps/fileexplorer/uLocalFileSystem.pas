@@ -130,6 +130,14 @@ type
         procedure getVerbItems(const verbs:TStrings); override;
     end;
 
+    THomeFolder=class(TFolder)
+    public
+        function getDisplayName: string; override;
+        constructor Create; reintroduce;
+        function getIcon: integer; override;
+        procedure getVerbItems(const verbs:TStrings); override;
+    end;
+
     TUserDocuments=class(TMyDocuments)
     public
         function getDisplayName: string; override;
@@ -268,6 +276,7 @@ type
 
 var
     imDESKTOP: integer=-1;
+    imHOME: integer=-1;    
     imMYDOCUMENTS: integer=-1;
     imMYCOMPUTER: integer=-1;
     imMYNETWORKPLACES: integer=-1;
@@ -735,9 +744,10 @@ begin
     children.add(TFloppy.create('/mnt/floppy','3" 1/2 Floppy',imFLOPPY));
     children.add(THardDisk.create('/','Local Disk',imHARDDISK));
     children.add(TCDDrive.create('/mnt/cdrom','CD Drive',imCDDRIVE));
+    children.add(THomeFolder.create);
     children.add(TControlPanel.create);
     children.add(TFolder.create('/opt/xpde/share/Shared Documents'));
-    children.add(TUserDocuments.create);                
+    children.add(TUserDocuments.create);
 end;
 
 destructor TMyPC.Destroy;
@@ -1316,40 +1326,77 @@ begin
     end;
 end;
 
+{ THomeFolder }
+
+constructor THomeFolder.Create;
+begin
+    inherited Create(XPAPI.getsysinfo(siUserDir));
+end;
+
+function THomeFolder.getDisplayName: string;
+begin
+    result:='Home Folder';
+end;
+
+function THomeFolder.getIcon: integer;
+begin
+    result:=imHOME;
+end;
+
+procedure THomeFolder.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('-');
+        add('Copy');
+        add('-');
+        add('Delete');
+        add('Rename');
+        add('-');
+        add('Properties');
+    end;
+end;
+
 initialization
     bmp:=TBitmap.create;
     try
         bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'desktop.png');
         imDESKTOP:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'mydocuments.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'home.png');
+        imHOME:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'folder_documents.png');
         imMYDOCUMENTS:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'mycomputer.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'monitor.png');
         imMYCOMPUTER:=XPExplorer.registerImage(bmp);
 
         bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'network.png');
         imMYNETWORKPLACES:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'recyclebin.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'recyclebinempty.png');
         imRECYCLEBIN:=XPExplorer.registerImage(bmp);
 
         bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'floppy.png');
         imFLOPPY:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'closedfolder.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'folder.png');
         imCLOSEDFOLDER:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'harddisk.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'harddrive.png');
         imHARDDISK:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'cddrive.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'cdrom.png');
         imCDDRIVE:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'controlpanel.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'control_panel.png');
         imCONTROLPANEL:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'noiconsm.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png');
         imNOICON:=XPExplorer.registerImage(bmp);
     finally
         bmp.free;

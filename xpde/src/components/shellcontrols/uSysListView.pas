@@ -207,7 +207,6 @@ begin
     result.ondblclick:=OnItemdblclick;
     result.onmouseup:=OnItemMouseUp;
     result.onmousedown:=OnItemMousedown;
-
     FItems.add(result);
 end;
 

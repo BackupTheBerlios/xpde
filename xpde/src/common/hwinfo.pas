@@ -28,8 +28,13 @@ uses Libc,SysUtils,Classes,xpclasses;
 
 type THostData = PHostEnt;
 
+type _Media = (meFloppy,meDisk,meCDROM,meUnknown);
+Const media_names :Array [0..3] of String=('floppy','disk','cdrom','unknown');
+
 Function Is_CableUnplugged(Const i_face:string):boolean;
 Function IsValidNetDevice(device:string):boolean;
+Function GetHardDiscs:PPci_Info_;
+Function GetSCSIDiscs:PPci_Info_;
 Function GetHdInfo(device:string):string;
 Function ReadHW(hwfile:string):PPci_Info_;
 Function InstalledRAM:cardinal;
@@ -441,8 +446,277 @@ Begin
         case i of
                0:Result:=true;
         End;
-
        End;
+End;
+
+Function GetMediaDeviceFunction(media:string):byte;
+var i:integer;
+Begin
+        Result:=255;
+        for i:=0 to 3 do
+        if media=media_names[i] then
+        Result:=i;
+End;
+
+
+Function GetDeviceTypeFromMedia(media:string):string;
+
+Const OtherDevices:Array[0..MAX_OTHER_DEVICES] of string=('Unknown','Keyboard','Mice and other pointing devices',
+       'Floppy disc controllers','Disk drives',
+       'DVD/CDROM drives','Floppy disc drives','FireWire Controllers',
+       'Ports (COM & LPT)','Processors','SCSI Controllers');
+var i:integer;
+Begin
+        Result:=OtherDevices[0];
+        for i:=0 to 3 do begin
+                if media=media_names[i] then begin
+                case i of
+                        0:Result:=OtherDevices[6];
+                        1:Result:=OtherDevices[4];
+                        2:Result:=OtherDevices[5];
+                        3:Result:=OtherDevices[0];
+                End;
+                End;
+        End;
+End;
+
+Function GetMedia(path:string):string;
+var s,ss:string;
+    fil:TextFile;
+    sta:_stat;
+Begin
+        Result:='unknown';
+        ss:='';
+        s:=path+'/media';
+        if Libc.stat(PChar(s),sta)=0 then begin
+        AssignFile(fil,s);
+        Reset(fil);
+        Readln(fil,ss);
+        CloseFile(fil);
+        if ss<>'' then Result:=ss;
+        End;
+End;
+
+Function GetMediaDeviceInfo(path:string):string;
+var s,ss:string;
+    fil:TextFile;
+    sta:_stat;
+Begin
+        Result:='No informations about device';
+        ss:='';
+        s:=path+'/model';
+        if Libc.stat(PChar(s),sta)=0 then begin
+        AssignFile(fil,s);
+        Reset(fil);
+        ReadLn(fil,ss);
+        CloseFile(fil);
+        if ss<>'' then Result:=ss;
+        End;
+End;
+
+Function GetMediaDriver(path:string):string;
+var s,ss:string;
+    fil:TextFile;
+    sta:_stat;
+Begin
+        Result:='(none)';
+        ss:='';
+        s:=path+'/driver';
+        if Libc.stat(PChar(s),sta)=0 then begin
+        AssignFile(fil,s);
+        Reset(fil);
+        ReadLn(fil,ss);
+        CloseFile(fil);
+        if ss<>'' then Result:=ss;
+        End;
+
+End;
+
+Function GetValueInt(Const value,data:string):byte;
+var ii,jj:integer;
+    s,ss:string;
+Begin
+        ss:='255';
+        ii:=AnsiPos(value,data);
+        if ii<>0 then begin
+        s:=data;
+        s:=copy(data,ii+length(value),length(data));
+        s:=trimleft(s);
+        jj:=Pos(' ',s);
+        if jj<>0 then begin
+                ss:=Copy(s,1,jj-1);
+        End;
+        End;
+        try
+        Result:=StrToInt(ss);
+        except
+        Result:=255;
+        End;
+End;
+
+Function GetValueStr(Const value,data:string):String;
+var ii,jj:integer;
+    s,s1,ss:string;
+Begin
+        ss:='';
+        s1:=data+' ';
+        ii:=AnsiPos(value,s1);
+        if ii<>0 then begin
+        s:=copy(s1,ii+length(value),length(s1));
+        s:=trimleft(s);
+        if (value<>usbinfobus[9]) and (value<>usbinfobus[10]) then
+        jj:=Pos(' ',s)
+        else
+        jj:=length(s)+1;
+        if jj<>0 then begin
+                ss:=Copy(s,1,jj-1);
+        End;
+        End;
+        Result:=ss;
+End;
+
+
+Function GetSCSIDiscs:PPci_Info_;
+Const scsikeys:Array[0..8] of String=('Host:','Channel:','Id:','Lun:',
+                'Vendor:','Model:','Rev:','Type:','ANSI SCSI revision:');
+      OtherDevices:Array[0..MAX_OTHER_DEVICES] of string=('Unknown','Keyboard','Mice and other pointing devices',
+       'Floppy disc controllers','Disk drives',
+       'DVD/CDROM drives','Floppy disc drives','FireWire Controllers',
+       'Ports (COM & LPT)','Processors','SCSI storage controller');
+      ScsiClassDevices:Array[0..1] of String=('Direct-Access','CD-ROM');
+var s,s1:string;
+    st,stt:TStrings;
+    fil:TextFile;
+    sta:_stat;
+    i,j,x,y:integer;
+    sci:PPci_Info_;
+
+Begin
+        s:='/proc/scsi/scsi';
+        SetLength(sci,0);
+        if Libc.stat(PChar(s),sta)=0 then begin
+                st:=TStringList.Create;
+                try
+                AssignFile(fil,s);
+                Reset(fil);
+                j:=0;
+                while not eof(fil) do begin
+                ReadLn(fil,s);
+                st.Add(s);
+                End;
+                CloseFile(fil);
+
+                x:=0;
+                y:=0;
+                i:=-1;
+                j:=0;
+                st.Strings[0]:='';
+                for i:=0 to st.Count-1 do begin
+                        if AnsiPos('Host:',st.Strings[i])<>0 then begin
+                                inc(j);
+                                st.Strings[i]:=st.Strings[i]+' '+st.Strings[i+1]+' '+st.Strings[i+2];
+                                st.Strings[i+1]:='';
+                                st.Strings[i+2]:='';
+                        End;
+                End;
+
+                SetLength(sci,j);
+
+                stt:=TStringList.Create;
+                for i:=0 to st.Count-1 do
+                if st.Strings[i]<>'' then
+                stt.Add(st.Strings[i]);
+
+                for i:=0 to length(sci)-1 do begin
+                        sci[i].bus_id:=GetValueInt(scsikeys[1],stt.Strings[i]);
+                        sci[i].device_id:=GetValueInt(scsikeys[2],stt.Strings[i]);
+                        sci[i].device_function:=GetValueInt(scsikeys[3],stt.Strings[i]);
+                        sci[i].device_type:='SCSI controllers';
+                        sci[i].device_info:=GetValueStr(scsikeys[4],stt.Strings[i])+' '+GetValueStr(scsikeys[5],stt.Strings[i]);
+                        sci[i].device_irq:=255;
+                        sci[i].sign:='';
+                        sci[i].driver:='scsi';
+                        s1:=GetValueStr(scsikeys[7],stt.Strings[i]);
+                        
+                        if s1=ScsiClassDevices[0] then
+                        sci[i].usbclass:=OtherDevices[4]
+                        else
+                        if s1=ScsiClassDevices[1] then
+                        sci[i].usbclass:=OtherDevices[5]
+                        else
+                        sci[i].usbclass:=OtherDevices[10];
+                        s1:=GetValueStr(scsikeys[0],stt.Strings[i]);
+                        Delete(s1,1,4);
+                        TryStrToInt(s1,sci[i].device_add.latency);
+                End;
+              (*
+                for i:=0 to length(sci)-1 do
+                writeln('BUS ',sci[i].bus_id,' ID ',sci[i].device_id,' FUNCTION ',sci[i].device_function,' INFO ',sci[i].device_info,' CLASS ',sci[i].usbclass,' scsiX ',sci[i].device_add.latency);
+                *)
+                stt.Free;
+                finally
+                st.Free;
+                End;
+        End;
+        Result:=sci;
+End;
+
+Function GetHardDiscs:PPci_Info_;
+Const hd='hd'; // a..z  97-122
+var hin:PPci_Info_;
+    fil:TextFile;
+    i,j,x,recnos:integer;
+    sta:_stat;
+    cmd,dir,s:string;
+    p:PChar;
+    st,std:TStrings;
+    hdsign:Array[0..64] of integer;
+    // since we cannot get any useable info (as user) from GetHdInfo,we'll get it from /proc
+Begin
+           SetLength(hin,0);
+           for i:=0 to 64 do
+           hdsign[i]:=0;
+
+           recnos:=0;
+           std:=TStringList.Create;
+           for i:=97 to 122 do begin
+                cmd:='/proc/ide/'+hd+char(i);
+                p:=StrAlloc(length(cmd)+1);
+                StrPCopy(p,cmd);
+                j:=Libc.stat(p,sta);
+                StrDispose(p);
+
+                if j=0 then begin
+                        hdsign[recnos]:=i;
+                        inc(recnos);
+                        std.Add(cmd);
+                End;
+           End;
+
+           if recnos > 0 then begin
+           SetLength(hin,recnos);
+                   for i:=0 to length(hin)-1 do begin
+                        hin[i].bus_id:=0;
+                        hin[i].device_id:=hdsign[i];
+                        cmd:=std.Strings[i];
+                        s:=GetMedia(cmd);
+                        hin[i].device_function:=GetMediaDeviceFunction(s);
+                        hin[i].device_type:='Other Devices';
+                        hin[i].device_info:=GetMediaDeviceInfo(cmd);
+                        hin[i].device_irq:=255;
+                        hin[i].usbclass:=GetDeviceTypeFromMedia(s);
+                        hin[i].sign:='';
+                        hin[i].driver:=GetMediaDriver(cmd);
+                   End;
+          {$MESSAGE WARN 'FIXME -> now we can search for more infos in /proc/ide/ideXX'}
+          {$IFDEF DEBUG}
+           for i:=0 to length(hin)-1 do
+           writeln(' TYPE ',hin[i].device_type,' FUNCTION ',hin[i].device_function,' INFO ',hin[i].device_info,' CLASS ',hin[i].usbclass,' DRIVER ',hin[i].driver);
+          {$ENDIF}
+           End; // recnos > 0
+           std.Free;
+
+           Result:=hin;
 End;
 
 Function GetHdInfo(device:string):string;

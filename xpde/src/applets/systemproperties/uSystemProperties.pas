@@ -189,7 +189,7 @@ End;
 
 procedure TSystemPropertiesDlg.FormShow(Sender: TObject);
 begin
-//      FillTabs;
+      FillTabs;
 end;
 
 procedure TSystemPropertiesDlg.Button10Click(Sender: TObject);

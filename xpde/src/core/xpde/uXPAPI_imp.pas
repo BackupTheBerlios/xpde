@@ -57,8 +57,9 @@ type
         procedure setWaitCursor;
         function getExecutable(ext:string):string;
         procedure storeExecutable(ext:string;executable:string);
-        function ShellExecute(const prog:string;waitfor:boolean):integer;
-        procedure ShellDocument(const document:string);
+        function ReplaceSystemPaths(const path:string):string;
+        function ShellExecute(const theprog:string;waitfor:boolean):integer;
+        procedure ShellDocument(const adocument:string);
         property UserDir:string read FUserDir;
         property Username:string read FUserName;
         property Appdir:string read GetAppDir;
@@ -291,15 +292,18 @@ begin
     end;
 end;
 
-procedure TXPAPI.ShellDocument(const document: string);
+procedure TXPAPI.ShellDocument(const adocument: string);
 var
     ext:string;
     sb: TStatBuf;
     executable: string;
     lnk:TLNKFile;
     lastdir: string;
+    document:string;
 
 begin
+    document:=replacesystempaths(adocument);
+
     libc.stat(PChar(document),sb);
     if s_isexec(sb.st_mode) then begin
         ShellExecute(document,false);
@@ -343,10 +347,12 @@ begin
     end;
 end;
 
-function TXPAPI.ShellExecute(const prog: string;waitfor:boolean):integer;
+function TXPAPI.ShellExecute(const theprog: string;waitfor:boolean):integer;
 var
     aprog:string;
+    prog:string;
 begin
+    prog:=replacesystempaths(theprog);
     aprog:=prog;
     if not waitfor then aprog:=aprog+' &';
 
@@ -458,6 +464,11 @@ end;
 function TXPAPI.GetAppsDir: string;
 begin
     result:=Appdir+'apps/';
+end;
+
+function TXPAPI.ReplaceSystemPaths(const path: string): string;
+begin
+    result:=StringReplace(path,'%APPS%',getAppsDir,[rfReplaceAll, rfIgnoreCase]);
 end;
 
 initialization

@@ -256,6 +256,8 @@ var
     name: string;
     extra: string;
 //    winname: string;
+    str: PChar;
+    state: string;
     s1,s2,s3,s4,s5,s6,s7: string;
 begin
   // filter overnumerous events
@@ -428,29 +430,22 @@ begin
       name := 'CirculateRequest';
       end;
      PropertyNotify: begin
-      {
-        char *str;
-        const char *state;
-
         name := 'PropertyNotify';
-            
-        meta_error_trap_push (display);
-        str := XGetAtomName (display.xdisplay,
-                            event.xproperty.atom);
-        meta_error_trap_pop (display, TRUE);
 
-        if (event.xproperty.state == PropertyNewValue)
-          state := 'PropertyNewValue';
-        else if (event.xproperty.state == PropertyDelete)
-          state := 'PropertyDelete';
-        else
-          state := '???';
-            
-        extra := format ('atom: %s state: %s',
-                                 str ? str : '(unknown atom)',
-                                 state);
-        meta_XFree (str);
-      }
+        str := XGetAtomName (xdisplay, event.xproperty.atom);
+
+        if (event.xproperty.state = PropertyNewValue) then state := 'PropertyNewValue'
+        else if (event.xproperty.state = PropertyDelete) then state := 'PropertyDelete'
+        else state := '???';
+
+        if assigned(str) then begin
+            extra := format ('atom: %s state: %s', [str,state]);
+        end
+        else begin
+            extra := format ('atom: unknown state: %s', [state]);
+        end;
+
+        XFree(str);
       end;
      SelectionClear: begin
       name := 'SelectionClear';
@@ -514,10 +509,11 @@ end;
 function eventhandler(event: PXEvent):boolean;cdecl;
 begin
     {$ifdef DEBUG}
-    spewEvent(xpwindowmanager.display,event);
+    spewEvent(xpwindowmanager.display,event^);
     {$endif}
     case event.xtype of
         maprequest: result:=(xpwindowmanager.handleMapRequest(event^)=1);
+        propertynotify: result:=(xpwindowmanager.handlePropertyNotify(event^)=1);
         unmapnotify: result:=(xpwindowmanager.handleUnmapNotify(event^)=1);
         enternotify: result:=(xpwindowmanager.handleenternotify(event^)=1);
         buttonpress: result:=(xpwindowmanager.handlebuttonpress(event^)=1);
@@ -753,8 +749,29 @@ begin
 end;
 
 function TXPWindowManager.handlePropertyNotify(var event:XEvent): integer;
+var
+    c: TWMClient;
+    xwindow: window;
+    name: XTextProperty;
 begin
-    result:=0;
+    xwindow:=event.xproperty.xwindow;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handlePropertyNotify %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
+    if event.xproperty.atom=XA_WM_NAME then begin
+        c:=findclient(xwindow);
+        if assigned(c) then begin
+            XGetWMName(FDisplay, xwindow, @name);
+            (c.frame as TWindowsClassic).setTitle(PChar(name.value));
+        end
+        else begin
+            {$ifdef DEBUG}
+            xlibinterface.outputDebugString(iWARNING,format('Not client found to set new caption %s',[xlibinterface.formatwindow(xwindow)]));
+            {$endif}
+        end;
+        result:=0;
+    end
+    else result:=1;
 end;
 
 function TXPWindowManager.handleSelectionClear(var event:XEvent): integer;

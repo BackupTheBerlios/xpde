@@ -1519,9 +1519,9 @@ procedure TWMClient.createFrame;
 var
 	attr:XWindowAttributes;
     attrs:XSetWindowAttributes;
-//	dummy:longint;
+	dummy:longint;
 	hints: PXWMHints;
-//    sizehints: PXSizeHints;
+    sizehints: PXSizeHints;
 	name:XTextProperty;
 //    nw,nh: longint;
 //    state: variant;
@@ -1534,8 +1534,8 @@ begin
     FWindowManager.grabDisplay;
 	hints := XGetWMHints(FWindowManager.FDisplay, xwindow);
 
-//    sizehints:=XAllocSizeHints();
-//    XGetWMNormalHints(FWindowManager.FDisplay, xwindow, sizehints, @dummy);
+    sizehints:=XAllocSizeHints();
+    XGetWMNormalHints(FWindowManager.FDisplay, xwindow, sizehints, @dummy);
 
 	XGetWindowAttributes(FWindowManager.FDisplay, xwindow, @attr);
 
@@ -1617,6 +1617,16 @@ begin
     frame.width:=attr.width+(fbs.left+fbs.right);
     frame.height:=attr.height+(fbs.bottom+co.y);
 
+    if (sizehints^.flags and PMinSize)=PMinSize then begin
+        if sizehints^.min_width>frame.constraints.MinWidth then frame.Constraints.MinWidth:=sizehints^.min_width+(fbs.left+fbs.right);
+        if sizehints^.min_height>frame.Constraints.MinHeight then frame.Constraints.MinHeight:=sizehints^.min_height+(co.Y+fbs.top);
+    end;
+
+    if (sizehints^.flags and PMaxSize)=PMaxSize then begin
+        if sizehints^.max_width>=sizehints^.min_width then frame.Constraints.maxWidth:=sizehints^.max_width+(fbs.left+fbs.right);
+        if sizehints^.max_height>=sizehints^.min_height then frame.Constraints.maxHeight:=sizehints^.max_height+(co.Y+fbs.top);
+    end;
+
     if FWindowState=wsNormal then begin
         wRect:=frame.boundsrect;
     end;
@@ -1650,10 +1660,10 @@ begin
     xlibinterface.outputDebugString(iINFO,format('Frame size (%d,%d)',[frame.width,frame.height]));
     {$endif}
     //XResizeWindow(FWindowManager.FDisplay,xwindow,sizehints.width,sizehints.height);
-    
+
 
 	if assigned(hints) then XFree(hints);
-//	if assigned(sizehints) then XFree(sizehints);
+	if assigned(sizehints) then XFree(sizehints);
 
 
     map;

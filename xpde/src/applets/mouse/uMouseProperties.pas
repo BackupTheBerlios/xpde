@@ -161,8 +161,8 @@ end;
 
 procedure TMousePropertiesDlg.FormCreate(Sender: TObject);
 begin
-        imClosed.Picture.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+'folder_slin.png');
-        imOpen.Picture.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+'folder_slin_open.png');        
+        imClosed.Picture.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+'folder2.png');
+        imOpen.Picture.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+'folder2_open.png');        
         readMousePropertiesFromRegistry;
         applyMouseProperties;
         Fill_Components;

@@ -1,0 +1,85 @@
+object FSearchForm: TFSearchForm
+  Left = 433
+  Top = 279
+  Width = 402
+  Height = 167
+  HorzScrollBar.Range = 395
+  VertScrollBar.Range = 137
+  ActiveControl = CBKeys
+  Caption = 'Find Text'
+  Color = 14412523
+  Position = poScreenCenter
+  Scaled = False
+  OnShow = FormShow
+  PixelsPerInch = 81
+  object GroupBox1: TGroupBox
+    Left = 8
+    Top = 40
+    Width = 305
+    Height = 97
+    Caption = 'Search Options'
+    TabOrder = 0
+    object CBKeys: TCheckBox
+      Left = 8
+      Top = 16
+      Width = 100
+      Height = 30
+      Caption = 'Keys'
+      Checked = True
+      State = cbChecked
+      TabOrder = 0
+    end
+    object CBValues: TCheckBox
+      Left = 8
+      Top = 40
+      Width = 100
+      Height = 30
+      Caption = 'Values'
+      Checked = True
+      State = cbChecked
+      TabOrder = 1
+    end
+    object CBData: TCheckBox
+      Left = 8
+      Top = 64
+      Width = 100
+      Height = 30
+      Caption = 'Data'
+      Checked = True
+      State = cbChecked
+      TabOrder = 2
+    end
+  end
+  object EdFind: TEdit
+    Left = 48
+    Top = 8
+    Width = 265
+    Height = 23
+    TabOrder = 1
+  end
+  object Label1: TLabel
+    Left = 8
+    Top = 8
+    Width = 25
+    Height = 15
+    Caption = 'Find'
+  end
+  object Button1: TButton
+    Left = 320
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Find'
+    ModalResult = 1
+    TabOrder = 3
+  end
+  object Button2: TButton
+    Left = 320
+    Top = 48
+    Width = 75
+    Height = 25
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 4
+  end
+end

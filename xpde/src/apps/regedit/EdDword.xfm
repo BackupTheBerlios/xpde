@@ -1,0 +1,80 @@
+object EdDWord1: TEdDWord1
+  Left = 343
+  Top = 214
+  Width = 319
+  Height = 181
+  HorzScrollBar.Range = 307
+  VertScrollBar.Range = 169
+  ActiveControl = Edit2
+  BorderStyle = fbsSizeToolWin
+  Caption = 'Edit DWORD Value '
+  Color = 14412523
+  Position = poScreenCenter
+  Scaled = False
+  PixelsPerInch = 90
+  object Label1: TLabel
+    Left = 8
+    Top = 6
+    Width = 83
+    Height = 17
+    Caption = 'Value name:.'
+  end
+  object Edit1: TEdit
+    Left = 8
+    Top = 24
+    Width = 297
+    Height = 25
+    Enabled = False
+    TabOrder = 1
+    Text = 'Edit1'
+  end
+  object Edit2: TEdit
+    Left = 8
+    Top = 72
+    Width = 129
+    Height = 25
+    TabOrder = 2
+    Text = 'Edit2'
+    OnChange = Edit2Change
+    OnKeyDown = Edit2KeyDown
+    OnKeyPress = Edit2KeyPress
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 54
+    Width = 73
+    Height = 17
+    Caption = 'Value data:'
+  end
+  object RadioGroup1: TRadioGroup
+    Left = 152
+    Top = 56
+    Width = 153
+    Height = 81
+    Items.Strings = (
+      'Hexadecimal'
+      'Decimal')
+    Caption = 'Base'
+    ItemIndex = 0
+    TabOrder = 4
+    OnClick = RadioGroup1Click
+  end
+  object Button1: TButton
+    Left = 152
+    Top = 144
+    Width = 75
+    Height = 25
+    Caption = 'OK'
+    ModalResult = 1
+    TabOrder = 5
+  end
+  object Button2: TButton
+    Left = 232
+    Top = 144
+    Width = 75
+    Height = 25
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 6
+  end
+end

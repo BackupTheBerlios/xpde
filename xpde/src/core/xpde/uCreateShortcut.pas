@@ -79,7 +79,7 @@ procedure CreateShortCut(x,y:integer);
 
 implementation
 
-uses main;
+uses uDesktopMain;
 
 {$R *.xfm}
 

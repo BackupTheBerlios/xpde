@@ -63,7 +63,7 @@ var
 
 implementation
 
-uses main;
+uses uDesktopMain;
 
 
 

@@ -119,7 +119,7 @@ procedure ShowLinkProperties(const linkfile:string;aselected:TSysListItem);
 
 implementation
 
-uses main;
+uses uDesktopMain;
 
 {$R *.xfm}
 

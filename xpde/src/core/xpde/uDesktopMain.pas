@@ -33,7 +33,7 @@ uses
   uXPAPI, uXPStyleConsts, uRegistry,
   uXPAPI_imp, uLNKFile, uCreateShortcut,
   uMouseAPI, uLNKProperties, Qt,
-  uXPStyle, uXPdeconsts, uXPIPC;
+  uXPStyle, uXPdeconsts, uXPIPC, distro;
 
 type
   TMainForm = class(TForm)
@@ -85,6 +85,8 @@ type
   private
     { Private declarations }
     procedure createFolder(ix, iy: integer);
+    Procedure CheckDistro;
+    Procedure CreateRegistryForDistro(struct_Data:uname_r);        
   public
     { Public declarations }
     desktopproperties: boolean;
@@ -335,10 +337,47 @@ begin
     desktop.SetFocus;
 end;
 
+
+Procedure TMainForm.CreateRegistryForDistro(struct_Data:uname_r);
+var  reg: TRegistry;
+Begin
+    reg:=TRegistry.create;
+    try
+        if reg.OpenKey('Software/XPde/System',true) then begin
+
+            reg.Writeinteger(dist_reg[0],struct_Data.dist);
+            reg.Writestring(dist_reg[1],struct_Data.name);
+            reg.Writestring(dist_reg[2],struct_Data.sys);
+            reg.Writestring(dist_reg[3],struct_Data.version);
+            reg.Writestring(dist_reg[4],struct_Data.kernel);
+            reg.Writestring(dist_reg[5],struct_Data.machine);
+            
+        end;
+    finally
+        reg.free;
+    end;
+End;
+
+Procedure TMainForm.CheckDistro;
+// we should check for distro at this point and write data into registry
+// so controlpanel applets knows for paths and names of various config files
+var my_distro:uname_r;
+    dbgfile:TextFile;
+Begin
+        my_distro:=Get_Distro_Version;
+        CreateRegistryForDistro(my_distro);
+        AssignFile(dbgfile,'/tmp/distro.txt');
+        Rewrite(dbgfile);
+        writeln(dbgfile,'XPDE DISTRIBUTION enum=',my_distro.dist,' name=',my_distro.name,' sys=',my_distro.sys,' version=',my_distro.version,' kernel=',my_distro.kernel,' machine=',my_distro.machine);
+        CloseFile(dbgFile);
+        // createregistry
+End;
+
 procedure TMainForm.FormShow(Sender: TObject);
 begin
     if paramstr(1)='full' then begin
     end;
+    CheckDistro;
 end;
 
 procedure TMainform.loadDesktopProperties;

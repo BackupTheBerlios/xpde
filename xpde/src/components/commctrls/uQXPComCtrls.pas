@@ -3588,6 +3588,7 @@ var
   function PaintProgress(var ARect: TRect): Boolean;
   var
     TotalPixels: Integer;
+    temp: extended;
     Rect: TRect;
   begin
     Result := False;
@@ -3602,7 +3603,10 @@ var
           pbHorizontal:
             begin
               TotalPixels := ARect.Right - ARect.Left;
-              ARect.Right := ARect.Left + ((ScalePosition(Position) * TotalPixels) div FTotalSteps);
+              temp:=ScalePosition(Position);
+              temp:=temp*totalpixels;
+              temp:=temp / FTotalSteps;
+              ARect.Right := ARect.Left + round(temp);
               ARect.Right := Math.Min(ARect.Right, ClientWidth);
             end;
           pbVertical:

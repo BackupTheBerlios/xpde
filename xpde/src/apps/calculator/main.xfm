@@ -1,0 +1,1726 @@
+object MainForm: TMainForm
+  Left = 262
+  Top = 279
+  Width = 474
+  Height = 288
+  HorzScrollBar.Range = 252
+  VertScrollBar.Range = 201
+  ActiveControl = BackSpaceBTN
+  BorderStyle = fbsSingle
+  Caption = 'Calculator'
+  Color = clBackground
+  Menu = MainMenu
+  Position = poDefaultPosOnly
+  Scaled = False
+  OnCreate = FormCreate
+  PixelsPerInch = 90
+  object SciencePanel: TPanel
+    Left = 0
+    Top = 0
+    Width = 474
+    Height = 261
+    Align = alClient
+    BevelOuter = bvNone
+    TabOrder = 1
+    object SciCalcEdit: TEdit
+      Left = 6
+      Top = 0
+      Width = 463
+      Height = 25
+      Alignment = taRightJustify
+      ReadOnly = True
+      TabOrder = 0
+      OnChange = CalcEditChange
+    end
+    object NumeralGroup: TRadioGroup
+      Left = 6
+      Top = 25
+      Width = 212
+      Height = 27
+      Items.Strings = (
+        'Hex'
+        'Dec'
+        'Oct'
+        'Bin')
+      ColumnLayout = clAutoSize
+      Columns = 4
+      ItemIndex = 1
+      TabOrder = 1
+      OnClick = NumeralGroupClick
+    end
+    object ByteGroup: TRadioGroup
+      Left = 220
+      Top = 25
+      Width = 249
+      Height = 27
+      Items.Strings = (
+        'Qword'
+        'Dword'
+        'Word'
+        'Byte')
+      ColumnLayout = clAutoSize
+      Columns = 4
+      ItemIndex = 0
+      TabOrder = 2
+      OnClick = ByteGroupClick
+    end
+    object FloatGroup: TRadioGroup
+      Left = 220
+      Top = 25
+      Width = 249
+      Height = 27
+      Items.Strings = (
+        'Degrees'
+        'Radians'
+        'Grads')
+      Columns = 3
+      ItemIndex = 0
+      TabOrder = 3
+      OnClick = FloatGroupClick
+    end
+    object SciMemoryLBL: TLabel
+      Left = 188
+      Top = 57
+      Width = 27
+      Height = 27
+      Alignment = taCenter
+      AutoSize = False
+      BorderStyle = bsSunken3d
+      Layout = tlCenter
+    end
+    object SciBackSpaceBTN: TButton
+      Left = 230
+      Top = 56
+      Width = 63
+      Height = 29
+      Caption = 'Backspace'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 5
+      OnClick = SciBackSpaceBTNClick
+    end
+    object SciCEBTN: TButton
+      Left = 296
+      Top = 56
+      Width = 62
+      Height = 29
+      Caption = 'CE'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 6
+      OnClick = SciCEBTNClick
+    end
+    object SciCBTN: TButton
+      Left = 361
+      Top = 56
+      Width = 62
+      Height = 29
+      Caption = 'C'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 7
+      OnClick = SciCBTNClick
+    end
+    object SciMCBTN: TButton
+      Left = 184
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = 'MC'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 8
+      OnClick = SciMCBTNClick
+    end
+    object SciSevenBTN: TButton
+      Tag = 7
+      Left = 230
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = '7'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 9
+      OnClick = SciZeroBTNClick
+    end
+    object SciEightBTN: TButton
+      Tag = 8
+      Left = 272
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = '8'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 10
+      OnClick = SciZeroBTNClick
+    end
+    object SciNineBTN: TButton
+      Tag = 9
+      Left = 312
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = '9'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 11
+      OnClick = SciZeroBTNClick
+    end
+    object SciDivideBTN: TButton
+      Tag = 1
+      Left = 352
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = '/'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 12
+      OnClick = SciDivideBTNClick
+    end
+    object SciMRBTN: TButton
+      Tag = 1
+      Left = 184
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = 'MR'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 13
+      OnClick = SciMCBTNClick
+    end
+    object SciFourBTN: TButton
+      Tag = 4
+      Left = 230
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = '4'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 14
+      OnClick = SciZeroBTNClick
+    end
+    object SciFiveBTN: TButton
+      Tag = 5
+      Left = 272
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = '5'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 15
+      OnClick = SciZeroBTNClick
+    end
+    object SciSixBTN: TButton
+      Tag = 6
+      Left = 312
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = '6'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 16
+      OnClick = SciZeroBTNClick
+    end
+    object SciMultiplyBTN: TButton
+      Tag = 2
+      Left = 352
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = '*'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 17
+      OnClick = SciDivideBTNClick
+    end
+    object SciMSBTN: TButton
+      Tag = 2
+      Left = 184
+      Top = 157
+      Width = 36
+      Height = 29
+      Caption = 'MS'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 18
+      OnClick = SciMCBTNClick
+    end
+    object SciOneBTN: TButton
+      Tag = 1
+      Left = 230
+      Top = 157
+      Width = 36
+      Height = 29
+      Caption = '1'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 19
+      OnClick = SciZeroBTNClick
+    end
+    object SciTwoBTN: TButton
+      Tag = 2
+      Left = 272
+      Top = 158
+      Width = 36
+      Height = 29
+      Caption = '2'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 20
+      OnClick = SciZeroBTNClick
+    end
+    object SciThreeBTN: TButton
+      Tag = 3
+      Left = 312
+      Top = 158
+      Width = 36
+      Height = 29
+      Caption = '3'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 21
+      OnClick = SciZeroBTNClick
+    end
+    object SciMinusBTN: TButton
+      Tag = 3
+      Left = 352
+      Top = 158
+      Width = 36
+      Height = 29
+      Caption = '-'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 22
+      OnClick = SciDivideBTNClick
+    end
+    object SciMBTN: TButton
+      Tag = 3
+      Left = 184
+      Top = 190
+      Width = 36
+      Height = 29
+      Caption = 'M+'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 23
+      OnClick = SciMCBTNClick
+    end
+    object SciZeroBTN: TButton
+      Left = 230
+      Top = 190
+      Width = 36
+      Height = 29
+      Caption = '0'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 24
+      OnClick = SciZeroBTNClick
+    end
+    object SciPlusMinusBTN: TButton
+      Left = 272
+      Top = 192
+      Width = 36
+      Height = 29
+      Caption = '+/-'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 25
+      OnClick = SciPlusMinusBTNClick
+    end
+    object SciDecimalBTN: TButton
+      Left = 312
+      Top = 192
+      Width = 36
+      Height = 29
+      Caption = '.'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 26
+      OnClick = SciDecimalBTNClick
+    end
+    object SciPlusBTN: TButton
+      Tag = 4
+      Left = 352
+      Top = 192
+      Width = 36
+      Height = 29
+      Caption = '+'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 27
+      OnClick = SciDivideBTNClick
+    end
+    object SciEqualBTN: TButton
+      Left = 392
+      Top = 192
+      Width = 36
+      Height = 29
+      Caption = '='
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 28
+      OnClick = SciEqualBTNClick
+    end
+    object ModBTN: TButton
+      Tag = 5
+      Left = 392
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = 'Mod'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 29
+      OnClick = SciDivideBTNClick
+    end
+    object OrBTN: TButton
+      Tag = 6
+      Left = 392
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = 'Or'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 30
+      OnClick = SciDivideBTNClick
+    end
+    object LshBTN: TButton
+      Tag = 7
+      Left = 392
+      Top = 158
+      Width = 36
+      Height = 29
+      Caption = 'Lsh'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 31
+      OnClick = SciDivideBTNClick
+    end
+    object AndBTN: TButton
+      Tag = 8
+      Left = 432
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = 'And'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 32
+      OnClick = SciDivideBTNClick
+    end
+    object XorBTN: TButton
+      Tag = 9
+      Left = 432
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = 'Xor'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 33
+      OnClick = SciDivideBTNClick
+    end
+    object NotBTN: TButton
+      Tag = 10
+      Left = 432
+      Top = 158
+      Width = 36
+      Height = 29
+      Caption = 'Not'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 34
+      OnClick = SciDivideBTNClick
+    end
+    object IntBTN: TButton
+      Tag = 11
+      Left = 432
+      Top = 192
+      Width = 36
+      Height = 29
+      Caption = 'Int'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 35
+      OnClick = SciDivideBTNClick
+    end
+    object piBTN: TButton
+      Left = 184
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'pi'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 36
+      OnClick = piBTNClick
+    end
+    object HexABTN: TButton
+      Left = 232
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'A'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 37
+    end
+    object HexBBTN: TButton
+      Left = 272
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'B'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 38
+    end
+    object HexCBTN: TButton
+      Left = 312
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'C'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 39
+    end
+    object HexDBTN: TButton
+      Tag = 4
+      Left = 352
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'D'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 40
+    end
+    object HexEBTN: TButton
+      Left = 392
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'E'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 41
+    end
+    object HexFBTN: TButton
+      Left = 432
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'F'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 42
+    end
+    object CheckGroup: TGroupBox
+      Left = 6
+      Top = 57
+      Width = 129
+      Height = 25
+      TabOrder = 43
+      object InvCB: TCheckBox
+        Left = 8
+        Top = 5
+        Width = 49
+        Height = 17
+        Caption = 'Inv'
+        TabOrder = 0
+      end
+      object HypCB: TCheckBox
+        Left = 64
+        Top = 5
+        Width = 49
+        Height = 17
+        Caption = 'Hyp'
+        Checked = True
+        State = cbChecked
+        TabOrder = 1
+      end
+    end
+    object SciOtherLBL: TLabel
+      Left = 141
+      Top = 57
+      Width = 26
+      Height = 27
+      Alignment = taCenter
+      AutoSize = False
+      BorderStyle = bsSunken3d
+      Layout = tlCenter
+    end
+    object StaBTN: TButton
+      Tag = 1
+      Left = 6
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = 'Sta'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 45
+      OnClick = StaBTNClick
+    end
+    object AveBTN: TButton
+      Tag = 2
+      Left = 6
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = 'Ave'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 46
+      OnClick = StaBTNClick
+    end
+    object SumBTN: TButton
+      Tag = 3
+      Left = 6
+      Top = 158
+      Width = 36
+      Height = 29
+      Caption = 'Sum'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 47
+      OnClick = StaBTNClick
+    end
+    object sBTN: TButton
+      Tag = 4
+      Left = 6
+      Top = 192
+      Width = 36
+      Height = 29
+      Caption = 's'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 48
+      OnClick = StaBTNClick
+    end
+    object DatBTN: TButton
+      Tag = 5
+      Left = 6
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'Dat'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 49
+      OnClick = StaBTNClick
+    end
+    object FEBTN: TButton
+      Tag = 1
+      Left = 56
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = 'F-E'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 50
+      OnClick = FEBTNClick
+    end
+    object OpenParBTN: TButton
+      Tag = 6
+      Left = 96
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = '('
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 51
+      OnClick = FEBTNClick
+    end
+    object CloseParBTN: TButton
+      Tag = 11
+      Left = 136
+      Top = 92
+      Width = 36
+      Height = 29
+      Caption = ')'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 52
+      OnClick = FEBTNClick
+    end
+    object dmsBTN: TButton
+      Tag = 2
+      Left = 56
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = 'dms'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 53
+      OnClick = FEBTNClick
+    end
+    object ExpBTN: TButton
+      Tag = 7
+      Left = 96
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = 'Exp'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 54
+      OnClick = FEBTNClick
+    end
+    object lnBTN: TButton
+      Tag = 12
+      Left = 136
+      Top = 125
+      Width = 36
+      Height = 29
+      Caption = 'ln'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 55
+      OnClick = FEBTNClick
+    end
+    object sinBTN: TButton
+      Tag = 3
+      Left = 56
+      Top = 158
+      Width = 36
+      Height = 29
+      Caption = 'sin'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 56
+      OnClick = FEBTNClick
+    end
+    object xyBTN: TButton
+      Tag = 8
+      Left = 96
+      Top = 158
+      Width = 36
+      Height = 29
+      Caption = 'x^y'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 57
+      OnClick = FEBTNClick
+    end
+    object logBTN: TButton
+      Tag = 13
+      Left = 136
+      Top = 158
+      Width = 36
+      Height = 29
+      Caption = 'log'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 58
+      OnClick = FEBTNClick
+    end
+    object cosBTN: TButton
+      Tag = 4
+      Left = 56
+      Top = 192
+      Width = 36
+      Height = 29
+      Caption = 'cos'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 59
+      OnClick = FEBTNClick
+    end
+    object x3BTN: TButton
+      Tag = 9
+      Left = 96
+      Top = 192
+      Width = 36
+      Height = 29
+      Caption = 'x^3'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 60
+      OnClick = FEBTNClick
+    end
+    object nBTN: TButton
+      Tag = 14
+      Left = 136
+      Top = 192
+      Width = 36
+      Height = 29
+      Caption = 'n!'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 61
+      OnClick = FEBTNClick
+    end
+    object tanBTN: TButton
+      Tag = 5
+      Left = 56
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'tan'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 62
+      OnClick = FEBTNClick
+    end
+    object x2BTN: TButton
+      Tag = 10
+      Left = 96
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = 'x^2'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 63
+      OnClick = FEBTNClick
+    end
+    object SciOneOverBTN: TButton
+      Tag = 15
+      Left = 136
+      Top = 226
+      Width = 36
+      Height = 29
+      Caption = '1/x'
+      Font.Color = clFuchsia
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 64
+      OnClick = FEBTNClick
+    end
+  end
+  object StandardPanel: TPanel
+    Left = 0
+    Top = -3
+    Width = 252
+    Height = 204
+    BevelOuter = bvNone
+    TabOrder = 0
+    object BackSpaceBTN: TButton
+      Left = 52
+      Top = 39
+      Width = 63
+      Height = 29
+      Caption = 'Backspace'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 0
+      OnClick = BackSpaceBTNClick
+    end
+    object CBTN: TButton
+      Left = 183
+      Top = 39
+      Width = 62
+      Height = 29
+      Caption = 'C'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 1
+      OnClick = CBTNClick
+    end
+    object CEBTN: TButton
+      Left = 118
+      Top = 39
+      Width = 62
+      Height = 29
+      Caption = 'CE'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 2
+      OnClick = CEBTNClick
+    end
+    object MCBTN: TButton
+      Left = 6
+      Top = 75
+      Width = 36
+      Height = 29
+      Caption = 'MC'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 3
+      OnClick = MCBTNClick
+    end
+    object MRBTN: TButton
+      Left = 6
+      Top = 108
+      Width = 36
+      Height = 29
+      Caption = 'MR'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 4
+      OnClick = MRBTNClick
+    end
+    object MSBTN: TButton
+      Left = 6
+      Top = 140
+      Width = 36
+      Height = 29
+      Caption = 'MS'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 5
+      OnClick = MSBTNClick
+    end
+    object MAddBTN: TButton
+      Tag = 4
+      Left = 6
+      Top = 174
+      Width = 36
+      Height = 29
+      Caption = 'M+'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 6
+      OnClick = MAddBTNClick
+    end
+    object MemoryLBL: TLabel
+      Left = 10
+      Top = 41
+      Width = 27
+      Height = 26
+      Alignment = taCenter
+      AutoSize = False
+      BorderStyle = bsSunken3d
+      Layout = tlCenter
+    end
+    object SevenBTN: TButton
+      Tag = 7
+      Left = 52
+      Top = 75
+      Width = 36
+      Height = 29
+      Caption = '7'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 8
+      OnClick = ZeroBTNClick
+    end
+    object EightBTN: TButton
+      Tag = 8
+      Left = 91
+      Top = 75
+      Width = 36
+      Height = 29
+      Caption = '8'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 9
+      OnClick = ZeroBTNClick
+    end
+    object NineBTN: TButton
+      Tag = 9
+      Left = 130
+      Top = 75
+      Width = 36
+      Height = 29
+      Caption = '9'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 10
+      OnClick = ZeroBTNClick
+    end
+    object DivideBTN: TButton
+      Tag = 1
+      Left = 169
+      Top = 75
+      Width = 36
+      Height = 29
+      Caption = '/'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 11
+      OnClick = DivideBTNClick
+    end
+    object SqrtBTN: TButton
+      Left = 208
+      Top = 75
+      Width = 36
+      Height = 29
+      Caption = 'sqrt'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 12
+      OnClick = SqrtBTNClick
+    end
+    object FourBTN: TButton
+      Tag = 4
+      Left = 52
+      Top = 108
+      Width = 36
+      Height = 29
+      Caption = '4'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 13
+      OnClick = ZeroBTNClick
+    end
+    object FiveBTN: TButton
+      Tag = 5
+      Left = 91
+      Top = 108
+      Width = 36
+      Height = 29
+      Caption = '5'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 14
+      OnClick = ZeroBTNClick
+    end
+    object SixBTN: TButton
+      Tag = 6
+      Left = 130
+      Top = 108
+      Width = 36
+      Height = 29
+      Caption = '6'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 15
+      OnClick = ZeroBTNClick
+    end
+    object MultiplyBTN: TButton
+      Tag = 2
+      Left = 169
+      Top = 108
+      Width = 36
+      Height = 29
+      Caption = '*'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 16
+      OnClick = DivideBTNClick
+    end
+    object PercentBTN: TButton
+      Left = 208
+      Top = 108
+      Width = 36
+      Height = 29
+      Caption = '%'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 17
+      OnClick = PercentBTNClick
+    end
+    object OneBTN: TButton
+      Tag = 1
+      Left = 52
+      Top = 140
+      Width = 36
+      Height = 29
+      Caption = '1'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 18
+      OnClick = ZeroBTNClick
+    end
+    object TwoBTN: TButton
+      Tag = 2
+      Left = 91
+      Top = 140
+      Width = 36
+      Height = 29
+      Caption = '2'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 19
+      OnClick = ZeroBTNClick
+    end
+    object ThreeBTN: TButton
+      Tag = 3
+      Left = 130
+      Top = 140
+      Width = 36
+      Height = 29
+      Caption = '3'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 20
+      OnClick = ZeroBTNClick
+    end
+    object MinusBTN: TButton
+      Tag = 3
+      Left = 169
+      Top = 140
+      Width = 36
+      Height = 29
+      Caption = '-'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 21
+      OnClick = DivideBTNClick
+    end
+    object OneOverBTN: TButton
+      Left = 208
+      Top = 140
+      Width = 36
+      Height = 29
+      Caption = '1/x'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 22
+      OnClick = OneOverBTNClick
+    end
+    object ZeroBTN: TButton
+      Left = 52
+      Top = 173
+      Width = 36
+      Height = 29
+      Caption = '0'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 23
+      OnClick = ZeroBTNClick
+    end
+    object PlusMinusBTN: TButton
+      Left = 91
+      Top = 173
+      Width = 36
+      Height = 29
+      Caption = '+/-'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 24
+      OnClick = PlusMinusBTNClick
+    end
+    object DecimalBTN: TButton
+      Left = 130
+      Top = 173
+      Width = 36
+      Height = 29
+      Caption = '.'
+      Font.Color = clBlue
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 25
+      OnClick = DecimalBTNClick
+    end
+    object PlusBTN: TButton
+      Tag = 4
+      Left = 169
+      Top = 173
+      Width = 36
+      Height = 29
+      Caption = '+'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 26
+      OnClick = DivideBTNClick
+    end
+    object EqualBTN: TButton
+      Left = 208
+      Top = 173
+      Width = 36
+      Height = 29
+      Caption = '='
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      TabOrder = 27
+      OnClick = EqualBTNClick
+    end
+    object CalcEdit: TEdit
+      Left = 6
+      Top = 4
+      Width = 241
+      Height = 25
+      Alignment = taRightJustify
+      ReadOnly = True
+      TabOrder = 28
+      OnChange = CalcEditChange
+    end
+  end
+  object MainMenu: TMainMenu
+    Color = clBackground
+    Left = 328
+    Top = 65524
+    object EditMNU: TMenuItem
+      Caption = '&Edit'
+      object CopyMNU: TMenuItem
+        Caption = '&Copy'
+        ShortCut = 16451
+        OnClick = CopyMNUClick
+      end
+      object PasteMNU: TMenuItem
+        Caption = '&Paste'
+        ShortCut = 16470
+        OnClick = PasteMNUClick
+      end
+    end
+    object ViewMNU: TMenuItem
+      Caption = '&View'
+      OnClick = ViewMNUClick
+      object StandardMNU: TMenuItem
+        Caption = '&Standard'
+        Checked = True
+        GroupIndex = 1
+        RadioItem = True
+        OnClick = StandardMNUClick
+      end
+      object ScientificMNU: TMenuItem
+        Caption = '&Scientific'
+        Enabled = False
+        GroupIndex = 1
+        RadioItem = True
+        OnClick = ScientificMNUClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+        GroupIndex = 1
+      end
+      object HexMNU: TMenuItem
+        Caption = '&Hex'
+        GroupIndex = 2
+        RadioItem = True
+        ShortCut = 4148
+        OnClick = HexMNUClick
+      end
+      object DecimalMNU: TMenuItem
+        Tag = 1
+        Caption = '&Decimal'
+        Checked = True
+        GroupIndex = 2
+        RadioItem = True
+        ShortCut = 4149
+        OnClick = HexMNUClick
+      end
+      object OctalMNU: TMenuItem
+        Tag = 2
+        Caption = '&Octal'
+        GroupIndex = 2
+        RadioItem = True
+        ShortCut = 4150
+        OnClick = HexMNUClick
+      end
+      object BinaryMNU: TMenuItem
+        Tag = 3
+        Caption = '&Binary'
+        GroupIndex = 2
+        RadioItem = True
+        ShortCut = 4151
+        OnClick = HexMNUClick
+      end
+      object N3: TMenuItem
+        Caption = '-'
+        GroupIndex = 2
+      end
+      object DegreesMNU: TMenuItem
+        Caption = 'D&egrees'
+        Checked = True
+        GroupIndex = 3
+        RadioItem = True
+        ShortCut = 4145
+        OnClick = DegreesMNUClick
+      end
+      object RadiansMNU: TMenuItem
+        Tag = 1
+        Caption = '&Radians'
+        GroupIndex = 3
+        RadioItem = True
+        ShortCut = 4146
+        OnClick = DegreesMNUClick
+      end
+      object GradsMNU: TMenuItem
+        Tag = 2
+        Caption = '&Grads'
+        GroupIndex = 3
+        RadioItem = True
+        ShortCut = 4147
+        OnClick = DegreesMNUClick
+      end
+      object N4: TMenuItem
+        Caption = '-'
+        GroupIndex = 3
+      end
+      object QwordMNU: TMenuItem
+        Caption = '&Qword'
+        Checked = True
+        GroupIndex = 4
+        RadioItem = True
+        ShortCut = 4155
+        OnClick = QwordMNUClick
+      end
+      object DwordMNU: TMenuItem
+        Tag = 1
+        Caption = 'Dwo&rd'
+        GroupIndex = 4
+        RadioItem = True
+        ShortCut = 4145
+        OnClick = QwordMNUClick
+      end
+      object WordMNU: TMenuItem
+        Tag = 2
+        Caption = '&Word'
+        GroupIndex = 4
+        RadioItem = True
+        ShortCut = 4146
+        OnClick = QwordMNUClick
+      end
+      object ByteMNU: TMenuItem
+        Tag = 3
+        Caption = '&Byte'
+        GroupIndex = 4
+        RadioItem = True
+        ShortCut = 4147
+        OnClick = QwordMNUClick
+      end
+      object N5: TMenuItem
+        Caption = '-'
+        GroupIndex = 5
+      end
+      object DigitGroupingMNU: TMenuItem
+        Caption = 'D&igit Grouping'
+        GroupIndex = 5
+        OnClick = DigitGroupingMNUClick
+      end
+    end
+    object HelpMNU: TMenuItem
+      Caption = '&Help'
+      object HelpTopics1: TMenuItem
+        Caption = '&Help Topics'
+        Enabled = False
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object AboutCalculator1: TMenuItem
+        Caption = '&About Calculator'
+        OnClick = AboutCalculator1Click
+      end
+    end
+  end
+end

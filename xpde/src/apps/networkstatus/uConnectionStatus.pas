@@ -433,13 +433,13 @@ End;
 Function ReverseString(s:string):string;
 var ss,sss:string;
 Begin
-ss:='';
-sss:=s;
-repeat
-ss:=ss+copy(sss,length(sss)-1,2);
-Delete(sss,length(sss)-1,2);
-until length(sss)=0;
-Result:=ss;
+        ss:='';
+        sss:=s;
+        repeat
+                ss:=ss+copy(sss,length(sss)-1,2);
+                Delete(sss,length(sss)-1,2);
+        until length(sss)=0;
+        Result:=ss;
 End;
 
 Function StrTo_IP(s:string):string;
@@ -522,7 +522,7 @@ Begin
         End;
         End;
         End;
-        
+
         if data_[3]='0001' then net_info[device_number].mask:=data_[7]
         else
         if data_[3]='0003' then net_info[device_number].gw:=data_[2];
@@ -685,19 +685,20 @@ end;
 
 procedure TConnectionStatusDlg.FormCreate(Sender: TObject);
 begin
+    Randomize;
     pcConnection.activepage:=tsGeneral;
 end;
 
 procedure TConnectionStatusDlg.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-Action:=caFree;
+        Action:=caFree;
 end;
 
 procedure TConnectionStatusDlg.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-CanClose:=true;
+        CanClose:=true;
 end;
 
 procedure TConnectionStatusDlg.FormShow(Sender: TObject);
@@ -718,7 +719,7 @@ if (net_info[device_number].bytes_in<>0) and (net_info[device_number].bytes_out<
         lbSpeed.Caption:='56k' else
         if copy(net_info[device_number].device,1,3)='ipp' then
         lbSpeed.Caption:='128k' else
-        lbSpeed.Caption:='Unknown';        
+        lbSpeed.Caption:='Unknown';
 
 
         lbType.Caption:=net_info[device_number].device_kind;
@@ -747,7 +748,7 @@ if (net_info[device_number].bytes_in<>0) and (net_info[device_number].bytes_out<
         lbSpeed.Caption:='56k' else
         if copy(net_info[device_number].device,1,3)='ipp' then
         lbSpeed.Caption:='128k' else
-        lbSpeed.Caption:='Unknown';        
+        lbSpeed.Caption:='Unknown';
 
 
 
@@ -759,8 +760,8 @@ end;
 
 procedure TConnectionStatusDlg.FormResize(Sender: TObject);
 begin
-Height:=319;
-Width:=338;
+        Height:=319;
+        Width:=338;
 end;
 
 

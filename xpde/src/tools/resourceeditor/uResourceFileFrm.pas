@@ -84,7 +84,7 @@ begin
             else category:=entry.sresourcetype;
             catnode:=FindCategory(category);
             if (not assigned(catnode)) then catnode:=tvEntries.Items.AddChild(root,category);
-            node:=tvEntries.Items.AddChild(catnode,entry.resourcename);            
+            node:=tvEntries.Items.AddChildObject(catnode,entry.resourcename,entry);            
         end;
     finally
         tvEntries.items.EndUpdate;

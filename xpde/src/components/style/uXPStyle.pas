@@ -654,7 +654,12 @@ end;
 procedure TXPStyle.OnShowHint(var HintStr: WideString; var CanShow: Boolean; var HintInfo: THintInfo);
 begin
     canshow:=true;
-    hintinfo.HintPos.Y:=hintinfo.HintPos.Y+48;
+    if (hintinfo.HintPos.Y>=screen.height-50) then begin
+        hintinfo.HintPos.Y:=hintinfo.HintPos.Y-6;
+    end
+    else begin
+        hintinfo.HintPos.Y:=hintinfo.HintPos.Y+48;
+    end;
 end;
 
 end.

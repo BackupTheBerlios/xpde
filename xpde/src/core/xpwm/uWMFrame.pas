@@ -266,6 +266,7 @@ begin
 
     updatewindowtitle;
     FormPaint(self);
+
 end;
 
 procedure TWindowsClassic.FormMouseDown(Sender: TObject; Button: TMouseButton;

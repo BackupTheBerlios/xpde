@@ -1,12 +1,12 @@
 object WindowsClassic: TWindowsClassic
-  Left = 355
-  Top = 518
+  Left = 362
+  Top = 544
   ActiveControl = btnClose
   AutoScroll = False
   BorderStyle = fbsNone
   Caption = 'WindowsClassic'
-  ClientHeight = 198
-  ClientWidth = 258
+  ClientHeight = 247
+  ClientWidth = 262
   Color = clButton
   Constraints.MinHeight = 50
   Constraints.MinWidth = 100

@@ -714,6 +714,7 @@ end;
 
 function TXPWindowManager.handleClientMessage(var event:XEvent): integer;
 begin
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleclient message',[]));
     result:=0;
 end;
 
@@ -756,7 +757,7 @@ begin
     xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleconfigurerequest %s',[xlibinterface.formatwindow(xwindow)]));
     {$endif}
     c:=findclient(xwindow);
-    if (not(assigned(c))) or (not c.framed) then begin
+    if (not(assigned(c))) then begin
         xwcm := event.xconfigurerequest.value_mask and (CWX or CWY or CWWidth or CWHeight or CWBorderWidth);
 
         xwc.x := event.xconfigurerequest.x;
@@ -767,6 +768,7 @@ begin
 
         {$ifdef DEBUG}
         xlibinterface.outputDebugString(iINFO,format('Configuring withdrawn window %s to %d,%d %dx%d border %d (some values may not be in mask)',[xlibinterface.formatwindow(xwindow),xwc.x, xwc.y, xwc.width, xwc.height, xwc.border_width]));
+        xlibinterface.outputDebugString(iINFO,format('%s to %d',[xlibinterface.formatwindow(event.xconfigurerequest.above),event.xconfigurerequest.detail]));
         {$endif}
 
         XConfigureWindow (Fdisplay, event.xconfigurerequest.xwindow, xwcm, @xwc);
@@ -788,28 +790,28 @@ var
     i: integer;
 begin
     xwindow:=event.xdestroywindow.xwindow;
-//    {$ifdef DEBUG}
+    {$ifdef DEBUG}
     xlibinterface.outputDebugString(iBEGINPROCESS,'HANDLE_DESTROY_NOTIFY');
     xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.handledestroyNotify '+xlibinterface.formatwindow(xwindow));
-//    {$endif}
+    {$endif}
     c:=findclient(xwindow);
     if assigned(c) then begin
         if (c.iskdetray) then begin
-//           {$ifdef DEBUG}
+           {$ifdef DEBUG}
            xlibinterface.outputDebugString(iINFO,format('Removing tray client %s',[xlibinterface.formatwindow(xwindow)]));
-//           {$endif}
+           {$endif}
             clients.Remove(c);
             c.free;
         end;
     end
     else begin
-//        {$ifdef DEBUG}
+        {$ifdef DEBUG}
         xlibinterface.outputDebugString(iINFO,'Client tray for window '+xlibinterface.formatwindow(xwindow)+' not found in handledestroyNotify');
-//        {$endif}
+        {$endif}
     end;
-//    {$ifdef DEBUG}
+    {$ifdef DEBUG}
     xlibinterface.outputDebugString(iENDPROCESS,'HANDLE_DESTROY_NOTIFY');
-//    {$endif}
+    {$endif}
     result:=0;
 end;
 
@@ -836,8 +838,13 @@ begin
 end;
 
 function TXPWindowManager.handleFocusInOut(var event:XEvent): integer;
+var
+    c: TWMClient;
+    xwindow: window;
 begin
+    xwindow:=event.xfocus.window;
     result:=0;
+//    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handlefocusinout %s',[xlibinterface.formatwindow(xwindow)]));
 end;
 
 function TXPWindowManager.handleLeaveNotify(var event:XEvent): integer;
@@ -847,6 +854,7 @@ end;
 
 function TXPWindowManager.handleMappingNotify(var event:XEvent): integer;
 begin
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handlemappingnotify',[]));
     result:=0;
 end;
 
@@ -861,8 +869,12 @@ begin
     xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handlemaprequest %s',[xlibinterface.formatwindow(xwindow)]));
     {$endif}
     c:=findclient(xwindow);
-    if assigned(c) then c.activate
+    if assigned(c) then begin
+//        xlibinterface.outputDebugString(iMETHOD,format('c.activate %s',[xlibinterface.formatwindow(xwindow)]));
+        c.activate;
+    end
     else begin
+//        xlibinterface.outputDebugString(iMETHOD,format('createnewclient %s',[xlibinterface.formatwindow(xwindow)]));
         createNewClient(xwindow);
     end;
     {$ifdef DEBUG}
@@ -1461,6 +1473,12 @@ begin
     XPTaskbar.activatetask(self);
     bringtofront;
     focus;
+    //This causes Delphi to raise a "Call to an OS function failed"
+    //It's due because the IDE tries to maximize the editor window
+    //FIXIT!!!
+    //Way to reproduce:
+    //Save the default desktop with the editor window maximized (F5)
+    //The editor window must be in MAXIMIZED STATE!!!
     sendsyntheticConfigureNotify;
 end;
 
@@ -1471,11 +1489,10 @@ end;
 
 procedure TWMClient.bringtofront;
 begin
-    if not assigned(frame) then exit;
     if not framed then begin
         XMapRaised(application.display,xwindow);
-    end;
-    frame.BringToFront;
+    end
+    else frame.BringToFront;
     xptaskbar.bringtofront;
     fwindowmanager.activeclient:=self;
 end;
@@ -1526,7 +1543,8 @@ begin
     xlibinterface.outputDebugString(iBEGINPROCESS,'CONFIGURE_REQUEST');
     xlibinterface.outputDebugString(iINFO,'configure request for window '+xlibinterface.formatWindow(event.xconfigurerequest.xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
     {$endif}
-    if not assigned(frame) then exit;
+
+    if assigned(frame) then begin
 //*******************
   {* We ignore configure requests while the user is moving/resizing
    * the window, since these represent the app sucking and fighting
@@ -1677,7 +1695,6 @@ begin
   if ((event.xconfigurerequest.value_mask and CWWidth)=CWWidth) then frame.width:=width+(fbs.Left+fbs.right);
   if ((event.xconfigurerequest.value_mask and CWHeight)=CWHeight) then frame.height:=height+(fbs.bottom+co.y);
 
-
   if FWindowState=wsNormal then begin
     wRect:=frame.boundsrect;
   end;
@@ -1688,6 +1705,7 @@ begin
         {$endif}
         XResizeWindow(FWindowManager.FDisplay,xwindow,width,height);
     end;
+  end;
 
   {* Handle stacking. We only handle raises/lowers, mostly because
    * stack.c really can't deal with anything else.  I guess we'll fix
@@ -1703,27 +1721,27 @@ begin
    * never a sibling set and always do the full raise/lower instead of
    * the raise-just-above/below-sibling.
    *}
-   (*
+
   if ((event.xconfigurerequest.value_mask and CWStackMode)=CWStackMode) then begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString('Stack mode');
     {$endif}
       case (event.xconfigurerequest.detail) of
         Above: begin
-            frame.bringtofront;
+            activate;
     {$ifdef DEBUG}
     xlibinterface.outputDebugString('bringtofront');
     {$endif}
         end;
         Below: begin
-            frame.sendtoback;
+            //frame.sendtoback;
     {$ifdef DEBUG}
     xlibinterface.outputDebugString('sendtoback');
     {$endif}
         end;
       end;
   end;
-  *)
+
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iENDPROCESS,'CONFIGURE_REQUEST');
     {$endif}
@@ -1884,9 +1902,8 @@ begin
 
         if framed then begin
             frame.show;
-
-            bringtofront;
         end;
+        bringtofront;        
 
         XPTaskbar.addtask(self);
 
@@ -2271,20 +2288,22 @@ var
     fbs: TRect;
     co: TPoint;
 begin
-    if FWindowState<>wsNormal then begin
-        {$ifdef DEBUG}
-        xlibinterface.outputDebugString(iMETHOD,'TWMClient.restore'+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
-        {$endif}
-        if FWindowState=wsMinimized then begin
-            frame.visible:=true;
-            FWindowState:=minimizedstate;
-        end
-        else begin
-            fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
-            co:=(frame as TWindowsClassic).getorigin;
-            frame.BoundsRect:=wRect;
-            XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
-            FWindowState:=wsNormal;
+    if assigned(frame) then begin
+        if FWindowState<>wsNormal then begin
+            {$ifdef DEBUG}
+            xlibinterface.outputDebugString(iMETHOD,'TWMClient.restore'+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+            {$endif}
+            if FWindowState=wsMinimized then begin
+                frame.visible:=true;
+                FWindowState:=minimizedstate;
+            end
+            else begin
+                fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
+                co:=(frame as TWindowsClassic).getorigin;
+                frame.BoundsRect:=wRect;
+                XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
+                FWindowState:=wsNormal;
+            end;
         end;
     end;
 end;
@@ -2310,7 +2329,19 @@ begin
     c.border_width := 0;
     c.above := None;
     c.override_redirect := 0;
-    XSendEvent( qtdisplay, c.event, 1, StructureNotifyMask, @c );
+
+
+    {
+    writeln('xwindow: '+inttostr(xwindow));
+    writeln('caption: '+(frame as TWindowsClassic).gettitle);
+    writeln('c.x: '+inttostr(c.x));
+    writeln('c.y: '+inttostr(c.y));
+    writeln('c.width: '+inttostr(c.width));
+    writeln('c.height: '+inttostr(c.height));
+    writeln('------------------');
+    }
+
+    XSendEvent( FWindowManager.FDisplay, c.xwindow, 0, StructureNotifyMask, @c );
 end;
 
 procedure TWMClient.setMapState(state: integer);

@@ -127,6 +127,7 @@ type
         procedure focus;
         procedure createFrame;
         procedure getIcons;
+        function isKDETray:boolean;
         procedure getSizeHints;
         procedure minimize;
         procedure maximize;
@@ -368,6 +369,9 @@ begin
       end;
      DestroyNotify: begin
       name := 'DestroyNotify';
+      extra := format ('event: 0x%x window: 0x%x ',[
+                               event.xdestroywindow.event,
+                               event.xdestroywindow.xwindow]);
       end;
      UnmapNotify: begin
       name := 'UnmapNotify';
@@ -388,6 +392,10 @@ begin
       end;
      ReparentNotify: begin
       name := 'ReparentNotify';
+      extra := format ('event: 0x%x window: 0x%x parent: 0x%x ',[
+                               event.xreparent.event,
+                               event.xreparent.xwindow,
+                               event.xreparent.parent]);
       end;
      ConfigureNotify: begin
       name := 'ConfigureNotify';
@@ -527,6 +535,7 @@ begin
     case event.xtype of
         maprequest: result:=(xpwindowmanager.handleMapRequest(event^)=1);
         propertynotify: result:=(xpwindowmanager.handlePropertyNotify(event^)=1);
+//        destroynotify: result:=(xpwindowmanager.handleDestroyNotify(event^)=1);
         unmapnotify: result:=(xpwindowmanager.handleUnmapNotify(event^)=1);
         enternotify: result:=(xpwindowmanager.handleenternotify(event^)=1);
         buttonpress: result:=(xpwindowmanager.handlebuttonpress(event^)=1);
@@ -740,7 +749,35 @@ begin
 end;
 
 function TXPWindowManager.handleDestroyNotify(var event:XEvent): integer;
+var
+    c: TWMClient;
+    p: TWMCLient;
+    xwindow: window;
+    i: integer;
 begin
+    xwindow:=event.xdestroywindow.xwindow;
+//    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iBEGINPROCESS,'HANDLE_DESTROY_NOTIFY');
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.handledestroyNotify '+xlibinterface.formatwindow(xwindow));
+//    {$endif}
+    c:=findclient(xwindow);
+    if assigned(c) then begin
+        if (c.iskdetray) then begin
+//           {$ifdef DEBUG}
+           xlibinterface.outputDebugString(iINFO,format('Removing tray client %s',[xlibinterface.formatwindow(xwindow)]));
+//           {$endif}
+            clients.Remove(c);
+            c.free;
+        end;
+    end
+    else begin
+//        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iINFO,'Client tray for window '+xlibinterface.formatwindow(xwindow)+' not found in handledestroyNotify');
+//        {$endif}
+    end;
+//    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iENDPROCESS,'HANDLE_DESTROY_NOTIFY');
+//    {$endif}
     result:=0;
 end;
 
@@ -798,7 +835,7 @@ begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iENDPROCESS,'HANDLE_MAP_REQUEST');
     {$endif}
-    result:=0;    
+    result:=0;
 end;
 
 function TXPWindowManager.handleMotionNotify(var event:XEvent): integer;
@@ -820,7 +857,9 @@ begin
         c:=findclient(xwindow);
         if assigned(c) then begin
             XGetWMName(FDisplay, xwindow, @name);
-            (c.frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
+            if assigned(c.frame) then begin
+                (c.frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
+            end;
             XPTaskBar.updatetask(c);
         end
         else begin
@@ -830,7 +869,9 @@ begin
         end;
         result:=0;
     end
-    else result:=1;
+    else begin
+        result:=1;
+    end;
 end;
 
 function TXPWindowManager.handleSelectionClear(var event:XEvent): integer;
@@ -1006,6 +1047,7 @@ begin
             add('_NET_WM_ACTION_CLOSE');
             add('_NET_WM_STATE_ABOVE');
             add('_NET_WM_STATE_BELOW');
+            add('_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR');
         end;
 
         for i:=0 to atomNames.count-1 do begin
@@ -1532,6 +1574,7 @@ begin
   if ((event.xconfigurerequest.value_mask and CWWidth)=CWWidth) then frame.width:=width+(fbs.Left+fbs.right);
   if ((event.xconfigurerequest.value_mask and CWHeight)=CWHeight) then frame.height:=height+(fbs.bottom+co.y);
 
+
   if FWindowState=wsNormal then begin
     wRect:=frame.boundsrect;
   end;
@@ -1627,7 +1670,7 @@ var
     data: PChar;
     str: TMemoryStream;
 //    nw,nh: longint;
-//    state: variant;
+    state: variant;
     fbs: TRect;
     co: TPoint;
 begin
@@ -1656,23 +1699,6 @@ begin
       exit;
     end;
 
-{
-    if (attr.map_state <> IsViewable) then begin
-      // Only manage if WM_STATE is IconicState or NormalState */
-      state:=xlibinterface.GetWindowProperty(FWindowManager.FDisplay,xwindow,FWindowManager.Atoms[atom_wm_state],FWindowManager.Atoms[atom_wm_state]);
-
-      if (state<>IconicState) or (state<>NormalState) then begin
-          xlibinterface.outputdebugstring(format('Deciding not to manage unmapped or unviewable window %d',[xwindow]));
-          FWindowManager.ungrabDisplay;
-          exit;
-      end;
-
-      //existing_wm_state = state;
-      //meta_verbose ("WM_STATE of %x = %s\n", xwindow,
-      //              wm_state_to_string (existing_wm_state));
-    end;
-}
-
     XSelectInput (FWindowManager.FDisplay, xwindow, PropertyChangeMask or EnterWindowMask or LeaveWindowMask or FocusChangeMask);
 
     {$ifdef DEBUG}
@@ -1691,111 +1717,92 @@ begin
       XChangeWindowAttributes (FWindowManager.FDisplay, xwindow, CWWinGravity, @attrs);
     end;
 
-//    frame:=FWindowManager.Frame.create(application);
-    frame:=TWindowsClassic.create(application);
-    (frame as TWindowsClassic).setclient(self);
-
-    if ((hints^.flags and IconPixmapHint)=IconPixmapHint) then begin
-        XpmCreateBufferFromPixmap(FWindowManager.Display,data, hints^.icon_pixmap,hints^.icon_mask,nil);
-        str:=TMemoryStream.create;
-        try
-            str.Write(data^,strlen(data));
-            str.position:=0;
-            (frame as TWindowsClassic).imgIcon.Picture.bitmap.LoadFromStream(str);
-        finally
-            str.free;
-        end;
-    end;
-    (frame as TWindowsClassic).setupIcons;
-
-//    (frame as TWindowsClassic).setclientarea(Rect(attr.x,attr.y,attr.x+attr.width,attr.y+attr.height));
-//   (frame as TWindowsClassic).setclientarea(Rect(sizehints.x,sizehints.y,sizehints.x+sizehints.width,sizehints.y+sizehints.height));
-    {$ifdef DEBUG}
-    xlibinterface.outputDebugString(iINFO,format('Frame(%d,%d)-(%d,%d)',[attr.x,attr.y, attr.width,attr.height]));
-    {$endif}
-
-    //This lines are temporary just to load Gimp and take screenshots
-    {
-    if sizehints.x<0 then sizehints.x:=0;
-    if sizehints.y<0 then sizehints.y:=0;
-
-    if sizehints.x>qforms.screen.width+200 then sizehints.x:=0;
-    if sizehints.y>qforms.screen.Height+200 then sizehints.y:=0;
-
-    if sizehints.width>qforms.Screen.width+200 then sizehints.width:=200;
-    if sizehints.height>qforms.screen.height+200 then sizehints.height:=350;
-    }
-
-    fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
-    co:=(frame as TWindowsClassic).getorigin;
-    frame.left:=attr.x;
-    frame.top:=attr.y;
-    frame.width:=attr.width+(fbs.left+fbs.right);
-    frame.height:=attr.height+(fbs.bottom+co.y);
-
-    if (sizehints^.flags and PMinSize)=PMinSize then begin
-        if sizehints^.min_width>frame.constraints.MinWidth then frame.Constraints.MinWidth:=sizehints^.min_width+(fbs.left+fbs.right);
-        if sizehints^.min_height>frame.Constraints.MinHeight then frame.Constraints.MinHeight:=sizehints^.min_height+(co.Y+fbs.top);
-    end;
-
-    if (sizehints^.flags and PMaxSize)=PMaxSize then begin
-        if sizehints^.max_width>=sizehints^.min_width then frame.Constraints.maxWidth:=sizehints^.max_width+(fbs.left+fbs.right);
-        if sizehints^.max_height>=sizehints^.min_height then frame.Constraints.maxHeight:=sizehints^.max_height+(co.Y+fbs.top);
-    end;
-
-    if FWindowState=wsNormal then begin
-        wRect:=frame.boundsrect;
-    end;
 
 
-    XGetWMName(FWindowManager.FDisplay, xwindow, @name);
-
-    (frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
-
-//    getIcons;
-
-    frame.show;
-
-    bringtofront;
-
-    XPTaskbar.addtask(self);
-
-    XPTaskbar.activatetask(self);
-
-	if (attr.map_state = IsViewable) then inc(FUnmapcounter,1)
+    if isKDETray then begin
+    	if (attr.map_state = IsViewable) then inc(FUnmapcounter,1);
+        XPTaskBar.addwindowtotray(xwindow)
+    end
     else begin
-//		c.initPosition;
-//		if (assigned(hints)) and  ((hints.flags and StateHint)<>0) then c.setWindowState(hints.initial_state);
-	end;
 
-	reparent;
-{
-    nw:=c.width;
-    nh:=c.height;
-}
+        frame:=TWindowsClassic.create(application);
+        (frame as TWindowsClassic).setclient(self);
+
+        if ((hints^.flags and IconPixmapHint)=IconPixmapHint) then begin
+            XpmCreateBufferFromPixmap(FWindowManager.Display,data, hints^.icon_pixmap,hints^.icon_mask,nil);
+            str:=TMemoryStream.create;
+            try
+                str.Write(data^,strlen(data));
+                str.position:=0;
+                (frame as TWindowsClassic).imgIcon.Picture.bitmap.LoadFromStream(str);
+            finally
+                str.free;
+            end;
+        end;
+        (frame as TWindowsClassic).setupIcons;
+
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iINFO,format('Frame(%d,%d)-(%d,%d)',[attr.x,attr.y, attr.width,attr.height]));
+        {$endif}
+
+        fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
+        co:=(frame as TWindowsClassic).getorigin;
+        frame.left:=attr.x;
+        frame.top:=attr.y;
+        frame.width:=attr.width+(fbs.left+fbs.right);
+        frame.height:=attr.height+(fbs.bottom+co.y);
 
 
+        if (sizehints^.flags and PMinSize)=PMinSize then begin
+            if sizehints^.min_width>frame.constraints.MinWidth then frame.Constraints.MinWidth:=sizehints^.min_width+(fbs.left+fbs.right);
+            if sizehints^.min_height>frame.Constraints.MinHeight then frame.Constraints.MinHeight:=sizehints^.min_height+(co.Y+fbs.top);
+        end;
 
-//*********************************
+        if (sizehints^.flags and PMaxSize)=PMaxSize then begin
+            if sizehints^.max_width>=sizehints^.min_width then frame.Constraints.maxWidth:=sizehints^.max_width+(fbs.left+fbs.right);
+            if sizehints^.max_height>=sizehints^.min_height then frame.Constraints.maxHeight:=sizehints^.max_height+(co.Y+fbs.top);
+        end;
+
+        if FWindowState=wsNormal then begin
+            wRect:=frame.boundsrect;
+        end;
 
 
-    {$ifdef DEBUG}
-    xlibinterface.outputDebugString(iINFO,format('Resizing window to (%d,%d)',[attr.width,attr.height]));
-    xlibinterface.outputDebugString(iINFO,format('Frame size (%d,%d)',[frame.width,frame.height]));
-    {$endif}
-    //XResizeWindow(FWindowManager.FDisplay,xwindow,sizehints.width,sizehints.height);
+        XGetWMName(FWindowManager.FDisplay, xwindow, @name);
+
+        (frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
+
+        frame.show;
+
+        bringtofront;
+
+        XPTaskbar.addtask(self);
+
+        XPTaskbar.activatetask(self);
+
+    	if (attr.map_state = IsViewable) then inc(FUnmapcounter,1)
+        else begin
+    //		c.initPosition;
+    //		if (assigned(hints)) and  ((hints.flags and StateHint)<>0) then c.setWindowState(hints.initial_state);
+    	end;
+
+
+        reparent;
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iINFO,format('Resizing window to (%d,%d)',[attr.width,attr.height]));
+        xlibinterface.outputDebugString(iINFO,format('Frame size (%d,%d)',[frame.width,frame.height]));
+        {$endif}
+        //XResizeWindow(FWindowManager.FDisplay,xwindow,sizehints.width,sizehints.height);
+        map;
+    end;
 
 
 	if assigned(hints) then XFree(hints);
 	if assigned(sizehints) then XFree(sizehints);
 
-
-    map;
-//	c.title.BringToFront;
-//	c.setWindowState(NormalState);
-
 	XSync(FWindowManager.FDisplay, 0);
     FWindowManager.ungrabDisplay;
+
 
 end;
 
@@ -1831,7 +1838,10 @@ begin
     xlibinterface.outputDebugString(iMETHOD,'UngrabDisplay');
     {$endif}
     WindowManager.ungrabdisplay;
-  end;
+  end
+  else XPTaskbar.removewindowfromtray(xwindow);
+
+
   inherited;
 end;
 
@@ -1884,7 +1894,7 @@ get_kwm_win_icon (MetaDisplay *display,
   result := XGetWindowProperty (FWindowManager.FDisplay, xwindow, FWindowManager.Atoms[atom_kwm_win_icon],
 			       0, MaxInt,  0, FWindowManager.Atoms[atom_kwm_win_icon], @atype, @format, @nitems, @bytes_after, @icons);
 
-                  
+
   if (atype <> FWindowManager.Atoms[atom_kwm_win_icon]) then begin
       XFree (icons);
       exit;
@@ -1933,6 +1943,55 @@ begin
         result:=(FWindowManager.ActiveClient=self);
     end
     else result:=false;
+end;
+
+function TWMClient.isKDETray: boolean;
+var
+  atype: Atom;
+  format: integer;
+  nitems:integer;
+  bytes_after:integer;
+  icons:PPixmap;
+  apixmap: Pixmap;
+  mask: Pixmap;
+  err, res: integer;
+
+  prop: TAtom;
+  data: TAtom;
+
+begin
+(*
+01417 bool NetHandler::IsSystrayWindow(Window w) {
+01418     CARD32 *data;
+01419
+01420     items_read = 0;
+01421     XGrabServer(display);
+01422     if (validatedrawable(w)) {
+01423         if (XGetWindowProperty(display, w, kde_net_wm_system_tray_window_for,
+01424                                0L, 1L, false, XA_WINDOW, &real_type,
+01425                                &real_format, &items_read, &items_left,
+01426                                &data) != Success) {
+01427             items_read = 0;
+01428         }
+01429     }
+01430     XUngrabServer(display);
+01431
+01432     return ((items_read)? true: false);
+01433 }
+*)
+
+  prop := XInternAtom(Application.Display, '_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR', 1);
+//         XChangeProperty(Application.Display, QWidget_winId(self.Handle), prop, XA_WINDOW, 32, PropModeReplace, PByte(@data), 1);
+
+  res := XGetWindowProperty (FWindowManager.FDisplay, xwindow, prop, 0, 1,  0, XA_WINDOW, @atype, @format, @nitems, @bytes_after, @icons);
+
+  if (nitems = 0) then begin
+      result:=false;
+  end
+  else result:=true;
+
+  XFree (icons);
+
 end;
 
 procedure TWMClient.map;
@@ -2010,7 +2069,6 @@ begin
 	XSelectInput(FWindowManager.Fdisplay, xwindow, ColormapChangeMask or EnterWindowMask or PropertyChangeMask);
 
 	p_attr.override_redirect := 1;
-//	p_attr.background_pixel := wm.bg.pixel;
 	p_attr.event_mask := ChildMask or ButtonPressMask or ExposureMask or EnterWindowMask;
 
 
@@ -2021,7 +2079,6 @@ begin
 
 	XAddToSaveSet(FWindowManager.Fdisplay, xwindow);
 	XSetWindowBorderWidth(FWindowManager.Fdisplay, xwindow, 0);
-//    XChangeWindowAttributes(FWindowManager.Fdisplay,parent,CWOverrideRedirect or CWBackPixel or CWEventMask, @p_attr);
     XChangeWindowAttributes(FWindowManager.Fdisplay,parent,CWOverrideRedirect or CWEventMask, @p_attr);
 
 	// Hmm, why resize this?
@@ -2065,6 +2122,7 @@ var
     fbs: TRect;
     co: TPoint;
 begin
+    if not assigned(frame) then exit;
     fbs:=(frame as TWindowsClassic).getframebordersizes;
     co:=(frame as TWindowsClassic).getorigin;
 

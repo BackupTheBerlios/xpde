@@ -1,6 +1,6 @@
 object TaskBar: TTaskBar
-  Left = 208
-  Top = 288
+  Left = 217
+  Top = 375
   ActiveControl = btnStart
   AutoScroll = False
   BorderStyle = fbsNone
@@ -87,10 +87,10 @@ object TaskBar: TTaskBar
       TabOrder = 0
     end
     object lbTimer: TLabel
-      Left = -4
+      Left = -5
       Top = 5
-      Width = 47
-      Height = 17
+      Width = 48
+      Height = 18
       Alignment = taRightJustify
       Anchors = [akTop, akRight]
       Caption = 'lbTimer'

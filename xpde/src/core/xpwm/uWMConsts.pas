@@ -31,8 +31,8 @@ const
     ICON_HEIGHT=32;
     MINI_ICON_WIDTH=16;
     MINI_ICON_HEIGHT=16;
-    
-    maxAtoms=76;
+
+    maxAtoms=77;
 
     atomsSupported=43;
 
@@ -114,8 +114,7 @@ const
     atom_net_wm_action_close =74;
     atom_net_wm_state_above =75;
     atom_net_wm_state_below =76;
-
-
+    atom_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR=77;
 
 
 implementation

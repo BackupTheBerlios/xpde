@@ -69,3 +69,7 @@ DebugCWD=
 /home/ttm/xpde/bin/bplXPShellControls.so=XPShell Controls
 /home/ttm/xpde/bin/bplXPTrayIcon.so=XPde Tray Icon component
 
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=$(HOME)/xpde/bin
+

@@ -121,6 +121,8 @@ type
   end;
 
   TXPTaskBar=class(TInterfacedObject, IXPTaskBar)
+        procedure addwindowtotray(const w: window);
+        procedure removewindowfromtray(const w: window);         
         procedure addtask(const task:IWMClient);
         procedure updatetask(const task:IWMClient);
         procedure activatetask(const task:IWMClient);
@@ -488,6 +490,11 @@ begin
     taskbar.createTask(task);
 end;
 
+procedure TXPTaskBar.addwindowtotray(const w: window);
+begin
+    taskbar.addwindowtotray(w);
+end;
+
 procedure TXPTaskBar.bringtofront;
 begin
     taskbar.BringToFront;
@@ -636,6 +643,8 @@ end;
 procedure TTaskBar.addwindowtotray(const w: window);
 var
     p: TPanel;
+    p_attr:XSetWindowAttributes;
+    parent: window;
 begin
     p:=TPanel.create(self);
     p.Width:=18;
@@ -644,7 +653,21 @@ begin
     p.Parent:=pnTray;
     p.align:=alRight;
     p.tag:=w;
-    XReparentWindow(application.display,w,QWidget_winID(p.handle),1,0);
+
+	XSelectInput(application.display, w, ColormapChangeMask or EnterWindowMask or PropertyChangeMask);
+
+	p_attr.override_redirect := 1;
+	p_attr.event_mask := ChildMask or ButtonPressMask or ExposureMask or EnterWindowMask;
+
+    parent:=QWidget_winID(p.Handle);
+
+	XAddToSaveSet(application.display, w);
+	XSetWindowBorderWidth(application.display, w, 0);
+    XChangeWindowAttributes(application.display,parent,CWOverrideRedirect or CWEventMask, @p_attr);
+
+    XReparentWindow(application.display,w,parent,1,0);
+
+    XResizeWindow(application.display,w,16,16);
     XMapWindow(application.display,w);
 
     updatetraysize;
@@ -676,8 +699,8 @@ begin
         pnTimer.update;
     end
     else begin
-        wi:=(pnTray.ControlCount*20);
-        pnTimer.width:=wi+42;
+        wi:=(pnTray.ControlCount*18);
+        pnTimer.width:=wi+45;
         pnTray.width:=wi;
         pnTimer.invalidate;
         pnTimer.update;
@@ -687,6 +710,11 @@ end;
 procedure TTaskBar.FormShow(Sender: TObject);
 begin
     updatetraysize;
+end;
+
+procedure TXPTaskBar.removewindowfromtray(const w: window);
+begin
+    taskbar.removewindowfromtray(w);
 end;
 
 procedure TXPTaskBar.updatetask(const task: IWMClient);

@@ -107,6 +107,7 @@ type
     { Public declarations }
     activetasks:TList;                                                          //TToolButton list for active tasks
     //Menu related functions
+    procedure releasebuttons;
     procedure IPCNotification(Sender:TObject; msg:integer; data: integer);
     procedure ShowMenu;
     procedure updatetaskswidth;
@@ -243,14 +244,8 @@ end;
 
 procedure TTaskBar.btnStartMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-var
-    i:integer;
 begin
-    for I := 0 to tbTasks.ControlCount - 1 do begin
-        if (tbTasks.Controls[I] is TToolButton) then begin
-            (tbTasks.Controls[I] as TToolButton).Down:=false;
-        end;
-    end;
+    releaseButtons;
     showmenu;
 end;
 
@@ -567,23 +562,28 @@ begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iMETHOD,'TTaskBar.activatetask');
     {$endif}
-    w:=task.getwindow;
-    for i := 0 to tbTasks.ControlCount - 1 do begin
-        if (tbTasks.Controls[I] is TToolButton) then begin
-            t:=(tbTasks.Controls[I] as TToolButton);
-            if cardinal(t.tag)=w then begin
-                {$ifdef DEBUG}
-                xlibinterface.outputDebugString(iINFO,'new activetask found');
-                {$endif}
-                for k := 0 to tbTasks.ControlCount - 1 do begin
-                    if (tbTasks.Controls[k] is TToolButton) then begin
-                        (tbTasks.Controls[k] as TToolButton).Down:=false;
+    if assigned(task) then begin
+        w:=task.getwindow;
+        for i := 0 to tbTasks.ControlCount - 1 do begin
+            if (tbTasks.Controls[I] is TToolButton) then begin
+                t:=(tbTasks.Controls[I] as TToolButton);
+                if cardinal(t.tag)=w then begin
+                    {$ifdef DEBUG}
+                    xlibinterface.outputDebugString(iINFO,'new activetask found');
+                    {$endif}
+                    for k := 0 to tbTasks.ControlCount - 1 do begin
+                        if (tbTasks.Controls[k] is TToolButton) then begin
+                            (tbTasks.Controls[k] as TToolButton).Down:=false;
+                        end;
                     end;
+                    t.Down:=true;
+                    break;
                 end;
-                t.Down:=true;
-                break;
             end;
         end;
+    end
+    else begin
+        releaseButtons;
     end;
 end;
 
@@ -705,6 +705,17 @@ begin
                 t.Caption:=task.getTitle;
                 break;
             end;
+        end;
+    end;
+end;
+
+procedure TTaskBar.releasebuttons;
+var
+    i:integer;
+begin
+    for I := 0 to tbTasks.ControlCount - 1 do begin
+        if (tbTasks.Controls[I] is TToolButton) then begin
+            (tbTasks.Controls[I] as TToolButton).Down:=false;
         end;
     end;
 end;

@@ -140,7 +140,7 @@ type
         function getWindow: Window;
         procedure updateactivestate;
         function isactive:boolean;
-        procedure activate;
+        procedure activate(restore:boolean=true);
         function getTitle: widestring;
         property WindowManager:TXPWindowManager read FWindowManager write SetWindowManager;
         property UnmapCounter: integer read FUnmapCounter write FUnmapCounter;
@@ -869,7 +869,7 @@ begin
                 if Clients.count>=1 then begin
                     p:=clients[0];
                     if assigned(p) then begin
-                        p.activate;
+                        p.activate(false);
                     end
                     else ActiveClient:=nil;
 
@@ -1265,7 +1265,8 @@ begin
                 if (clients.Remove(FActiveClient)<>-1) then clients.Insert(0,FActiveClient);
             end;
 
-        end;
+        end
+        else XPTaskbar.activatetask(nil);
     end;
 end;
 
@@ -1305,9 +1306,11 @@ begin
 	result:=XSendEvent(XPWindowManager.Display, w, 0, NoEventMask, @ev);
 end;
 
-procedure TWMClient.activate;
+procedure TWMClient.activate(restore:boolean=true);
 begin
-    if FWindowState=wsMinimized then restore;
+    if (restore) then begin
+        if FWindowState=wsMinimized then self.restore;
+    end;
     FWindowManager.ActiveClient:=self;
     updateactivestate;
     XPTaskbar.activatetask(self);
@@ -1955,6 +1958,10 @@ begin
 end;
 
 procedure TWMClient.minimize;
+var
+    p: TWMClient;
+    i: integer;
+    found: boolean;
 begin
     if FWindowState<>wsMinimized then begin
         minimizedstate:=FWindowState;
@@ -1963,6 +1970,22 @@ begin
         {$endif}
         frame.visible:=false;
         FWindowState:=wsMinimized;
+
+        found:=false;
+        if FWindowManager.clients.count>1 then begin
+            for i:=1 to FWindowManager.clients.count-1 do begin
+                p:=FWindowManager.clients[i];
+                if assigned(p) then begin
+                    if (p.WindowState<>wsMinimized) then begin
+                        p.activate;
+                        found:=true;
+                        break;
+                    end;
+                end;
+            end;
+        end;
+
+        if not found then FWindowManager.activeclient:=nil;
     end;
 end;
 

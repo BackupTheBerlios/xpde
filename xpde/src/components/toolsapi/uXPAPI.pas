@@ -66,7 +66,7 @@ type
         procedure bringtofront;
         procedure updateactivestate;
         function isactive:boolean;
-        procedure activate;
+        procedure activate(restore:boolean=true);
         function getTitle: widestring;
         function getBitmap: TBitmap;
         function getWindow: Window;

@@ -1,0 +1,102 @@
+object ChangePasswd: TChangePasswd
+  Left = 452
+  Top = 271
+  Width = 305
+  Height = 114
+  HorzScrollBar.Range = 299
+  VertScrollBar.Range = 105
+  ActiveControl = NewPasswd
+  Color = clBackground
+  Scaled = False
+  OnShow = FormShow
+  PixelsPerInch = 78
+  object Label2: TLabel
+    Left = 8
+    Top = 16
+    Width = 69
+    Height = 13
+    Caption = 'New password'
+    Font.Color = clBlack
+    Font.Height = 10
+    Font.Name = 'tahoma'
+    Font.Pitch = fpVariable
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 8
+    Top = 56
+    Width = 106
+    Height = 13
+    Caption = 'Confirm new pasword '
+    Font.Color = clBlack
+    Font.Height = 11
+    Font.Name = 'tahoma'
+    Font.Pitch = fpVariable
+    Font.Style = []
+    ParentFont = False
+    WordWrap = True
+  end
+  object btnOk: TButton
+    Left = 136
+    Top = 80
+    Width = 75
+    Height = 25
+    Caption = 'Ok'
+    Font.Color = clBlack
+    Font.Height = 11
+    Font.Name = 'tahoma'
+    Font.Pitch = fpVariable
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    OnClick = btnOkClick
+  end
+  object btnCancel: TButton
+    Left = 224
+    Top = 80
+    Width = 75
+    Height = 25
+    Caption = 'Cancel'
+    Font.Color = clBlack
+    Font.Height = 11
+    Font.Name = 'tahoma'
+    Font.Pitch = fpVariable
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    OnClick = btnCancelClick
+  end
+  object NewPasswd: TEdit
+    Left = 120
+    Top = 8
+    Width = 177
+    Height = 21
+    EchoMode = emPassword
+    Font.Color = clBlack
+    Font.Height = 11
+    Font.Name = 'tahoma'
+    Font.Pitch = fpVariable
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+  end
+  object ConfPasswd: TEdit
+    Left = 120
+    Top = 48
+    Width = 177
+    Height = 21
+    EchoMode = emPassword
+    Font.Color = clBlack
+    Font.Height = 11
+    Font.Name = 'tahoma'
+    Font.Pitch = fpVariable
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+  end
+  object XPStyle1: TXPStyle
+    Left = 8
+    Top = 80
+  end
+end

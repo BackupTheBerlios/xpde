@@ -2,7 +2,7 @@
 {                                                                             }
 { This file is part of the XPde project                                       }
 {                                                                             }
-{ Copyright (c) 2003, Valeriy Gabrusev <valery@xpde.com>                              }
+{ Copyright (c) 2003, Valeriy Gabrusev <valery@xpde.com>                      }
 {                                                                             }
 { This program is free software; you can redistribute it and/or               }
 { modify it under the terms of the GNU General Public                         }
@@ -165,6 +165,8 @@ type
     procedure chbxReadOnlyFileClick(Sender: TObject);
     procedure chbxHiddenFileClick(Sender: TObject);
     procedure btnAdvancedClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
      { Private declarations }
     StatBuf: TStatBuf;
@@ -175,7 +177,7 @@ type
     IconIndex : integer;
     OpenIconIndex : integer;
 
-//real permissions selected object
+ //real permissions selected object
     atHidden, atSetUID, atSetGID, atSticky : boolean;
     atUserReadOnly, atUserWrite, atUserExecute : boolean;
     atGroupReadOnly, atGroupWrite, atGroupExecute : boolean;
@@ -223,7 +225,7 @@ var
 
 implementation
 
-uses uOpenWith, uSelUserGroup,uSecurityAdv,uResString, uXPuserUtils;
+uses uOpenWith, uXPuserUtils, uGroupAndUser, uSelectObj,uSecurityAdv, uGroupUserResourse;
 
 {$R *.xfm}
 
@@ -550,8 +552,6 @@ end;
 
 //****************** Permissions**********************************************
 
-
-
 procedure TPropetiesDlg.chbxReadAllowClick(Sender: TObject);
 begin
  if chbxReadAllow.Checked then chbxReadDeny.Checked := false
@@ -738,9 +738,10 @@ end;
 procedure TPropetiesDlg.btnAddUserGroupClick(Sender: TObject);
 var
  i : byte;
+ ObjType : string;
 begin
- MemberListStr := TStringList.Create;
- RunSelectObject(ResString1);
+ ObjType := objtypestr1;
+ RunSelectObjDlg(ObjType, MemberListStr);
   if MemberListStr.Count <> 0 then begin
    for i := 0 to MemberListStr.Count-1 do begin
     if lvUserList.FindCaption(0, MemberListStr.Strings[i], false, true, false) = nil then  begin
@@ -780,7 +781,6 @@ end;
 
 procedure TPropetiesDlg.btnCancelClick(Sender: TObject);
 begin
- MemberListStr.Free;
  Close;
 end;
 
@@ -820,7 +820,6 @@ begin
 
 // Rename File
  if edPathFile.Modified then begin
-  ShowMessage(DataName + '#13'+  ExtractFilePath(DataName)+ edPathFile.Text);
   if RenameFile(DataName, ExtractFilePath(DataName)+ edPathFile.Text) then begin
     DataName := ExtractFilePath(DataName)+ edPathFile.Text;
   end
@@ -841,7 +840,6 @@ begin
     end;
     FillUserList;
     flAddUserToGroup := False;
-    MemberListStr.Free;
   end;
 
 //   if flDelUserFromGroup then begin
@@ -849,6 +847,16 @@ begin
 //    flDelUserFromGroup := False;
 //    FillUserList;
 //  end;
+end;
+
+procedure TPropetiesDlg.FormCreate(Sender: TObject);
+begin
+ MemberListStr := TStringList.Create;
+end;
+
+procedure TPropetiesDlg.FormDestroy(Sender: TObject);
+begin
+  MemberListStr.Free;
 end;
 
 end.

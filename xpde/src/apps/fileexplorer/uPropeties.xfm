@@ -1,6 +1,6 @@
 object PropetiesDlg: TPropetiesDlg
-  Left = 389
-  Top = 206
+  Left = 393
+  Top = 229
   Width = 360
   Height = 436
   HorzScrollBar.Range = 355
@@ -20,8 +20,8 @@ object PropetiesDlg: TPropetiesDlg
   ParentFont = False
   Position = poDesktopCenter
   Scaled = False
-  Visible = True
-  WindowState = wsMinimized
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 78
   object btnOk: TButton
     Left = 117

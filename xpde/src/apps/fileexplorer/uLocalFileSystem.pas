@@ -28,9 +28,8 @@ uses
     Classes, SysUtils, QGraphics,
     uExplorerAPI, QDialogs, uXPAPI,
     uXPStyleConsts, QForms, Libc,
-    uLNKFile, uSmbClient, uSelectUser,
-    uConfirmFileReplace, uConfirmFolderReplace,
-    QControls, uPropeties, uExplorerUtil;
+    uLNKFile, uSmbClient, uConfirmFileReplace, uConfirmFolderReplace,
+    QControls, uPropeties, uExplorerUtil, uSelectUser;
 
 type
     TBroadcastOp=(boAddFile, boAddFolder);
@@ -1726,16 +1725,14 @@ begin
   smbOk := false;
   if not isMount then begin
     repeat
-     if not Mount then  begin
-       mrResult := dlgSelectUser.SelectUser(smbUser, smbPassword);
-       if mrResult = mrCancel then smbOk := true;
-     end
-       else begin
-         if children <> nil then children.free;
-         children:=TInterfaceList.create;
-         children.add(TFolder.create(FPath));
-         smbOk := true;
-       end;
+     if not Mount then
+       if not RunSelectUser(smbUser, smbPassword) then smbOk := true
+         else begin
+           if children <> nil then children.free;
+           children:=TInterfaceList.create;
+           children.add(TFolder.create(FPath));
+           smbOk := true;
+         end;
     until smbOk;
   end;
 

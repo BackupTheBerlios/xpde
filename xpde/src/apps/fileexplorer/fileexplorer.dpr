@@ -14,17 +14,17 @@ uses
   uAboutDlg in '../../core/xpde/uAboutDlg.pas' {AboutDlg},
   uSmbClient in 'uSmbClient.pas',
   uSmbOption in 'uSmbOption.pas' {smbOption},
-  uSelectUser in 'uSelectUser.pas' {dlgSelectUser},
   uConfirmFileReplace in 'uConfirmFileReplace.pas' {ConfirmFileReplaceDlg},
   uConfirmFolderReplace in 'uConfirmFolderReplace.pas' {ConfirmFolderReplaceDlg},
-  uSelUserGroup in '../../components/selectuser/uSelUserGroup.pas' {SelectUserGroup},
-  uLocation in '../../components/selectuser/uLocation.pas' {LocationDlg},
-  uObjectTypes in '../../components/selectuser/uObjectTypes.pas' {ObjTypesDlg},
-  uResString in '../../components/selectuser/uResString.pas',
   uXPuserUtils in '../../components/userlib/uXPuserUtils.pas',
   uExplorerUtil in 'uExplorerUtil.pas',
   uPropeties in 'uPropeties.pas' {PropetiesDlg},
-  uSecurityAdv in 'uSecurityAdv.pas' {SecurityDlg};
+  uSecurityAdv in 'uSecurityAdv.pas' {SecurityDlg},
+  uGroupAndUser in '../../components/selectuser/uGroupAndUser.pas' {SelUserGroup},
+  uSelectObj in '../../components/selectuser/uSelectObj.pas' {ObjTypes},
+  uGroupUserResourse in '../../components/selectuser/uGroupUserResourse.pas',
+  uLocationObj in '../../components/selectuser/uLocationObj.pas' {LocationObj},
+  uSelectUser in '../../components/userlib/uSelectUser.pas' {dlgSelectUserDlg};
 
 {$R *.res}
 
@@ -33,6 +33,5 @@ begin
   SetXPStyle(application);
   Application.CreateForm(TExplorerForm, ExplorerForm);
   Application.CreateForm(TsmbOption, smbOption);
-  Application.CreateForm(TdlgSelectUser, dlgSelectUser);
   Application.Run;
 end.

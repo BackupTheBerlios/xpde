@@ -11,8 +11,8 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 90
-  TextHeight = 18
-  TextWidth = 8
+  TextHeight = 17
+  TextWidth = 7
   object ListBox: TListBox
     Left = 128
     Top = 28

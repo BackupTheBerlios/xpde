@@ -241,8 +241,8 @@ begin
 
     addSystemIcons;
     readDesktopItems;
-    loadbackgroundfromregistry;
     loadproperties;
+    loadbackgroundfromregistry;
 end;
 
 procedure TMainForm.LoadBackGroundFromRegistry;
@@ -342,8 +342,8 @@ end;
 
 procedure TMainform.loadDesktopProperties;
 begin
-    loadBackgroundFromRegistry;
     loadproperties;
+    loadBackgroundFromRegistry;
 end;
 
 procedure TMainForm.Properties1Click(Sender: TObject);

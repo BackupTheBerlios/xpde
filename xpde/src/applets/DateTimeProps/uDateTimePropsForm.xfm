@@ -1,0 +1,132 @@
+object DateTimePropsFm: TDateTimePropsFm
+  Left = 383
+  Top = 408
+  Width = 457
+  Height = 330
+  HorzScrollBar.Range = 457
+  VertScrollBar.Range = 321
+  ActiveControl = PageControl1
+  Caption = 'Properties of Date and Time'
+  Color = clBackground
+  Position = poScreenCenter
+  OnShow = FormShow
+  PixelsPerInch = 89
+  TextHeight = 15
+  TextWidth = 7
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 0
+    Width = 457
+    Height = 281
+    ActivePage = sheetDateTime
+    TabOrder = 0
+    object sheetDateTime: TTabSheet
+      Caption = 'Date and Time'
+      object grpDate: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 225
+        Height = 241
+        Caption = '&Date'
+        TabOrder = 0
+        object comboMonth: TComboBox
+          Left = 8
+          Top = 24
+          Width = 129
+          Height = 23
+          Style = csDropDownList
+          DropDownCount = 12
+          ItemHeight = 17
+          TabOrder = 0
+          OnChange = comboMonthChange
+        end
+        object spinYear: TSpinEdit
+          Left = 152
+          Top = 24
+          Width = 60
+          Height = 23
+          Max = 2099
+          Min = 1980
+          TabOrder = 1
+          Value = 1980
+          Wrap = True
+          OnChanged = spinYearChanged
+        end
+        object gridDate: TStringGrid
+          Left = 8
+          Top = 64
+          Width = 201
+          Height = 161
+          ColCount = 7
+          DefaultColWidth = 28
+          DefaultRowHeight = 28
+          FixedCols = 0
+          RowCount = 7
+          Options = [goDrawFocusSelected]
+          ScrollBars = ssNone
+          TabOrder = 2
+          OnSelectCell = gridDateSelectCell
+        end
+      end
+      object grpTime: TGroupBox
+        Left = 232
+        Top = 0
+        Width = 209
+        Height = 241
+        Caption = '&Time'
+        TabOrder = 1
+        object pbClock: TPaintBox
+          Left = 16
+          Top = 24
+          Width = 177
+          Height = 161
+          OnPaint = pbClockPaint
+        end
+        object efTime: TMaskEdit
+          Left = 64
+          Top = 200
+          Width = 73
+          Height = 23
+          EditMask = '!00:00:00;1; '
+          MaxLength = 8
+          TabOrder = 0
+          Text = '  :  :  '
+          OnChange = efTimeChange
+        end
+      end
+    end
+  end
+  object btnOK: TButton
+    Left = 190
+    Top = 296
+    Width = 75
+    Height = 25
+    Caption = '&OK'
+    Default = True
+    TabOrder = 1
+    OnClick = btnOKClick
+  end
+  object btnCancel: TButton
+    Left = 278
+    Top = 296
+    Width = 75
+    Height = 25
+    Caption = '&Cancel'
+    TabOrder = 2
+    OnClick = btnCancelClick
+  end
+  object btnApply: TButton
+    Left = 372
+    Top = 296
+    Width = 75
+    Height = 25
+    Caption = '&Apply'
+    TabOrder = 3
+    OnClick = btnApplyClick
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 240
+    Top = 264
+  end
+end

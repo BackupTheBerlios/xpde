@@ -84,9 +84,11 @@ procedure TActiveTasksDlg.FormShow(Sender: TObject);
 var
     rows: integer;
 begin
+    width:=330;
+    height:=107;
     rows:=((xpwindowmanager.clients.count-1) div 7)+1;
     height:=height+(43*(rows-1));
-    activetask:=-1;
+    activetask:=0;
     incActiveTask;
     left:=(screen.Width-width) div 2;
     top:=((screen.height-height) div 2)-107;

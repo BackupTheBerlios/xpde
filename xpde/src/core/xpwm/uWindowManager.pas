@@ -708,7 +708,13 @@ begin
     {$endif}
     c:=findclient(xwindow);
     if assigned(c) then begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,format('c.activate %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
         c.activate;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,format('XAllowevents %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
         XAllowEvents (Fdisplay, ReplayPointer, event.xbutton.time);
     end
     else begin
@@ -717,6 +723,9 @@ begin
         {$endif}
     end;
     result:=0;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,format('END TXPWindowManager.handleButtonPress %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
 end;
 
 function TXPWindowManager.handleButtonRelease(var event:XEvent): integer;
@@ -1552,9 +1561,8 @@ var
     exclude: TList;
 begin
     tf:=FWindowManager.findTransientFor(xwindow);
-
     //If it's not modal, but there is a modal shown
-    if assigned(tf) then begin
+    if (assigned(tf)) and (tf<>self) then begin
         {
         exclude:=TList.create;
         try
@@ -1594,16 +1602,14 @@ begin
                 end;
                 }
                 if FWindowManager.ActiveClient<>self then begin
-                    FWindowManager.ActiveClient:=tf;                
+                    FWindowManager.ActiveClient:=tf;
                     tf.bringtofront;
                 end;
             end;
         end;
-
         FWindowManager.ActiveClient:=self;
         updateactivestate;
         XPTaskbar.activatetask(self);
-
         bringtofront;
         focus;
         //This causes Delphi to raise a "Call to an OS function failed"

@@ -62,14 +62,18 @@ UseLauncher=0
 DebugCWD=
 
 [Excluded Packages]
+/home/ttm/xpde/bin/bplXPRegistry.so=XPde Registry components
+/home/ttm/xpde/bin/bplXPCommon.so=XPde utility functions
+/home/ttm/xpde/bin/bplXPAPI.so=XPAPI interface
+/home/ttm/xpde/bin/bplXPMenus.so=XPde Menu Components
+/home/ttm/xpde/bin/bplXPTrayIcon.so=XPde Tray Icon component
 /home/ttm/xpde/bin/bplXPStyle.so=XPStyle component
 /home/ttm/xpde/bin/bplXPColorSelect.so=XPColorSelect components
-/home/ttm/xpde/bin/bplXPCommctrls.so=XPCommctrls unit
 /home/ttm/xpde/bin/bplXPShellControls.so=XPShell Controls
-/home/ttm/xpde/bin/bplXPTrayIcon.so=XPde Tray Icon component
+/home/ttm/xpde/bin/bplXPCommctrls.so=XPCommctrls unit
 
 [HistoryLists\hlOutputDirectorry]
 Count=2
-Item0=$(HOME)/xpde/bin/apps
-Item1=$(HOME)/xpde/bin
+Item0=$(HOME)/xpde/bin
+Item1=$(HOME)/xpde/bin/apps
 

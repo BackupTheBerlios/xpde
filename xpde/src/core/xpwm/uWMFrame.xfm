@@ -22,7 +22,7 @@ object WindowsClassic: TWindowsClassic
   OnMouseUp = FormMouseUp
   OnPaint = FormPaint
   OnResize = FormResize
-  PixelsPerInch = 90
+  PixelsPerInch = 84
   object restore: TImage
     Left = 192
     Top = 32

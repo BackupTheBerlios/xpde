@@ -35,7 +35,7 @@ Const diUnknown=0;
       diLindows=8;
       diSlackware=9;
       FreeBSD=10; // ;) just a hope ....
-      dist_reg:Array[0..5] of string=('distribution_enum','distribution_name','distribution_sys','distribution_version','distribution_kernel','distribution_machine');
+      dist_reg:Array[0..6] of string=('distribution_enum','distribution_name','distribution_sys','distribution_version','distribution_kernel','distribution_machine','distribution_kernel_date');
 
 type  uname_r = record
         dist   : integer;
@@ -44,6 +44,7 @@ type  uname_r = record
         version :string;
         kernel :string;
         machine:string;
+        krnl_date:string;
         End;
 
        TUname=uname_r;
@@ -61,9 +62,12 @@ type  uname_r = record
         // used by hwinfo.pas
 
 Const   MAX_DEVICE_EXP=11;
+        MAX_SIGN_SHORT=10;
+        MAX_OTHER_DEVICES=10;
+        MAX_USB_CLASSES=14;
         MAX_BUSVALUES=2;
         MAX_KWORDS=4;
-        MAX_USB_INFO=11;
+        MAX_USB_INFO=12;
         devices:Array[0..MAX_DEVICE_EXP] of string=('Host bridge:','PCI bridge:',
         'ISA bridge:','IDE interface:','SMBus:','USB Controller:',
         'VGA compatible controller:','Ethernet controller:',
@@ -75,10 +79,46 @@ Const   MAX_DEVICE_EXP=11;
 
         usbinfobus:Array[0..MAX_USB_INFO] of String=('Bus=','Lev=','Prnt=',
                 'Port=','Dev#=','Spd=','Ver=','Vendor=','ProdID=',
-                'Manufacturer=','Product=','Driver=');
+                'Manufacturer=','Product=','Cls=','Driver=');
 
       HDIO_GET_IDENTITY=$00000307;
 
+type devices_list=(dlHostBridge,dlISABridge,dlIDEInterface,dlSMBus,
+                   dlUSBController,dlVGA,dlEth,dlNet,dlUnknownMassStorage,
+                   dlMMAudio,dlInputDevice);                                   
+(*
+type usb_devices=(USB_NULL,USB_CLASS_PER_INTERFACE,USB_CLASS_AUDIO,
+USB_CLASS_COMM,USB_CLASS_HID,USB_CLASS_HUB,USB_CLASS_PHYSICAL,
+USB_CLASS_PRINTER,USB_CLASS_MASS_STORAGE,USB_CLASS_CDC_DATA,
+USB_CLASS_APP_SPEC,USB_VENDOR_SPEC,USB_CLASS_STILL_IMAGE,
+USB_CLASS_CSCID,USB_CLASS_CONTENT_SEC);
+*)
+
+type usb_classes=record
+        class_:integer;
+        name:string(.5.);
+        cheat:string; // ;)
+        End;
+        TUsb_Classes=Array[0..MAX_USB_CLASSES] of usb_classes;
+(*
+{				     max. 5 chars. per name string
+	{USB_CLASS_PER_INTERFACE,	">ifc"},
+	{USB_CLASS_AUDIO,		"audio"},
+	{USB_CLASS_COMM,		"comm."},
+	{USB_CLASS_HID,			"HID"},
+	{USB_CLASS_HUB,			"hub"},
+	{USB_CLASS_PHYSICAL,		"PID"},
+	{USB_CLASS_PRINTER,		"print"},
+	{USB_CLASS_MASS_STORAGE,	"stor."},
+	{USB_CLASS_CDC_DATA,		"data"},
+	{USB_CLASS_APP_SPEC,		"app."},
+	{USB_CLASS_VENDOR_SPEC,		"vend."},
+	{USB_CLASS_STILL_IMAGE,		"still"},
+	{USB_CLASS_CSCID,		"scard"},
+	{USB_CLASS_CONTENT_SEC,		"c-sec"},
+	{-1,				"unk."}
+}
+  *)
 type usb_info_bus=record
         bus:integer;
         lev:integer;
@@ -91,6 +131,7 @@ type usb_info_bus=record
         prod_id:string;
         manufacturer:string;
         product:string;
+        cls:string; // TUsbClasses connection !
         driver:string;
         End;
         TUsbInfo=usb_info_bus;
@@ -126,11 +167,24 @@ type pci_info_=record
         non_prefetch_hi:string;
         prefetchable_lo:string;
         prefetchable_hi:string;
+        usbclass:string;
         sign:string; // eth0,ippp0,sb..etc
         driver:string;
         End;
         Tpci_info=pci_info_;
         Ppci_info_=Array of TPci_Info;
+
+type nodups_pci_info=record
+        kind:string;
+        device_type:string;
+        usbclass:string;
+        otherdevice:string;
+        device_point:Array[0..64] of integer;
+        device_class:Array[0..64] of string;
+        device_info:Array[0..64] of string;
+        End;
+        TNoDups_Pci_Info=nodups_pci_info;
+        PNoDups_Pci_Info=Array of TNoDups_Pci_Info;
 
 type bus_value=record
         bus:integer;

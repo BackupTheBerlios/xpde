@@ -62,7 +62,7 @@ type  uname_r = record
         krnl_date:string;
         End;
 
-       TUname=uname_r;
+       T_Uname=uname_r;
 
       needed_info = record
         net_conf:string;

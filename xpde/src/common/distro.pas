@@ -25,7 +25,7 @@ unit distro;
 interface
 uses Libc,SysUtils,xpclasses;
 
-        Function Get_Distro_Version:TUname;
+        Function Get_Distro_Version:T_Uname;
         Function Get_Config_Paths(dist_:integer):TConfInfo;
 
 implementation
@@ -48,8 +48,8 @@ Begin
         Result:=true;
 End;
 
-Function Get_From_Release(dist_:integer):TUname;
-var uname__:TUName;
+Function Get_From_Release(dist_:integer):T_Uname;
+var uname__:T_Uname;
     fi_rel:TextFile;
     lines:Array[0..50] of string;
     i,j,x,ii,jj:integer;
@@ -253,8 +253,8 @@ Begin
     Result:=diUnknown;
 End;
 
-Function Get_From_Uname(dist_:integer):TUname;
-var uname__:TUName;
+Function Get_From_Uname(dist_:integer):T_Uname;
+var uname__:T_Uname;
     sis:Utsname;
 Begin
         Libc.uname(sis);
@@ -267,8 +267,8 @@ Begin
 Result:=uname__;
 End;
 
-Function Get_Distro_Version:TUname;
-var uname__:TUname;
+Function Get_Distro_Version:T_Uname;
+var uname__:T_Uname;
 Begin
         case Get_Distro of
                 diUnknown :Begin

@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs,
-  QStdCtrls, QMenus, QTypes, QExtCtrls, QComCtrls;
+  QStdCtrls, QMenus, QTypes, QExtCtrls, QComCtrls,uQXPComCtrls;
 
 type
   TWindowsTaskManagerDlg = class(TForm)
@@ -47,10 +47,7 @@ type
         Label2:TLabel;
         CheckBox5:TCheckBox;
         CheckBox4:TCheckBox;
-        CheckBox3:TCheckBox;
         ListView3:TListView;
-        ScrollBar1:TScrollBar;
-        Label1:TLabel;
         Button6:TButton;
         Button5:TButton;
         Button4:TButton;
@@ -66,7 +63,7 @@ type
         TabSheet3:TTabSheet;
         TabSheet2:TTabSheet;
         TabSheet1:TTabSheet;
-    Menu: TMainMenu;
+        MainMenu: TMainMenu;
   private
     { Private declarations }
   public

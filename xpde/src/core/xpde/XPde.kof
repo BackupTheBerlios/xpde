@@ -44,12 +44,12 @@ ExeDescription=
 DynamicLoader=/lib/ld-linux.so.2
 
 [Directories]
-OutputDir=
+OutputDir=$(HOME)/xpde
 UnitOutputDir=
-PackageDLLOutputDir=$(HOME)/xpde
+PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
-Packages=
+Packages=rtl:visualclx
 Conditionals=
 DebugSourceDirs=
 UsePackages=0
@@ -60,6 +60,18 @@ HostApplication=
 Launcher=/usr/X11R6/bin/xterm -T KylixDebuggerOutput -e bash -i -c %debuggee%
 UseLauncher=0
 DebugCWD=
+
+[Excluded Packages]
+/home/ttm/xpde/bplXPCommon.so=XPde utility functions
+/home/ttm/xpde/bplXPRegistry.so=XPde Registry components
+/home/ttm/xpde/bplXPAPI.so=XPAPI interface
+/home/ttm/xpde/bplXPMenus.so=XPde Menu Components
+/home/ttm/xpde/bplXPStyle.so=XPStyle component
+/home/ttm/xpde/bplXPLocalizator.so=XPLocalizator run-time package
+/home/ttm/xpde/bplXPLocalizatorIDE.so=XPLocalizator Design-time package
+/home/ttm/xpde/bplXPColorSelect.so=XPColorSelect components
+/home/ttm/xpde/bplXPShellControls.so=XPShell Controls
+/home/ttm/xpde/bplXPCommctrls.so=XPCommctrls unit
 
 [HistoryLists\hlOutputDirectorry]
 Count=5

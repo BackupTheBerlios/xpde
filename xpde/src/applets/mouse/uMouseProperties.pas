@@ -365,6 +365,11 @@ Begin
         if RB2.Checked then notch_to_scroll:=1;
         num_lines:=StrToInt(ED1.Text);
 
+        if notch_to_scroll=0 then
+                QApplication_setWheelScrollLines(num_lines)
+        else
+        if notch_to_scroll=1 then
+        QApplication_setWheelScrollLines(20); // UGLY ;)
 
         reg:=TRegistry.Create;
         reg.RootKey:=HKEY_CURRENT_CONFIG;
@@ -438,7 +443,7 @@ end;
 
 procedure TMousePropertiesDlg.Button5Click(Sender: TObject);
 begin
-        ShowMessage('Please, write some code for me ;)');
+        ShowMessage('Please, write some code for me ;)'+#13#10);
 end;
 
 end.

@@ -1924,8 +1924,13 @@ begin
 
         fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
         co:=(frame as TWindowsClassic).getorigin;
-        frame.left:=attr.x;
-        frame.top:=attr.y;
+
+        frame.left:=attr.x-co.x;
+        if frame.left<0 then frame.left:=0;
+
+        frame.top:=attr.y-co.y;
+        if frame.top<0 then frame.top:=0;
+
         frame.width:=attr.width+(fbs.left+fbs.right);
         frame.height:=attr.height+(fbs.bottom+co.y);
 

@@ -23,41 +23,7 @@
 unit distro;
 // FUNCTIONS TO RECOGNIZE DISTRIBUTION AND LOCATE NETWORK CONFIG FILES
 interface
-uses Libc,SysUtils;
-
-Const diUnknown=0;
-      diRedHat=1;
-      diMandrake=2;
-      diSuse=3;
-      diDebian=4;
-      diCaldera=5;
-      diTurboLinux=6;
-      diConectiva=7;
-      diLindows=8;
-      diSlackware=9;
-      FreeBSD=10; // ;) just a hope ....
-      dist_reg:Array[0..5] of string=('distribution_enum','distribution_name','distribution_sys','distribution_version','distribution_kernel','distribution_machine');
-
-type  uname_r = record
-        dist   : integer;
-        name   :string;
-        sys    :string;
-        version :string;
-        kernel :string;
-        machine:string;
-        End;
-
-       TUname=uname_r;
-
-      needed_info = record
-        net_conf:string;
-        ppp_conf:string;
-        ifconfig:string;
-        route   :string;
-        netstat :string;
-        End;
-
-        TConfInfo = needed_info;
+uses Libc,SysUtils,xpclasses;
 
         Function Get_Distro_Version:TUname;
         Function Get_Config_Paths(dist_:integer):TConfInfo;

@@ -32,12 +32,14 @@ uses
 
 type
   TStringEditor = class(TForm)
-    Label1: TLabel;
+    meStrings: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
+    entry: TResourceEntry;
   public
     { Public declarations }
+    procedure loadfromentry;
   end;
 
   TStringResourceEditor=class(TResourceEditor)
@@ -68,6 +70,8 @@ begin
     if not assigned(editor) then begin
         editor:=TStringEditor.create(nil);
         editor.caption:=editor.caption+' - '+entry.resourcename;
+        editor.entry:=entry;
+        editor.loadfromentry;
     end;
 end;
 
@@ -75,6 +79,40 @@ procedure TStringEditor.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
     action:=caFree;
+end;
+
+procedure TStringEditor.loadfromentry;
+var
+    c: array [0..512] of char;
+    b: byte;
+    i: integer;
+    line:string;
+    function readString(length:integer):string;
+    var
+        c: char;
+        k: integer;
+    begin
+        result:='';
+        for k:=0 to length-1 do begin
+            entry.data.Read(c,1); //#0
+            entry.data.Read(c,1);
+            result:=result+c;            
+        end;
+        entry.data.Read(c,1); //#0
+    end;
+begin
+    meStrings.lines.clear;
+    entry.data.Position:=0;
+    line:='';
+    while entry.data.position<entry.data.size do begin
+        entry.data.Read(b,1);
+        if b=0 then break;
+        //b= size of the string to read *2 (unicode)
+        line:=readstring(b);
+        meStrings.lines.add(line);
+    end;
+    entry.data.Position:=0;
+//    meStrings.Lines.LoadFromStream(entry.data);
 end;
 
 initialization

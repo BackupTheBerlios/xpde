@@ -1,6 +1,6 @@
 object ResourceFileFrm: TResourceFileFrm
-  Left = 334
-  Top = 420
+  Left = 337
+  Top = 449
   Width = 378
   Height = 248
   VertScrollBar.Range = 19
@@ -21,8 +21,8 @@ object ResourceFileFrm: TResourceFileFrm
     Align = alClient
     Columns = <>
     TabOrder = 0
-    OnDblClick = tvEntriesDblClick
     OnEditing = tvEntriesEditing
+    OnItemClick = tvEntriesItemClick
   end
   object StatusBar1: TStatusBar
     Left = 0
@@ -30,5 +30,16 @@ object ResourceFileFrm: TResourceFileFrm
     Width = 378
     Height = 19
     Panels = <>
+  end
+  object entryPopup: TPopupMenu
+    Left = 252
+    Top = 56
+    object Edit1: TMenuItem
+      Caption = '&Edit'
+      OnClick = Edit1Click
+    end
+    object Rename1: TMenuItem
+      Caption = '&Rename'
+    end
   end
 end

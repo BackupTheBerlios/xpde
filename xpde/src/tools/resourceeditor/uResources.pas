@@ -37,38 +37,44 @@ type
     TResourceFile=class(TComponent)
     private
         procedure destroyresources;
+        function getIsModified: boolean;
     public
         resources: TList;
         procedure getResourceNames(strings: TStrings);
         procedure loadfromfile(const filename:string);
         constructor Create(AOwner:TComponent);override;
         destructor Destroy;override;
+        property IsModified:boolean read getIsModified;
     end;
 
     //A resource entry
     TResourceEntry=class(TObject)
-        public
-            //Just 32 byte resources, 16 bit not supported
-            datasize:integer;
-            headersize: integer;
-            resourcetype: TResourceType;
-            sresourcetype: string;
-            //If first two are $FFFF, the subsequent two bytes are numeric value
-            //else, the first two are the first Unicode in a zs
-            resourcename: string;
-            dataversion: integer;
-            flags: word;
-            language: word;
-            version:integer;
-            characteristics: integer;
-            data: TMemoryStream;
-            resourcefile: TResourceFile;
-            procedure ReadFromStream(stream:TStream);
-            function GetFormresAsText : string;
-            procedure GetStringListRes( strings : TStrings );
-            constructor Create;
-            destructor Destroy;override;
-    end;    
+    private
+        FModified: boolean;
+        procedure SetModified(const Value: boolean);
+    public
+        //Just 32 byte resources, 16 bit not supported
+        datasize:integer;
+        headersize: integer;
+        resourcetype: TResourceType;
+        sresourcetype: string;
+        //If first two are $FFFF, the subsequent two bytes are numeric value
+        //else, the first two are the first Unicode in a zs
+        resourcename: string;
+        dataversion: integer;
+        flags: word;
+        language: word;
+        version:integer;
+        characteristics: integer;
+        data: TMemoryStream;
+        resourcefile: TResourceFile;
+        procedure ReadFromStream(stream:TStream);
+        function GetFormresAsText : string;
+        procedure GetStringListRes( strings : TStrings );
+        constructor Create;
+        destructor Destroy;override;
+        property Modified:boolean read FModified write SetModified;
+    end;
 
 function ResourceTypeToString(const rt: TResourceType):string;
 
@@ -128,6 +134,19 @@ begin
 end;
 
 //Return all the resource names in strings
+function TResourceFile.getIsModified: boolean;
+var
+    i:longint;
+    r: TResourceEntry;
+begin
+    result:=false;
+    for i:=0 to resources.count-1 do begin
+        r:=resources[i];
+        result:=r.Modified;
+        if result then break;
+    end;
+end;
+
 procedure TResourceFile.getResourceNames(strings: TStrings);
 var
     i:longint;
@@ -167,11 +186,13 @@ begin
     end;
 end;
 
+
 { TResourceEntry }
 
 constructor TResourceEntry.Create;
 begin
     inherited;
+    FModified:=false;
     data:=TMemoryStream.create;
     resourceType:=rtNone;
     sresourcetype:='';
@@ -194,6 +215,8 @@ var
         if (result mod 4)<>0 then result:=result+2;
     end;
 begin
+    FModified:=false;
+
     stream.Read(datasize,4);
     stream.Read(headersize,4);
 
@@ -283,5 +306,12 @@ begin
   end;
 end;
 
+
+procedure TResourceEntry.SetModified(const Value: boolean);
+begin
+    if value<>FModified then begin
+        FModified := Value;
+    end;
+end;
 
 end.

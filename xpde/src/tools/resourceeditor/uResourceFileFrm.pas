@@ -29,16 +29,21 @@ uses
   Variants, QTypes, QGraphics,
   QControls, QForms, QDialogs,
   QStdCtrls, QComCtrls, uResources,
-  QExtCtrls, uResourceAPI;
+  QExtCtrls, uResourceAPI, QMenus;
 
 type
   TResourceFileFrm = class(TForm)
     tvEntries: TTreeView;
     StatusBar1: TStatusBar;
+    entryPopup: TPopupMenu;
+    Edit1: TMenuItem;
+    Rename1: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure tvEntriesDblClick(Sender: TObject);
     procedure tvEntriesEditing(Sender: TObject; Node: TTreeNode;
       var AllowEdit: Boolean);
+    procedure tvEntriesItemClick(Sender: TObject; Button: TMouseButton;
+      Node: TTreeNode; const Pt: TPoint);
+    procedure Edit1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -129,21 +134,6 @@ begin
     destroyEditors;
 end;
 
-procedure TResourceFileFrm.tvEntriesDblClick(Sender: TObject);
-var
-    node: TTreeNode;
-    entry: TResourceEntry;
-    ed: TResourceEditor;
-begin
-    node:=tvEntries.Selected;
-    entry:=node.data;
-    if assigned(entry) then begin
-        //Call the right editor for this entry
-        ed:=ResourceAPI.callEditor(entry);
-        if assigned(ed) then editors.add(ed);
-    end;
-end;
-
 procedure TResourceFileFrm.tvEntriesEditing(Sender: TObject;
   Node: TTreeNode; var AllowEdit: Boolean);
 begin
@@ -160,6 +150,38 @@ begin
         ed:=editors[i];
         ed.close;
         ed.free;
+    end;
+end;
+
+procedure TResourceFileFrm.tvEntriesItemClick(Sender: TObject;
+  Button: TMouseButton; Node: TTreeNode; const Pt: TPoint);
+var
+    entry: TResourceEntry;
+    ed: TResourceEditor;
+begin
+    if button=mbRight then begin
+        entry:=node.data;
+        if assigned(entry) then begin
+            //Call the right editor for this entry
+            //ed:=ResourceAPI.callEditor(entry);
+            //if assigned(ed) then editors.add(ed);
+            entryPopup.Popup(pt.x,pt.y);
+        end;
+    end;
+end;
+
+procedure TResourceFileFrm.Edit1Click(Sender: TObject);
+var
+    entry: TResourceEntry;
+    node: TTreeNode;
+    ed: TResourceEditor;
+begin
+    node:=tvEntries.Selected;
+    entry:=node.data;
+    if assigned(entry) then begin
+        //Call the right editor for this entry
+        ed:=ResourceAPI.callEditor(entry);
+        if assigned(ed) then editors.add(ed);
     end;
 end;
 

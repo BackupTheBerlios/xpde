@@ -7,27 +7,18 @@ File_4=SourceModule,'/home/ttm/kylix3/source/clx/QControls.pas',0,1,4516,1,4538,
 File_5=SourceModule,'/home/ttm/kylix3/source/rtl/sys/System.pas',0,1,267,1,284,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas
-Module1=/home/ttm/xpde/src/tools/resourceeditor/uResourceAPI.pas
+Module0=/home/ttm/xpde/src/tools/resourceeditor/ResourceEditor.dpr
+Module1=/home/ttm/xpde/src/tools/resourceeditor/main.pas
 Module2=/home/ttm/xpde/src/tools/resourceeditor/uResourceFileFrm.pas
-Module3=/home/ttm/xpde/src/tools/resourceeditor/main.pas
-Module4=/home/ttm/xpde/src/tools/resourceeditor/uResources.pas
-Count=5
+Module3=/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas
+Module4=/home/ttm/xpde/src/tools/resourceeditor/uResourceAPI.pas
+Module5=/home/ttm/xpde/src/tools/resourceeditor/uResources.pas
+Count=6
 EditWindowCount=1
 
-[/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[/home/ttm/xpde/src/tools/resourceeditor/uResourceAPI.pas]
+[/home/ttm/xpde/src/tools/resourceeditor/ResourceEditor.dpr]
 ModuleType=SourceModule
 FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/tools/resourceeditor/uResourceFileFrm.pas]
-ModuleType=SourceModule
-FormState=1
 FormOnTop=0
 
 [/home/ttm/xpde/src/tools/resourceeditor/main.pas]
@@ -35,12 +26,23 @@ ModuleType=SourceModule
 FormState=1
 FormOnTop=1
 
-[/home/ttm/xpde/src/tools/resourceeditor/uResources.pas]
+[/home/ttm/xpde/src/tools/resourceeditor/uResourceFileFrm.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=1
+
+[/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=1
+
+[/home/ttm/xpde/src/tools/resourceeditor/uResourceAPI.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/tools/resourceeditor/ResourceEditor.dpr]
+[/home/ttm/xpde/src/tools/resourceeditor/uResources.pas]
+ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
@@ -49,13 +51,14 @@ FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=5
-CurrentView=4
+ViewCount=6
+CurrentView=1
 View0=0
 View1=1
 View2=2
 View3=3
 View4=4
+View5=5
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -65,49 +68,56 @@ Left=268
 Top=136
 Width=696
 Height=482
-MaxLeft=4
-MaxTop=128
-MaxWidth=1016
-MaxHeight=585
-ClientWidth=1016
-ClientHeight=585
+MaxLeft=3
+MaxTop=45
+MaxWidth=1017
+MaxHeight=668
+ClientWidth=1017
+ClientHeight=668
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=0
+BottomPanelSize=85
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=00000400010000000B0000004D65737361676556696577000000000000000000000000000000000001000000000000000000000000FFFFFFFF
+BottomPanelData=0000040000000000F903000000000000025500000000000000010000000000000000000000000100000000F90300000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/tools/resourceeditor/main.pas
-CursorX=1
-CursorY=100
+CursorX=12
+CursorY=106
 TopLine=100
 LeftCol=1
 
 [View1]
+Module=/home/ttm/xpde/src/tools/resourceeditor/ResourceEditor.dpr
+CursorX=24
+CursorY=7
+TopLine=1
+LeftCol=1
+
+[View2]
 Module=/home/ttm/xpde/src/tools/resourceeditor/uResources.pas
 CursorX=1
 CursorY=10
 TopLine=220
 LeftCol=1
 
-[View2]
+[View3]
 Module=/home/ttm/xpde/src/tools/resourceeditor/uResourceFileFrm.pas
 CursorX=1
 CursorY=1
 TopLine=1
 LeftCol=1
 
-[View3]
+[View4]
 Module=/home/ttm/xpde/src/tools/resourceeditor/uResourceAPI.pas
 CursorX=17
 CursorY=29
 TopLine=19
 LeftCol=1
 
-[View4]
+[View5]
 Module=/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas
 CursorX=80
 CursorY=22
@@ -202,6 +212,22 @@ SelectedItem=Action
 ExpandedItems=BorderIcons,EdgeBorders,Font.Style,Localizable,Miscellaneous,Visual
 HiddenCategories=
 
+[WatchWindow]
+Create=1
+Visible=0
+State=0
+Left=4
+Top=718
+Width=421
+Height=149
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=415
+ClientHeight=124
+TBDockHeight=86
+LRDockWidth=421
+Dockable=1
+
 [ObjectTree]
 Create=1
 Visible=1
@@ -225,26 +251,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=573
+Height=568
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=573
+ClientHeight=568
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=0
+Visible=1
 State=0
 Left=12
 Top=0
-Width=684
+Width=1005
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=684
+ClientWidth=1005
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443

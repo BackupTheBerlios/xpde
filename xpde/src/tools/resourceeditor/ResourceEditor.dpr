@@ -2,6 +2,7 @@ program ResourceEditor;
 
 uses
   QForms,
+  uXPStyle,
   main in 'main.pas' {MainForm},
   uResources in 'uResources.pas',
   uResourceFileFrm in 'uResourceFileFrm.pas' {ResourceFileFrm},
@@ -12,6 +13,7 @@ uses
 
 begin
   Application.Initialize;
+  SetXPStyle(application);
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.

@@ -1,10 +1,8 @@
 object StringEditor: TStringEditor
-  Left = 402
-  Top = 328
+  Left = 405
+  Top = 357
   Width = 444
   Height = 264
-  HorzScrollBar.Range = 246
-  VertScrollBar.Range = 36
   Caption = 'String Editor'
   Color = clBackground
   FormStyle = fsMDIChild
@@ -13,11 +11,20 @@ object StringEditor: TStringEditor
   PixelsPerInch = 84
   TextHeight = 20
   TextWidth = 7
-  object Label1: TLabel
-    Left = 20
-    Top = 16
-    Width = 226
-    Height = 20
-    Caption = 'Here is the String editor, not ready yet!!!!'
+  object meStrings: TMemo
+    Left = 0
+    Top = 0
+    Width = 444
+    Height = 264
+    Align = alClient
+    Font.Color = clBlack
+    Font.Height = 12
+    Font.Name = 'adobe-courier'
+    Font.Pitch = fpFixed
+    Font.Style = []
+    ParentFont = False
+    ScrollBars = ssBoth
+    TabOrder = 0
+    WordWrap = False
   end
 end

@@ -1,37 +1,32 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,9,1,80,22,0,0
-File_1=SourceModule,'/home/ttm/xpde/src/tools/translator/main.pas',0,1,1,1,1,1,0
-File_2=SourceModule,'/home/ttm/kylix3/source/clx/QForms.pas',0,1,5502,1,5519,0,0
+File_0=SourceModule,'/home/ttm/kylix3/source/rtl/sys/System.pas',0,1,398,13,415,0,0
+File_1=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,9,1,80,22,0,0
+File_2=SourceModule,'/home/ttm/xpde/src/tools/translator/main.pas',0,1,1,1,1,1,0
 File_3=SourceModule,'/home/ttm/kylix3/source/rtl/sys/SysUtils.pas',0,1,10732,11,10737,0,0
 File_4=SourceModule,'/home/ttm/kylix3/source/clx/QControls.pas',0,1,4516,1,4538,0,0
-File_5=SourceModule,'/home/ttm/kylix3/source/rtl/sys/System.pas',0,1,267,1,284,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/tools/resourceeditor/ResourceEditor.dpr
-Module1=/home/ttm/xpde/src/tools/resourceeditor/main.pas
-Module2=/home/ttm/xpde/src/tools/resourceeditor/uResourceFileFrm.pas
-Module3=/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas
-Module4=/home/ttm/xpde/src/tools/resourceeditor/uResourceAPI.pas
-Module5=/home/ttm/xpde/src/tools/resourceeditor/uResources.pas
-Count=6
+Module0=/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas
+Module1=/home/ttm/xpde/src/tools/resourceeditor/uResourceFileFrm.pas
+Module2=/home/ttm/xpde/src/tools/resourceeditor/main.pas
+Module3=/home/ttm/xpde/src/tools/resourceeditor/uResourceAPI.pas
+Module4=/home/ttm/xpde/src/tools/resourceeditor/uResources.pas
+Module5=/home/ttm/xpde/src/tools/resourceeditor/ResourceEditor.dpr
+Module6=/home/ttm/kylix3/source/clx/QForms.pas
+Count=7
 EditWindowCount=1
 
-[/home/ttm/xpde/src/tools/resourceeditor/ResourceEditor.dpr]
-ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/tools/resourceeditor/main.pas]
+[/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas]
 ModuleType=SourceModule
 FormState=1
-FormOnTop=1
+FormOnTop=0
 
 [/home/ttm/xpde/src/tools/resourceeditor/uResourceFileFrm.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=1
 
-[/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas]
+[/home/ttm/xpde/src/tools/resourceeditor/main.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=1
@@ -46,19 +41,30 @@ ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
+[/home/ttm/xpde/src/tools/resourceeditor/ResourceEditor.dpr]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
+[/home/ttm/kylix3/source/clx/QForms.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
 [/home/ttm/ProjectGroup1.bpg]
 FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=6
-CurrentView=1
+ViewCount=7
+CurrentView=5
 View0=0
 View1=1
 View2=2
 View3=3
 View4=4
 View5=5
+View6=6
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -68,19 +74,19 @@ Left=268
 Top=136
 Width=696
 Height=482
-MaxLeft=3
-MaxTop=45
-MaxWidth=1017
-MaxHeight=668
-ClientWidth=1017
-ClientHeight=668
+MaxLeft=4
+MaxTop=128
+MaxWidth=1016
+MaxHeight=585
+ClientWidth=1016
+ClientHeight=585
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=85
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=0000040000000000F903000000000000025500000000000000010000000000000000000000000100000000F90300000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D65737361676556696577F803000000000000025500000000000000010000000000000000000000000100000000F80300000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/tools/resourceeditor/main.pas
@@ -98,30 +104,37 @@ LeftCol=1
 
 [View2]
 Module=/home/ttm/xpde/src/tools/resourceeditor/uResources.pas
-CursorX=1
-CursorY=10
-TopLine=220
+CursorX=19
+CursorY=44
+TopLine=27
 LeftCol=1
 
 [View3]
 Module=/home/ttm/xpde/src/tools/resourceeditor/uResourceFileFrm.pas
-CursorX=1
-CursorY=1
-TopLine=1
+CursorX=25
+CursorY=192
+TopLine=178
 LeftCol=1
 
 [View4]
 Module=/home/ttm/xpde/src/tools/resourceeditor/uResourceAPI.pas
-CursorX=17
-CursorY=29
-TopLine=19
+CursorX=1
+CursorY=34
+TopLine=20
 LeftCol=1
 
 [View5]
 Module=/home/ttm/xpde/src/tools/resourceeditor/uStringEditor.pas
 CursorX=80
-CursorY=22
-TopLine=52
+CursorY=57
+TopLine=33
+LeftCol=1
+
+[View6]
+Module=/home/ttm/kylix3/source/clx/QForms.pas
+CursorX=21
+CursorY=5788
+TopLine=5774
 LeftCol=1
 
 [Watches]
@@ -212,22 +225,6 @@ SelectedItem=Action
 ExpandedItems=BorderIcons,EdgeBorders,Font.Style,Localizable,Miscellaneous,Visual
 HiddenCategories=
 
-[WatchWindow]
-Create=1
-Visible=0
-State=0
-Left=4
-Top=718
-Width=421
-Height=149
-MaxLeft=-1
-MaxTop=-1
-ClientWidth=415
-ClientHeight=124
-TBDockHeight=86
-LRDockWidth=421
-Dockable=1
-
 [ObjectTree]
 Create=1
 Visible=1
@@ -251,26 +248,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=568
+Height=573
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=568
+ClientHeight=573
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
 Left=12
 Top=0
-Width=1005
+Width=1004
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1005
+ClientWidth=1004
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443

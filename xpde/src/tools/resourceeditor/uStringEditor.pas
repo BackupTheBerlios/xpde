@@ -31,23 +31,30 @@ uses
   QStdCtrls, uResources, uResourceAPI;
 
 type
+  TStringResourceEditor=class;
+
+  //The form to edit strings
   TStringEditor = class(TForm)
     meStrings: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure meStringsChange(Sender: TObject);
   private
     { Private declarations }
-    entry: TResourceEntry;
+    editor: TStringResourceEditor;                                              //The editor
+    loading:boolean;                                                            //A simple switch
   public
     { Public declarations }
-    procedure loadfromentry;
+    procedure loadfromentry;                                                    //Load the strings into the memo
+    procedure savetoentry;                                                      //Save the memo strings to the stream
   end;
 
   TStringResourceEditor=class(TResourceEditor)
   private
-       editor: TStringEditor;
+       stringeditor: TStringEditor;                                             //The form
+       entry: TResourceEntry;
   public
-       procedure edit(const entry:TResourceEntry);override;
-       procedure close;override;
+       procedure edit(const entry:TResourceEntry);override;                     //Creates the string editor form
+       destructor Destroy;override;                                             //Closes and saves
   end;
 
 var
@@ -59,33 +66,39 @@ implementation
 
 { TStringResourceEditor }
 
-procedure TStringResourceEditor.close;
+destructor TStringResourceEditor.Destroy;
 begin
-    editor.release;
-    editor:=nil;
+    //When the editor must close, saves the data to the entry if modified and releases the form
+    if entry.Modified then stringeditor.savetoentry;
+    stringeditor.release;
+    stringeditor:=nil;
+    inherited;
 end;
 
 procedure TStringResourceEditor.edit(const entry: TResourceEntry);
 begin
-    if not assigned(editor) then begin
-        editor:=TStringEditor.create(nil);
-        editor.caption:=editor.caption+' - '+entry.resourcename;
-        editor.entry:=entry;
-        editor.loadfromentry;
+    if not assigned(stringeditor) then begin
+        //Create the editor and setup all is needed
+        stringeditor:=TStringEditor.create(nil);
+        stringeditor.editor:=self;
+        stringeditor.caption:=stringeditor.caption+' - '+entry.resourcename;
+        self.entry:=entry;
+        stringeditor.loadfromentry;
+
     end;
 end;
 
 procedure TStringEditor.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-    action:=caFree;
+    //Closes the editor
+    editor.free;
 end;
 
+//It must support unicode!!!
 procedure TStringEditor.loadfromentry;
 var
-    c: array [0..512] of char;
     b: byte;
-    i: integer;
     line:string;
     function readString(length:integer):string;
     var
@@ -94,25 +107,62 @@ var
     begin
         result:='';
         for k:=0 to length-1 do begin
-            entry.data.Read(c,1); //#0
-            entry.data.Read(c,1);
-            result:=result+c;            
+            editor.entry.data.Read(c,1); //#0
+            editor.entry.data.Read(c,1);
+            result:=result+c;
         end;
-        entry.data.Read(c,1); //#0
+        editor.entry.data.Read(c,1); //#0
     end;
 begin
-    meStrings.lines.clear;
-    entry.data.Position:=0;
-    line:='';
-    while entry.data.position<entry.data.size do begin
-        entry.data.Read(b,1);
-        if b=0 then break;
-        //b= size of the string to read *2 (unicode)
-        line:=readstring(b);
-        meStrings.lines.add(line);
+    loading:=true;
+    try
+        meStrings.lines.clear;
+        editor.entry.data.Position:=0;
+        line:='';
+        while editor.entry.data.position<editor.entry.data.size do begin
+            editor.entry.data.Read(b,1);
+            if b=0 then break;
+            //b= size of the string to read *2 (unicode)
+            line:=readstring(b);
+            meStrings.lines.add(line);
+        end;
+        editor.entry.data.Position:=0;
+        meStrings.modified:=false;
+    finally
+        loading:=false;
     end;
-    entry.data.Position:=0;
-//    meStrings.Lines.LoadFromStream(entry.data);
+end;
+
+procedure TStringEditor.meStringsChange(Sender: TObject);
+begin
+    //If not loading and the memo changes, then, the entry must be marked as modified
+    if not loading then begin
+        editor.entry.Modified:=true;
+    end;
+end;
+
+procedure TStringEditor.savetoentry;
+var
+    i:integer;
+    line:string;
+    c: byte;
+    d: char;
+    k: integer;
+begin
+    editor.entry.data.Clear;
+    for i:=0 to meStrings.Lines.count-1 do begin
+        line:=meStrings.lines[i];
+        c:=length(line);
+        editor.entry.data.Write(c,1);
+        for k:=1 to length(line) do begin
+            d:=#0;
+            editor.entry.data.Write(d,1);
+            d:=line[k];
+            editor.entry.data.Write(d,1);
+        end;
+        d:=#0;
+        editor.entry.data.Write(d,1);
+    end;
 end;
 
 initialization

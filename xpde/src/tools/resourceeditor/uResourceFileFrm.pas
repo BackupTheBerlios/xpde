@@ -50,6 +50,7 @@ type
     { Public declarations }
     editors: TList;
     resourceFile:TResourceFile;
+    procedure OnEditorDestroyed(Sender:TObject);
     procedure destroyEditors;
     procedure updateResourceTree;
     procedure loadFromFile(const filename:string);
@@ -80,10 +81,12 @@ begin
     inherited;
 end;
 
+//Loads a resource file
 procedure TResourceFileFrm.loadFromFile(const filename: string);
 begin
     resourcefile.loadfromfile(filename);
     caption:=filename;
+    //Updates the tree
     updateResourceTree;
 end;
 
@@ -95,6 +98,7 @@ var
     i: integer;
     category: string;
     entry: TResourceEntry;
+    //Search for a specific category
     function FindCategory(const caption:string):TTreeNode;
     var
         k:longint;
@@ -112,14 +116,18 @@ begin
     tvEntries.Items.BeginUpdate;
     try
         tvEntries.Items.clear;
+        //Add root item
         root:=tvEntries.Items.AddChild(nil,'Resources');
+
         for i:=0 to resourcefile.resources.count-1 do begin
             entry:=resourcefile.resources[i];
             if entry.resourcetype<>rtNone then category:=ResourceTypeToString(entry.resourcetype)
             else category:=entry.sresourcetype;
+
+            //Finds the category for this resource
             catnode:=FindCategory(category);
             if (not assigned(catnode)) then catnode:=tvEntries.Items.AddChild(root,category);
-            node:=tvEntries.Items.AddChildObject(catnode,entry.resourcename,entry);            
+            node:=tvEntries.Items.AddChildObject(catnode,entry.resourcename,entry);
         end;
     finally
         tvEntries.items.EndUpdate;
@@ -130,6 +138,10 @@ procedure TResourceFileFrm.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
     //Check for modifications before close!!!
+    if resourceFile.IsModified then begin
+        showmessage('modified!!');
+    end;
+
     action:=caFree;
     destroyEditors;
 end;
@@ -148,7 +160,6 @@ begin
     //Destroys all the editors
     for i:=editors.count-1 downto 0 do begin
         ed:=editors[i];
-        ed.close;
         ed.free;
     end;
 end;
@@ -157,14 +168,10 @@ procedure TResourceFileFrm.tvEntriesItemClick(Sender: TObject;
   Button: TMouseButton; Node: TTreeNode; const Pt: TPoint);
 var
     entry: TResourceEntry;
-    ed: TResourceEditor;
 begin
     if button=mbRight then begin
         entry:=node.data;
         if assigned(entry) then begin
-            //Call the right editor for this entry
-            //ed:=ResourceAPI.callEditor(entry);
-            //if assigned(ed) then editors.add(ed);
             entryPopup.Popup(pt.x,pt.y);
         end;
     end;
@@ -181,8 +188,16 @@ begin
     if assigned(entry) then begin
         //Call the right editor for this entry
         ed:=ResourceAPI.callEditor(entry);
-        if assigned(ed) then editors.add(ed);
+        if assigned(ed) then begin
+            ed.OnDestroy:=OnEditorDestroyed;
+            editors.add(ed);
+        end;
     end;
+end;
+
+procedure TResourceFileFrm.OnEditorDestroyed(Sender: TObject);
+begin
+    editors.Remove(sender);
 end;
 
 end.

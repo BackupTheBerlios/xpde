@@ -1,6 +1,6 @@
 object ResourceFileFrm: TResourceFileFrm
-  Left = 337
-  Top = 449
+  Left = 340
+  Top = 465
   Width = 378
   Height = 248
   VertScrollBar.Range = 19

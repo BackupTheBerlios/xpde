@@ -24,12 +24,17 @@ unit uResourceAPI;
 
 interface
 
-uses uResources;
+uses uResources,Classes;
 
 type
     TResourceEditor=class
+    private
+        FOnDestroy: TNotifyEvent;
+        procedure SetOnDestroy(const Value: TNotifyEvent);
+    public
        procedure edit(const entry:TResourceEntry);virtual;abstract;
-       procedure close;virtual;abstract;
+       destructor Destroy;override;
+       property OnDestroy: TNotifyEvent read FOnDestroy write SetOnDestroy;
     end;
 
     TResourceEditorClass=class of TResourceEditor;
@@ -42,8 +47,21 @@ type
     end;
 
 var
-    ResourceAPI: IResourceAPI=nil;    
+    ResourceAPI: IResourceAPI=nil;
 
 implementation
+
+{ TResourceEditor }
+
+destructor TResourceEditor.Destroy;
+begin
+  if assigned(FOnDestroy) then FOnDestroy(self);
+  inherited;
+end;
+
+procedure TResourceEditor.SetOnDestroy(const Value: TNotifyEvent);
+begin
+    FOnDestroy := Value;
+end;
 
 end.

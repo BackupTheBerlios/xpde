@@ -1,8 +1,9 @@
 object StringEditor: TStringEditor
-  Left = 405
-  Top = 357
+  Left = 408
+  Top = 386
   Width = 444
   Height = 264
+  ActiveControl = meStrings
   Caption = 'String Editor'
   Color = clBackground
   FormStyle = fsMDIChild
@@ -26,5 +27,6 @@ object StringEditor: TStringEditor
     ScrollBars = ssBoth
     TabOrder = 0
     WordWrap = False
+    OnChange = meStringsChange
   end
 end

@@ -118,7 +118,6 @@ var
     i:integer;
 *)
 begin
-
 //This code is to produce the fade effect when the menu it's shown, but it has some
 //flickering I couldn't remove 
 (*

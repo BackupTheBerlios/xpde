@@ -40,7 +40,7 @@ DebugInfo=0
 RemoteSymbols=0
 ResourceReserve=1048576
 ImageBase=4194304
-ExeDescription=
+ExeDescription=XPde Menu Components
 DynamicLoader=/lib/ld-linux.so.2
 
 [Directories]

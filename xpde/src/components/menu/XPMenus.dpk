@@ -22,6 +22,7 @@ package XPMenus;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DESCRIPTION 'XPde Menu Components'}
 {$IMPLICITBUILD OFF}
 
 requires

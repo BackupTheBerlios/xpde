@@ -1,6 +1,6 @@
 object TaskBar: TTaskBar
-  Left = 225
-  Top = 421
+  Left = 201
+  Top = 503
   ActiveControl = btnStart
   AutoScroll = False
   BorderStyle = fbsNone
@@ -8,7 +8,6 @@ object TaskBar: TTaskBar
   ClientWidth = 684
   Color = clBackground
   FormStyle = fsStayOnTop
-  PopupMenu = propertiesmenu
   Position = poDefault
   Scaled = False
   Visible = True
@@ -137,7 +136,7 @@ object TaskBar: TTaskBar
       Top = 2
       Width = 52
       Height = 22
-      Hint = 'Click here to start'
+      Hint = 'Click here to begin'
       Caption = 'Start'
       Color = 13554646
       Font.Color = clBlack
@@ -147,10 +146,10 @@ object TaskBar: TTaskBar
       Font.Style = [fsBold]
       ParentFont = False
       ParentShowHint = False
-      ShowHint = False
+      ShowHint = True
       TabOrder = 0
       ToggleButton = True
-      OnMouseDown = btnStartMouseDown
+      OnStateChanged = btnStartStateChanged
       Margin = 0
       Spacing = 2
     end
@@ -177,12 +176,6 @@ object TaskBar: TTaskBar
     OnTimer = TimerTimer
     Left = 488
     Top = 4
-  end
-  object btnTimer: TTimer
-    Enabled = False
-    Interval = 1
-    OnTimer = btnTimerTimer
-    Left = 192
   end
   object startmenu: TXPPopupMenu
     AutoHotkeys = maManual
@@ -1074,5 +1067,12 @@ object TaskBar: TTaskBar
     object OpenNetworkConnections1: TMenuItem
       Caption = 'Open Network Connections'
     end
+  end
+  object btnTimer: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = btnTimerTimer
+    Left = 108
+    Top = 20
   end
 end

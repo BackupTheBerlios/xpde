@@ -40,7 +40,6 @@ type
   TTaskBar = class(TForm)
     pnTimer: TPanel;
     Timer: TTimer;
-    btnTimer: TTimer;
     tbTasks: TToolBar;
     Panel1: TPanel;
     btnStart: TBitBtn;
@@ -79,12 +78,10 @@ type
     OpenNetworkConnections1: TMenuItem;
     pnTray: TPanel;
     lbTimer: TLabel;
+    btnTimer: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
-    procedure btnStartMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure btnTimerTimer(Sender: TObject);
     procedure pbLinePaint(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure ToolButton1MouseUp(Sender: TObject; Button: TMouseButton;
@@ -98,6 +95,8 @@ type
     procedure pnTimerDblClick(Sender: TObject);
     procedure Settings1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnStartStateChanged(Sender: TObject; State: TToggleState);
+    procedure btnTimerTimer(Sender: TObject);
   private
     menupaths: TStringList;
     procedure OnMenuItemClick(Sender: TObject);
@@ -246,13 +245,6 @@ begin
     pnTimer.hint:=lbTimer.Hint;
 end;
 
-procedure TTaskBar.btnStartMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-    releaseButtons;
-    showmenu;
-end;
-
 procedure TTaskBar.ShowMenu;
 var
     p: TPoint;
@@ -264,13 +256,6 @@ begin
         startmenu.popup(p.x-2,p.y-2);
 end;
 
-
-procedure TTaskBar.btnTimerTimer(Sender: TObject);
-begin
-    QButton_setDown(btnStart.handle,false);
-    application.processmessages;
-    btnTimer.enabled:=false;
-end;
 
 procedure TTaskBar.pbLinePaint(Sender: TObject);
 begin
@@ -341,9 +326,7 @@ end;
 
 procedure TTaskBar.startmenuHide(Sender: TObject);
 begin
-    btnStart.Toggle;
-//    QButton_setDown(btnStart.handle,false);
-//    application.processmessages;
+    btnTimer.Enabled:=true;
 end;
 
 procedure TTaskBar.LogOffAdministrator1Click(Sender: TObject);
@@ -758,6 +741,25 @@ begin
             (tbTasks.Controls[I] as TToolButton).Down:=false;
         end;
     end;
+end;
+
+procedure TTaskBar.btnStartStateChanged(Sender: TObject;
+  State: TToggleState);
+begin
+    if state=tsOff then begin
+        QPopupMenu_hide(startmenu.handle);
+    end;
+
+    if state=tsOn then begin
+        releaseButtons;
+        showmenu;
+    end;
+end;
+
+procedure TTaskBar.btnTimerTimer(Sender: TObject);
+begin
+    btnStart.Down:=false;
+    btnTimer.Enabled:=false;    
 end;
 
 initialization

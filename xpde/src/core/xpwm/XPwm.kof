@@ -61,15 +61,3 @@ Launcher=/usr/X11R6/bin/xterm -T KylixDebuggerOutput -e bash -i -c %debuggee%
 UseLauncher=0
 DebugCWD=
 
-[Excluded Packages]
-/home/ttm/xpde/bin/bplXPCommon.so=XPde utility functions
-/home/ttm/xpde/bin/bplXPStyle.so=XPStyle component
-/home/ttm/xpde/bin/bplXPColorSelect.so=XPColorSelect components
-/home/ttm/xpde/bin/bplXPCommctrls.so=XPCommctrls unit
-/home/ttm/xpde/bin/bplXPShellControls.so=XPShell Controls
-/home/ttm/xpde/bin/bplXPTrayIcon.so=XPde Tray Icon component
-
-[HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=$(HOME)/xpde/bin
-

@@ -25,7 +25,7 @@ unit uWMFrame;
 interface
 
 uses
-  Xlib,SysUtils, Types,
+  Xlib,SysUtils, Types, uXPAPI, uXPCommon,
   Classes, QGraphics, uXPStyleConsts,
   QControls, QForms, QDialogs, resample,
   QButtons, QStdCtrls, uWindowManager,

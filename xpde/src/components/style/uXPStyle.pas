@@ -68,6 +68,7 @@ implementation
 var
     st: TXPStyle=nil;
 
+
 procedure SetXPStyle(app:TApplication);
 begin
     if not (assigned(st)) then st:=TXPStyle.create(app);
@@ -199,21 +200,28 @@ begin
         fillrect(crect);
         s:=m.Caption;
         if s<>'-' then begin
-            tx:=24;
+            tx:=20;
             if not (m.bitmap.empty) then begin
                 tx:=m.bitmap.width+9;
                 gy:=crect.top+((crect.bottom-crect.top)-m.bitmap.height) div 2;
 
-                p:=TXPPNG.create;
-                try
-                    p.BackgroundColor:=brush.color;
-                    p.Assign(m.bitmap);
-                    p.paintToCanvas(canvas,cRect.left+2,gy);
-                    //draw(cRect.left+2,gy,m.bitmap);
-                finally
-                    p.Free;
+                if (m.tag>=3569) then begin
+                        drawWindowsGlyph(canvas,cRect.left+2,gy,TWindowsGlyph(m.tag-3569),m.Enabled,highlighted);
+                end
+                else begin
+                    p:=TXPPNG.create;
+                    try
+                        p.BackgroundColor:=brush.color;
+                        p.Assign(m.bitmap);
+                        p.paintToCanvas(canvas,cRect.left+2,gy);
+                        //draw(cRect.left+2,gy,m.bitmap);
+                    finally
+                        p.Free;
+                    end;
                 end;
             end;
+
+
 
             if (m.imageindex<>-1) then begin
                 tx:=m.getparentmenu.Images.width+5;

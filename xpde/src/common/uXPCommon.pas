@@ -28,6 +28,7 @@ uses QForms,QGraphics,Types,
      Libc, Xlib, Qt,
      Classes, SysUtils, QDialogs;
 
+
 procedure MergeBitmaps(source1,source2,target:TBitmap;dens:longint);
 procedure AlphaBitmap(source1,source2,target:TBitmap;dens:longint);
 procedure SelectedBitmap(source1,source2,target:TBitmap;dens:longint);
@@ -39,6 +40,7 @@ procedure bitblt(source:TBitmap;target:TBitmap;const x,y,w,h:integer);
 procedure bitblt2(source:TBitmap;target:TBitmap;const x,y,w,h:integer);
 
 implementation
+
 
 function pixel(bmp: TBitmap;x,y:integer): integer;
 var

@@ -28,7 +28,7 @@ uses QForms,QGraphics,Types,Libc, Xlib, Qt;
 
 const
     sDefaultFontName='tahoma';
-    iDefaultFontSize=9;
+    iDefaultFontSize=10;
     iDefaultFontHeight=11;
     dclBtnShadow=$848284;
     dclGray=$424142;
@@ -68,10 +68,90 @@ const
     gBMP='bmp.png';
     gJPG='jpg.png';
 
+type
+    TWindowsGlyph=(wgRestore, wgMinimize, wgMaximize, wgClose);
+
 procedure R3D(canvas:TCanvas;r:TRect;flat:boolean=false;raised:boolean=true;fill:boolean=true);
 procedure drawButton(canvas:TCanvas;r:TRect;down:boolean=false;fill:boolean=true;isdefault:boolean=false);
+procedure drawWindowsGlyph(canvas:TCanvas;x,y:integer;glyph:TWindowsGlyph;enabled:boolean;highlight:boolean);
 
 implementation
+
+procedure drawWindowsGlyph(canvas:TCanvas;x,y:integer;glyph:TWindowsGlyph;enabled:boolean;highlight:boolean);
+    procedure drawGlyph;
+    begin
+        with canvas do begin
+        case glyph of
+            wgMinimize: begin
+
+                moveto(x+2,y+7);
+                lineto(x+8,y+7);
+
+                moveto(x+2,y+8);
+                lineto(x+8,y+8);
+            end;
+            wgClose: begin
+                moveto(x+1,y+1);
+                lineto(x+8,y+8);
+
+                moveto(x+2,y+1);
+                lineto(x+9,y+8);
+
+                moveto(x+8,y+0);
+                lineto(x+1,y+7);
+
+                moveto(x+9,y+0);
+                lineto(x+2,y+7);
+            end;
+            wgMaximize: begin
+
+                Rectangle(x+1,y+0,x+10,y+9);
+
+                moveto(x+1,y+1);
+                lineto(x+9,y+1);
+            end;
+            wgRestore: begin
+
+                Rectangle(x+3,y+0,x+9,y+6);
+
+                moveto(x+3,y+1);
+                lineto(x+9,y+1);
+
+
+                Rectangle(x+1,y+3,x+7,y+9);
+
+                moveto(x+1,y+4);
+                lineto(x+7,y+4);
+            end;
+        end;
+        end;
+    end;
+begin
+    with canvas do begin
+        if enabled then begin
+            if highlight then begin
+                pen.color:=clWhite;
+                drawglyph;
+            end
+            else begin
+                pen.color:=clBlack;
+                drawglyph;
+            end;
+        end
+        else begin
+            if not highlight then begin
+                pen.color:=clWhite;
+                x:=x+1;
+                y:=y+1;
+                drawglyph;
+                x:=x-1;
+                y:=y-1;
+            end;
+            pen.color:=dclbtnShadow;
+            drawglyph;            
+        end;
+    end;
+end;
 
 procedure R3D(canvas:TCanvas;r:TRect;flat:boolean=false;raised:boolean=true;fill:boolean=true);
 begin

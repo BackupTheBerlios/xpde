@@ -5,12 +5,12 @@ uses
   XLib,
   SysUtils,
   uXPStyle,
+  uXPAPI_imp in '../xpde/uXPAPI_imp.pas',
   uTaskBar in 'uTaskBar.pas' {TaskBar},
   uWMConsts in 'uWMConsts.pas',
   uWMFrame in 'uWMFrame.pas' {WindowsClassic},
   uWindowManager in 'uWindowManager.pas',
   uOpenWith in '../xpde/uOpenWith.pas' {OpenWithDlg},
-  uXPAPI_imp in '../xpde/uXPAPI_imp.pas',
   uTurnOff in 'uTurnOff.pas' {Turnoff},
   uActiveTasks in 'uActiveTasks.pas' {ActiveTasksDlg};
 

@@ -372,7 +372,6 @@ begin
     if not waitfor then aprog:=aprog+' &';
 
     setwaitcursor;
-    showmessage(aprog);    
     result:=Libc.system(PChar(aprog));
     if result = -1 then begin
         showmessage(format('Unable to execute %s',[prog]));

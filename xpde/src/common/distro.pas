@@ -55,9 +55,11 @@ var uname__:TUName;
     i,j,x,ii,jj:integer;
     ss:string;
     dec_sep:char;
+    sis:TUtsName;
 Begin
         dec_sep:=DecimalSeparator;
         DecimalSeparator:='.';
+        Libc.uname(sis);
         i:=-1;
         case dist_ of
                 diRedHat:Begin
@@ -231,6 +233,7 @@ Begin
                 DecimalSeparator:=dec_sep;
                 uname__.kernel:=Return_Kernel_Machine(0);
                 uname__.machine:=Return_Kernel_Machine(1);
+                uname__.krnl_date:=sis.version;
 Result:=uname__;
 End;
 
@@ -260,6 +263,7 @@ Begin
         uname__.version:=sis.version;
         uname__.kernel:=sis.release;
         uname__.machine:=sis.machine;
+        uname__.krnl_date:='Unknown';
 Result:=uname__;
 End;
 

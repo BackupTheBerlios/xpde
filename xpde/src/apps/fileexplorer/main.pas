@@ -540,7 +540,7 @@ end;
 
 procedure TExplorerForm.About1Click(Sender: TObject);
 begin
-    XPAPI.showaboutdlg;
+    XPAPI.showaboutdlg('XPde File Explorer');
 end;
 
 end.

@@ -65,6 +65,7 @@ type
         procedure copytoclipboard(const item:string); overload;
         procedure copytoclipboard(const items:TStrings); overload;
         function createNewProgressDlg(const title:string):TForm;
+        procedure updateProgressDlg(const dialog:TForm; const progress: integer; const max: integer; const str: string; const status:string; const eta:string);
     end;
 
 var

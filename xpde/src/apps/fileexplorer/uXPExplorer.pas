@@ -41,6 +41,7 @@ type
         procedure copytoclipboard(const item:string); overload;
         procedure copytoclipboard(const items:TStrings); overload;
         function createNewProgressDlg(const title:string):TForm;
+        procedure updateProgressDlg(const dialog:TForm; const progress: integer; const max: integer; const str: string; const status: string; const eta:string);
         function registerImage(const bmp: TBitmap):integer;
         procedure registerRootItem(item:IXPVirtualFile);
         function getImageList: TImageList;
@@ -122,6 +123,12 @@ function TXPExplorer.createNewProgressDlg(const title: string): TForm;
 begin
     result:=TProgressDlg.create(application);
     result.caption:=title;
+end;
+
+procedure TXPExplorer.updateProgressDlg(const dialog: TForm;
+  const progress, max: integer; const str, status, eta: string);
+begin
+    (dialog as TProgressDlg).updateDialog(progress,max,str,status,eta);
 end;
 
 initialization

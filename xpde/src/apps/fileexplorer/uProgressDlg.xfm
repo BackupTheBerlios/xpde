@@ -1,6 +1,7 @@
 object ProgressDlg: TProgressDlg
-  Left = 301
-  Top = 221
+  Left = 307
+  Top = 279
+  ActiveControl = Button1
   AutoScroll = False
   BorderStyle = fbsDialog
   Caption = 'ProgressDlg'
@@ -10,7 +11,7 @@ object ProgressDlg: TProgressDlg
   FormStyle = fsStayOnTop
   Position = poDefault
   Scaled = False
-  PixelsPerInch = 84
+  PixelsPerInch = 90
   object Image2: TImage
     Left = 17
     Top = 8
@@ -1235,27 +1236,27 @@ object ProgressDlg: TProgressDlg
       00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF000000}
     Transparent = True
   end
-  object ProgressBar1: TProgressBar
+  object pbProgress: TProgressBar
     Left = 11
     Top = 102
     Width = 285
     Height = 13
   end
-  object Label1: TLabel
+  object lbFile: TLabel
     Left = 11
     Top = 61
-    Width = 65
-    Height = 20
-    Caption = 'rbent7d.exe'
+    Width = 20
+    Height = 18
+    Caption = '%s'
     Masked = True
     Transparent = True
   end
-  object Label2: TLabel
+  object lbStatus: TLabel
     Left = 11
     Top = 77
-    Width = 327
-    Height = 20
-    Caption = 'De '#39'Copia de Nueva carpeta'#39' a '#39'Copia de Copia de Nue...'#39
+    Width = 20
+    Height = 18
+    Caption = '%s'
     Masked = True
     Transparent = True
   end
@@ -1266,5 +1267,14 @@ object ProgressDlg: TProgressDlg
     Height = 23
     Caption = 'Cancel'
     TabOrder = 2
+  end
+  object lbETA: TLabel
+    Left = 11
+    Top = 117
+    Width = 20
+    Height = 18
+    Caption = '%s'
+    Masked = True
+    Transparent = True
   end
 end

@@ -44,7 +44,6 @@ type
         iDelete: integer;
         iRename: integer;
         iProperties: integer;
-        copydlg: TForm;
     public
         function hasChild: boolean; virtual;
         function getChildren: TInterfaceList; virtual;
@@ -224,7 +223,10 @@ type
         sourcepaths: TStringList;
         sources: TStringList;
         target: string;
-
+        copydlg: TForm;
+        currentfile: string;
+        currentsource: string;
+        currenttarget: string;
         procedure copyFile(const source:string; const target:string);
         procedure OnFileProgress(const position:integer; const size:integer);
         procedure fillSources;
@@ -246,22 +248,40 @@ var
     imCONTROLPANEL: integer=-1;
     imNOICON: integer=-1;
 
+const
+    bufsize=16384;    
+
 implementation
 
 var
     bmp: TBitmap;
 
+function removeTrailingSlash(const str:string):string;
+begin
+    result:=str;
+    if result<>'/' then begin
+        if result[length(result)]='/' then result:=copy(result,1,length(result)-1);
+    end;
+end;
+    
+
 function extractdirname(const str:string):string;
 var
     i:longint;
 begin
-    result:=str;
-    for i:=length(str) downto 1 do begin
+    result:=removetrailingslash(str);
+    for i:=length(str)-1 downto 1 do begin
         if (str[i]='/') then begin
-            result:=copy(str,i+1,length(str));
+            result:=copy(result,i+1,length(result));
             break;
         end;
     end;
+end;
+
+function addTrailingSlash(const str:string):string;
+begin
+    result:=str;
+    if result[length(result)]<>'/' then result:=result+'/';
 end;
 
 
@@ -338,7 +358,10 @@ var
 begin
     if children.count=0 then begin
         size:=0;
-        if Findfirst(FPath+'/*',faHidden or faAnyFile or faSysFile or faDirectory,f)=0 then begin
+
+        FPath:=addTrailingSlash(FPath);
+
+        if Findfirst(FPath+'*',faHidden or faAnyFile or faSysFile or faDirectory,f)=0 then begin
             ss:=TStringList.create;
             ss.sorted:=true;
             try
@@ -477,6 +500,7 @@ end;
 procedure TFile.executeVerb(const verb: integer);
 var
     f: TFileCopier;
+    copydlg:TForm;
 begin
     if verb=iCopy then begin
         XPExplorer.copytoclipboard(getUniqueID);
@@ -487,10 +511,12 @@ begin
         copydlg.show;
         f:=TFileCopier.create;
         try
+            f.copydlg:=copydlg;
             f.target:=extractfilepath(FPath);
             f.sourcepaths.assign(XPExplorer.getClipboard);
             f.start;
         finally
+            copydlg.free;
             f.free;
         end;
     end;
@@ -969,11 +995,15 @@ var
     sourcename:string;
     targetname:string;
     k: integer;
-    //This number I supose it must be greater
-    buf: array [0..1023] of byte;
+
+    buf: array [0..bufsize-1] of byte;
     rsize: integer;
 begin
     sourcename:=extractfilename(source);
+    currentfile:=sourcename;
+
+    currenttarget:=extractdirname(target);
+    currentsource:=extractdirname(extractfilepath(source));
 
     targetname:=target+sourcename;
     if fileexists(targetname) then begin
@@ -992,9 +1022,10 @@ begin
     t:=TFileStream.Create(targetname, fmOpenWrite or fmCreate);
     try
         while t.size<s.size do begin
-            rsize:=s.Read(buf,1024);
+            rsize:=s.Read(buf,sizeof(buf));
             t.Write(buf,rsize);
             OnFileProgress(t.size,s.size);
+            application.processmessages;
         end;
     finally
         t.free;
@@ -1033,7 +1064,7 @@ end;
 
 procedure TFileCopier.OnFileProgress(const position, size: integer);
 begin
-
+    XPExplorer.updateProgressDlg(copydlg,position,size,currentfile,format('Copying from ''%s'' to ''%s''',[currentsource,currenttarget]),'');
 end;
 
 procedure TFileCopier.start;

@@ -112,10 +112,9 @@ type
     XPTrayIcon1: TXPTrayIcon;
     ImageList1: TImageList;
     PopupMenu1: TPopupMenu;
-    Open1: TMenuItem;
-    Changeimage1: TMenuItem;
-    About1: TMenuItem;
     Close1: TMenuItem;
+    N1: TMenuItem;
+    Alwaysontop1: TMenuItem;
     procedure ExitTaskManager1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -135,6 +134,7 @@ type
     procedure LVNetSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
     procedure FormCreate(Sender: TObject);
+    procedure Close1Click(Sender: TObject);
   private
     Procedure Get_PIDS_Apps(__cmdline:string);
     Procedure Read_stats(statsfile_:string);
@@ -781,6 +781,7 @@ end;
 Procedure TWindowsTaskManagerDlg.Paint_PB1;
 var value_:string;
      x,i,j:integer;
+     per: integer;
 
 Function fill_text(s:string):string;
 var ss:string;
@@ -972,7 +973,14 @@ Begin
 
 
         value_:=IntToStr(diff_user)+' %';
+        per:=(diff_user*(ImageList1.Count-1)) div 100;
+
+        if per>ImageList1.count-1 then per:=ImageList1.count-1;
+         XPTrayIcon1.ImageIndex:=per;
+
         StatusBar1.Panels[1].Text:='CPU Usage: '+value_;
+
+         XPTrayIcon1.Hint:='CPU Usage: '+value_;
 
         PB1.Canvas.TextOut((PB1.Width div 2)-14 ,PB1.Height - 22,fill_text(value_));
         PB1.Canvas.Stop;
@@ -1624,6 +1632,11 @@ begin
     FormResize(self);
 
     Randomize;
+end;
+
+procedure TWindowsTaskManagerDlg.Close1Click(Sender: TObject);
+begin
+    close;
 end;
 
 end.

@@ -581,8 +581,8 @@ begin
                 fillrect(types.rect(x,y,w,h));
                 down:=(downcontrol=sbcSubButton);
                 r3d(canvas,types.rect(x,y,w,h),down);
-                if not down then canvas.Draw(x+6,y+7,toTop)
-                else canvas.Draw(x+7,y+8,toTop);
+                if not down then canvas.Draw(x+((buttonsize-toTop.width) div 2)+1,y+((buttonsize-toTop.height) div 2),toTop)
+                else canvas.Draw(x+((buttonsize-toTop.width) div 2)+2,y+((buttonsize-toTop.height) div 2)+1,toTop);
             end;
             if sbcAddButton in controls then begin
                 x:=rect.left;
@@ -593,8 +593,8 @@ begin
                 fillrect(types.rect(x,y,w,h));
                 down:=(downcontrol=sbcAddButton);
                 r3d(canvas,types.rect(x,y,w,h),down);
-                if not down then canvas.Draw(x+6,y+7,toBottom)
-                else canvas.Draw(x+7,y+8,toBottom);
+                if not down then canvas.Draw(x+((buttonsize-toTop.width) div 2)+1,y+((buttonsize-toTop.height) div 2),toBottom)
+                else canvas.Draw(x+((buttonsize-toTop.width) div 2)+2,y+((buttonsize-toTop.height) div 2)+1,toBottom);
                 end;
             end;
         end;

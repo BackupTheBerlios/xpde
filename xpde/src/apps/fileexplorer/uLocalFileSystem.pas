@@ -26,11 +26,14 @@ interface
 
 uses
     Classes, SysUtils, QGraphics,
-    uExplorerAPI, QDialogs, uXPAPI, uXPStyleConsts, QForms, Libc, uLNKFile,
-    uSmbClient, uSelectUser;
+    uExplorerAPI, QDialogs, uXPAPI,
+    uXPStyleConsts, QForms, Libc,
+    uLNKFile, uSmbClient, uSelectUser,
+    uConfirmFileReplace, uConfirmFolderReplace,
+    QControls;
 
 type
-
+    TBroadcastOp=(boAddFile, boAddFolder);
     //Local File
     //Implements some of the common functions of files and folders
     TLocalFile=class(TInterfacedObject, IXPVirtualFile)
@@ -51,6 +54,8 @@ type
     public
         procedure doChildrenModified(const op: TXPChildrenOperation; const item: IXPVirtualFile);
         function hasChild: boolean; virtual;
+        function getSize: integer; virtual;
+        function getContents: TObject; virtual;        
         function locationExists(const location:string):boolean; virtual;
         function getChildren: TInterfaceList; virtual;
         function getDisplayName: string; virtual;
@@ -67,6 +72,8 @@ type
         procedure setChildrenModified(value: TXPChildrenModified);virtual;
         function getIcon: integer; virtual;
         function getCategory: string; virtual;
+        procedure disposeContents; virtual;
+        function getModifiedString: string; virtual;
         constructor Create;
     end;
 
@@ -85,6 +92,7 @@ type
         iProperties: integer;
 
         children: TInterfaceList;
+
         FPath: string;
         procedure SetPath(const Value: string);
     public
@@ -92,9 +100,12 @@ type
         time: integer;
         function hasChild: boolean; override;
         function getUniqueID:string; override;
+        procedure broadcastpath(const op: TBroadcastOp; const path:string);
         procedure addFile(const path:string);
         procedure addFolder(const path:string);
         function getChildren: TInterfaceList; override;
+        function getContents: TObject; override;        
+        function getSize: integer; override;
         procedure getStatusData(const status:TStrings);override;
         procedure getColumnData(const columns:TStrings); override;
         procedure executeVerb(const verb:integer); override;
@@ -112,16 +123,22 @@ type
     private
         FPath: string;
         smallicon: integer;
+        FStream: TFileStream;
     public
         filesize: integer;
         time: integer;
         parentfolder: TFolder;
         function hasChild: boolean; override;
         function getDisplayName: string; override;
+        function getContents: TObject; override;
+        procedure disposeContents; override;
+        function getModifiedString: string; override;
         procedure doubleClick; override;
+        function getSize: integer; override;
         function getUniqueID:string; override;
         procedure getColumnData(const columns:TStrings); override;
         constructor Create(const APath:string); virtual;
+        destructor Destroy;override;
         procedure executeVerb(const verb:integer); override;
         function getIcon: integer; override;
     end;
@@ -153,7 +170,6 @@ type
         constructor Create; reintroduce;
         function getUniqueID:string; override;
         function getIcon: integer; override;
-        procedure getVerbItems(const verbs:TStrings); override;
     end;
 
     TUserDocuments=class(TMyDocuments)
@@ -254,6 +270,7 @@ type
         procedure fillArchives(const dirname:string; list:TStrings; paths: TStrings; const basepath:string);
         procedure fillSources;
         procedure calculatesize;
+        procedure copyfiles;
         procedure start;
         constructor Create;
         destructor Destroy;override;
@@ -369,6 +386,8 @@ var
     imLOCALNETWORK: integer=-1;
     imNETWORKRESOURCE: integer=-1;
 
+    folders: TList;
+
 const
     bufsize=32768;
 
@@ -377,6 +396,29 @@ implementation
 
 var
     bmp: TBitmap;
+
+    function formatfilesize(size:extended):string;
+    begin
+        result:=formatfloat('###,###,###,###,###,##0',trunc(size));
+    end;
+    function formatsize(size:extended):string;
+    var
+        kfs:extended;
+    begin
+        if size>1024 then begin
+            if (size>1024*1024) then begin
+                kfs:=size / (1024*1024);
+                result:=formatfilesize(kfs)+' MB';
+            end
+            else begin
+                kfs:=size / 1024;
+                result:=formatfilesize(kfs)+' KB';
+            end;
+        end
+        else begin
+            result:=formatfilesize(size)+' bytes';
+        end;
+    end;
 
 function registerBitmap(const path:string):integer;
 begin
@@ -537,10 +579,27 @@ begin
     doChildrenModified(coAdd,a);
 end;
 
+procedure TFolder.broadcastpath(const op: TBroadcastOp; const path:string);
+var
+    i:longint;
+    f: TFolder;
+begin
+    for i:=0 to folders.count-1 do begin
+        f:=TFolder(folders[i]);
+        if (f.FPath=self.FPath) then begin
+            case op of
+                boAddFile: f.addFile(path);
+                boAddFolder: f.addFolder(path);                
+            end;
+        end;
+    end;
+end;
+
 constructor TFolder.Create(const APath:string);
 var
     statbuff: _stat;
 begin
+    folders.add(self);
     stat(PChar(apath),statbuff);
     time:=statbuff.st_mtime;
   children:=TInterfaceList.create;
@@ -549,6 +608,7 @@ end;
 
 destructor TFolder.Destroy;
 begin
+    folders.remove(self);
     children.free;
   inherited;
 end;
@@ -568,7 +628,7 @@ begin
         f:=TFileCopier.create;
         try
             f.copydlg:=copydlg;
-            f.target:=extractfilepath(FPath);
+            f.target:=FPath;
             f.sourcepaths.assign(XPExplorer.getClipboard);
             f.targetFolder:=Self;
             f.start;
@@ -628,6 +688,7 @@ begin
             end;
         end;
     end;
+    FPath:=removeTrailingSlash(FPath);
     result:=children;
 end;
 
@@ -637,6 +698,11 @@ begin
     columns.add('');
     columns.add('File Folder');
     columns.add(datetimetostr(FileDateToDateTime(time)));
+end;
+
+function TFolder.getContents: TObject;
+begin
+    result:=getChildren;
 end;
 
 function TFolder.getDisplayName: string;
@@ -649,29 +715,24 @@ begin
     result:=imCLOSEDFOLDER;
 end;
 
-procedure TFolder.getStatusData(const status: TStrings);
-    function formatfilesize(size:extended):string;
-    begin
-        result:=formatfloat('###,###,###,###,###,##0',trunc(size));
-    end;
-    function formatsize(size:extended):string;
-    var
-        kfs:extended;
-    begin
-        if size>1024 then begin
-            if (size>1024*1024) then begin
-                kfs:=size / (1024*1024);
-                result:=formatfilesize(kfs)+' MB';
-            end
-            else begin
-                kfs:=size / 1024;
-                result:=formatfilesize(kfs)+' KB';
-            end;
-        end
-        else begin
-            result:=formatfilesize(size)+' bytes';
+function TFolder.getSize: integer;
+var
+    i:longint;
+    items: TInterfaceList;
+    f: IXPVirtualFile;
+begin
+    result:=0;
+
+    items:= getChildren;
+    if assigned(items) then begin
+        for i:=0 to items.count-1 do begin
+            f:=(items[i] as IXPVirtualFile);
+            result:=result+f.getsize;
         end;
     end;
+end;
+
+procedure TFolder.getStatusData(const status: TStrings);
 begin
     status.clear;
     status.add(format('%d objects',[children.count]));
@@ -724,8 +785,23 @@ end;
 
 constructor TFile.Create(const APath: string);
 begin
+    FStream:=nil;
     smallicon:=imNOICON;
     FPath:=APath;
+end;
+
+destructor TFile.Destroy;
+begin
+  if assigned(FStream) then FStream.Free;
+  inherited;
+end;
+
+procedure TFile.disposeContents;
+begin
+    if assigned(FStream) then begin
+        FStream.free;
+        FStream:=nil;
+    end;
 end;
 
 procedure TFile.doubleClick;
@@ -764,6 +840,7 @@ var
     f: extended;
     l: TLNKFile;
 begin
+
     columns.clear;
     if assigned(parent) and (parent is TControlPanel) then begin
         l:=TLNKFile.Create(nil);
@@ -787,6 +864,13 @@ begin
     end;
 end;
 
+function TFile.getContents: TObject;
+begin
+    if assigned(FStream) then FStream.free;
+    FStream:=TFileStream.Create(FPath, fmOpenRead);
+    result:=FStream;    
+end;
+
 function TFile.getDisplayName: string;
 begin
     if assigned(parent) then begin
@@ -805,6 +889,16 @@ end;
 function TFile.getIcon: integer;
 begin
     result:=smallicon;
+end;
+
+function TFile.getModifiedString: string;
+begin
+    result:=FormatDateTime('dddd, mmmm d, yyyy, hh:nn:ss am/pm',FileDateToDateTime(time));
+end;
+
+function TFile.getSize: integer;
+begin
+    result:=filesize;
 end;
 
 function TFile.getUniqueID: string;
@@ -949,6 +1043,11 @@ begin
     FChildrenModified:=nil;
 end;
 
+procedure TLocalFile.disposeContents;
+begin
+    //Do nothing
+end;
+
 procedure TLocalFile.doChildrenModified(const op: TXPChildrenOperation;
   const item: IXPVirtualFile);
 begin
@@ -992,6 +1091,11 @@ begin
     columns.add('Modification Date');
 end;
 
+function TLocalFile.getContents: TObject;
+begin
+    result:=nil;
+end;
+
 function TLocalFile.getDisplayName: string;
 begin
     result:='';
@@ -1002,9 +1106,19 @@ begin
     result:=imNOICON;
 end;
 
+function TLocalFile.getModifiedString: string;
+begin
+    result:='';
+end;
+
 function TLocalFile.getNode: TObject;
 begin
     result:=node;
+end;
+
+function TLocalFile.getSize: integer;
+begin
+    result:=0;
 end;
 
 procedure TLocalFile.getStatusData(const status: TStrings);
@@ -1295,14 +1409,26 @@ var
     source: string;
     i: integer;
     statbuff: _stat;
+    f: IXPVirtualFile;
 begin
     XPExplorer.updateProgressDlg(copydlg,0,0,'','','Calculating size...');
     totalsize:=0;
+    for i:=0 to sourcepaths.count-1 do begin
+        f:=XPExplorer.findLocation(sourcepaths[i]);
+        if assigned(f) then begin
+            totalsize:=totalsize+f.getSize;
+        end
+        else begin
+            showmessage(sourcepaths[i]+' not found');
+        end;
+    end;
+    {
     for i:=0 to sources.count-1 do begin
         source:=sources[i];
         stat(PChar(source), statbuff);
         totalsize:=totalsize+statbuff.st_size;
     end;
+    }
 end;
 
 procedure TFileCopier.copyFile(const source, target, basepath: string);
@@ -1367,6 +1493,152 @@ begin
     finally
         t.free;
         s.free;
+    end;
+end;
+
+procedure TFileCopier.copyfiles;
+var
+    i:longint;
+    f: IXPVirtualFile;
+    yestoall: boolean;
+    yes: boolean;
+    procedure copyFile(const afile: IXPVirtualFile;target:string);
+    var
+        c: TObject;
+        i: integer;
+        f: IXPVirtualFile;
+        t: TFileStream;
+        targetname: string;
+        s: TStream;
+        st: _stat;
+        buf: array [0..bufsize-1] of byte;
+        mod1: string;
+        rsize: integer;
+        targetfolder: string;
+        k: integer;
+        rd: TModalResult;
+        exists: boolean;
+    begin
+        c:=afile.getContents;
+        target:=removeTrailingSlash(target);
+        exists:=false;
+        if assigned(c) then begin
+            //It's a file
+            if (c is TStream) then begin
+                s:=(c as TStream);
+                ForceDirectories(target);
+                targetname:=target+'/'+afile.getDisplayName;
+
+                if (targetname=afile.getUniqueID) then begin
+
+                    k:=1;
+                    targetname:=target+'/Copy of '+afile.getDisplayName;
+                    while fileexists(targetname) do begin
+                        targetname:=target+'/Copy ('+inttostr(k)+') of '+afile.getDisplayName;
+                        inc(k);
+                    end;
+                end
+                else if (fileexists(targetname)) then begin
+                    exists:=true;
+                    stat(pchar(targetname),st);
+                    mod1:=FormatDateTime('dddd, mmmm d, yyyy, hh:nn:ss am/pm',filedatetodatetime(st.st_mtime));
+
+                    if (yes) or (yestoall) then begin
+                        //Overwrite the file
+                    end
+                    else begin
+                        if (not ReplaceFile(targetname,formatsize(st.st_size)+#13+'modified: '+mod1,formatsize(afile.getSize)+#13+'modified: '+afile.getModifiedString)) then begin
+                            exit;
+                        end;
+                    end;
+                end;
+
+                //writeln('Copy file '+afile.getUniqueId+' to '+targetname);
+
+                currentfile:=extractfilename(targetname);
+                currenttarget:=extractdirname(target);
+                currentsource:=extractdirname(extractfilepath(afile.getUniqueId));
+
+                t:=TFileStream.Create(targetname, fmOpenWrite or fmCreate);
+                try
+                    while t.size<s.size do begin
+                        rsize:=s.Read(buf,sizeof(buf));
+                        t.Write(buf,rsize);
+                        currentsize:=currentsize+rsize;
+                        OnFileProgress;
+                        application.processmessages;
+                        if copydlg.tag=1 then break;
+                    end;
+                finally
+                    if (not exists) and (removetrailingslash(extractfilepath(targetname))=removetrailingslash(self.target)) then begin
+                        self.targetFolder.broadcastpath(boAddFile,targetname);
+                    end;
+                    t.free;
+                end;
+            end
+            else if (c is TInterfaceList) then begin
+                if (afile.getUniqueID=target) then begin
+                    raise Exception.create('Cannot copy '+afile.getuniqueid+': The destination folder is the same as the source folder');
+                end;
+
+                if (copy(target,1,length(afile.getuniqueId))=afile.getUniqueID) then begin
+                    raise Exception.create('Cannot copy '+afile.getuniqueid+': The destination folder is a subfolder of the source folder');
+                end;
+
+                targetfolder:=afile.getDisplayName;
+
+                targetname:=target+'/'+targetfolder;
+
+                if (targetname=afile.getUniqueID) then begin
+                    k:=1;
+                    targetname:=target+'/Copy of '+targetfolder;
+                    while directoryexists(targetname) do begin
+                        targetname:=target+'/Copy ('+inttostr(k)+') of '+targetfolder;
+                        inc(k);
+                    end;
+                end
+                else begin
+                    if (yes) or (yestoall) then begin
+                        //Overwrite
+                    end
+                    else
+                    if directoryexists(target+'/'+targetfolder) then begin
+                        exists:=true;
+                        rd:= replacedir(targetfolder);
+                        case rd of
+                            mrNo: exit;
+                            mrCancel: abort;
+                            mrYes: yes:=true;
+                            mrYesToAll: yestoall:=true;
+                        end;
+                    end;
+                end;
+                ForceDirectories(targetname);
+
+                if (not exists) and (removetrailingslash(extractdirpart(targetname))=removetrailingslash(self.target)) then begin
+                    self.targetFolder.broadcastpath(boAddFolder,targetname);
+                end;
+
+                //writeln('Copy dir '+afile.getUniqueId+' to '+targetname);
+                for i:=0 to (c as TInterfaceList).count-1 do begin
+                    f:=((c as TInterfaceList)[i] as IXPVirtualFile);
+                    copyFile(f,targetname);
+                end;
+            end;
+            afile.disposeContents;
+        end;
+    end;
+begin
+    yestoall:=false;
+    for i:=0 to sourcepaths.count-1 do begin
+        f:=XPExplorer.findLocation(sourcepaths[i]);
+        if assigned(f) then begin
+            yes:=false;
+            copyFile(f,target);
+        end
+        else begin
+            showmessage(sourcepaths[i]+' not found');
+        end;
     end;
 end;
 
@@ -1477,14 +1749,17 @@ begin
     currentsize:=0;
     lasteta:=high(integer);
     eta:='';
-    fillsources;
     calculatesize;
     starttime:=gettickcount;
+    copyfiles;
+    {
+    fillsources;
     for i:=0 to sources.count-1 do begin
         source:=sources[i];
         copyFile(source,target, basepaths[i]);
         if copydlg.tag=1 then break;
     end;
+    }
 end;
 
 { THomeFolder }
@@ -1508,24 +1783,6 @@ function THomeFolder.getUniqueID: string;
 begin
     result:='%MYHOME%';
 end;
-
-procedure THomeFolder.getVerbItems(const verbs: TStrings);
-begin
-    with verbs do begin
-        clear;
-        add('Explore');
-        add('Open');
-        add('Find...');
-        add('-');
-        add('Copy');
-        add('-');
-        add('Delete');
-        add('Rename');
-        add('-');
-        add('Properties');
-    end;
-end;
-
 
 { TMyNetworkPlaces }
 
@@ -1913,6 +2170,8 @@ end;
 // *******************************************************
 
 initialization
+    folders:=TList.create;
+    
     bmp:=TBitmap.create;
     try
         bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'desktop.png');
@@ -1924,10 +2183,10 @@ initialization
         bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'fileopen.png');
         imMYDOCUMENTS:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'konsole2.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'mycomputer.png');
         imMYCOMPUTER:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'linneighborhood.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'network.png');
         imMYNETWORKPLACES:=XPExplorer.registerImage(bmp);
 
         bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'trashcan_empty.png');
@@ -1961,5 +2220,6 @@ initialization
     end;
 
     XPExplorer.registerRootItem(TDesktopItem.create);
+
 
 end.

@@ -14,7 +14,9 @@ uses
   uAboutDlg in '../../core/xpde/uAboutDlg.pas' {AboutDlg},
   uSmbClient in 'uSmbClient.pas',
   uSmbOption in 'uSmbOption.pas' {smbOption},
-  uSelectUser in 'uSelectUser.pas' {dlgSelectUser};
+  uSelectUser in 'uSelectUser.pas' {dlgSelectUser},
+  uConfirmFileReplace in 'uConfirmFileReplace.pas' {ConfirmFileReplaceDlg},
+  uConfirmFolderReplace in 'uConfirmFolderReplace.pas' {ConfirmFolderReplaceDlg};
 
 {$R *.res}
 

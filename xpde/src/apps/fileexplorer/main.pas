@@ -116,6 +116,12 @@ type
     procedure Copy1Click(Sender: TObject);
     procedure sbNextClick(Sender: TObject);
     procedure SMBoptiond1Click(Sender: TObject);
+    procedure lvItemsMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure lvItemsMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure lvItemsItemMouseDown(Sender: TObject; Button: TMouseButton;
+      Item: TListItem; const Pt: TPoint; ColIndex: Integer);
   private
     { Private declarations }
     FVerbs: TList;
@@ -745,6 +751,49 @@ end;
 procedure TExplorerForm.SMBoptiond1Click(Sender: TObject);
 begin
  smbOption.showmodal;
+end;
+
+procedure TExplorerForm.lvItemsMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+    f: IXPVirtualFile;
+begin
+    if button=mbRight then begin
+        if x>lvItems.Columns[0].Width then begin
+            lvItems.Selected:=nil;
+            f:=IXPVirtualFile(tvItems.Selected.data);
+            updateitemsmenu(f);
+        end;
+    end;
+end;
+
+procedure TExplorerForm.lvItemsMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+    f: IXPVirtualFile;
+begin
+    if button=mbRight then begin
+        if x>lvItems.Columns[0].Width then begin
+            lvItems.Selected:=nil;
+            f:=IXPVirtualFile(tvItems.Selected.data);
+            updateitemsmenu(f);            
+        end;
+    end;
+end;
+
+procedure TExplorerForm.lvItemsItemMouseDown(Sender: TObject;
+  Button: TMouseButton; Item: TListItem; const Pt: TPoint;
+  ColIndex: Integer);
+var
+    f: IXPVirtualFile;
+begin
+    if button=mbRight then begin
+        if pt.x>lvItems.Columns[0].Width then begin
+            lvItems.Selected:=nil;
+            f:=IXPVirtualFile(tvItems.Selected.data);
+            updateitemsmenu(f);
+        end;
+    end;
 end;
 
 end.

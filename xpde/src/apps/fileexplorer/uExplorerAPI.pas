@@ -42,6 +42,10 @@ type
         function getDisplayName: string;                                        //Must return the name to display for that item
         procedure getColumnHeaders(const columns:TStrings);                     //Must return the caption of the headers for that item
         procedure getColumnData(const columns:TStrings);                        //Must return the data for each column
+        function getSize: integer;                                              //Must return the size for the file
+        function getModifiedString: string;
+        function getContents: TObject;
+        procedure disposeContents;
         procedure setNode(node:TObject);                                        //Must store the node
         function getNode:TObject;                                               //Must return the node
         procedure doubleClick;                                                  //Must execute a double click over the item
@@ -74,6 +78,9 @@ type
         procedure clearclipboard;                                               //Clears the clipboard
         //Clipboard functions, must change
         procedure copycurrentselectiontoclipboard;
+
+        function findLocation(const id:string):IXPVirtualFile;
+
         procedure copytoclipboard(const item:string); overload;
         procedure copytoclipboard(const items:TStrings); overload;
         function ClipboardEmpty:boolean;                                        //Returns true if the clipboard is empty

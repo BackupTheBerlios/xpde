@@ -26,7 +26,7 @@ interface
 
 uses
     uExplorerAPI, QGraphics, QImgList ,
-    Classes, uProgressDlg, QForms,
+    Classes, uProgressDlg, QForms, Sysutils,
     QDialogs, uQXPComCtrls, QClipbrd;
 
 type
@@ -42,7 +42,9 @@ type
         procedure copycurrentselectiontoclipboard;
         procedure copytoclipboard(const item:string); overload;
         procedure copytoclipboard(const items:TStrings); overload;
-       
+
+        function findLocation(const id:string):IXPVirtualFile;
+
         procedure setclipboard;
         function getcurrentpath:string;
         function createNewProgressDlg(const title:string):TForm;
@@ -205,6 +207,61 @@ begin
         result:=IXPVirtualFile(ExplorerForm.tvItems.Selected.Data).getuniqueid;
     end
     else result:='';
+end;
+
+function TXPExplorer.findLocation(const id: string): IXPVirtualFile;
+var
+    i: longint;
+    f: IXPVirtualFile;
+    a: IXPVirtualFile;
+    root: IXPVirtualFile;
+    pieces: TStringList;
+    children: TInterfaceList;
+    path: TInterfaceList;
+    k: integer;
+    l: integer;
+    n: TTreeNode;
+    r: TTreeNode;
+    cl: string;
+    sl: string;
+    found: boolean;
+begin
+    result:=nil;
+    root:=roots[0] as IXPVirtualFile;
+    children:=root.getChildren;
+    for i:=0 to children.count-1 do begin
+        f:=children[i] as IXPVirtualFile;
+        if f.locationExists(id) then begin
+            path:=f.getChildren;
+            pieces:=TStringList.create;
+            try
+                f.striplocation(id,pieces);
+                cl:='';
+                for k:=0 to pieces.count-1 do begin
+                    cl:=cl+pieces[k];
+                    found:=false;
+                    for l:=0 to path.Count-1 do begin
+                        a:=path[l] as IXPVirtualFile;
+                        sl:=a.getUniqueID;
+//                        showmessage(sl+'        '+cl);
+                        if sl=cl then begin
+                            result:=a;
+                            found:=true;
+                            path:=a.getChildren;
+                            break;
+                        end;
+                    end;
+                    if not found then begin
+                        result:=nil;
+                        break;
+                    end;
+                end;
+            finally
+                pieces.free;
+            end;
+            break;
+        end;
+    end;
 end;
 
 initialization

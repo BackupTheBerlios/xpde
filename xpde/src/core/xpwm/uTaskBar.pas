@@ -154,24 +154,24 @@ begin
     XPAPI.setdefaultcursor;
 
     //*****************************************************
-    btnStart.Glyph.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+sSTARTBUTTON);
-    imgProgramFolder.picture.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sPROGRAMFOLDER);
-    startmenu.backbitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sSTARTMENU);
+    btnStart.Glyph.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+gSTARTBUTTON);
+    imgProgramFolder.picture.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gPROGRAMFOLDER);
+    startmenu.backbitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSTARTMENU);
     //*****************************************************
-    Programs1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sPROGRAMS);
-    Documents1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sDOCUMENTS);
+    Programs1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gPROGRAMS);
+    Documents1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gDOCUMENTS);
     b:=TBitmap.create;
     try
-        b.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sSETTINGS);
+        b.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSETTINGS);
         Settings1.bitmap.assign(b);
     finally
         b.free;
     end;
-    Search1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sSEARCH);
-    HelpandSupport1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sHELPANDSUPPORT);
-    Run1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sRUN);
-    LogOffAdministrator1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sLOGOFF);
-    TurnOffComputer1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+sTURNOFF);
+    Search1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSEARCH);
+    HelpandSupport1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gHELPANDSUPPORT);
+    Run1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gRUN);
+    LogOffAdministrator1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gLOGOFF);
+    TurnOffComputer1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gTURNOFF);
     //*****************************************************
 
 
@@ -382,20 +382,20 @@ begin
                     if trim(l.caption)<>'' then d.caption:=l.Caption
                     else d.caption:=changefileext(files[i],'');
 
-                    iconfile:=XPAPI.getsysinfo(siSystemDir)+sNOICONSMALL;
+                    iconfile:=XPAPI.getsysinfo(siSystemDir)+gNOICONSMALL;
                     if trim(l.icon)<>'' then begin
                         if (fileexists(l.icon)) then iconfile:=l.icon
                         else begin
                             if (fileexists(XPAPI.getsysinfo(siSystemDir)+l.Icon)) then begin
                                 iconfile:=XPAPI.getsysinfo(siSystemDir)+l.Icon;
                             end
-                            else iconfile:=XPAPI.getsysinfo(siSystemDir)+sNOICONSMALL;
+                            else iconfile:=XPAPI.getsysinfo(siSystemDir)+gNOICONSMALL;
                         end;
                     end
                     else begin
                         iconfile:=XPAPI.getsysinfo(siSystemDir)+changefileext(files[i],'.ico');
                         if not fileexists(iconfile) then begin
-                            iconfile:=XPAPI.getsysinfo(siSystemDir)+sNOICONSMALL;
+                            iconfile:=XPAPI.getsysinfo(siSystemDir)+gNOICONSMALL;
                         end;
                     end;
                     
@@ -404,7 +404,7 @@ begin
                         f.graphic.width:=16;
                         f.graphic.height:=16;
                     except
-                        iconfile:=XPAPI.getsysinfo(siSystemDir)+sNOICONSMALL;
+                        iconfile:=XPAPI.getsysinfo(siSystemDir)+gNOICONSMALL;
                         f.LoadFromFile(iconfile);
                         f.graphic.width:=16;
                         f.graphic.height:=16;

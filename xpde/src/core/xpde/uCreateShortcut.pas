@@ -182,8 +182,8 @@ end;
 
 procedure TCreateShortcutDlg.FormCreate(Sender: TObject);
 begin
-  image1.Picture.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sCREATESHORTCUTWIZARD);
-  image3.Picture.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sCREATESHORTCUTWIZARD);
+  image1.Picture.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gCREATESHORTCUTWIZARD);
+  image3.Picture.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gCREATESHORTCUTWIZARD);
 end;
 
 end.

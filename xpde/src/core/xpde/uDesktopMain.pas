@@ -136,7 +136,7 @@ begin
     if findfirst(XPAPI.getSysInfo(siUserDir)+'/.xpde/Desktop/*',faAnyFile,sr)=0 then begin
         repeat
             if (sr.Attr and faDirectory)=faDirectory then begin
-                if (sr.name<>'.') and (sr.name<>'..') then addIcon(sr.name,sFOLDER,sr.PathOnly+sr.name,false);
+                if (sr.name<>'.') and (sr.name<>'..') then addIcon(sr.name,gFOLDER,sr.PathOnly+sr.name,false);
             end
             else begin
                ext:=copy(ansilowercase(extractfileext(sr.name)),2,255);
@@ -161,11 +161,11 @@ end;
 
 procedure TMainform.addSystemIcons;
 begin
-    addIcon(sMyDocuments,sMYDOCUMENTS,'%MYDOCUMENTS%',false);
-    addIcon(sMyComputer,sMYCOMPUTER,'%MYCOMPUTER%',false);
-    addIcon(sMyHome,sMYHOME,'%MYHOME%',false);
-    addIcon(sMyNetworkPlaces,sMYNETWORKPLACES,'%MYNETWORKPLACES%',false);
-    addIcon(sRecycleBin,sRECYCLEBINEMPTY,'%RECYCLEBIN%',false);
+    addIcon(sMyDocuments,gMYDOCUMENTS,'%MYDOCUMENTS%',false);
+    addIcon(sMyComputer,gMYCOMPUTER,'%MYCOMPUTER%',false);
+    addIcon(sMyHome,gMYHOME,'%MYHOME%',false);
+    addIcon(sMyNetworkPlaces,gMYNETWORKPLACES,'%MYNETWORKPLACES%',false);
+    addIcon(sRecycleBin,gRECYCLEBINEMPTY,'%RECYCLEBIN%',false);
 end;
 
 function TMainform.addIcon(const caption, image, fullpath: string;islnk:boolean): TSysListItem;
@@ -175,11 +175,11 @@ begin
     { TODO : Store the fullpath somewhere }
     if (image<>'') and (fileexists(image)) then iconfile:=image
     else begin
-        if (image='') then iconfile:=XPAPI.getSysInfo(siSystemDir)+sNOICON
+        if (image='') then iconfile:=XPAPI.getSysInfo(siSystemDir)+gNOICON
         else begin
             iconfile:=XPAPI.getSysInfo(siSystemDir)+image;
             if (not fileexists(iconfile)) then begin
-                iconfile:=XPAPI.getSysInfo(siSystemDir)+sNOICON;
+                iconfile:=XPAPI.getSysInfo(siSystemDir)+gNOICON;
             end;
         end;
     end;
@@ -384,7 +384,7 @@ begin
     until not (directoryexists(fullpath));
 
     if ForceDirectories(fullpath) then begin
-        d:=addIcon(dirname,sFOLDER,fullpath,false);
+        d:=addIcon(dirname,gFOLDER,fullpath,false);
         if desktop.aligntogrid then begin
             desktop.GetAlignedCoords(ix,iy);
         end;
@@ -397,8 +397,8 @@ end;
 procedure TMainForm.initTheme;
 begin
 
-        shortcut1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sSHORTCUTSMALL);
-        folder1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sFOLDERSMALL);
+        shortcut1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gSHORTCUTSMALL);
+        folder1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gFOLDERSMALL);
 end;
 
 { TXPDesktop }

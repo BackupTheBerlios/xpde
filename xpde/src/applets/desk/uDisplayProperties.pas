@@ -172,7 +172,7 @@ var
     method:integer;
     b:TBitmap;
 begin
-    image5.Picture.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sDESKTOPPROPERTIESMONITOR);
+    image5.Picture.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gDESKTOPPROPERTIESMONITOR);
     b:=TBitmap.create;
     try
         b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sNONE);
@@ -180,12 +180,12 @@ begin
         b.height:=imgList.height;
         imgList.AddMasked(b,clFuchsia);
 
-        b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sBMP);
+        b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gBMP);
         b.width:=imgList.Width;
         b.height:=imgList.height;
         imgList.AddMasked(b,clFuchsia);
 
-        b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sJPG);
+        b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gJPG);
         b.width:=imgList.Width;
         b.height:=imgList.height;
         imgList.Add(b,b);

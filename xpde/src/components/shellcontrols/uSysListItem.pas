@@ -645,7 +645,7 @@ begin
   if lnk then begin
     b:=TBitmap.create;
     try
-        b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+sSHORTCUT);
+        b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+gSHORTCUT);
         b.transparent:=false;
         original.canvas.draw(0,original.height-b.height-1,b);
         original.Transparent:=false;
@@ -668,7 +668,7 @@ begin
   if lnk then begin
     b:=TBitmap.create;
     try
-        b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+sSHORTCUT);
+        b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+gSHORTCUT);
         b.transparent:=false;
         selectedbitmap.canvas.draw(0,original.height-b.height-1,b);
     finally

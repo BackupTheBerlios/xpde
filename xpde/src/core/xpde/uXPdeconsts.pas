@@ -3,11 +3,14 @@ unit uXPdeconsts;
 interface
 
 resourcestring
+
     sMyDocuments= 'My Documents';
     sMyComputer= 'My Computer';
     sMyHome='My Home';
     sMyNetworkPlaces='My Network Places';
+
     sRecycleBin='Recycle Bin';
+
     sNewFolder='New Folder (%d)';
     sSelectADirectory= 'Select a directory';
 
@@ -17,6 +20,7 @@ resourcestring
     sSelectATitleForTheProgram='Select a Title for the Program';
 
     sShortcut='Shortcut';
+
 
 implementation
 

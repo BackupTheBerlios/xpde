@@ -128,8 +128,6 @@ object TaskBar: TTaskBar
     Height = 48
     Align = alClient
     AutoSize = True
-    ButtonHeight = 24
-    ButtonWidth = 86
     Caption = 'tbTasks'
     Color = 13554646
     EdgeBorders = []

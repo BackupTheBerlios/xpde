@@ -107,7 +107,7 @@ end;
 
 procedure TOpenWithDlg.FormCreate(Sender: TObject);
 begin
-    image1.picture.loadfromfile(XPAPI.getSysInfo(siSystemDir)+sSEARCH);
+    image1.picture.loadfromfile(XPAPI.getSysInfo(siSystemDir)+gSEARCH);
 end;
 
 end.

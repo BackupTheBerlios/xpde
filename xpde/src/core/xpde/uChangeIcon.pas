@@ -77,7 +77,7 @@ begin
         icondir:=XPAPI.getSysInfo(siSystemDir);
     end;
     if (iconfilename='') then begin
-        iconfilename:=icondir+sNOICON;
+        iconfilename:=icondir+gNOICON;
     end;
     edDirectory.text:='';
     edDirectory.text:=icondir;

@@ -186,7 +186,7 @@ begin
         edStartin.text:=lnk.startin;
         edComment.text:=lnk.comment;
         //**************************************
-        edTypeOfFile.text:=sShortCut;
+        edTypeOfFile.text:=gShortCut;
         edLocation.text:=extractfilepath(linkfile);
         stat(PChar(linkfile),buf);
         //**********************************
@@ -269,7 +269,7 @@ begin
 
                    b:=TBitmap.create;
                    try
-                       b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+sSHORTCUT);
+                       b.loadfromfile(XPAPI.getSysInfo(siSystemDir)+gSHORTCUT);
                        b.transparent:=false;
                        imgicon.picture.bitmap.canvas.draw(0,imgicon.picture.bitmap.height-b.height-1,b);
                    finally

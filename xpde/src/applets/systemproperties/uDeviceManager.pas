@@ -184,9 +184,12 @@ var frmProps:TfrmProp;
     i,j,x:integer;
     founded:boolean;
     bmp:TBitmap;
+    temppic:string;
 Begin
         Result:=false;
+
         if Sender is TfrmProp then begin
+        temppic:='/tmp/xpbmptemp.png';
         frmProps:=Sender as TfrmProp;
         s:=devinfo;
 
@@ -204,11 +207,11 @@ Begin
                             bmp.Height:=48;
                             bmp.Transparent:=true;
                             frmProps.ImgList.GetBitmap(devicePics[x],bmp);
-                            bmp.SaveToFile('/tmp/xpbmptemp.png');
-                            frmProps.Image1.Picture.LoadFromFile('/tmp/xpbmp.png');
+                            bmp.SaveToFile(temppic);
+                            frmProps.Image1.Picture.LoadFromFile(temppic);
                             frmProps.Image1.Transparent:=true;
                             bmp.Free;
-                            DeleteFile('/tmp/xpbmptemp.png');
+                            DeleteFile(temppic);
                             break;
                         End;
                 End;

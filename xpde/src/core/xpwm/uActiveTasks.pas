@@ -44,40 +44,41 @@ var
     nc: integer;
     ox: integer;
 begin
-    y:=19;
-    nc:=xpwindowmanager.clients.count;
-    if (nc>7) then nc:=7;
+        y:=19;
+        nc:=xpwindowmanager.framedclients.count;
+        if (nc>7) then nc:=7;
 
-    w:=nc*43;
-    ox:=(width-w) div 2;
+        w:=nc*43;
+        ox:=(width-w) div 2;
 
-    x:=ox;
+        x:=ox;
 
-    canvas.pen.width:=1;
-    R3D(canvas,clientrect);
-    R3D(canvas,rect(14,height-35,315,height-10),false,false,true);
+        canvas.pen.width:=1;
+        R3D(canvas,clientrect);
+        R3D(canvas,rect(14,height-35,315,height-10),false,false,true);
 
-    c:=0;
-    canvas.pen.color:=dclHighlight;
-    canvas.pen.width:=2;
-    while (c<xpwindowmanager.clients.count) do begin
-        cli:=xpwindowmanager.clients[c];
-        if c=activetask then begin
-            canvas.rectangle(rect(x,y,x+43,y+43));
+        c:=0;
+        canvas.pen.color:=dclHighlight;
+        canvas.pen.width:=2;
+        while (c<xpwindowmanager.framedclients.count) do begin
+            cli:=xpwindowmanager.framedclients[c];
+            if c=activetask then begin
+                canvas.rectangle(rect(x,y,x+43,y+43));
+            end;
+
+            b:=cli.geticon;
+            if assigned(b) then begin
+                b.transparent:=true;
+                canvas.draw(x+5,y+5,b);
+                x:=x+43;                      
+
+                if ((c+1) mod 7)=0 then begin
+                    x:=ox;
+                    y:=y+43;
+                end;
+            end;
+            inc(c);
         end;
-
-        b:=cli.geticon;
-        b.transparent:=true;
-        canvas.draw(x+5,y+5,b);
-
-        x:=x+43;
-
-        if ((c+1) mod 7)=0 then begin
-            x:=ox;
-            y:=y+43;
-        end;
-        inc(c);
-    end;
 end;
 
 procedure TActiveTasksDlg.FormShow(Sender: TObject);
@@ -86,7 +87,7 @@ var
 begin
     width:=330;
     height:=107;
-    rows:=((xpwindowmanager.clients.count-1) div 7)+1;
+    rows:=((xpwindowmanager.framedclients.count-1) div 7)+1;
     height:=height+(43*(rows-1));
     activetask:=0;
     incActiveTask;
@@ -105,7 +106,7 @@ begin
 
     if keymap[8]=#0 then begin
         timer1.enabled:=false;
-        c:=xpwindowmanager.clients[activetask];
+        c:=xpwindowmanager.framedclients[activetask];
         if assigned(c) then begin
             c.activate;
             activetasksdlg:=nil;
@@ -146,12 +147,12 @@ var
     c: TWMClient;
 begin
     inc(activetask);
-    if activetask>=xpwindowmanager.clients.count then begin
+    if activetask>=xpwindowmanager.framedclients.count then begin
         activetask:=0;
     end;
 
     invalidate;
-    c:=xpwindowmanager.clients[activetask];
+    c:=xpwindowmanager.framedclients[activetask];
     label1.caption:=getdottedText(c.gettitle,label1.width);
 end;
 

@@ -51,6 +51,7 @@ type
         FScreen: integer;
         FRoot: Window;
         FClients: TList;
+        cList: TList;
         FAtoms: array [0..maxAtoms] of Atom;
         FFrame: TFormClass;
         FActiveClient: TWMClient;
@@ -68,6 +69,7 @@ type
         procedure SetAtoms(Index: Integer; const Value: Atom);
         procedure setFrame(AFrameClass: TFormClass);
         procedure SetActiveClient(const Value: TWMClient);
+        function getFramedClients: TList;
     public
         function hasborder(xwindow:window):boolean;
         procedure grabDisplay;
@@ -99,6 +101,7 @@ type
         //**********************************
         property Atoms[Index: Integer]: Atom read GetAtoms write SetAtoms;
         property Clients:TList read FClients;
+        property FramedClients: TList read getFramedClients;
         property Frame: TFormClass read FFrame write SetFrame;
         property Display: PDisplay read FDisplay write FDisplay;
         property Root: Window read FRoot write FRoot;
@@ -570,7 +573,7 @@ begin
         keypress: begin
             if (event^.xkey.keycode=XKeysymToKeycode(qtdisplay, xk_tab)) then begin
                 if not assigned(activetasksdlg) then begin
-                    if xpwindowmanager.Clients.Count>1 then begin
+                    if xpwindowmanager.framedClients.Count>1 then begin
                         activetasksdlg:=TActiveTasksDlg.create(application);
                         activetasksdlg.show;
                         ActiveTasksDlg.SetFocus;
@@ -629,6 +632,7 @@ end;
 constructor TXPWindowManager.Create;
 begin
     inherited;
+    clist:=TList.create;
     FActiveClient:=nil;
     FServerGrabCount:=0;
     FDisplay:=nil;
@@ -645,6 +649,7 @@ end;
 
 destructor TXPWindowManager.Destroy;
 begin
+    clist.free;
    FClients.free;
    inherited;
 end;
@@ -933,7 +938,10 @@ begin
            {$ifdef DEBUG}
            xlibinterface.outputDebugString(iINFO,format('Removing client %s',[xlibinterface.formatwindow(xwindow)]));
            {$endif}
+//            writeln('UnmapNotify');
+//            writeln(clients.count);
             clients.Remove(c);
+//            writeln(clients.count);            
 
             if c=FActiveClient then begin
                 if Clients.count>=1 then begin
@@ -1317,7 +1325,9 @@ begin
     {$endif}
     result:=TWMClient.create(w,self);
     if assigned(result) then begin
+//        writeln('CreateNewClient');
         clients.insert(0,result);
+//        writeln(clients.count);        
         //Ensures the grabs are not overriden
         setupKeyboardGrab;
         result.focus;
@@ -1338,7 +1348,9 @@ begin
             FActiveClient.updateactivestate;
 
             if clients.count>1 then begin
+//                writeln('SetActiveClient');
                 if (clients.Remove(FActiveClient)<>-1) then clients.Insert(0,FActiveClient);
+//                writeln(clients.count);                
             end;
 
         end
@@ -1406,6 +1418,21 @@ begin
     else result:=false;
     XFree (data);
   end;
+end;
+
+function TXPWindowManager.getFramedClients: TList;
+var
+    i: integer;
+    cli: TWMClient;
+    b: TBitmap;
+begin
+    clist.clear;
+    for i:=0 to fclients.count-1 do begin
+        cli:=fclients[i];
+        b:=cli.geticon;
+        if assigned(b) then clist.add(cli);
+    end;
+    result:=clist;
 end;
 
 { TWMClient }
@@ -1953,7 +1980,12 @@ end;
 
 function TWMClient.getIcon: TBitmap;
 begin
-    result:=(frame as TWindowsClassic).icon_s;
+    if assigned(frame) then begin
+        result:=(frame as TWindowsClassic).icon_s;
+    end
+    else begin
+        result:=nil;
+    end;
 end;
 
 procedure TWMClient.getIcons;

@@ -1,6 +1,6 @@
 object WindowsClassic: TWindowsClassic
-  Left = 352
-  Top = 489
+  Left = 355
+  Top = 518
   ActiveControl = btnClose
   AutoScroll = False
   BorderStyle = fbsNone
@@ -22,7 +22,7 @@ object WindowsClassic: TWindowsClassic
   OnMouseUp = FormMouseUp
   OnPaint = FormPaint
   OnResize = FormResize
-  PixelsPerInch = 84
+  PixelsPerInch = 90
   object restore: TImage
     Left = 192
     Top = 32

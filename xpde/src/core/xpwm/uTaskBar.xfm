@@ -169,7 +169,7 @@ object TaskBar: TTaskBar
     end
   end
   object Timer: TTimer
-    Interval = 10000
+    Interval = 100
     OnTimer = TimerTimer
     Left = 488
     Top = 4

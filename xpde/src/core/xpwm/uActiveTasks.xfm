@@ -1,6 +1,6 @@
 object ActiveTasksDlg: TActiveTasksDlg
-  Left = 485
-  Top = 442
+  Left = 488
+  Top = 471
   Width = 330
   Height = 107
   HorzScrollBar.Range = 305

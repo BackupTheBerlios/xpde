@@ -44,7 +44,9 @@ type
         iDelete: integer;
         iRename: integer;
         iProperties: integer;
+        FChildrenModified: TXPChildrenModified;
     public
+        procedure doChildrenModified(const op: TXPChildrenOperation; const item: IXPVirtualFile);
         function hasChild: boolean; virtual;
         function getChildren: TInterfaceList; virtual;
         function getDisplayName: string; virtual;
@@ -57,25 +59,10 @@ type
         procedure getStatusData(const status:TStrings);virtual;
         procedure getVerbItems(const verbs:TStrings); virtual;
         procedure executeVerb(const verb:integer); virtual;
+        procedure setChildrenModified(value: TXPChildrenModified);virtual;
         function getIcon: integer; virtual;
         function getCategory: string; virtual;
         constructor Create;
-    end;
-
-    TFile=class(TLocalFile)
-    private
-        FPath: string;
-    public
-        filesize: integer;
-        time: integer;
-        function hasChild: boolean; override;
-        function getDisplayName: string; override;
-        procedure doubleClick; override;
-        function getUniqueID:string; override;
-        procedure getColumnData(const columns:TStrings); override;
-        constructor Create(const APath:string); virtual;
-        procedure executeVerb(const verb:integer); override;
-        function getIcon: integer; override;
     end;
 
     TFolder=class(TLocalFile)
@@ -100,6 +87,8 @@ type
         time: integer;
         function hasChild: boolean; override;
         function getUniqueID:string; override;
+        procedure addFile(const path:string);
+        procedure addFolder(const path:string);
         function getChildren: TInterfaceList; override;
         procedure getStatusData(const status:TStrings);override;
         procedure getColumnData(const columns:TStrings); override;
@@ -113,6 +102,24 @@ type
         constructor Create(const APath:string); virtual;
         destructor Destroy;override;
     end;
+
+    TFile=class(TLocalFile)
+    private
+        FPath: string;
+    public
+        filesize: integer;
+        time: integer;
+        parentfolder: TFolder;
+        function hasChild: boolean; override;
+        function getDisplayName: string; override;
+        procedure doubleClick; override;
+        function getUniqueID:string; override;
+        procedure getColumnData(const columns:TStrings); override;
+        constructor Create(const APath:string); virtual;
+        procedure executeVerb(const verb:integer); override;
+        function getIcon: integer; override;
+    end;
+
 
     TMyDocuments=class(TFolder)
     public
@@ -221,6 +228,7 @@ type
 
     TFileCopier=class(TObject)
     public
+        targetFolder: TFolder;
         sourcepaths: TStringList;
         basepaths: TStringList;
         sources: TStringList;
@@ -284,7 +292,6 @@ begin
         if result[length(result)]='/' then result:=copy(result,1,length(result)-1);
     end;
 end;
-    
 
 function extractdirname(const str:string):string;
 var
@@ -302,7 +309,26 @@ end;
 function addTrailingSlash(const str:string):string;
 begin
     result:=str;
-    if result[length(result)]<>'/' then result:=result+'/';
+    if result<>'' then begin
+        if result[length(result)]<>'/' then result:=result+'/';
+    end;
+end;
+
+function getnewdir(const path:string; const basepath:string):string;
+var
+    spath:string;
+    rightpath: string;
+    k: integer;
+begin
+    result:='';
+    spath:=extractfilepath(path);
+    rightpath:=copy(spath,length(basepath)+1,length(spath));
+
+    rightpath:=addTrailingSlash(rightpath);
+    k:=pos('/',rightpath);
+    if k<>0 then begin
+        result:=copy(rightpath,1,k-1);
+    end;
 end;
 
 
@@ -356,8 +382,41 @@ end;
 
 { TFolder }
 
-constructor TFolder.Create(const APath:string);
+procedure TFolder.addFile(const path: string);
+var
+    a: TFile;
+    st: _stat;
 begin
+    if children.count=0 then getChildren;
+    a:=TFile.Create(path);
+    a.parentfolder:=self;
+    stat(pchar(path),st);
+    a.filesize:=st.st_size;
+    size:=size+a.filesize;
+    a.time:=st.st_mtime;
+    children.add(a);
+    doChildrenModified(coAdd,a);
+end;
+
+procedure TFolder.addFolder(const path: string);
+var
+    a: TFolder;
+    st: _stat;
+begin
+    if children.count=0 then getChildren;
+    a:=TFolder.Create(path);
+    stat(pchar(path),st);
+    a.time:=st.st_mtime;
+    children.add(a);
+    doChildrenModified(coAdd,a);
+end;
+
+constructor TFolder.Create(const APath:string);
+var
+    statbuff: _stat;
+begin
+    stat(PChar(apath),statbuff);
+    time:=statbuff.st_mtime;
   children:=TInterfaceList.create;
   FPath:=APath;
 end;
@@ -385,6 +444,7 @@ begin
             f.copydlg:=copydlg;
             f.target:=extractfilepath(FPath);
             f.sourcepaths.assign(XPExplorer.getClipboard);
+            f.targetFolder:=Self;
             f.start;
         finally
             copydlg.free;
@@ -421,6 +481,7 @@ begin
                     end
                     else begin
                         a:=TFile.Create(f.PathOnly+f.Name);
+                        a.parentfolder:=self;
                         a.filesize:=f.Size;
                         size:=size+a.filesize;
                         a.time:=f.Time;
@@ -560,6 +621,7 @@ begin
             f.copydlg:=copydlg;
             f.target:=extractfilepath(FPath);
             f.sourcepaths.assign(XPExplorer.getClipboard);
+            f.targetFolder:=parentfolder;
             f.start;
         finally
             copydlg.free;
@@ -607,7 +669,7 @@ end;
 
 constructor TMyDocuments.Create;
 begin
-    inherited Create('/home/ttm/.xpde/My Documents');
+    inherited Create(XPAPI.getsysinfo(siMyDocuments));
 end;
 
 function TMyDocuments.getDisplayName: string;
@@ -709,6 +771,13 @@ end;
 constructor TLocalFile.Create;
 begin
     node:=nil;
+    FChildrenModified:=nil;
+end;
+
+procedure TLocalFile.doChildrenModified(const op: TXPChildrenOperation;
+  const item: IXPVirtualFile);
+begin
+    if assigned(FChildrenModified) then FChildrenModified(self,op,item);
 end;
 
 procedure TLocalFile.doubleClick;
@@ -812,6 +881,11 @@ end;
 function TLocalFile.hasChild: boolean;
 begin
     result:=false;
+end;
+
+procedure TLocalFile.setChildrenModified(value: TXPChildrenModified);
+begin
+    FChildrenModified:=value;
 end;
 
 procedure TLocalFile.setNode(anode: TObject);
@@ -1056,6 +1130,8 @@ var
     sourcename:string;
     targetname:string;
     k: integer;
+    newdir: string;
+    addnew: boolean;
 
     buf: array [0..bufsize-1] of byte;
     rsize: integer;
@@ -1080,7 +1156,12 @@ begin
     end;
 
     s:=TFileStream.Create(source, fmOpenRead);
+    newdir:=getNewDir(targetname,basepath);
+    addnew:=not directoryexists(basepath+newdir);
     ForceDirectories(extractfilepath(targetname));
+    if addnew then begin
+        targetFolder.addFolder(basepath+newdir);
+    end;
     t:=TFileStream.Create(targetname, fmOpenWrite or fmCreate);
     try
         while t.size<s.size do begin
@@ -1091,6 +1172,7 @@ begin
             application.processmessages;
             if copydlg.tag=1 then break;
         end;
+        if (newdir='') or (targetFolder.getDisplayName=newdir) then targetFolder.addFile(targetname);
     finally
         t.free;
         s.free;
@@ -1151,6 +1233,9 @@ begin
     for i:=0 to sourcepaths.count-1 do begin
         path:=sourcepaths[i];
         if DirectoryExists(path) then begin
+            if path=target then begin
+                raise Exception.create('Cannot copy '+extractdirname(path)+': The destination folder is the same as the source folder');
+            end;
             fillarchives(path,sources,basepaths,extractfilepath(path));        
         end
         else if fileexists(path) then begin
@@ -1214,37 +1299,37 @@ end;
 initialization
     bmp:=TBitmap.create;
     try
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/desktop.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'desktop.png');
         imDESKTOP:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/mydocuments.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'mydocuments.png');
         imMYDOCUMENTS:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/mycomputer.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'mycomputer.png');
         imMYCOMPUTER:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/network.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'network.png');
         imMYNETWORKPLACES:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/recyclebin.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'recyclebin.png');
         imRECYCLEBIN:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/floppy.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'floppy.png');
         imFLOPPY:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/closedfolder.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'closedfolder.png');
         imCLOSEDFOLDER:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/harddisk.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'harddisk.png');
         imHARDDISK:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/cddrive.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'cddrive.png');
         imCDDRIVE:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/controlpanel.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'controlpanel.png');
         imCONTROLPANEL:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/noiconsm.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'noiconsm.png');
         imNOICON:=XPExplorer.registerImage(bmp);
     finally
         bmp.free;

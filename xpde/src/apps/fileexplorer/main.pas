@@ -29,7 +29,7 @@ uses
   Variants, QTypes, QGraphics,
   QControls, QForms, QDialogs,
   QStdCtrls, QComCtrls, uXPAPI,
-  uExplorerAPI, QExtCtrls,
+  uExplorerAPI, QExtCtrls, Qt,
   QMenus, QImgList, QButtons,
   uQXPComCtrls;
 
@@ -50,17 +50,17 @@ type
     ToolButton8: TToolButton;
     ImageList1: TImageList;
     ToolBar1: TToolBar;
-    SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
-    SpeedButton3: TSpeedButton;
-    SpeedButton4: TSpeedButton;
+    sbBack: TSpeedButton;
+    sbNext: TSpeedButton;
+    sbUp: TSpeedButton;
+    sbSearch: TSpeedButton;
     sbFolders: TSpeedButton;
-    SpeedButton6: TSpeedButton;
-    SpeedButton7: TSpeedButton;
-    SpeedButton8: TSpeedButton;
-    SpeedButton9: TSpeedButton;
+    sbMove: TSpeedButton;
+    sbCopy: TSpeedButton;
+    sbStop: TSpeedButton;
+    sbUndo: TSpeedButton;
     ToolButton1: TToolButton;
-    SpeedButton10: TSpeedButton;
+    sbView: TSpeedButton;
     New1: TMenuItem;
     N1: TMenuItem;
     CreateShortcut1: TMenuItem;
@@ -108,7 +108,7 @@ type
       Selected: Boolean);
     procedure sbFoldersClick(Sender: TObject);
     procedure lvItemsItemDoubleClick(Sender: TObject; Item: TListItem);
-    procedure SpeedButton3Click(Sender: TObject);
+    procedure sbUpClick(Sender: TObject);
     procedure pmItemPropertiesPopup(Sender: TObject);
     procedure About1Click(Sender: TObject);
     procedure Copy1Click(Sender: TObject);
@@ -117,8 +117,10 @@ type
     FVerbs: TList;
     FItemVerbs: TList;
     procedure ItemPropertiesClick(Sender: TObject);
+    procedure PropertiesClick(Sender: TObject);
   public
     { Public declarations }
+    procedure ChildrenNotified(const sender: IXPVirtualFile; const op: TXPChildrenOperation; const item: IXPVirtualFile);
     procedure updateall;
     procedure populatenodes(parent: TTreeNode; const item: IXPVirtualFile);
     procedure addnodes(parent: TTreeNode; const item: IXPVirtualFile);
@@ -153,6 +155,7 @@ begin
         if assigned(items) then begin
             for i:=0 to items.count-1 do begin
                 f:=(items[i] as IXPVirtualFile);
+                f.setChildrenModified(ChildrenNotified);
                 p:=tvItems.Items.AddChildObject(n, f.getDisplayName, pointer(f));
                 f.setNode(p);
                 p.ImageIndex:=f.getIcon;
@@ -199,6 +202,7 @@ var
     begin
         l:=lvItems.Items.Add;
         l.Data:=TObject(f);
+        f.setChildrenModified(ChildrenNotified);
         f.getcolumndata(cols);
         l.Caption:=f.getDisplayName;
         l.SubItems.assign(cols);
@@ -226,12 +230,16 @@ begin
             if assigned(items) then begin
                 for i:=0 to items.count-1 do begin
                     f:=(items[i] as IXPVirtualFile);
-                    if f.hasChild then addItem;
+                    if f.hasChild then begin
+                        addItem;
+                    end;
                 end;
 
                 for i:=0 to items.count-1 do begin
                     f:=(items[i] as IXPVirtualFile);
-                    if not f.hasChild then addItem;
+                    if not f.hasChild then begin
+                        addItem;
+                    end;
                 end;
             end;
         end;
@@ -279,6 +287,7 @@ begin
                 if (f.hasChild) then begin
                     p:=tvItems.Items.AddChildObject(parent, f.getDisplayName, pointer(f));
                     f.setNode(p);
+                    f.setChildrenModified(ChildrenNotified);
                     p.ImageIndex:=f.getIcon;
                     tvItems.Items.AddChildObject(p,'dummy',nil);
                 end;
@@ -311,6 +320,17 @@ end;
 
 procedure TExplorerForm.FormCreate(Sender: TObject);
 begin
+    sbBack.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'back.png');
+    sbNext.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'next.png');
+    sbUp.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'up.png');
+    sbSearch.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'search.png');
+    sbFolders.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'folders.png');
+    sbMove.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'moveto.png');
+    sbCopy.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'copyto.png');
+    sbStop.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'cancel.png');
+    sbUndo.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'refresh.png');
+    sbView.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'view.png');                            
+
     //These lines are here to set the font of the menubar
     font.name:='';
     parentfont:=true;
@@ -397,6 +417,8 @@ begin
         for i:=0 to verbs.count-1 do begin
             m:=TMenuItem.create(self);
             m.Caption:=verbs[i];
+            m.Tag:=i;
+            m.OnClick:=PropertiesClick;
             FVerbs.add(m);
             s1.Add(m);
         end;
@@ -404,6 +426,8 @@ begin
         for i:=verbs.count-1 downto 0 do begin
             m:=TMenuItem.create(self);
             m.Caption:=verbs[i];
+            m.tag:=i;
+            m.OnClick:=PropertiesClick;
             FVerbs.add(m);
             pmProperties.Items.Insert(miVerbs.menuindex+1,m);
         end;
@@ -433,10 +457,15 @@ begin
 end;
 
 procedure TExplorerForm.pmPropertiesPopup(Sender: TObject);
+var
+    f: IXPVirtualFile;
 begin
     if assigned(tvItems.selected) then begin
         if tvItems.Selected.Expanded then expand1.caption:='Collapse'
         else expand1.caption:='Expand';
+
+        f:=IXPVirtualFile(tvItems.selected.data);
+        updateMenus(f);
     end
     else begin
         expand1.caption:='Expand';
@@ -483,11 +512,12 @@ begin
     end;
 end;
 
-procedure TExplorerForm.SpeedButton3Click(Sender: TObject);
+procedure TExplorerForm.sbUpClick(Sender: TObject);
 begin
     if (assigned(tvitems.selected)) then begin
         if (assigned(tvitems.selected.parent)) then begin
             tvItems.Selected:=tvItems.selected.Parent;
+            tvItems.Selected.MakeVisible;
         end;
     end;
 end;
@@ -548,6 +578,59 @@ end;
 procedure TExplorerForm.Copy1Click(Sender: TObject);
 begin
     XPExplorer.copycurrentselectiontoclipboard;
+end;
+
+procedure TExplorerForm.ChildrenNotified(const sender: IXPVirtualFile;
+  const op: TXPChildrenOperation; const item: IXPVirtualFile);
+var
+    f: IXPVirtualFile;
+    procedure addItem;
+    var
+        k: integer;
+        l: TListItem;
+        cols: TStringList;
+        w: integer;
+    begin
+        cols:=TStringList.create;
+        try
+            l:=lvItems.Items.Add;
+            l.Data:=TObject(item);
+            item.setChildrenModified(ChildrenNotified);
+            item.getcolumndata(cols);
+            l.Caption:=item.getDisplayName;
+            l.SubItems.assign(cols);
+            for k:=0 to l.subitems.count-1 do begin
+                l.SubItemImages[k]:=-1;
+                w:=canvas.textwidth(l.subitems[k])+20;
+                if lvItems.Columns[k+1].Width<w then lvItems.Columns[k+1].Width:=w;
+            end;
+            l.ImageIndex:=item.getIcon;
+            QListView_clearSelection(lvItems.Handle);
+            l.Selected:=true;
+            l.MakeVisible;
+        finally
+            cols.free;
+        end;
+    end;
+begin
+    f:=IXPVirtualFile(tvItems.selected.data);
+    if f=sender then begin
+        case op of
+            coAdd: begin
+                addItem;
+            end;
+        end;
+    end;
+end;
+
+procedure TExplorerForm.PropertiesClick(Sender: TObject);
+var
+    f: IXPVirtualFile;
+begin
+    if assigned(tvItems.selected) then begin
+        f:=IXPVirtualFile(tvItems.selected.data);
+        f.executeVerb((sender as TMenuItem).tag);
+    end;
 end;
 
 end.

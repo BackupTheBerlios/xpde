@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 299
-  Top = 137
+  Left = 275
+  Top = 0
   ActiveControl = DoneBTN
   AutoScroll = False
   Caption = ' '

@@ -29,7 +29,7 @@ unit uXPIPC;
 interface
 
 uses
-    Classes, Sysutils, QForms, Qt, XLib;
+    Classes, Sysutils, QForms, Qt, XLib, QDialogs;
 
 const
     XPDE_BASE=3569;
@@ -165,6 +165,7 @@ begin
     else begin
         if assigned(oldeventfilter) then result:=oldeventfilter(event)
         else result:=false;
+
     end;
 end;
 

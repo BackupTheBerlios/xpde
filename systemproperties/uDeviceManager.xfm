@@ -1,0 +1,99 @@
+object frmSystem: TfrmSystem
+  Left = 365
+  Top = 231
+  Width = 571
+  Height = 371
+  Caption = 'frmSystem'
+  Color = clBackground
+  Menu = Menu
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 75
+  TextHeight = 16
+  TextWidth = 7
+  object PA1: TPanel
+    Left = 0
+    Top = 0
+    Width = 571
+    Height = 345
+    Align = alClient
+    TabOrder = 0
+  end
+  object Menu: TMainMenu
+    Left = 136
+    Top = 8
+    object File1: TMenuItem
+      Caption = 'File'
+      object Options1: TMenuItem
+        Caption = 'Options...'
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Exit1: TMenuItem
+        Caption = 'Exit'
+        OnClick = Exit1Click
+      end
+    end
+    object Action1: TMenuItem
+      Caption = 'Action'
+      object Help1: TMenuItem
+        Caption = 'Help'
+      end
+    end
+    object View1: TMenuItem
+      Caption = 'View'
+      object Devicesbytype1: TMenuItem
+        Caption = 'Devices by type'
+        Checked = True
+        RadioItem = True
+      end
+      object Devicesbyconnection1: TMenuItem
+        Caption = 'Devices by connection'
+        GroupIndex = 1
+        RadioItem = True
+      end
+      object Resourcesbytype1: TMenuItem
+        Caption = 'Resources by type'
+        GroupIndex = 2
+        RadioItem = True
+      end
+      object Resourcesbyconnection1: TMenuItem
+        Caption = 'Resources by connection'
+        GroupIndex = 3
+        RadioItem = True
+      end
+      object N2: TMenuItem
+        Caption = '-'
+        GroupIndex = 3
+      end
+      object Showhiddendevices1: TMenuItem
+        Caption = 'Show hidden devices'
+        GroupIndex = 4
+      end
+      object N3: TMenuItem
+        Caption = '-'
+        GroupIndex = 4
+      end
+      object Customize1: TMenuItem
+        Caption = 'Customize...'
+        GroupIndex = 5
+      end
+    end
+    object Help2: TMenuItem
+      Caption = 'Help'
+      object HelpTopics1: TMenuItem
+        Caption = 'Help Topics'
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object AboutXPdeManagementConsole1: TMenuItem
+        Caption = 'About XPde Management Console...'
+      end
+      object AboutDeviceManager1: TMenuItem
+        Caption = 'About Device Manager...'
+      end
+    end
+  end
+end

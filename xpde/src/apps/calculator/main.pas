@@ -1,11 +1,8 @@
 // Completly rewritten due to supporting of big numbers
 // Bugs:
-//       - Code is not clear
-//       - negative numbers in other bases are not fully supported
-//       - Need some optimizations
 //       - still a BIG QUESTION
 //             Is that the best way i choose ???
-//
+//       - Bugs in Negative Bitwise Operations
 //
 //
 // TODO:
@@ -15,7 +12,7 @@
 //       - Optimizations
 //       - How Windows Calculator have all of digits of sin(x)
 //       - Clearifying code
-//       - Bitwise calculations
+//       - General bug finding
 //
 //
 // History:
@@ -26,10 +23,10 @@
 //         -  Every operation was done on Extended types so numbers have to be
 //              in the range of  3.6 x 10^-4951 .. 1.1 x 10^4932 with only 10
 //              valid floating digits,
-//         -  Everything was divided in Scientific and Normal calculator so somethings
-//              were duplicated
+//         -  Everything was divided in Scientific and Normal calculator so numerical keys
+//              have to be duplicated
 //         -    No Scientifics operations was developed
-//         -    Calculations doesnt have any priority
+//         -    Calculations doesnt have any priority (2+3*4 = 20 !!)
 //         -    Bugs in Numbers in other Bases
 //
 //
@@ -37,24 +34,38 @@
 //    1.0b :
 //         -  First New Designed Version
 //         -  Completly changed & Improved By Roozbeh GHolizadeh [roozbeh@xpde.com]
-//         -  Now every operation is done by new type TNumber to go over limits of
-//             pascal extended types,there is no theorical limit in number of digits,
-//             and limit of Longint in Exponents.
+//         -  Now every operation is done by new type TNumber (a unit by Roozbeh GHolizadeh
+//             roozbehid@yahoo.com) to go over limits of pascal extended types,
+//             there is no theorical limit in number of digits,
+//             and a limit of Longint in Exponents.
 //         -  Now there is no Scientific or Normal Calculator everything is mixed in one
-//             Form and panels
+//             Form and Panels
 //         -  Calculations are done by priority of operations
 //         -  Parantheses are Fully Supported
 //         -  Numbers can be shown and calculated in other bases (still problems mainly
 //             with negative numbers)
 //         -  Trigonometric functions with support of diffrent Angle types
 //
-//    1.1a :
+//    1.1a : "%" operator is now working,(very strange operator :-) )
 //         -  All functions are now supported but bitwise operators
+//         -  ByteGrouping now working
 //         -  Keyboard shortcuts are working
-//         -  Now buttons get focus when going over them
+//         -  Now buttons get focus when moving mouse over them
 //         -  Some bugs fixed
+//         -  DegtoDMS and DMStoDeg added
 //         -  X1Y operation added for x^(1/y)
 //
+//    1.11a :
+//         - Now you can do the following 2 -+*/ (some button like x^2)
+//         - Digit Grouping for other bases
+//         - Kinda help engine for buttons added.(maybe replaced by help engine)
+//         - Negative numbers bug in other bases solved, now working perfect
+//
+//    1.2a  :
+//         - Logical operators are now working
+//
+//
+
 unit main;
 {$o-}
 
@@ -65,7 +76,7 @@ uses
   Variants, QTypes, QGraphics,
   QControls, QForms, QDialogs,
   QStdCtrls, QMenus, QExtCtrls,
-   uXPAPI,BigNumber;
+   {uXPAPI,}BigNumber;
 
 
 
@@ -77,7 +88,7 @@ Const
 type
 TheOperations=(
 _Nop,_Equal,_Fact,_OpenPr,_ClosePr,_FESci,_FENorm,
-_Or,_And,_Not,_Xor,_Int,_Frac,
+_Or,_And,_Not,_Xor,_Int,_Frac,_Lsh,_Rsh,
 _DegDMS,_DMSDeg,
 _Sin,_Cos,_Tan,_ArcSin,_ArcCos,_ArcTan,
 _Sinh,_Cosh,_Tanh,_ArcSinh,_ArcCosh,_ArcTanh,
@@ -91,6 +102,10 @@ Sentence=record
   Priority:byte;
 end;
 
+  TMYHintWindow = Class(THintWindow)
+     property onMouseDown;
+     property onKeyPress;
+   end;
 
   TMainForm = class(TForm)
     MainMenu: TMainMenu;
@@ -249,13 +264,13 @@ end;
     procedure FormActivate(Sender: TObject);
     procedure ControlMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure LogicalBTNClick(Sender: TObject);
   private
-    FHintWindow:THintWindow;
-    FHintPoint:TPoint;
+    FHintWindow:TMYHintWindow;
     FHintShow:Boolean;
     HintStr:String;
     FNumIndex,BaseIndex: Byte;
-    FNum:array[1..MaxPR+1] of Sentence;
+    FNum:array[1..MaxPR+2] of Sentence;
     FMemoryNum: TNumber;
     isManuallyEntered,IsDecimal,IsFloat,ShowSCi: Boolean;
     procedure SetCalcText(S: string);
@@ -265,6 +280,8 @@ end;
     procedure Operate(OP: TheOperations);
     procedure Calculate(b: Shortint);
     procedure CorrectCurrentNum;
+    procedure HintWindowMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   public
     CalcText: String;
   end;
@@ -356,13 +373,15 @@ tmp2 := TNumber.Create(0,Res.FloatDigits);
 tmp.Int(Res);
 tmp.Frac;
 tmp.mul(TNumber.Create('0.6'));
-tmp.Exponent:=tmp.Exponent+2; //*100
-tmp.Int(tmp2);tmp2.Exponent:=tmp2.Exponent-2; // /100
+tmp.Exponent := tmp.Exponent + 2; // * 100
+tmp.Int(tmp2);
+tmp2.Exponent := tmp2.Exponent - 2;// / 100
 Res.Add(tmp2);
 tmp.Frac;
 tmp.mul(TNumber.Create('0.006'));
 Res.Add(tmp);
 end;
+
 
 
 
@@ -375,9 +394,9 @@ tmp := TNumber.Create(Res,Res.FloatDigits);
 tmp2 := TNumber.Create(Res,Res.FloatDigits);
 tmp.Int(Res);
 tmp.Frac(tmp2);
-tmp2.Exponent:=tmp2.Exponent+2;
+tmp2.Exponent := tmp2.Exponent + 2; // * 100
 tmp2.Int;
-tmp2.Exponent:=tmp2.Exponent-2;
+tmp2.Exponent := tmp2.Exponent - 2; // / 100
 tmp.Frac;
 tmp.Sub(tmp2);
 tmp2.divide(TNumber.Create('0.6'));
@@ -388,82 +407,161 @@ end;
 
 
 
-function BinToInt(Value: string): Int64;
-var
-  i: Integer;
-  int: Int64;
-begin
-  int := 0;
-  for i := 1 to Length(Value) do
-  begin
-    int := int * 2 + StrToInt(Copy(Value, i, 1));
-  end;
-  Result := int;
+
+
+procedure CvtInt64;
+asm
+        OR      CL, CL
+        JNZ     @start             // CL = 0  => signed integer conversion
+        MOV     ECX, 10
+        TEST    [EAX + 4], $80000000
+        JZ      @start
+        PUSH    [EAX + 4]
+        PUSH    [EAX]
+        MOV     EAX, ESP
+        NEG     [ESP]              // negate the value
+        ADC     [ESP + 4],0
+        NEG     [ESP + 4]
+        CALL    @start             // perform unsigned conversion
+        MOV     [ESI-1].Byte, '-'  // tack on the negative sign
+        DEC     ESI
+        INC     ECX
+        ADD     ESP, 8
+        RET
+
+@start:   // perform unsigned conversion
+        PUSH    ESI
+        SUB     ESP, 4
+        FNSTCW  [ESP+2].Word     // save
+        FNSTCW  [ESP].Word       // scratch
+        OR      [ESP].Word, $0F00  // trunc toward zero, full precision
+        FLDCW   [ESP].Word
+
+        MOV     [ESP].Word, CX
+        FLD1
+        TEST    [EAX + 4], $80000000 // test for negative
+        JZ      @ld1                 // FPU doesn't understand unsigned ints
+        PUSH    [EAX + 4]            // copy value before modifying
+        PUSH    [EAX]
+        AND     [ESP + 4], $7FFFFFFF // clear the sign bit
+        PUSH    $7FFFFFFF
+        PUSH    $FFFFFFFF
+        FILD    [ESP + 8].QWord     // load value
+        FILD    [ESP].QWord
+        FADD    ST(0), ST(2)        // Add 1.  Produces unsigned $80000000 in ST(0)
+        FADDP   ST(1), ST(0)        // Add $80000000 to value to replace the sign bit
+        ADD     ESP, 16
+        JMP     @ld2
+@ld1:
+        FILD    [EAX].QWord         // value
+@ld2:
+        FILD    [ESP].Word          // base
+        FLD     ST(1)
+@loop:
+        DEC     ESI
+        FPREM                       // accumulator mod base
+        FISTP   [ESP].Word
+        FDIV    ST(1), ST(0)        // accumulator := acumulator / base
+        MOV     AL, [ESP].Byte      // overlap long FPU division op with int ops
+        ADD     AL, '0'
+        CMP     AL, '0'+10
+        JB      @store
+        ADD     AL, ('A'-'0')-10
+@store:
+        MOV     [ESI].Byte, AL
+        FLD     ST(1)           // copy accumulator
+        FCOM    ST(3)           // if accumulator >= 1.0 then loop
+        FSTSW   AX
+        SAHF
+        JAE @loop
+
+        FLDCW   [ESP+2].Word
+        ADD     ESP,4
+
+        FFREE   ST(3)
+        FFREE   ST(2)
+        FFREE   ST(1);
+        FFREE   ST(0);
+
+        POP     ECX             // original ESI
+        SUB     ECX, ESI        // ECX = length of converted string
+        SUB     EDX,ECX
+        JBE     @done           // output longer than field width = no pad
+        SUB     ESI,EDX
+        MOV     AL,'0'
+        ADD     ECX,EDX
+        JMP     @z
+@zloop: MOV     [ESI+EDX].Byte,AL
+@z:     DEC     EDX
+        JNZ     @zloop
+        MOV     [ESI].Byte,AL
+@done:
 end;
 
 
 
-function OctToInt(Value: string): Int64;
-var
-  i: Integer;
-  int: Int64;
-begin
-  int := 0;
-  for i := 1 to Length(Value) do
-  begin
-    int := int * 8 + StrToInt(Copy(Value, i, 1));
-  end;
-  Result := int;
+function IntToOct(Value: Int64; Digits: Integer): string;
+asm
+        CMP     EAX, 32
+        JLE     @A1
+        XOR     EAX, EAX
+@A1:    PUSH    ESI
+        MOV     ESI, ESP
+        SUB     ESP, 32
+        MOV     ECX, 8
+        PUSH    EDX
+        MOV     EDX, EAX
+        LEA     EAX, Value;
+        CALL    CvtInt64
+
+        MOV     EDX, ESI
+        POP     EAX
+        CALL    System.@LStrFromPCharLen
+        ADD     ESP, 32
+        POP     ESI
 end;
 
 
-function IntToOct(Value: Int64; digits: Integer): string;
-var
-  rest: Int64;
-  oct: string;
-  i: Integer;
-begin
-  oct  :=  '';
-  while Value <> 0 do
-  begin
-    rest  := Value mod 8;
-    Value := Value div 8;
-    oct := IntToStr(rest) + oct;
-  end;
-  for i := Length(oct) + 1 to digits do
-    oct := '0' + oct;
-  Result := oct;
+// modified 32 buffer length to 64 to support for -1 or other negative values  for
+// bases like 2 that result is big
+function IntToBin(Value: Int64; Digits: Integer): string;
+asm
+        CMP     EAX, 64
+        JLE     @A1
+        XOR     EAX, EAX
+@A1:    PUSH    ESI
+        MOV     ESI, ESP
+        SUB     ESP, 64
+        MOV     ECX, 2
+        PUSH    EDX
+        MOV     EDX, EAX
+        LEA     EAX, Value;
+        CALL    CvtInt64
+
+        MOV     EDX, ESI
+        POP     EAX
+        CALL    System.@LStrFromPCharLen
+        ADD     ESP, 64
+        POP     ESI
 end;
 
 
-function IntToBin(Value: Int64; digits: Integer): string;
-var
-  rest: Longint;
-  oct: string;
-  i: Integer;
-begin
-  oct := '';
-  while Value <> 0 do
-  begin
-    rest  := Value mod 2;
-    Value := Value div 2;
-    oct := IntToStr(rest) + oct;
-  end;
-  for i := Length(oct) + 1 to digits do
-    oct := '0' + oct;
-  Result := oct;
-end;
 
 
 function HexToInt(HexStr: String): Int64;
 var RetVar : Int64;
     i : byte;
+    C : Shortint;
 begin
   HexStr := UpperCase(HexStr);
   RetVar := 0;
+  if Pos('-',HexStr)=1 then
+    begin Delete(HexStr,1,1);C:=-1;end
+   else
+     C:=1;
 
   for i :=1  to length(HexStr) do begin
-      RetVar := RetVar *16;
+      RetVar := RetVar * 16;
       if HexStr[i] in ['0'..'9'] then
          RetVar := RetVar + (byte(HexStr[i]) - 48)
       else
@@ -474,25 +572,80 @@ begin
             break;
          end;
   end;
-  Result := RetVar;
+  Result := C * RetVar;
 end;
 
 
-function AddThousandSeparator(S: string; Chr: Char): string;
+function BinToInt(BinStr: string): Int64;
+var RetVar : Int64;
+    i : byte;
+    C : Shortint;
+begin
+  RetVar := 0;
+  if Pos('-',BinStr)=1 then
+    begin Delete(BinStr,1,1);C:=-1;end
+   else
+     C:=1;
+
+  for i :=1  to length(BinStr) do begin
+      RetVar := RetVar * 2;
+      if BinStr[i] in ['0'..'9'] then
+         RetVar := RetVar + (byte(BinStr[i]) - 48)
+         else begin
+            Retvar := 0;
+            break;
+         end;
+  end;
+  Result := C * RetVar;
+end;
+
+
+
+function OctToInt(OctStr: string): Int64;
+var RetVar : Int64;
+    i : byte;
+    C : Shortint;
+begin                                   
+  RetVar := 0;
+  if Pos('-',OctStr)=1 then
+    begin Delete(OctStr,1,1);C:=-1;end
+   else
+     C:=1;
+
+  for i :=1  to length(OctStr) do begin
+      RetVar := RetVar * 2;
+      if OctStr[i] in ['0'..'9'] then
+         RetVar := RetVar + (byte(OctStr[i]) - 48)
+         else begin
+            Retvar := 0;
+            break;
+         end;
+  end;
+  Result := C * RetVar;
+end;
+
+
+
+function AddThousandSeparator(S: string; Chr: Char;SepChars: Byte): string;
 var
   I: Integer;
   Decimal: String;
+  LastPos: Word;
 begin
-  Decimal := Copy(S,Pos(DecimalSeparator,S),Length(S));
-  if Pos('-',S) > 0 then
-   Result :=  Copy(S,2,Pos(DecimalSeparator,S)-2)
+  if Pos(DecimalSeparator,S) = 0 then
+   LastPos := Length(S) + 1
   else
-   Result := Copy(S,1,Pos(DecimalSeparator,S)-1);
-  I := Length(Result) - 2;
+   LastPos := Pos(DecimalSeparator,S);
+  Decimal := Copy(S,LastPos,Length(S));
+  if Pos('-',S) > 0 then
+   Result :=  Copy(S, 2, LastPos - 2)
+  else
+   Result := Copy(S, 1, LastPos - 1);
+  I := Length(Result) - SepChars + 1;
   while I > 1 do
   begin
     Insert(Chr, Result, I);
-    I := I - 3;
+    I := I - SepChars;
   end;
   if Pos('-',S) > 0 then
    Result := '-' + Result + Decimal
@@ -501,37 +654,21 @@ begin
 end;
 
 
-function AddSciSeparator(S: string; Chr: Char): string;
-var
-  I: Integer;
-begin
-  if Pos('-',S) > 0 then
-   Result := Copy(S,2,Length(S))
-  else
-   Result := Copy(S,1,Length(S));
-  I := Length(Result) - 2;
-  while I > 1 do
-  begin
-    Insert(Chr, Result, I);
-    I := I - 4;
-  end;
-  if Pos('-',S) > 0 then
-   Result := '-' + Result
-  else
-   Result := Result;
-end;
 
 
 function  TMainForm.GetOperationPriority(OP: TheOperations): Byte;
 begin
 case OP of
-  _Add,_Sub:Result := 0;
-  _Mul,_Div:Result := 1;
-  _XY:Result := 2;
+  _Add,_Sub,_Or,_And,_Xor:Result := 1;
+  _Lsh,_Rsh: Result := 2;
+  _Mul,_Div:Result := 3;
+  _XY:Result := 4;
+  _X1Y:Result := 4;
 else
   Result := 0;
 end;
 end;
+
 
 
 procedure TMainForm.Calculate(b: Shortint);
@@ -545,35 +682,42 @@ begin
 while  (FNum[FNumIndex].Priority <= FNum[FNumIndex-1].Priority)
       and (not FNum[FNumIndex-1].Pr) do
 begin
-case FNum[FNumIndex-1].Operation of
-  _Add: FNum[FNumIndex-1].Num.Add(FNum[FNumIndex].Num);
-  _Sub: FNum[FNumIndex-1].Num.Sub(FNum[FNumIndex].Num);
-  _Mul: FNum[FNumIndex-1].Num.Mul(FNum[FNumIndex].Num);
-  _Div: FNum[FNumIndex-1].Num.Divide(FNum[FNumIndex].Num);
-  _Mod: FNum[FNumIndex-1].Num.DivMod(FNum[FNumIndex].Num);
-  _XY:  FNum[FNumIndex-1].Num.Power(FNum[FNumIndex].Num);
+case FNum[FNumIndex - 1].Operation of
+  _Add: FNum[FNumIndex - 1].Num.Add(FNum[FNumIndex].Num);
+  _Sub: FNum[FNumIndex - 1].Num.Sub(FNum[FNumIndex].Num);
+  _Mul: FNum[FNumIndex - 1].Num.Mul(FNum[FNumIndex].Num);
+  _Div: FNum[FNumIndex - 1].Num.Divide(FNum[FNumIndex].Num);
+  _Mod: FNum[FNumIndex - 1].Num.DivMod(FNum[FNumIndex].Num);
+  _And: FNum[FNumIndex - 1].Num.BitWiseAnd(FNum[FNumIndex].Num);
+  _Or:  FNum[FNumIndex - 1].Num.BitWiseOr(FNum[FNumIndex].Num);
+  _Lsh: FNum[FNumIndex - 1].Num.BitWiseLsh(FNum[FNumIndex].Num);
+  _Rsh: FNum[FNumIndex - 1].Num.BitWiseRsh(FNum[FNumIndex].Num);
+  _Xor: FNum[FNumIndex - 1].Num.BitWiseXor(FNum[FNumIndex].Num);
+  _XY:  FNum[FNumIndex - 1].Num.Power(FNum[FNumIndex].Num);
   _X1Y:
         begin
         FNum[FNumIndex].Num.Inverse;
-        FNum[FNumIndex-1].Num.Power(FNum[FNumIndex].Num);
+        FNum[FNumIndex - 1].Num.Power(FNum[FNumIndex].Num);
         end;
+
 end;
 
-FNum[FNumIndex-1].Operation := FNum[FNumIndex].Operation;
-FNum[FNumIndex-1].Priority := FNum[FNumIndex].Priority;
+FNum[FNumIndex - 1].Operation := FNum[FNumIndex].Operation;
+FNum[FNumIndex - 1].Priority := FNum[FNumIndex].Priority;
 FNum[FNumIndex].Num.MakeZero;
 Dec(FNumIndex);
-if FNumIndex=1 then break;
+if FNumIndex = 1 then break;
 end;
 end
 
 else
 
-if b>0 then
+if b > 0 then
 begin
 case FNum[b].Operation of
   _Int: FNum[b].Num.Int;
   _Frac: FNum[b].Num.Frac;
+  _Not: FNum[b].Num.BitWiseNot;
   _Sin: FNum[b].Num.Sin;
   _Cos: FNum[b].Num.Cos;
   _Tan: FNum[b].Num.Tan;
@@ -602,7 +746,7 @@ end;
 
 end;
 // permanetly ?????????
-AngleGroup.OnClick(self);
+//AngleGroup.OnClick(self);
 end;
 
 
@@ -628,10 +772,10 @@ if Ch = '-' then
      else CalcText := '-'+CalcText
 
  else
-   if pos('e-',CalcText) <> 0 then
-      CalcText := AnsiReplaceStr(CalcText,'e-','e+')
+   if Pos('e-',CalcText) <> 0 then
+       CalcText := AnsiReplaceStr(CalcText,'e-','e+')
     else
-     CalcText := AnsiReplaceStr(CalcText,'e+','e-');
+       CalcText := AnsiReplaceStr(CalcText,'e+','e-');
 
 
 
@@ -662,9 +806,15 @@ if not ConvertToCurrentNum then
 s := CalcText;
 if s = '' then s := '0';
 if Pos('e',s) = Length(s) then s := s+'+0';
-if Pos('.',CalcText) = 0 then
+if (Pos('.',CalcText) = 0) and (BaseIndex = DecRDBTN.Tag) then
 s := s+'.';
-if DigitGroupingMNU.Checked then s:=AddThousandSeparator(s,',');
+
+if DigitGroupingMNU.Checked then
+   if BaseIndex = 1 then
+     s := AddThousandSeparator(s,',',3)
+   else
+     s := AddThousandSeparator(s,' ',4);
+
 CalcEdit.Text := s;
 end;
 
@@ -679,8 +829,16 @@ isManuallyEntered  :=  false;
   2:s := IntToOct(Strtoint64(s),0);
   3:s := IntToBin(Strtoint64(s),0);
  end;
-if pos('.',s)=0 then s  :=  s + '.';
-if DigitGroupingMNU.Checked then s:=AddThousandSeparator(s,',');
+
+if (Pos('.',S) = 0) and (BaseIndex = DecRDBTN.Tag) then
+ s := s+'.';
+
+if DigitGroupingMNU.Checked then
+   if BaseIndex = 1 then
+     s := AddThousandSeparator(s,',',3)
+   else
+     s := AddThousandSeparator(s,' ',4);
+
 CalcEdit.Text  :=  S;
 end;
 
@@ -692,11 +850,12 @@ begin
 Result := false;
 Case BaseIndex of
 0:if ByteGroup.ItemIndex > 1 then
-   if Length(CalcText) > 8-ByteGroup.ItemIndex*4 then exit else
+   if Length(CalcText) > 8 - ByteGroup.ItemIndex * 4 then exit else
   else
-   if Length(CalcText) > 16-ByteGroup.ItemIndex*4 then exit;
+   if Length(CalcText) > 16 - ByteGroup.ItemIndex * 4 then exit;
 1:if (Length(CalcText) > MaxShow) or
-     ((Pos('e',CalcText)<>0) and (Length(Copy(CalcText,Pos('e',CalcText),Length(CalcText))) > 7)) then exit;
+     ((Pos('e',CalcText) <> 0) and
+     (Length(Copy(CalcText,Pos('e',CalcText),Length(CalcText))) > 7)) then exit;
 2:
   case ByteGroup.ItemIndex of
     0:if length(CalcText) > 22 then exit;
@@ -704,7 +863,7 @@ Case BaseIndex of
     2:if Length(CalcText) > 5 then exit;
     3:if Length(CalcText) > 2 then exit;
   end;
-3:if Length(CalcText) > (8-ByteGroup.ItemIndex*2)*4 then exit;
+3:if Length(CalcText) > (8 - ByteGroup.ItemIndex * 2) * 4 then exit;
 end;
  case BaseIndex of
   0:FNum[FNumIndex].Num.Assign(IntToStr(HexToInt(CalcText)));
@@ -744,10 +903,10 @@ begin
 DefocusControl(MainForm,True);
 doinc := true;
 try
-if OP=_ClosePr then
+if OP = _ClosePr then
 begin
 dec(FNumIndex);
-FNum[FNumIndex-1].Num.Assign(FNum[FNumIndex].Num);
+FNum[FNumIndex - 1].Num.Assign(FNum[FNumIndex].Num);
 dec(FNumIndex);
 FNum[FNumIndex].Pr := false;
 FNum[FNumIndex].Operation := _Add;
@@ -755,7 +914,7 @@ FNum[FNumIndex].Priority := 0;
 Calculate(AllToPr);
 end
 else
-if OP=_OpenPr then
+if OP = _OpenPr then
 begin
 FNum[FNumIndex].Pr := true;
 FNum[FNumIndex].Operation := _OpenPr;
@@ -775,7 +934,7 @@ end;
 
 Case OP of
 _DegDMS,_DMSDeg,
-_Frac,_Int,
+_Frac,_Int,_Not,
 _Sin,_Cos,_Tan,_ArcSin,_ArcCos,_ArcTan,
 _Sinh,_Cosh,_Tanh,_ArcSinh,_ArcCosh,_ArcTanh,
 _Exp,_Ln,_Log,_InvLog,_X2,_X3,_X3Sqrt,_XSqrt, _XInv,_Fact:begin Calculate(FNumIndex);doinc := false;end;
@@ -783,9 +942,9 @@ _Nop,_ClosePr,_Equal,_FESci,_FENorm:doinc := false;
 _OpenPr:;
 else
 begin
-if FNumIndex>1 then
-   if FNum[FNumIndex].Priority <= FNum[FNumIndex-1].Priority then
-      if not FNum[FNumIndex-1].Pr then
+if FNumIndex > 1 then
+   if FNum[FNumIndex].Priority <= FNum[FNumIndex - 1].Priority then
+      if not FNum[FNumIndex - 1].Pr then
           Calculate(ALLToPr);
 // ????????????
 doinc := true;
@@ -804,7 +963,7 @@ SetCalcText(CalcText);
 if doinc then
 begin
 Inc(FNumIndex);
-FNum[FNumIndex].Operation:=_Nop;
+FNum[FNumIndex].Operation := _Nop;
 end;
 IsFloat := false;
 
@@ -812,7 +971,7 @@ except
  on E: Exception do
    begin
    CEBTNClick(self);
-   CalcEdit.Text:=E.Message;
+   CalcEdit.Text := E.Message;
    end;
 
 end;end;
@@ -837,9 +996,10 @@ FNum[b].Operation:=_Equal;
 end;
 FMemoryNum := TNumber.Create(0,MaxDig);
 FNumIndex := 1;
-FHintWindow:= HintWindowClass.Create(MainForm);
-FHintWindow.Color:=clInfoBk;
-FHintShow:=False;
+FHintWindow := TMYHintWindow.Create(self);
+FHintWindow.Color := clInfoBk;
+// FHintWindow.onMouseDown := HintWindowMouseDown; ?? not working perfect now
+FHintShow := False;
 IsFloat := false;ShowSCi := false;
 CalcText  :=  '0';
 SetCalcText(CalcText);
@@ -854,7 +1014,7 @@ end;
 
 procedure TMainForm.AboutCalculator1Click(Sender: TObject);
 begin
-    XPAPI.showAboutDlg('Calculator');
+//    XPAPI.showAboutDlg('Calculator');
 end;
 
 
@@ -880,7 +1040,7 @@ begin
 repeat
 CEBTNClick(Self);
 dec(FNumIndex);
-until FNumIndex=0;
+until FNumIndex = 0;
 FNumIndex := 1;
 ShowSCi := False;
 DefocusControl(MainForm,True)
@@ -938,6 +1098,7 @@ if StandardMNU.Checked then
 FEBTNClick(Percent_OrBTN);
 end;
 
+
 procedure TMainForm.OneOver_LshBTNClick(Sender: TObject);
 begin
 OneOver_LshBTN.Tag := 15;
@@ -986,12 +1147,16 @@ end;
 
 procedure TMainForm.BackSpaceBTNClick(Sender: TObject);
 begin
+if not isManuallyEntered then
+begin Beep;exit;end; 
 if (CalcText = '') or (CalcText = '0') then exit;
 if pos('.',CalcText) = Length(CalcText) then IsFloat := false;
 delete(CalcText,Length(CalcText),1);
 AddCalcText(' ');
 DefocusControl(MainForm,True)
 end;
+
+
 
 procedure TMainForm.StandardMNUClick(Sender: TObject);
 var
@@ -1005,7 +1170,7 @@ MainForm.Width := 260;
 StandardPanel.Left := 0;
 StandardPanel.Top := StandardPanel.Top-AngleGroup.Height;
 CCEPanel.Top := 30;
-Height := Height-50;
+Height := Height - 50;
 Sqrt_ModBTN.Caption := 'sqrt';Sqrt_ModBTN.Font.Color := ZeroBTN.Font.Color;
 Percent_OrBTN.Caption := '%';Percent_OrBTN.Font.Color := ZeroBTN.Font.Color;
 OneOver_LshBTN.Caption := '1/x';OneOver_LshBTN.Font.Color := ZeroBTN.Font.Color;
@@ -1014,7 +1179,7 @@ if InvCB.Tag = 20 then begin InvCB.OnClick(self);InvCB.Checked := false;end;
 if HypCB.Tag = 40 then begin HypCB.OnClick(self);HypCB.Checked := false;end;
 
 
-for b := 0 to ViewMNU.Count-1 do
+for b := 0 to ViewMNU.Count - 1 do
 if pos('T',ViewMNU.Items[b].Hint) <> 0 then
 begin ViewMNU.Items[b].Visible := true;ViewMNU.Items[b].Enabled := true;end
 else
@@ -1035,14 +1200,14 @@ MainForm.Width := 476;
 StandardPanel.Left := 181;
 StandardPanel.Top := StandardPanel.Top+AngleGroup.Height;
 CCEPanel.Top := 56;
-Height := Height+50;
+Height := Height + 50;
 SciencePanel.Show;
 Sqrt_ModBTN.Caption := 'Mod';Sqrt_ModBTN.Font.Color := DivideBTN.Font.Color;
 Percent_OrBTN.Caption := 'Or';Percent_OrBTN.Font.Color := DivideBTN.Font.Color;
 OneOver_LshBTN.Caption := 'Lsh';OneOver_LshBTN.Font.Color := DivideBTN.Font.Color;
 
 
-for b := 0 to ViewMNU.Count-1 do
+for b := 0 to ViewMNU.Count - 1 do
 if pos('C',ViewMNU.Items[b].Hint) <> 0 then
 begin ViewMNU.Items[b].Visible := true;ViewMNU.Items[b].Enabled := true;end
 else
@@ -1059,10 +1224,15 @@ end;
 procedure TMainForm.FEBTNClick(Sender: TObject);
 var
 opBak:TheOperations;
-begin                    //+20      +40
+begin
 if not (Sender as TButton).Enabled then begin Beep;exit;end;
+
 Screen.Cursor:=crHourGlass;
-case TButton(Sender).Tag+InvCB.Tag+HypCB.Tag of
+if (not isManuallyEntered) and (FNum[FNumIndex].Operation=_Nop) then
+   FNum[FNumIndex].Num.Assign(FNum[FNumIndex - 1].Num);
+
+                         //+20           +40
+case TButton(Sender).Tag + InvCB.Tag + HypCB.Tag of
  0,20,40: Operate(_Nop);
  1,21,41:
    if BaseIndex = 1 then
@@ -1117,18 +1287,18 @@ case TButton(Sender).Tag+InvCB.Tag+HypCB.Tag of
 
  6,26,66:
      begin// Do (
-      if OtherLBL.Tag = MaxPR-4 then exit;
-      OtherLBL.Tag := OtherLBL.Tag+1;
-      OtherLBL.Caption := '(='+inttostr(OtherLBL.Tag);
+      if OtherLBL.Tag = MaxPR - 4 then exit;
+      OtherLBL.Tag := OtherLBL.Tag + 1;
+      OtherLBL.Caption := '(=' + InttoStr(OtherLBL.Tag);
       Operate(_OpenPr);
     end;
  11,31,71:
      begin// Do )
       if OtherLBL.Tag = 0 then exit;
       Operate(_Add);
-      OtherLBL.Tag := OtherLBL.Tag-1;
+      OtherLBL.Tag := OtherLBL.Tag - 1;
       if OtherLBL.Tag <> 0 then
-      OtherLBL.Caption := '(='+inttostr(OtherLBL.Tag)
+      OtherLBL.Caption := '(=' + InttoStr(OtherLBL.Tag)
       else OtherLBL.Caption := '';
       Operate(_ClosePr);
     end;
@@ -1176,22 +1346,22 @@ case TButton(Sender).Tag+InvCB.Tag+HypCB.Tag of
      Operate(_Frac);
  17:if FNumIndex<=1 then CEBTNClick(self) else
      begin
-       if (not isManuallyEntered) and (FNum[FNumIndex].Operation=_Nop) then
+       if (not isManuallyEntered) and (FNum[FNumIndex].Operation = _Nop) then
        begin
-       FNum[FNumIndex].Num.Assign(FNum[FNumIndex-1].Num);
+       FNum[FNumIndex].Num.Assign(FNum[FNumIndex - 1].Num);
        end;
-       opBak:=FNum[FNumIndex-1].Operation;
-       FNum[FNumIndex-1].Operation:=_Add;
-       FNum[FNumIndex-1].Priority:=GetOperationPriority(_Add);
-       FNum[FNumIndex].Operation:=_Mul;
-       FNum[FNumIndex].Priority:=GetOperationPriority(_Mul);
-       inc(FNumIndex);
-       FNum[FNumIndex].Num.Assign(FNum[FNumIndex-1].Num);
-       FNum[FNumIndex-1].Num.Assign(FNum[FNumIndex-2].Num);
-       FNum[FNumIndex].Num.Exponent:=FNum[FNumIndex].Num.Exponent-2;
+       opBak:=FNum[FNumIndex - 1].Operation;
+       FNum[FNumIndex - 1].Operation := _Add;
+       FNum[FNumIndex - 1].Priority := GetOperationPriority(_Add);
+       FNum[FNumIndex].Operation := _Mul;
+       FNum[FNumIndex].Priority := GetOperationPriority(_Mul);
+       Inc(FNumIndex);
+       FNum[FNumIndex].Num.Assign(FNum[FNumIndex - 1].Num);
+       FNum[FNumIndex-1].Num.Assign(FNum[FNumIndex - 2].Num);
+       FNum[FNumIndex].Num.Exponent:=FNum[FNumIndex].Num.Exponent - 2;
        Operate(_Mul);Dec(FNumIndex);
-       assert(FNumIndex>1);
-       FNum[FNumIndex-1].Operation:=opBak;
+       Assert(FNumIndex>1);
+       FNum[FNumIndex - 1].Operation:=opBak;
      end;
 
   18:
@@ -1207,13 +1377,32 @@ end;
 
 
 
+procedure TMainForm.LogicalBTNClick(Sender: TObject);
+begin
+case (Sender as TButton).Tag + InvCB.Tag of
+1,21: Operate(_And);
+2,22: Operate(_Or);
+3,23: Operate(_Xor);
+4: Operate(_Lsh);
+5,25: Operate(_Not);
+24: Operate(_Rsh);
+end;
+if InvCB.Tag = 20 then begin InvCB.OnClick(self);InvCB.Checked := false;end;
+if HypCB.Tag = 40 then begin HypCB.OnClick(self);HypCB.Checked := false;end;
+DefocusControl(MainForm,True)
+end;
+
+
+
+
+
 procedure TMainForm.StaBTNClick(Sender: TObject);
 begin
 if not (Sender as TButton).Enabled then begin Beep;exit;end;
-case TButton(Sender).Tag+InvCB.Tag of
+case TButton(Sender).Tag + InvCB.Tag of
  0,1: begin
      StaBTN.Tag := StaBTN.Tag xor 1;
-     if StaBTN.Tag=1 then
+     if StaBTN.Tag = 1 then
       begin
        StatisticsForm.Show;
        AveBTN.Enabled := true;SumBTN.Enabled := true;
@@ -1255,9 +1444,10 @@ case TButton(Sender).Tag+InvCB.Tag of
       Operate(_Nop);
     end;
 end;
-if InvCB.Tag=20 then begin InvCB.OnClick(self); InvCB.Checked := false; end;
+if InvCB.Tag = 20 then begin InvCB.OnClick(self); InvCB.Checked := false; end;
 DefocusControl(MainForm,True)
 end;
+
 
 
 
@@ -1270,6 +1460,7 @@ if not (Sender as TButton).Enabled then begin Beep;exit;end;
 end;
 
 
+
 procedure TMainForm.FormDestroy(Sender: TObject);
 var
 b:byte;
@@ -1279,37 +1470,42 @@ for b := 1 to MaxPR do
 end;
 
 
+
 procedure TMainForm.DivideBTNClick(Sender: TObject);
 begin
-if (not isManuallyEntered) and (FNum[FNumIndex].Operation=_Nop) then dec(FNumIndex);
+if (not isManuallyEntered) and (FNum[FNumIndex].Operation = _Nop) then dec(FNumIndex);
   Operate(_Div);
 end;
 
 
+
 procedure TMainForm.MultiplyBTNClick(Sender: TObject);
 begin
-if (not isManuallyEntered) and (FNum[FNumIndex].Operation=_Nop) then dec(FNumIndex);
+if (not isManuallyEntered) and (FNum[FNumIndex].Operation = _Nop) then dec(FNumIndex);
    Operate(_Mul);
 end;
 
 
+
 procedure TMainForm.MinusBTNClick(Sender: TObject);
 begin
-if (not isManuallyEntered) and (FNum[FNumIndex].Operation=_Nop) then dec(FNumIndex);
+if (not isManuallyEntered) and (FNum[FNumIndex].Operation = _Nop) then dec(FNumIndex);
    Operate(_Sub);
 end;
 
 
+
 procedure TMainForm.PlusBTNClick(Sender: TObject);
 begin
-if (not isManuallyEntered) and (FNum[FNumIndex].Operation=_Nop) then dec(FNumIndex);
+if (not isManuallyEntered) and (FNum[FNumIndex].Operation = _Nop) then dec(FNumIndex);
    Operate(_Add);
 end;
 
 
+
 procedure TMainForm.piBTNClick(Sender: TObject);
 begin
-if InvCB.Tag=0 then
+if InvCB.Tag = 0 then
   FNum[FNumIndex].Num.Assign(Pi,asAllbutFloatDigits xor asAngle)
 else
   FNum[FNumIndex].Num.Assign(Pi2,asAllbutFloatDigits xor asAngle);
@@ -1323,12 +1519,14 @@ ConvertToCurrentNum;}
 end;
 
 
+
 procedure TMainForm.InvCBClick(Sender: TObject);
 begin
 if ScientificMNU.Checked then
    if InvCB.Checked then
        InvCB.Tag := 20 else InvCB.Tag := 0;
 end;
+
 
 
 procedure TMainForm.HypCBClick(Sender: TObject);
@@ -1339,6 +1537,7 @@ if ScientificMNU.Checked then
 end;
 
 
+
 procedure TMainForm.HexMNUClick(Sender: TObject);
 var
 i: Word;
@@ -1346,25 +1545,26 @@ begin
 HexMNU.Checked := true;
 HexRDBTN.Checked := true;
 
-for i := 0 to SciencePanel.ControlCount-1 do
+for i := 0 to SciencePanel.ControlCount - 1 do
   if SciencePanel.Controls[i] is TButton then
      with SciencePanel.Controls[i] as TButton do
        if pos('H',Hint) <> 0 then Enabled := true else Enabled := false;
 
-for i := 0 to StandardPanel.ControlCount-1 do
+for i := 0 to StandardPanel.ControlCount - 1 do
   if StandardPanel.Controls[i] is TButton then
      with StandardPanel.Controls[i] as TButton do
         if pos('H',Hint) <> 0 then Enabled := true else Enabled := false;
 
-for i := 0 to ViewMNU.Count-1 do
-    if ViewMNU.Items[i].GroupIndex=3 then
+for i := 0 to ViewMNU.Count - 1 do
+    if ViewMNU.Items[i].GroupIndex = 3 then
        begin ViewMNU.Items[i].Visible := true;ViewMNU.Items[i].Enabled := true;end
-    else if ViewMNU.Items[i].GroupIndex=4 then
+    else if ViewMNU.Items[i].GroupIndex = 4 then
        begin ViewMNU.Items[i].Visible := false;ViewMNU.Items[i].Enabled := false;end;
 
 AngleGroup.Hide;
 SetCalcText(CalcText);
 end;
+
 
 
 
@@ -1376,25 +1576,26 @@ DecimalMNU.Checked := true;
 DecRDBTN.Checked := true;
 
 
-for i := 0 to SciencePanel.ControlCount-1 do
+for i := 0 to SciencePanel.ControlCount - 1 do
    if SciencePanel.Controls[i] is TButton then
       with SciencePanel.Controls[i] as TButton do
          if pos('D',Hint) <> 0 then Enabled := true else Enabled := false;
 
-for i := 0 to StandardPanel.ControlCount-1 do
+for i := 0 to StandardPanel.ControlCount - 1 do
    if StandardPanel.Controls[i] is TButton then
       with StandardPanel.Controls[i] as TButton do
          if pos('D',Hint) <> 0 then Enabled := true else Enabled := false;
 
-for i := 0 to ViewMNU.Count-1 do
-    if ViewMNU.Items[i].GroupIndex=4 then
+for i := 0 to ViewMNU.Count - 1 do
+    if ViewMNU.Items[i].GroupIndex = 4 then
        begin ViewMNU.Items[i].Visible := true;ViewMNU.Items[i].Enabled := true;end
-    else if ViewMNU.Items[i].GroupIndex=3 then
+    else if ViewMNU.Items[i].GroupIndex = 3 then
        begin ViewMNU.Items[i].Visible := false;ViewMNU.Items[i].Enabled := false;end;
 
 AngleGroup.Show;
 SetCalcText(CalcText);
 end;
+
 
 
 
@@ -1405,19 +1606,19 @@ begin
 OctalMNU.Checked := true;
 OctRDBTN.Checked := true;
 
-for i := 0 to SciencePanel.ControlCount-1 do
+for i := 0 to SciencePanel.ControlCount - 1 do
   if SciencePanel.Controls[i] is TButton then
      with SciencePanel.Controls[i] as TButton do
         if pos('O',Hint) <> 0 then Enabled := true else Enabled := false;
-for i := 0 to StandardPanel.ControlCount-1 do
+for i := 0 to StandardPanel.ControlCount - 1 do
   if StandardPanel.Controls[i] is TButton then
       with StandardPanel.Controls[i] as TButton do
          if pos('O',Hint) <> 0 then Enabled := true else Enabled := false;
 
-for i := 0 to ViewMNU.Count-1 do
-    if ViewMNU.Items[i].GroupIndex=3 then
+for i := 0 to ViewMNU.Count - 1 do
+    if ViewMNU.Items[i].GroupIndex = 3 then
        begin ViewMNU.Items[i].Visible := true;ViewMNU.Items[i].Enabled := true;end
-    else if ViewMNU.Items[i].GroupIndex=4 then
+    else if ViewMNU.Items[i].GroupIndex = 4 then
        begin ViewMNU.Items[i].Visible := false;ViewMNU.Items[i].Enabled := false;end;
 
 AngleGroup.Hide;
@@ -1433,20 +1634,20 @@ begin
 BinaryMNU.Checked := true;
 BinRDBTN.Checked := true;
 
-for i := 0 to SciencePanel.ControlCount-1 do
+for i := 0 to SciencePanel.ControlCount - 1 do
 if SciencePanel.Controls[i] is TButton then
    with SciencePanel.Controls[i] as TButton do
      if pos('B',Hint) <> 0 then Enabled := true else Enabled := false;
 
-for i := 0 to StandardPanel.ControlCount-1 do
+for i := 0 to StandardPanel.ControlCount - 1 do
   if StandardPanel.Controls[i] is TButton then
      with StandardPanel.Controls[i] as TButton do
        if pos('B',Hint) <> 0 then Enabled := true else Enabled := false;
 
-for i := 0 to ViewMNU.Count-1 do
-    if ViewMNU.Items[i].GroupIndex=3 then
+for i := 0 to ViewMNU.Count - 1 do
+    if ViewMNU.Items[i].GroupIndex = 3 then
        begin ViewMNU.Items[i].Visible := true;ViewMNU.Items[i].Enabled := true;end
-    else if ViewMNU.Items[i].GroupIndex=4 then
+    else if ViewMNU.Items[i].GroupIndex = 4 then
        begin ViewMNU.Items[i].Visible := false;ViewMNU.Items[i].Enabled := false;end;
 
 AngleGroup.Hide;
@@ -1484,6 +1685,7 @@ DefocusControl(MainForm,True)
 end;
 
 
+
 procedure TMainForm.DegreesMNUClick(Sender: TObject);
 var
 i: Word;
@@ -1493,6 +1695,7 @@ AngleGroup.ItemIndex := 0;
 for i := 1 to MaxPR do
 FNum[i].Num.Angle := Degrees;
 end;
+
 
 
 procedure TMainForm.RadiansMNUClick(Sender: TObject);
@@ -1506,6 +1709,7 @@ FNum[i].Num.Angle := Radians;
 end;
 
 
+
 procedure TMainForm.GradsMNUClick(Sender: TObject);
 var
 i: Word;
@@ -1515,6 +1719,7 @@ AngleGroup.ItemIndex := 2;
 for i := 1 to MaxPR do
 FNum[i].Num.Angle := Grads;
 end;
+
 
 
 procedure TMainForm.AngleGroupClick(Sender: TObject);
@@ -1528,6 +1733,7 @@ DefocusControl(MainForm,True)
 end;
 
 
+
 procedure TMainForm.DigitGroupingMNUClick(Sender: TObject);
 begin
 DigitGroupingMNU.Tag := DigitGroupingMNU.Tag xor 1;
@@ -1535,6 +1741,7 @@ if DigitGroupingMNU.Tag = 1 then
    DigitGroupingMNU.Checked := true
 else
    DigitGroupingMNU.Checked := false;
+
 SetCalcText(CalcText);
 end;
 
@@ -1547,6 +1754,7 @@ procedure TMainForm.KeyPressed(Sender: TObject; var Key: Char);
 begin
 //
 end;
+
 
 procedure TMainForm.AveBTNKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
@@ -1595,11 +1803,13 @@ end;
 end;
 
 
+
 procedure TMainForm.AveBTNKeyString(Sender: TObject; var S: WideString;
   var Handled: Boolean);
 begin
 //
 end;
+
 
 procedure TMainForm.TheMouseEnter(Sender: TObject);
 begin
@@ -1607,16 +1817,18 @@ with Sender as TControl do
 HintStr:=HelpKeyword;
 with Sender as TButtonControl do
  if Visible and Enabled and (not FHintShow) then
-  begin
-  SetFocus;
-  end;
+  if Application.Active then
+    SetFocus;
 end;
+
+
 
 procedure TMainForm.TheMouseLeave(Sender: TObject);
 begin
 if not FHintShow then
 DefocusControl(Sender as TButtonControl,True)
 end;
+
 
 
 procedure TMainForm.ByteGroupMNUClick(Sender: TObject);
@@ -1627,36 +1839,50 @@ ByteGroup.ItemIndex:=Tag;
 ByteGroupClick(self);
 end;
 
+
+
 procedure TMainForm.WhatsThisMNUClick(Sender: TObject);
 var
 mr:trect;
-
 begin
-mr:=FHintWindow.CalcHintRect(2000, HintStr, 0);
-inc(mr.Left,Mouse.CursorPos.X);inc(mr.Top,Mouse.CursorPos.Y);
-inc(mr.Right,Mouse.CursorPos.X);inc(mr.Bottom,Mouse.CursorPos.Y);
+mr := FHintWindow.CalcHintRect(2000, HintStr, nil);
+Inc(mr.Left,Mouse.CursorPos.X);Inc(mr.Top,Mouse.CursorPos.Y);
+Inc(mr.Right,Mouse.CursorPos.X);Inc(mr.Bottom,Mouse.CursorPos.Y);
 FHintWindow.ActivateHint(mr,HintStr);
 FHintWindow.SetFocus;
-FHintShow:=True;
-//Application.ActivateHint(point(10,10));
+FHintShow := True;
 end;
+
+
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
 if FHintShow then
 begin
 FHintWindow.ReleaseHandle;
-FHintShow:=False;
+FHintShow := False;
 end;
 end;
+
 
 procedure TMainForm.ControlMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-if Button=mbRight then
+if Button = mbRight then
 with Sender as TControl do
- HintStr:=HelpStr[HelpContext];
+ HintStr := HelpStr[HelpContext];
 end;
+
+
+
+procedure TMainForm.HintWindowMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+// MainForm.setFocuse;  //why not working ????
+end;
+
+
+
 
 end.
 

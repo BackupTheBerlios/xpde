@@ -1,13 +1,14 @@
 object MainForm: TMainForm
   HelpType = htContext
   HelpKeyword = 'start'
-  Left = 366
-  Top = 115
+  Left = 400
+  Top = 176
   Width = 476
   Height = 294
   HorzScrollBar.Range = 433
   VertScrollBar.Range = 224
   ActiveControl = ByteGroup
+  BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = fbsSingle
   Caption = 'Calculator'
   Color = clBackground
@@ -60,7 +61,7 @@ object MainForm: TMainForm
       OnClick = AngleGroupClick
     end
     object AndBTN: TButton
-      Tag = 8
+      Tag = 1
       Left = 432
       Top = 92
       Width = 36
@@ -77,6 +78,7 @@ object MainForm: TMainForm
       PopupMenu = WhatsThisPUMNU
       TabOrder = 2
       TabStop = False
+      OnClick = LogicalBTNClick
       OnKeyDown = AveBTNKeyDown
       OnKeyPress = KeyPressed
       OnKeyString = AveBTNKeyString
@@ -85,7 +87,7 @@ object MainForm: TMainForm
       OnMouseLeave = TheMouseLeave
     end
     object XorBTN: TButton
-      Tag = 9
+      Tag = 3
       Left = 432
       Top = 125
       Width = 36
@@ -102,6 +104,7 @@ object MainForm: TMainForm
       PopupMenu = WhatsThisPUMNU
       TabOrder = 3
       TabStop = False
+      OnClick = LogicalBTNClick
       OnKeyDown = AveBTNKeyDown
       OnKeyPress = KeyPressed
       OnKeyString = AveBTNKeyString
@@ -110,7 +113,7 @@ object MainForm: TMainForm
       OnMouseLeave = TheMouseLeave
     end
     object NotBTN: TButton
-      Tag = 10
+      Tag = 5
       Left = 432
       Top = 158
       Width = 36
@@ -127,6 +130,7 @@ object MainForm: TMainForm
       PopupMenu = WhatsThisPUMNU
       TabOrder = 4
       TabStop = False
+      OnClick = LogicalBTNClick
       OnKeyDown = AveBTNKeyDown
       OnKeyPress = KeyPressed
       OnKeyString = AveBTNKeyString
@@ -1086,7 +1090,7 @@ object MainForm: TMainForm
       ParentFont = False
       ParentShowHint = False
       PopupMenu = WhatsThisPUMNU
-      ShowHint = False
+      ShowHint = True
       TabOrder = 4
       TabStop = False
       OnClick = NumberBTNClick
@@ -1344,6 +1348,7 @@ object MainForm: TMainForm
       OnMouseLeave = TheMouseLeave
     end
     object Percent_OrBTN: TButton
+      Tag = 2
       HelpType = htContext
       HelpContext = 8
       Left = 212
@@ -1363,7 +1368,7 @@ object MainForm: TMainForm
       PopupMenu = WhatsThisPUMNU
       TabOrder = 13
       TabStop = False
-      OnClick = Percent_OrBTNClick
+      OnClick = LogicalBTNClick
       OnKeyDown = AveBTNKeyDown
       OnKeyPress = KeyPressed
       OnKeyString = AveBTNKeyString
@@ -1497,6 +1502,7 @@ object MainForm: TMainForm
       OnMouseLeave = TheMouseLeave
     end
     object OneOver_LshBTN: TButton
+      Tag = 4
       HelpType = htContext
       HelpContext = 9
       Left = 212
@@ -1516,7 +1522,7 @@ object MainForm: TMainForm
       PopupMenu = WhatsThisPUMNU
       TabOrder = 18
       TabStop = False
-      OnClick = OneOver_LshBTNClick
+      OnClick = LogicalBTNClick
       OnKeyDown = AveBTNKeyDown
       OnKeyPress = KeyPressed
       OnKeyString = AveBTNKeyString

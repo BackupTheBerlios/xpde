@@ -55,25 +55,26 @@
 //
 //      Feb 2003
 //        2.02b : TaylorLn and TaylorExp added but very slow
-//                - Again lots of fixups and optimizations but still some bugs and
+//                - Again lots of fixups and optimizations but still lotta bugs
 //
 //
 //      April 2003
 //        3.0a  : Very Fast Taylor and Newton equatons (compare to previous ones)
 //               - Now every byte hold two digits
 //               - Lots of functions added
-//               - All of Trigonometric functions with support of diffrent Angle Types
+//               - Trigonometric functions added
 //               - Lots of Optimizations
 //               - Lots of bug fixes
 //
-//       May 2003
+//      May 2003
 //         3.1a  : Added support for nonlimited digits numbers (not fully developed)
 //                - "SetEqual" and "SetNumber" are combined in "Assign" method
 //                - Small but important fixups in Division
 //                - Ln and Exp is finally fast but still requires some little more
 //                   optimizations
+//                - Trigonimetric functions with soppurt of different Angle types
 //                - Hyperbolic Trigonometric functions added
-//                - Reverse Trigonometric added
+//                - Reverse Trigonometric functions added
 //                - Guassien 3 Point Integral added for any function
 //                - 5 Exceptional classes added
 //                - Good error handling with Messages
@@ -85,21 +86,26 @@
 //        3.101a  : Taylor Series are now 10% faster than before
 //                - "Assign" method now got options for better assigning
 //
-//  BUGS
-//         - Some functions have to change to procedures
-//         - Problems with Asigning
+//  1  June 2003
+//        3.11a  : Logical Operators are Added
+//
+//  BUGS :
+//         - Some functions have to change to procedures (making try exception statements
+//             hard to define and somewheres code is not clear)
+//         - Problems with Assigning
 //         - bugs in  Nonlimited Digits numbers
+//         
 //
 //
 //
-//
-//  TODO
+//  TODO :
 //         - Clearifying code
 //         - Support for Rational Numbers
-//         - Remove HardCoded Numbers like Ln10 and Pi
+//         - Remove HardCoded Numbers like Ln10 and Pi to support digits more than
+//             what is declared
 //         - Optimization for support of bigger digits
 //         - Change internal Structures to IEEE Floating Point Numbers (????)
-//         - Support of bitwise operators
+//         - Make internal structure numbers bigger (any gain in speed ???)
 //
 unit BigNumber;
 {$o-}
@@ -115,9 +121,11 @@ NoFloatLimit=-1;
 MaxDivDigits=60;
 DefFloatDig=20;
 DigPerNum=2;
+DigPerNumMax=100;
 InvalidInputErrorStr='Invalid function input';
 DivisionByZeroErrorStr='Divion by zero';
 UndefinedErrorStr='Result of function is undefined';
+ConversionError='Error in converting to number'; 
 
 asTheSign=1;
 asExponent=2;
@@ -138,6 +146,7 @@ AngleKind=(Degrees,Radians,Grads);
 SignIndicator=(Zero=0,Positive=1,Negative=2);
 NumberType=Byte;
 NumberArray=Array of NumberType;
+BitWiseArray=Array of Cardinal;
 OneDigit=0..9;
 
 ENumberConversionError=Class(Exception);
@@ -174,6 +183,8 @@ TNumber=Class
    procedure SetExponent(Ex: Longint);
    procedure SetNum(Ind: Longint;Num: NumberType);
    function  GetNum(Ind: Longint): NumberType;
+   procedure SetNumPos(Ind: Longint;Pos: Shortint;Value: NumberType);
+   function  GetNumPos(Ind: Longint;Pos: Shortint): NumberType;
    procedure SetDigValue(Ind: Longint;Value: NumberType);
    function  GetDigValue(Ind: Longint): NumberType;
    procedure SetFloatDigits(b: Longint);
@@ -187,6 +198,7 @@ TNumber=Class
      property FloatDigits: Longint read GetFloatDigits write SetFloatDigits;
      property Exponent: LongInt read GetExponent write SetExponent;
      property Num[Ind: Longint]: NumberType read GetNum write SetNum;default;
+     property NumPos[Ind: Longint;Pos: Shortint]: NumberType read GetNumPos write SetNumPos;
      property Dig[Ind: Longint]: NumberType read GetDigValue write SetDigValue;
      property FN[Ind: Longint]: NumberType read GetFN write SetFN;
 
@@ -246,6 +258,24 @@ TNumber=Class
      procedure DivInt(b: TNumber);overload;
      procedure DivMod(b: TNumber;var Res: TNumber);overload;
      procedure DivMod(b: TNumber);overload;
+     procedure DivIntMod(b: TNumber;Var ResDiv,ResMod: TNumber);
+
+     function  BitWiseConvertOut:BitWiseArray;
+     procedure BitWiseConvertIn(bitar:BitWiseArray);
+     procedure BitWiseAnd(b: TNumber;var Res: TNumber);overload;
+     procedure BitWiseAnd(b: TNumber);overload;
+     procedure BitWiseOr(b: TNumber;var Res: TNumber);overload;
+     procedure BitWiseOr(b: TNumber);overload;
+     procedure BitWiseXor(b: TNumber;var Res: TNumber);overload;
+     procedure BitWiseXor(b: TNumber);overload;
+     procedure BitWiseNot(var Res: TNumber);overload;
+     procedure BitWiseNot;overload;
+     procedure BitWiseLsh(b: TNumber;var Res: TNumber);overload;
+     procedure BitWiseLsh(b: TNumber);overload;
+     procedure BitWiseRsh(b: TNumber;var Res: TNumber);overload;
+     procedure BitWiseRsh(b: TNumber);overload;
+
+
 
      function  FIntPower(b: TNumber): TNumber;
      procedure IntPower(b: TNumber);overload;
@@ -323,7 +353,6 @@ TNumber=Class
      procedure TaylorExp(var Res: TNumber);
      procedure Exp(var Res: TNumber);overload;
      procedure Exp;overload;
-
 end;
 
 
@@ -341,47 +370,48 @@ PLn10onLn2= 3.3119281;
 
 constructor TNumber.Create;
 begin
-inherited;
-FSimpleOP := false;
-FNumHigh := -1;
-FFloatDigits := DefFloatDig;
-FAngle := Radians;
-MakeZero;
+ inherited;
+  FSimpleOP := false;
+  FNumHigh := -1;
+  FFloatDigits := DefFloatDig;
+  FAngle := Radians;
+  MakeZero;
 end;
 
 
 
 constructor TNumber.Create(b:extended;FPr: Longint=DefFloatDig);
 begin
-Create;
-FFloatDigits := FPr;
-Assign(b);
+  Create;
+  FFloatDigits := FPr;
+  Assign(b);
 end;
 
 
 
-constructor TNumber.Create(b:string;FPr: Longint=DefFloatDig);
+constructor TNumber.Create(b:string;FPr: Longint = DefFloatDig);
 begin
-Create;
-FFloatDigits := FPr;
-if b <> '' then
-Assign(b);
+  Create;
+  FFloatDigits := FPr;
+  if b <> '' then
+    Assign(b);
 end;
 
 
-constructor TNumber.Create(b: TNumber;FPr: Longint=DefFloatDig);
+constructor TNumber.Create(b: TNumber;FPr: Longint = DefFloatDig);
 begin
-Create;
-FFloatDigits := FPr;
-Assign(b);
+  Create;
+  FFloatDigits := FPr;
+  Assign(b);
 end;
 
 
 procedure TNumber.SetLength(Size: Longint);
 begin
-if Size - 1 = FNumHigh then exit;
-system.SetLength(FNum,Size);
-FNumHigh := Size - 1;
+  if Size - 1 = FNumHigh then
+    Exit;
+  System.SetLength(FNum, Size);
+  FNumHigh := Size - 1;
 end;
 
 
@@ -390,20 +420,20 @@ function  TNumber.GetString(MaxChar: Word):String;
 var
 l: Longint;
 begin
-Result := Chr(FNum[0] div 10+byte('0'))+'.'+Chr(FNum[0] mod 10+byte('0'));
-for l := 1 to FNumHigh do
-begin
-Result := Result + Chr(FNum[l] div 10 + byte('0'));
-Result := Result + Chr(FNum[l] mod 10 + byte('0'));
-end;
-if (((FNumHigh + 1) * DigPerNum - 1)>FExponent) then
-if Result[Length(Result)] = '0' then delete(Result,Length(Result),1);
-if Result[Length(Result)] = '.' then delete(Result,Length(Result),1);
-if Length(Result) > MaxChar then
-delete(Result,MaxChar,Length(Result));
-Result := Result + 'e' + IntToStr(FExponent);
-if FSign = Negative then
-Result := '-' + Result;
+  Result := Chr(FNum[0] div 10+byte('0'))+'.'+Chr(FNum[0] mod 10+byte('0'));
+  for l := 1 to FNumHigh do
+    begin
+      Result := Result + Chr(FNum[l] div 10 + byte('0'));
+      Result := Result + Chr(FNum[l] mod 10 + byte('0'));
+    end;
+  if (((FNumHigh + 1) * DigPerNum - 1) > FExponent) then
+  if Result[Length(Result)] = '0' then delete(Result, Length(Result), 1);
+  if Result[Length(Result)] = '.' then delete(Result, Length(Result), 1);
+  if Length(Result) > MaxChar then       
+    Delete(Result,MaxChar,Length(Result));
+  Result := Result + 'e' + IntToStr(FExponent);
+  if FSign = Negative then
+    Result := '-' + Result;
 end;
 
 
@@ -414,48 +444,59 @@ var
 s:string;
 tmp: TNumber;
 begin
-tmp := TNumber.Create(self,FFloatDigits);
-try
-tmp.RoundTo(MaxDig - 1);
-Result := tmp.GetString(Maxdig);
-if Pos('-',Result)=1 then
-delete(Result,1,1);
+  tmp := TNumber.Create(self, FFloatDigits);
+  try
+    tmp.RoundTo(MaxDig - 1);
+    Result := tmp.GetString(Maxdig);
+    if Pos('-',Result)=1 then
+      delete(Result,1,1);
 
-if (tmp.FNumHigh + 1) * DigPerNum > MaxDig then exit;
-if tmp.Fexponent>0 then
-if 2 * tmp.FExponent - (tmp.FNumHigh + 1) * DigPerNum > MaxDig then exit else
-else
-if abs(tmp.FExponent) - 1 + (tmp.FNumHigh + 1) * DigPerNum > MaxDig then exit;
+    if (tmp.FNumHigh + 1) * DigPerNum > MaxDig then
+      exit;
+    if tmp.Fexponent>0 then
+      if 2 * tmp.FExponent - (tmp.FNumHigh + 1) * DigPerNum > MaxDig then
+        Exit
+      else
+     else
+    if abs(tmp.FExponent) - 1 + (tmp.FNumHigh + 1) * DigPerNum > MaxDig then
+      exit;
 
-//delete exponent
-delete(Result,Pos('e',Result),Length(Result));
-// delete .
-if pos('.',Result) <> 0 then
-delete(Result,2,1);
-if tmp.FExponent >= 0 then
-begin
-if 2+tmp.FExponent <= Length(Result) then
-Insert('.',Result,2 + tmp.FExponent)
-else
-Result := Result + StringofChar('0', tmp.FExponent - Length(Result) + 1);
-end
-else
-begin
-s := StringofChar('0', -tmp.FExponent - 1);
-Result := '0.' + s + Result;
-if Length(s)>MaxDig then
-begin
-Result := tmp.GetString(MaxDig);exit;
-end;
-end;
-if Result[1] = '.' then Result := '0' + Result;
-if Result[Length(Result)] = '.' then Delete(Result,Length(Result),1);
-if Result = '00' then Result:='0';
+   //delete exponent
+   delete(Result, Pos('e', Result), Length(Result));
+   // delete .
+   if pos('.', Result) <> 0 then
+     delete(Result, 2, 1);
+   if tmp.FExponent >= 0 then
+     begin
+     if 2+tmp.FExponent <= Length(Result) then
+       Insert('.', Result, 2 + tmp.FExponent)
+      else
+     Result := Result + StringofChar('0', tmp.FExponent - Length(Result) + 1);
+  end
+   else
+  begin
+    s := StringofChar('0', -tmp.FExponent - 1);
+    Result := '0.' + s + Result;
+    if Length(s)>MaxDig then
+      begin
+        Result := tmp.GetString(MaxDig);
+        Exit;
+      end;
+  end;
+  if Result[1] = '.' then
+    Result := '0' + Result;
 
-if tmp.FSign = Negative then
-Result := '-' + Result;
-finally
-tmp.Destroy;
+  if Result[Length(Result)] = '.' then
+    Delete(Result, Length(Result), 1);
+
+  if Result = '00' then
+    Result:='0';
+
+  if tmp.FSign = Negative then
+    Result := '-' + Result;
+
+  finally
+    tmp.Destroy;
 end;end;
 
 
@@ -466,16 +507,17 @@ var
 tmp: TNumber;
 cmp:TValueRelationship;
 begin
-tmp := TNumber.Create('');
-try
-Result := 0;
-int(tmp);
-cmp := TNumber.Create('9223372036854775807').AbsCompare(tmp);
-if cmp=LessThanValue then exit;
-//Result := round(StrtoFloat(tmp.GetString(30)));
-Result := Trunc(StrtoFloat(tmp.GetString(30)));
-finally
-tmp.Destroy;
+  tmp := TNumber.Create('');
+   try
+     Result := 0;
+     int(tmp);
+     cmp := TNumber.Create('9223372036854775807').AbsCompare(tmp);
+     if cmp=LessThanValue then
+       exit;
+     //Result := round(StrtoFloat(tmp.GetString(30)));
+     Result := Trunc(StrtoFloat(tmp.GetString(30)));
+   finally
+     tmp.Destroy;
 end;end;
 
 
@@ -485,10 +527,11 @@ function  TNumber.GetExtended:Extended;
 var
 cmp:TValueRelationship;
 begin
-Result := 0;
-cmp := TNumber.Create('1.1e4932').AbsCompare(self);
-if cmp=LessThanValue then exit;
-Result := StrtoFloat(GetString(13));
+  Result := 0;
+  cmp := TNumber.Create('1.1e4932').AbsCompare(self);
+  if cmp=LessThanValue then
+    exit;
+  Result := StrtoFloat(GetString(13));
 end;
 
 
@@ -496,14 +539,14 @@ function  TNumber.GetManitissa:Extended;
 var
 b:byte;
 begin
-Result := FNum[0];
-for b:=1 to 4 do
-begin
-Result:=Result * 100;
-if b<=FNumHigh then
-Result:= Result + FNum[b];
-end;
-Result := Result /1000000000;
+  Result := FNum[0];
+  for b:=1 to 4 do
+    begin
+      Result:=Result * DigPerNumMax;
+      if b <= FNumHigh then
+        Result:= Result + FNum[b];
+    end;
+  Result := Result /1000000000;
 end;
 
 
@@ -512,21 +555,22 @@ procedure TNumber.SetManitissa(Man:Extended;Index: Longint=0);
 var
 b:Longint;
 begin
-if Man>=10 then
-Man:=Man / Math.Power(10,trunc(Log10(Man) + 1));
-for b:=Index to Index + 4 do
-begin
-Man:=Man * 100;
-FNum[b]:=Trunc(Man);
-Man:=System.Frac(Man);
+  if Man>=10 then
+    Man:=Man / Math.Power(10, trunc(Log10(Man) + 1));
+  for b:=Index to Index + 4 do
+    begin
+      Man:=Man * DigPerNumMax;
+      FNum[b]:=Trunc(Man);
+      Man:=System.Frac(Man);
+    end;
 end;
-end;
+
 
 
 procedure TNumber.RoundTo(MaxDig: Longint;var Res: TNumber);
 begin
-Res.Assign(self);
-Res.RoundTo(MaxDig);
+  Res.Assign(Self, asAll);
+  Res.RoundTo(MaxDig);
 end;
 
 
@@ -536,36 +580,52 @@ var
 i: Longint;
 c: Byte;
 begin
-dec(MaxDig);// ???????????
-if MaxDig > (FNumHigh + 1) * DigPerNum then exit;
-c := 0;
-for i := FNumHigh downto 0 do
-begin
-FNum[i] := FNum[i] + c;
-if (i + 1) * DigPerNum = MaxDig then break;
-if FNum[i] mod 10 >= 5 then c := 1 else c := 0;
-FNum[i] := ((FNum[i] div 10) + c) * 10;
+  dec(MaxDig);// ???????????
+  if MaxDig > (FNumHigh + 1) * DigPerNum then
+    Exit;
+  c := 0;
+  for i := FNumHigh downto 0 do
+    begin
+      FNum[i] := FNum[i] + c;
+      if (i + 1) * DigPerNum = MaxDig then
+        break;
+      if FNum[i] mod 10 >= 5 then
+        c := 1
+      else
+        c := 0;
 
-if (i + 1) * DigPerNum - 1=MaxDig then break;
-if FNum[i] div 10 >= 5 then c := 1 else c := 0;
-FNum[i] := 0;
-end;
-Correction;
-c := 0;
+      FNum[i] := ((FNum[i] div 10) + c) * 10;
+      if (i + 1) * DigPerNum - 1 = MaxDig then
+        break;
+      if FNum[i] div 10 >= 5 then
+        c := 1
+      else
+        c := 0;
+      FNum[i] := 0;
+    end;
+  Correction;
+  c := 0;
 
-for i := FNumHigh downto 0 do
-begin
-//if i <> 0 then
-FNum[i] := FNum[i] + c;
-if FNum[i] div 100 > 0 then c := 1 else c := 0;
-if i = 0 then
-begin FNum[0] := (FNum[0] div 100) * 10 + (FNum[0] mod 100);break;end;
-FNum[i] := FNum[i] mod 100
+  for i := FNumHigh downto 0 do
+    begin
+      //if i <> 0 then
+      FNum[i] := FNum[i] + c;
+      if FNum[i] div 100 > 0 then
+        c := 1
+      else
+        c := 0;
+      if i = 0 then
+        begin
+          FNum[0] := (FNum[0] div 100) * 10 + (FNum[0] mod 100);
+          Break;
+        end;
+      FNum[i] := FNum[i] mod 100
+    end;
+  Correction;
+  if c>0 then
+  FExponent := FExponent + 1;
 end;
-Correction;
-if c>0 then
-FExponent := FExponent + 1;
-end;
+
 
 
 
@@ -574,32 +634,21 @@ procedure TNumber.Int(var Res: TNumber);
 var
 i: Longint;
 begin
-Res.Assign(self);
-if FExponent >= (FNumHigh + 1) * DigPerNum - 1 then exit;
-for i := Res.FNumHigh downto 0 do
-begin
-if FExponent + 1 = (i + 1) * DigPerNum then break;
-Res.FNum[i] := (Res.FNum[i] div 10) * 10;
-if Res.FExponent + 1 = (i + 1) * DigPerNum - 1 then break;
-Res.FNum[i] := 0;
+  Res.Assign(self, asAll);
+  if FExponent >= (FNumHigh + 1) * DigPerNum - 1 then exit;
+  for i := Res.FNumHigh downto 0 do
+    begin
+      if FExponent + 1 = (i + 1) * DigPerNum then break;
+      Res.FNum[i] := (Res.FNum[i] div 10) * 10;
+      if Res.FExponent + 1 = (i + 1) * DigPerNum - 1 then break;
+      Res.FNum[i] := 0;
+    end;
+  Res.Correction;
 end;
-Res.Correction;
-end;
 
 
 
 
-procedure TNumber.Frac(var Res: TNumber);
-var
-tmp: TNumber;
-begin
-tmp := TNumber.Create('',Res.FFloatDigits);
-try
-Int(tmp);
-Sub(tmp,Res);
-finally
-tmp.Destroy;
-end;end;
 
 
 
@@ -610,19 +659,19 @@ var
 tmp: TNumber;
 b: Word;
 begin
-if FAngle = Degrees then
-b := 180
-else
-if FAngle = Grads then
-b := 400
-else
-exit;
-tmp := TNumber.Create(b);
-try
-Mul(Pi);
-Divide(tmp);
-finally
-tmp.Destroy;
+  if FAngle = Degrees then
+    b := 180
+  else
+  if FAngle = Grads then
+    b := 400
+  else
+    exit;
+  tmp := TNumber.Create(b);
+ try
+  Mul(Pi);
+  Divide(tmp);
+ finally
+  tmp.Destroy;
 end;end;
 
 
@@ -633,21 +682,22 @@ var
 tmp: TNumber;
 b: Word;
 begin
-Res.Assign(self);
-if Res.FAngle = Degrees then
-b := 180
-else
-if Res.FAngle = Grads then
-b := 400
-else
-exit;
-tmp := TNumber.Create(b);
-try
-Res.Mul(Pi);
-Res.Divide(tmp);
-finally
-tmp.Destroy;
+  Res.Assign(Self);
+  if Res.FAngle = Degrees then
+    b := 180
+  else
+    if Res.FAngle = Grads then
+      b := 400
+  else
+    exit;
+  tmp := TNumber.Create(b);
+ try
+  Res.Mul(Pi);
+  Res.Divide(tmp);
+ finally
+  tmp.Destroy;
 end;end;
+
 
 
 
@@ -656,20 +706,21 @@ var
 tmp: TNumber;
 b: Word;
 begin
-if FAngle = Degrees then
-b := 180
-else
-if FAngle = Grads then
-b := 400
-else
-exit;
-tmp := TNumber.Create(b);
-try
-Divide(Pi);
-Mul(tmp);
-finally
-tmp.Destroy;
+  if FAngle = Degrees then
+    b := 180
+ else
+  if FAngle = Grads then
+    b := 400
+ else
+   exit;
+  tmp := TNumber.Create(b);
+ try
+  Divide(Pi);
+  Mul(tmp);
+ finally
+  tmp.Destroy;
 end;end;
+
 
 
 procedure TNumber.RadianToAngle(var Res: TNumber);
@@ -677,20 +728,20 @@ var
 tmp: TNumber;
 b: Word;
 begin
-Res.Assign(self);
-if Res.FAngle = Degrees then
-b := 180
-else
-if Res.FAngle = Grads then
-b := 400
-else
-exit;
-tmp := TNumber.Create(b);
-try
-Res.divide(Pi);
-Res.Mul(tmp);
-finally
-tmp.Destroy;
+  Res.Assign(Self);
+  if Res.FAngle = Degrees then
+    b := 180
+ else
+  if Res.FAngle = Grads then
+    b := 400
+ else
+    exit;
+  tmp := TNumber.Create(b);
+ try
+  Res.divide(Pi);
+  Res.Mul(tmp);
+ finally
+  tmp.Destroy;
 end;end;
 
 
@@ -698,55 +749,55 @@ end;end;
 
 procedure TNumber.Assign(Num: TNumber;AssignMode:byte=asAllbutAngle);
 begin
-if AssignMode and asNumber=asNumber then
-begin SetLength(0);FNum := Copy(Num.FNum);FNumHigh := Num.FNumHigh;end;
+  if AssignMode and asNumber = asNumber then
+    begin SetLength(0);FNum := Copy(Num.FNum);FNumHigh := Num.FNumHigh;end;
 
-if AssignMode and asExponent = asExponent then
-FExponent := Num.FExponent;
+  if AssignMode and asExponent = asExponent then
+    FExponent := Num.FExponent;
 
-if AssignMode and asTheSign = asTheSign then
-FSign := Num.FSign;
+  if AssignMode and asTheSign = asTheSign then
+    FSign := Num.FSign;
 
-if AssignMode and asIndexAdd = asIndexAdd then
-FIndexAdd := Num.FIndexAdd;
+  if AssignMode and asIndexAdd = asIndexAdd then
+    FIndexAdd := Num.FIndexAdd;
 
-if AssignMode and asFloatDigits = asFloatDigits then
-FFloatDigits := Num.FFloatDigits;
+  if AssignMode and asFloatDigits = asFloatDigits then
+    FFloatDigits := Num.FFloatDigits;
 
-if AssignMode and asAngle = asAngle then
-FAngle := Num.FAngle;
+  if AssignMode and asAngle = asAngle then
+    FAngle := Num.FAngle;
 
-if (AssignMode and asFloatDigits <> asFloatDigits) and
-   (AssignMode and asNumber = asNumber) then
-Correction;
+  if (AssignMode and asFloatDigits <> asFloatDigits) and
+     (AssignMode and asNumber = asNumber) then
+   Correction;
 end;
 
 
 
 procedure TNumber.MakeZero;
 begin
-SetLength(1);
-FNum[0] := 0;
-Exponent := 0;
-Sign := Zero;
-FIndexAdd := 0;
+  SetLength(1);
+  FNum[0] := 0;
+  Exponent := 0;
+  Sign := Zero;
+  FIndexAdd := 0;
 end;
 
 
 procedure TNumber.MakeOne;
 begin
-SetLength(1);
-FNum[0] := 10;
-Exponent := 0;
-Sign := Positive;
-FIndexAdd := 0;
+  SetLength(1);
+  FNum[0] := 10;
+  Exponent := 0;
+  Sign := Positive;
+  FIndexAdd := 0;
 end;
 
 
 
 procedure TNumber.Assign(b:Extended);
 begin
-Assign(FloatToStr(b));
+  Assign(FloatToStr(b));
 end;
 
 
@@ -756,51 +807,48 @@ procedure TNumber.Assign(b:string);
 var
 i,w: Word;
 begin
-if Pos('e',b) = Length(b) then b := b + '0';
-Sign := Positive;
-if pos('-',b) = 1 then begin Sign := Negative;Delete(b,1,1);end;
-if pos('+',b) = 1 then Delete(b,1,1);
-b := UpperCase(b);
-FExponent := 0;
-w := 0;
+  if Pos('e', b) = Length(b) then
+    b := b + '0';
+  Sign := Positive;
+  if Pos('-', b) = 1 then
+    begin Sign := Negative;Delete(b, 1, 1);end;
+  if Pos('+', b) = 1 then
+    Delete(b,1,1);
+  b := UpperCase(b);
+  FExponent := 0;
 
-if pos('E',b)  <>  0 then
-   begin
-   FExponent := StrToInt(Copy(b, Pos('E',b) + 1, Length(b)));
-   Delete(b, Pos('E',b), Length(b));
-   end;
-
-if Pos('.',b) = 0 then
-   b := b+'.0';
-
-FExponent := FExponent + Pos('.',b) - 2;
-Delete(b, Pos('.',b), 1);
-
-for i := 1 to length(b) do
-begin
-if not ( b[i] in ['0'..'9']) then
-   raise ENumberConversionError.Create('Unknow Chars in String');
-if odd(i) then
- begin
- w := (byte(b[i]) - $30) * 10;
- if i=length(b) then
+  if pos('E',b)  <>  0 then
     begin
-    SetLength((i + 1) div 2);
-    FNum[FNumHigh] := w;
+      FExponent := StrToInt(Copy(b, Pos('E', b) + 1, Length(b)));
+      Delete(b, Pos('E', b), Length(b));
     end;
- end
-else
-  begin
-  w := w + (byte(b[i]) - $30);
-  SetLength((i div 2));
-  FNum[FNumHigh] := w;
-  end;
-end;
 
-if FNumHigh * DigPerNum - 1 > FloatDigits then
-SetFloatDigits(FNumHigh * DigPerNum - 1);
+  if Pos('.',b) = 0 then
+     b := b+'.0';
 
-Correction;
+  FExponent := FExponent + Pos('.', b) - 2;
+  Delete(b, Pos('.', b), 1);
+
+  if Length(b) mod DigPerNum=0 then
+    SetLength(Length(b) div DigPerNum )
+  else
+    SetLength(Length(b) div DigPerNum + 1 );
+
+  for i := 0 to length(b)-1 do
+    begin
+      if not ( b[i+1] in ['0'..'9']) then
+        raise ENumberConversionError.Create(ConversionError);
+      W := (byte(b[i+1]) - $30) ;
+      if i mod DigPerNum=0 then
+        FNum[i div DigPerNum] := W
+      else
+      FNum[i div DigPerNum] := FNum[i  div DigPerNum] * 10 + W;
+    end;
+
+  if FNumHigh * DigPerNum - 1 > FloatDigits then
+    SetFloatDigits(FNumHigh * DigPerNum - 1);
+
+  Correction;
 end;
 
 
@@ -808,8 +856,8 @@ end;
 
 destructor TNumber.Destroy;
 begin
-System.SetLength(FNum,0);
-inherited;
+  System.SetLength(FNum,0);
+  inherited;
 end;
 
 
@@ -818,39 +866,84 @@ end;
 
 function  TNumber.GetFN(Ind: Longint): NumberType;
 begin
-Result := 0;
-if (Ind > FNumHigh) then Result := 0
-else
-if Ind >= 0 then
-Result := FNum[Ind];
+  Result := 0;
+  if (Ind > FNumHigh) then Result := 0
+ else
+  if Ind >= 0 then
+  Result := FNum[Ind];
 end;
 
 
 
 procedure TNumber.SetFN(Ind: Longint;Value: NumberType);
 begin
-if (Ind > FNumHigh) then exit
-else
-if Ind >= 0 then
-FNum[Ind] := Value;
+  if (Ind > FNumHigh) then exit
+ else
+  if Ind >= 0 then
+    FNum[Ind] := Value;
 end;
 
 
 procedure TNumber.SetDigValue(Ind: Longint;Value: NumberType);
 begin
-FNum[FNumHigh - Ind] := Value;
+  FNum[FNumHigh - Ind] := Value;
 end;
 
 
 
 function  TNumber.GetDigValue(Ind: Longint): NumberType;
 begin
-if Ind > FNumHigh then Result := 0
-else
-Result := FNum[FNumHigh - Ind];
+  if Ind > FNumHigh then Result := 0
+ else
+  Result := FNum[FNumHigh - Ind];
 end;
 
 
+
+procedure TNumber.SetNumPos(Ind: Longint;Pos: Shortint;Value: NumberType);
+var
+b,i: Shortint;
+rs,k: NumberType;
+begin
+  if Pos = -1 then
+    FNum[Ind] := Value
+ else
+   begin
+     b:=0;
+     rs := FNum[Ind];
+     while rs <> 0 do begin inc(b);rs := rs div 10;end;
+     rs := FNum[Ind];
+     if Pos >= b then repeat inc(b);rs := rs * 10; until b = pos + 1;
+     Inc(Pos);
+     k := 1;
+     for i := 1 to b - Pos do k := k * 10;
+     FNum[Ind]:=rs- ((rs div k) mod 10) * k + Value * k;
+   end;
+end;
+
+
+
+function  TNumber.GetNumPos(Ind: Longint;Pos: Shortint): NumberType;
+var
+b,i: Shortint;
+rs,k: NumberType;
+begin
+  if (Ind > FNumHigh) or (Ind < 0) then Result := 0
+ else
+  if Pos <> -1 then
+    begin
+      b := 0;
+      rs := FNum[Ind];
+      while rs <> 0 do begin inc(b);rs := rs div 10;end;
+      Inc(pos);
+      if Pos > b then begin Result := 0;exit;end;
+      k:=1;
+      for i := 1 to b - pos do k := k * 10;
+        Result:=(FNum[Ind] div k) mod 10;
+    end
+   else
+    Result := FNum[Ind];
+end;
 
 
 
@@ -859,25 +952,25 @@ procedure TNumber.SetNum(Ind: Longint;Num: NumberType);
 var
 tmp:Longint;
 begin
-if Ind > FNumHigh + FIndexAdd then
+  if Ind > FNumHigh + FIndexAdd then
     Raise ENumberUnknownError.Create('')
-else
-begin
-if FIndexAdd = 0 then FNum[Ind] := Num
-else
-if Ind < FIndexAdd then
-else
-begin
-tmp := Ind - FIndexAdd;
-if odd(FIndexAdd) then
-begin
-FNum[tmp] := Num mod 10;
-FNum[tmp + 1] := Num div 10;
-end
-else
-FNum[tmp] := Num;
-end;
-end;
+ else
+   begin
+     if FIndexAdd = 0 then FNum[Ind] := Num
+    else
+     if Ind < FIndexAdd then
+    else
+      begin
+        tmp := Ind - FIndexAdd;
+        if odd(FIndexAdd) then
+          begin
+            FNum[tmp] := Num mod 10;
+            FNum[tmp + 1] := Num div 10;
+          end
+      else
+       FNum[tmp] := Num;
+    end;
+  end;
 end;
 
 
@@ -888,22 +981,21 @@ function  TNumber.GetNum(Ind: Longint): NumberType;
 var
 tmp:Longint;
 begin
-if Ind > FNumHigh + FIndexAdd then Result := 0
-else
-begin
-if FIndexAdd = 0 then Result := FNum[Ind]
-else
-if Ind < FIndexAdd div DigPerNum then Result := 0
-else
-begin
-tmp:=Ind - FIndexAdd div DigPerNum;
-if odd(FIndexAdd) then
- Result := (FN[tmp-1] mod 10) * 10 + (FN[tmp] div 10)
-else
- Result := FNum[tmp];
-
-end;
-end;
+  if Ind > FNumHigh + FIndexAdd then Result := 0
+ else
+   begin
+     if FIndexAdd = 0 then Result := FNum[Ind]
+    else
+     if Ind < FIndexAdd div DigPerNum then Result := 0
+    else
+      begin
+        tmp:=Ind - FIndexAdd div DigPerNum;
+        if odd(FIndexAdd) then
+          Result := (FN[tmp-1] mod 10) * 10 + (FN[tmp] div 10)
+       else
+          Result := FN[tmp];
+      end;
+   end;
 end;
 
 
@@ -911,22 +1003,22 @@ end;
 
 function TNumber.GetSign:SignIndicator;
 begin
-Result := FSign;
+  Result := FSign;
 end;
 
 procedure TNumber.SetSign(sgn:SignIndicator);
 begin
-FSign := sgn;
+  FSign := sgn;
 end;
 
 function TNumber.GetExponent: Longint;
 begin
-Result := FExponent;
+  Result := FExponent;
 end;
 
 procedure TNumber.SetExponent(Ex: Longint);
 begin
-FExponent := Ex;
+  FExponent := Ex;
 end;
 
 
@@ -937,20 +1029,19 @@ procedure TNumber.ShiftRightDigits(Numbers: Byte);
 var
 i: Word;
 begin
-Setlength(FNumHigh + 1 + ((Numbers - 1) div 2 + 1) );//???????????
-
-if not odd(Numbers) then
-for i := FNumHigh downto 0 do
-    if i-Numbers div 2 >= 0 then
-    FNum[i] := FN[i-Numbers div 2]
-    else
-    FNum[i] := 0
-else
-for i := FNumHigh downto 0 do
-    if i-Numbers div 2 >= 0 then
-    FNum[i] := (FN[i - Numbers div 2 - 1] mod 10) * 10 + FN[i - Numbers div 2] div 10
-    else
-    FNum[i] := 0
+  Setlength(FNumHigh + 1 + ((Numbers - 1) div 2 + 1) );//???????????
+  if not odd(Numbers) then
+    for i := FNumHigh downto 0 do
+      if i-Numbers div 2 >= 0 then
+        FNum[i] := FN[i - Numbers div 2]
+      else
+        FNum[i] := 0
+     else
+      for i := FNumHigh downto 0 do
+        if i-Numbers div 2 >= 0 then
+          FNum[i] := (FN[i - Numbers div 2 - 1] mod 10) * 10 + FN[i - Numbers div 2] div 10
+       else
+          FNum[i] := 0
 end;
 
 
@@ -1032,7 +1123,7 @@ if FSign=Zero then Result := false
 else
 if FSign=Negative then Result := false
 else
-if (FNum[0] = 10) and (FExponent = 0) and (FNumHigh = 0) then Result := true
+if (FNum[0] = 1 * DigPerNumMax div 10) and (FExponent = 0) and (FNumHigh = 0) then Result := true
 else Result := false;
 end;
 
@@ -1047,11 +1138,12 @@ if FSign = Zero then Result := false
 else
 if FSign = Negative then Result := false
 else
-if (FNum[0] = b * 10) and (FExponent = 0) and (FNumHigh = 0) then
+if (FNum[0] = b * DigPerNumMax div 10) and (FExponent = 0) and (FNumHigh = 0) then
  Result := true
 else
  Result := false;
 end;
+
 
 
 function TNumber.IsInteger:Boolean;
@@ -1074,24 +1166,24 @@ else
 if FExponent > (FNumHigh + 1) * DigPerNum - 1 then
 Result := false
 else
-Result := Odd(FNum[FNumHigh] div 10)
+Result := Odd(FNum[FNumHigh] div (DigPerNumMax div 10))
 end;
 
 
 procedure TNumber.SetFloatDigits(b: Longint);
 begin
-FFloatDigits := b;
-Correction;
+  FFloatDigits := b;
+  Correction;
 end;
 
 
 
 function TNumber.GetFloatDigits: Longint;
 begin
-if FFloatDigits <> NoFloatLimit then
-Result := FFloatDigits
-else
-Result := MaxDivDigits;
+  if FFloatDigits <> NoFloatLimit then
+    Result := FFloatDigits
+  else
+    Result := MaxDivDigits;
 end;
 
 
@@ -1099,11 +1191,11 @@ end;
 
 procedure TNumber.SwitchSign;
 begin
-if FSign = Zero then exit;
-if FSign = Negative then
- FSign := Positive
-else
- FSign := Negative;
+  if FSign = Zero then exit;
+  if FSign = Negative then
+    FSign := Positive
+  else
+    FSign := Negative;
 end;
 
 
@@ -1253,7 +1345,7 @@ end;
 // omptimized
 procedure TNumber.IncNumber;
 begin
-Add(one);
+  Add(one);
 end;
 
 
@@ -1261,7 +1353,7 @@ end;
 // omptimized
 procedure TNumber.DecNumber;
 begin
-Sub(One);
+  Sub(One);
 end;
 
 
@@ -1275,8 +1367,8 @@ rs,bn,i: Word;
 CR: Byte;
 begin
 
-if b.IsZero then begin Res.Assign(self,asAllbutFloatAngle);exit;end;
-if   IsZero then begin Res.Assign(b,asAllbutFloatAngle);exit;end;
+if b.IsZero then begin Res.Assign(self, asAllbutFloatAngle);exit;end;
+if   IsZero then begin Res.Assign(b, asAllbutFloatAngle);exit;end;
 
 if not FSimpleOP then
 begin
@@ -1288,9 +1380,9 @@ begin
     end
 else if FSign <> b.FSign then
        if FSign = Positive then{+ -}
-         begin b.FSign := Positive;Sub(b,res);b.FSign := Negative;exit;end
+         begin b.FSign := Positive;Sub(b, res);b.FSign := Negative;exit;end
         else{- +}
-         begin FSign := Positive;b.Sub(self,res);FSign := Negative;exit;end;
+         begin FSign := Positive;b.Sub(self, res);FSign := Negative;exit;end;
 end else FSimpleOP := false;
 
 
@@ -1314,8 +1406,8 @@ CR := 0;
 for i := bn downto 0 do
  begin
  rs := Num[i] + b.Num[i] + CR;
- Res[i] := rs mod 100;
- CR := rs div 100;
+ Res[i] := rs mod DigPerNumMax;
+ CR := rs div DigPerNumMax;
  end;
 
 if cr > 0 then
@@ -1357,15 +1449,15 @@ begin
 
 Res.MakeZero;Res.FSign := Positive;
 
-if b.IsZero then begin Res.Assign(self,asAllbutFloatAngle);exit;end;
-if   IsZero then begin Res.Assign(b,asAllbutFloatAngle);Res.SwitchSign;exit;end;
+if b.IsZero then begin Res.Assign(self, asAllbutFloatAngle);exit;end;
+if   IsZero then begin Res.Assign(b, asAllbutFloatAngle);Res.SwitchSign;exit;end;
 
 if not FSimpleOP then
 begin
 cmp := AbsCompare(b);
 sgntmp := FSign;
 
-if FSign=b.FSign then // + +    -  -
+if FSign = b.FSign then // + +    -  -
 case cmp of
 EqualsValue:begin Res.Makezero;exit;end;
 
@@ -1378,7 +1470,7 @@ exit;
 end;
 
 GreaterThanValue:
-if FSign=Negative then Res.FSign := Negative
+if FSign = Negative then Res.FSign := Negative
 
 end//end case
 else
@@ -1411,7 +1503,7 @@ for i := bn downto 0 do
     begin rs := rs + 100;cr := -1;end
  else
     cr := 0;
- Res[i] := rs mod 100;
+ Res[i] := rs mod DigPerNumMax;
  end;
 
 
@@ -1458,8 +1550,8 @@ begin
 if j = b.FNumHigh then
 prev := prev;
 rs := b.Dig[j] * Dig[i] + prev + Res.Dig[j + i];
-Res.Dig[j + i] := rs mod 100;
-prev := rs div 100;
+Res.Dig[j + i] := rs mod DigPerNumMax;
+prev := rs div DigPerNumMax;
 end;
 
 //if Res[0] Div 10 <> 0 then
@@ -1496,22 +1588,22 @@ begin
 end;
 
 if b.IsZero then
-   Raise ENumberDivisonByZeroError.Create('Division by zero');
+   Raise ENumberDivisonByZeroError.Create(DivisionByZeroErrorStr);
 
 
 if not FSimpleOP then
  begin
 
    if b.IsOne then
-        begin Res.Assign(self);exit;end;
+        begin Res.Assign(Self, asAllButFloatAngle);exit;end;
  end
 else FSimpleOP := false;
 
- Temp := TNumber.Create('',Res.FFloatDigits+2);
+ Temp := TNumber.Create('', Res.FFloatDigits + 2);
   // ????????
 // Res.MakeZero;
- Res.SetLength((Res.FloatDigits + 1) div 2 + 2);
- Temp.SetLength((Res.FloatDigits + 1) div 2 + 2);
+ Res.SetLength((Res.FloatDigits + 1) div DigPerNum + 2);
+ Temp.SetLength((Res.FloatDigits + 1) div DigPerNum + 2);
 
 
 if ((FSign=Positive) and  (b.FSign=Positive)) or ((FSign=Negative) and (b.FSign=Negative)) then
@@ -1541,13 +1633,24 @@ until  temp.AbsCompare(b) = LessThanValue;
 //a.Assign(temp);
 temp.FExponent := temp.FExponent + 1;  //*10
 
-if not odd(i) then
+if i mod DigPerNum=0 then
+   Res.FNum[i div DigPerNum] := n
+else
+   Res.FNum[i div DigPerNum] := Res.FNum[i  div DigPerNum] * 10 + n;
+
+
+{if not odd(i) then
 Res.FNum[i div 2] := n * 10
 else
-Res.FNum[i div 2] := Res.FNum[i div 2] + n;
+Res.FNum[i div 2] := Res.FNum[i div 2] + n;}
 //if temp.FSign=Zero then break;
 if temp.IsZero then break;
 end;
+while i mod DigPerNum <> 1 do
+  begin
+  Res.FNum[i div DigPerNum] := Res.FNum[i  div DigPerNum] * 10;
+  inc(i);
+  end;
 
 FSign := sgntmp1;
 b.FSign := sgntmp2;
@@ -1569,7 +1672,7 @@ begin
 cmp := Compare(b);
 if cmp = EqualsValue then begin Res.MakeOne;exit;end;
 if cmp = LessThanValue then begin Res.MakeZero;exit;end;
-Divide(b,Res);
+Divide(b, Res);
 Res.Int;
 end;
 
@@ -1586,16 +1689,293 @@ if b.IsZero then
       Raise ENumberInvalidInputError.Create(UndefinedErrorStr);
 cmp := Compare(b);
 if cmp = EqualsValue then begin Res.MakeZero;exit;end;
-if cmp = LessThanValue then begin Res.Assign(self);exit;end;
-tmp := TNumber.Create('',Res.FFloatDigits);
-Divide(b,tmp);
+if cmp = LessThanValue then begin Res.Assign(Self, asAllButFloatAngle);exit;end;
+tmp := TNumber.Create('', Res.FFloatDigits);
+Divide(b, tmp);
 tmp.Int;
 tmp.Mul(b);
-Sub(tmp,Res);
+Sub(tmp, Res);
 end;
 
 
 
+
+
+procedure TNumber.DivIntMod(b: TNumber;Var ResDiv,ResMod: TNumber);
+var
+cmp: TValueRelationship;
+tmp: TNumber;
+begin
+if b.IsZero then
+      Raise ENumberInvalidInputError.Create(UndefinedErrorStr);
+
+cmp := Compare(b);
+if cmp = EqualsValue then
+  begin ResMod.MakeZero;ResDiv.MakeOne;exit;end;
+if cmp = LessThanValue then
+  begin ResMod.Assign(Self, asAllButFloatAngle);ResDiv.MakeZero; exit;end;
+
+tmp := TNumber.Create('', ResMod.FFloatDigits);
+try
+Divide(b, ResDiv);
+ResDiv.Int;
+ResDiv.Mul(b,tmp);
+Sub(tmp, ResMod);
+finally
+tmp.Destroy;
+end;end;
+
+
+
+
+function TNumber.BitWiseConvertOut:BitWiseArray;
+var
+bittmp: BitWiseArray;
+tmp,base,divint,divmod: TNumber;
+i,j: longint;
+cmp: TValueRelationship;
+begin
+divint := TNumber.Create(self, FFloatDigits);
+divmod := TNumber.Create('', FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
+base := TNumber.Create('4294967296', FFloatDigits);
+try
+i:=0;
+
+System.Setlength(bittmp,1);
+repeat
+divint.DivIntMod(base,tmp,divmod);
+bittmp[i]:=divmod.GetInt64;
+inc(i);
+System.Setlength(bittmp,i+1);
+divint.Assign(tmp);
+cmp:=divint.Compare(base);
+until cmp=LessThanValue;
+bittmp[i]:=divint.GetInt64;
+if bittmp[i]=0 then dec(i);
+System.SetLength(Result,i+1);
+for j:=0 to i do
+Result[j]:=bittmp[i-j];
+finally
+divint.Destroy;divmod.Destroy;tmp.Destroy;base.Destroy;bittmp:=nil;
+end;end;
+
+
+
+
+procedure TNumber.BitWiseConvertIn(bitar:BitWiseArray);
+var
+base,tmp,tmp2: TNumber;
+i: Longint;
+begin
+MakeZero;
+tmp := TNumber.Create('1', FFloatDigits);
+tmp2 := TNumber.Create('', FFloatDigits);
+base := TNumber.Create('4294967296', FFloatDigits);
+try
+for i:=High(bitar) downto 0 do
+begin
+tmp.Mul(TNumber.Create(bitar[i]),tmp2);
+Add(tmp2);
+if i<>0 then
+tmp.Mul(base);
+end;
+finally
+tmp.Destroy;tmp2.Destroy;base.Destroy;
+end;end;
+
+
+
+
+
+procedure TNumber.BitWiseAnd(b: TNumber;var Res: TNumber);
+var
+aa,bb,cc:BitWiseArray;
+i,ha,hb,hc: Longint;
+begin
+aa:=BitWiseConvertOut;
+bb:=b.BitWiseConvertOut;
+ha:=High(aa);hb:=High(bb);
+if ha>hb then
+System.SetLength(cc,ha+1)
+else
+System.SetLength(cc,hb+1);
+hc:=High(cc);
+i:=0;
+repeat
+if hc-i>=0 then
+  if hb-i<0 then
+    cc[hc-i]:=aa[ha-i] and 0
+   else
+     if ha-i<0 then
+       cc[hc-i]:=0 and bb[hb-i]
+      else
+        cc[hc-i]:=aa[ha-i] and bb[hb-i]
+ else
+   break;
+
+inc(i);
+until 1=2;
+Res.BitWiseConvertIn(cc);
+aa:=nil;bb:=nil;cc:=nil;
+end;
+
+
+
+
+procedure TNumber.BitWiseOr(b: TNumber;var Res: TNumber);
+var
+aa,bb,cc:BitWiseArray;
+i,ha,hb,hc: Longint;
+begin
+aa:=BitWiseConvertOut;
+bb:=b.BitWiseConvertOut;
+ha:=High(aa);hb:=High(bb);
+if ha>hb then
+System.SetLength(cc,ha+1)
+else
+System.SetLength(cc,hb+1);
+hc:=High(cc);
+i:=0;
+repeat
+if hc-i>=0 then
+  if hb-i<0 then
+    cc[hc-i]:=aa[ha-i] or 0
+   else
+     if ha-i<0 then
+       cc[hc-i]:=0 or bb[hb-i]
+      else
+        cc[hc-i]:=aa[ha-i] or bb[hb-i]
+ else
+   break;
+
+inc(i);
+until 1=2;
+Res.BitWiseConvertIn(cc);
+aa:=nil;bb:=nil;cc:=nil;
+end;
+
+
+
+
+
+procedure TNumber.BitWiseXor(b: TNumber;var Res: TNumber);
+var
+aa,bb,cc:BitWiseArray;
+i,ha,hb,hc: Longint;
+begin
+aa:=BitWiseConvertOut;
+bb:=b.BitWiseConvertOut;
+ha:=High(aa);hb:=High(bb);
+if ha>hb then
+System.SetLength(cc,ha+1)
+else
+System.SetLength(cc,hb+1);
+hc:=High(cc);
+i:=0;
+repeat
+if hc-i>=0 then
+  if hb-i<0 then
+    cc[hc-i]:=aa[ha-i] xor 0
+   else
+     if ha-i<0 then
+       cc[hc-i]:=0 xor bb[hb-i]
+      else
+        cc[hc-i]:=aa[ha-i] xor bb[hb-i]
+ else
+   break;
+
+inc(i);
+until 1=2;
+Res.BitWiseConvertIn(cc);
+aa:=nil;bb:=nil;cc:=nil;
+end;
+
+
+
+
+procedure TNumber.BitWiseLsh(b: TNumber;var Res: TNumber);
+var
+bb: Int64;
+aa,cc:BitWiseArray;
+i:integer;
+lb:byte;
+tmp:cardinal;
+begin
+if b.IsZero then begin Res.Assign(self); exit; end;
+bb:=b.GetInt64;
+lb:=bb mod 32;
+if (bb=0) or (bb>65535) then
+   Raise ENumberInvalidInputError.Create(InvalidInputErrorStr);
+aa:=BitWiseConvertOut;
+System.SetLength(cc,(High(aa)+1)+bb div 32 + 1);
+
+for i:=0 to High(aa) do
+cc[i+1]:=aa[i];
+
+tmp:=0;
+for i:=high(aa) downto 0 do
+begin
+cc[i+1]:=cc[i+1] or tmp;
+tmp:=cc[i+1] shr (32-lb);
+cc[i+1]:=cc[i+1] shl lb;
+end;
+cc[0]:=tmp;
+Res.BitWiseConvertIn(cc);
+aa:=nil;cc:=nil;
+end;
+
+
+
+
+procedure TNumber.BitWiseRsh(b: TNumber;var Res: TNumber);
+var
+bb: Int64;
+aa,cc:BitWiseArray;
+i:integer;
+rb:byte;
+tmp:cardinal;
+hc,ha:longint;
+begin
+if b.IsZero then begin Res.Assign(self); exit; end;
+bb:=b.GetInt64;
+rb:=bb mod 32;
+
+if (bb=0) or (bb>65535) then
+   Raise ENumberInvalidInputError.Create(InvalidInputErrorStr);
+aa:=BitWiseConvertOut;
+ha:=High(aa);
+if bb div 32 <= ha + 1  then
+System.SetLength(cc,(ha+1)-bb div 32)
+else
+begin
+Res.MakeZero;exit;
+end;
+hc:=high(cc);
+for i:=0 to hc do
+cc[i]:=aa[i];
+
+tmp:=0;
+for i:=0 to hc do
+begin
+cc[i]:=cc[i] or tmp;
+tmp:=(cc[i] shl (32-rb)) shr (32-rb);
+cc[i]:=cc[i] shr rb;
+end;
+Res.BitWiseConvertIn(cc);
+aa:=nil;cc:=nil;
+end;
+
+
+
+
+
+procedure TNumber.BitWiseNot(var Res: TNumber);
+begin
+Res.assign(Self);
+Res.Add(one);
+Res.SwitchSign
+end;
 
 
 
@@ -1612,18 +1992,18 @@ begin
 NumberOut.MakeZero;
 x0 := (FNum[0] div 10)+(FNum[0] mod 10)*0.1+(FN[1] div 10)*0.01+(FN[1] mod 10)*0.001;
 x0 := 1/x0;
-xn := TNumber.Create(x0,NumberOut.FFloatDigits);
-tmp2 := TNumber.Create(0,NumberOut.FFloatDigits);
-tmp := TNumber.Create(0,NumberOut.FFloatDigits);
+xn := TNumber.Create(x0, NumberOut.FFloatDigits);
+tmp2 := TNumber.Create(0, NumberOut.FFloatDigits);
+tmp := TNumber.Create(0, NumberOut.FFloatDigits);
 expbak := FExponent;sgnbak := FSign;
 FExponent := 0;SetSign(Positive);
 
 i:=xn.FNumHigh * DigPerNum;
 repeat
-mul(xn,tmp);
-two.Sub(tmp,tmp2);
-tmp2.mul(xn,tmp);
-xn.Assign(tmp,asAllButFloatAngle);
+Mul(xn, tmp);
+two.Sub(tmp, tmp2);
+tmp2.Mul(xn, tmp);
+xn.Assign(tmp, asAllButFloatAngle);
 i:=i*2;
 until i>NumberOut.FFloatDigits;
 
@@ -1633,7 +2013,7 @@ tmp.FExponent := -expbak;
 if expbak <> 0 then
 tmp.Mul(xn,NumberOut)
 else
-NumberOut.Assign(xn);
+NumberOut.Assign(xn, asAllButFloatAngle);
 end;
 
 
@@ -1654,10 +2034,10 @@ begin
 if FSign=Negative then
    Raise ENumberInvalidInputError.Create(InvalidInputErrorStr);
 if (IsZero) or (IsOne) then
-begin Res.Assign(self);exit;end;
+begin Res.Assign(self, asAllButFloatAngle);exit;end;
 
-tmp := TNumber.Create('',Res.FFloatDigits);
-tmp1 := TNumber.Create('',Res.FFloatDigits);
+tmp := TNumber.Create('', Res.FFloatDigits);
+tmp1 := TNumber.Create('', Res.FFloatDigits);
 
 if (abs(FExponent) > 2) then
 begin
@@ -1686,7 +2066,7 @@ else // self < 1
 begin
 one.Divide(four,tmp);
 cmp := tmp.Compare(self);
-x := TNumber.Create(self,FFloatDigits);
+x := TNumber.Create(self, FFloatDigits);
 m := TNumber.Create('0');
 
 if cmp = GreaterThanValue then //self <1/4
@@ -1695,7 +2075,7 @@ begin
 repeat
 m.DecNumber;
 tmp2 := tmp.FIntPower(m);
-x.Mul(tmp2,tmp1);
+x.Mul(tmp2, tmp1);
 cmp := tmp.Compare(tmp1);
 tmp2.Destroy;
 until cmp=LessThanValue;
@@ -1705,7 +2085,7 @@ end;
 
 end;
 
-Res.Assign(x,asTheNumber);
+Res.Assign(x, asTheNumber);
 Res.Mul(two);
 Res.Add(one);
 Res.Divide(three);
@@ -1713,14 +2093,14 @@ n := Round(System.Ln(Res.FloatDigits * PLn10onLn2) / PLn2) + 1;
 
 for i := 1 to n do
 begin
-Res.Mul(two,tmp);
-x.Divide(tmp,tmp1);
-Res.Divide(two,tmp);
-tmp1.Add(tmp,res);
+Res.Mul(two, tmp);
+x.Divide(tmp, tmp1);
+Res.Divide(two, tmp);
+tmp1.Add(tmp, res);
 end;
 
 //m.SetSign(Positive);
-two.IntPower(m,tmp);
+two.IntPower(m, tmp);
 Res.Mul(tmp);
 end;
 
@@ -1733,8 +2113,8 @@ var
 tmp: TNumber;
 begin
 if y.IsInteger then
-begin IntPower(y,res);exit;end;
-tmp := TNumber.Create('',Res.FFloatDigits);
+begin IntPower(y, res);exit;end;
+tmp := TNumber.Create('', Res.FFloatDigits);
 try
 ln(tmp);
 tmp.Mul(y);
@@ -1756,7 +2136,7 @@ begin
 
 selftmp := nil;tmp := nil;
 if b < 0 then
-begin selftmp := TNumber.Create(self,FFloatDigits);Inverse;b := -b;end;
+begin selftmp := TNumber.Create(self, FFloatDigits);Inverse;b := -b;end;
 
 try
 Result := TNumber.Create(self);
@@ -1773,7 +2153,7 @@ else
   exit;
  end;
 
-tmp := TNumber.Create('',FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 
 if Odd(b) then
  t := b - 1
@@ -1807,7 +2187,7 @@ var
 tmp: TNumber;
 begin
 tmp := FIntPower(b);
-Assign(tmp,asAllButFloatAngle);
+Assign(tmp, asAllButFloatAngle);
 tmp.Destroy;
 end;
 
@@ -1819,7 +2199,7 @@ var
 tmp: TNumber;
 begin
 tmp := FIntPower(b);
-Res.Assign(tmp,asAllButFloatAngle);
+Res.Assign(tmp, asAllButFloatAngle);
 tmp.Destroy;
 end;
 
@@ -1836,13 +2216,13 @@ two := TNumber.Create('2');
 
 if b.FSign=Negative then
 begin
-selftmp := TNumber.Create(self,FFloatDigits);
+selftmp := TNumber.Create(self, FFloatDigits);
 Inverse;
 b.SetSign(Positive);
 end;
 
 try
-Result := TNumber.Create(self,FFloatDigits);
+Result := TNumber.Create(self, FFloatDigits);
 if b.IsZero then
 begin Result.MakeOne;exit;end;
 
@@ -1853,8 +2233,8 @@ begin
 Result.Mul(self);exit;
 end;
 
-tmp := TNumber.Create('',FFloatDigits);
-tmp2 := TNumber.Create('',FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
+tmp2 := TNumber.Create('', FFloatDigits);
 
 if b.IsIntegerOdd then
 b.Sub(one,tmp)
@@ -1895,7 +2275,7 @@ tmp1,tmp2: TNumber;
 i: Word;
 begin
 tmp1 := TNumber.Create('1');
-tmp2 := TNumber.Create('',FFloatDigits);
+tmp2 := TNumber.Create('', FFloatDigits);
 try
 Assign('1');
 for i := 1 to a do
@@ -1930,7 +2310,7 @@ function TNumber.FFactoriel: TNumber;
 var
 incr: TNumber;
 begin
-Result := TNumber.Create('1',FFloatDigits);
+Result := TNumber.Create('1', FFloatDigits);
 incr := TNumber.Create('1');
 try
 if FSign=Negative then raise ENumberInvalidInputError.Create(InvalidInputErrorStr);
@@ -2078,8 +2458,8 @@ i: Word;
 tmp4,tmp1: TNumber;
 c:shortint;
 begin
-tmp1 := TNumber.Create('1',Res.FFloatDigits);
-tmp4 := TNumber.Create('0',Res.FFloatDigits);
+tmp1 := TNumber.Create('1', Res.FFloatDigits);
+tmp4 := TNumber.Create('0', Res.FFloatDigits);
 try
 Res.MakeZero;
 c := 1;
@@ -2093,9 +2473,11 @@ tmp1.Divide(tmp4);
 if not odd(i) then continue;
 
 
-if c>0 then
-tmp1.FSign := Positive else tmp1.FSign := Negative;
-Res.Add(tmp1);
+if c > 0 then
+Res.Add(tmp1)
+else
+Res.Sub(tmp1);
+
 c := c * -1;
 until abs(tmp1.FExponent) >= Res.FloatDigits;
 finally
@@ -2128,10 +2510,10 @@ x := TNumber.Create('');
 try
 x.Assign(self,asAll);x.AngleToRadian;
 tmp.SetFloatDigits(x.FloatDigits);
-tmp.Assign(pion2,asAllbutFloatDigits);
+tmp.Assign(pion2, asAllbutFloatDigits);
 if x.Compare(tmp) = EqualsValue then begin Res.MakeOne;exit; end;
 if x.Compare(TNumber.Create) = EqualsValue then begin Res.MakeZero;exit;end;
-tmp.Assign(pi,asAllbutFloatDigits);
+tmp.Assign(pi, asAllbutFloatDigits);
 if x.Compare(tmp) = EqualsValue then begin Res.MakeZero;exit; end;
 // error in bignumbers ?????/
 x.DivMod(tmp);
@@ -2162,8 +2544,8 @@ i: Word;
 tmp4,tmp1: TNumber;
 c:shortint;
 begin
-tmp1 := TNumber.Create(self,Res.FloatDigits);
-tmp4 := TNumber.Create('1',Res.FloatDigits);
+tmp1 := TNumber.Create(Self, Res.FloatDigits);
+tmp4 := TNumber.Create('1', Res.FloatDigits);
 try
 Res.MakeOne;
 c := -1;
@@ -2209,14 +2591,14 @@ end;
 tmp := TNumber.Create;
 x := TNumber.Create;
 try
-x.Assign(self,asAll);
+x.Assign(self, asAll);
 x.AngleToRadian;
 
 tmp.SetFloatDigits(x.FloatDigits);
-tmp.Assign(pion2,asAllbutFloatDigits);
+tmp.Assign(pion2, asAllbutFloatDigits);
 if x.Compare(tmp) = EqualsValue then begin Res.MakeZero;exit; end;
 if x.Compare(TNumber.Create) = EqualsValue then begin Res.MakeOne;exit;end;
-tmp.Assign(pi,asAllbutFloatDigits);
+tmp.Assign(pi, asAllbutFloatDigits);
 if x.Compare(tmp) = EqualsValue then begin Res.MakeOne;Res.SwitchSign;exit; end;
 
 x.DivMod(pi2);
@@ -2250,8 +2632,8 @@ procedure TNumber.Tan(var Res: TNumber);
 var
 tmp1,tmp2: TNumber;
 begin
-tmp1 := TNumber.Create('',Res.FFloatDigits);
-tmp2 := TNumber.Create('',Res.FFloatDigits);
+tmp1 := TNumber.Create('', Res.FFloatDigits);
+tmp2 := TNumber.Create('', Res.FFloatDigits);
 try
 try
 Sin(Res);
@@ -2282,9 +2664,9 @@ incr,tmp3,xp: TNumber;
 c: Byte;
 begin
 
-xp := TNumber.Create('1',Res.FFloatDigits);
-tmp3 := TNumber.Create('',Res.FFloatDigits);
-incr := TNumber.Create('0',Res.FFloatDigits);
+xp := TNumber.Create('1', Res.FFloatDigits);
+tmp3 := TNumber.Create('', Res.FFloatDigits);
+incr := TNumber.Create('0', Res.FFloatDigits);
 try
 Res.MakeZero;
 c := 0;
@@ -2320,7 +2702,7 @@ x,tmp: TNumber;
 red:boolean;
 begin
 tmp := TNumber.Create('0.5');
-x := TNumber.Create(self,Res.FFloatDigits);
+x := TNumber.Create(self, Res.FFloatDigits);
 try
 if tmp.Compare(self) <> GreaterThanValue then
 begin
@@ -2366,13 +2748,13 @@ var
 tmp1,tmp2,tmp3: TNumber;
 i: Word;
 begin
-tmp1 := TNumber.Create('0',Res.FFloatDigits);
-tmp2 := TNumber.Create('0',Res.FFloatDigits);
-tmp3 := TNumber.Create('0',Res.FFloatDigits);
+tmp1 := TNumber.Create('0', Res.FFloatDigits);
+tmp2 := TNumber.Create('0', Res.FFloatDigits);
+tmp3 := TNumber.Create('0', Res.FFloatDigits);
 try
 Res.Assign(Math.ArcSin(GetExtended));
 
-for i := 1 to (Res.FloatDigits div 10) + 1 do
+for i := 1 to (Res.FloatDigits div 12) + 1 do
 begin
 Res.Sin(tmp1);
 Res.Cos(tmp2);
@@ -2393,11 +2775,11 @@ var
 i: Word;
 oddmul,evenmul,incr,tmp3,xp: TNumber;
 begin
-xp := TNumber.Create('1',Res.FFloatDigits);
-tmp3 := TNumber.Create('0',Res.FFloatDigits);
-incr := TNumber.Create('0',Res.FFloatDigits);
-oddmul := TNumber.Create('1',Res.FFloatDigits);
-evenmul := TNumber.Create('1',Res.FFloatDigits);
+xp := TNumber.Create('1', Res.FFloatDigits);
+tmp3 := TNumber.Create('0', Res.FFloatDigits);
+incr := TNumber.Create('0', Res.FFloatDigits);
+oddmul := TNumber.Create('1', Res.FFloatDigits);
+evenmul := TNumber.Create('1', Res.FFloatDigits);
 try
 Res.MakeZero;
 i := 1;
@@ -2414,7 +2796,7 @@ inc(i);
 continue;
 end;
 
-oddmul.Divide(evenmul,tmp3);
+oddmul.Divide(evenmul, tmp3);
 tmp3.Divide(incr);
 tmp3.Mul(xp);
 Res.Add(tmp3);
@@ -2437,7 +2819,7 @@ procedure TNumber.ArcCos(var Res: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',Res.FFloatDigits);
+tmp := TNumber.Create('', Res.FFloatDigits);
 try
 ArcSin(tmp);
 tmp.AngleToRadian;
@@ -2482,54 +2864,9 @@ Res.RadianToAngle;}
 end;
 
 
-// ArcCosh(x)=Ln(x+Sqrt(x^2-1)),
-procedure TNumber.ArcCosh(var Res: TNumber);
-var
-tmp: TNumber;
-begin
-tmp := FIntPower(two);
-tmp.Sub(one);
-tmp.Sqrt;
-tmp.Add(self);
-tmp.Ln(Res);
-end;
 
 
 
-//  ArcSinh(x)=Ln(x+Sqrt(x^2+1)),
-procedure TNumber.ArcSinh(var Res: TNumber);
-var
-tmp: TNumber;
-begin
-tmp := TNumber.Create(self,Res.FFloatDigits);
-try
-tmp.Mul(self);
-tmp.Add(one);
-tmp.Sqrt;
-tmp.Add(self);
-tmp.Ln(Res);
-finally
-tmp.Destroy;
-end;end;
-
-
-
-// ArcTanh(x)=1/2*Ln((1+x)/(1-x)).
-procedure TNumber.ArcTanh(var Res: TNumber);
-var
-tmp,tmp1: TNumber;
-begin
-tmp := TNumber.Create(self,Res.FFloatDigits);
-tmp1 := TNumber.Create('1',Res.FFloatDigits);
-try
-tmp.Add(one);
-tmp1.Sub(self);
-tmp.Divide(tmp1);
-tmp.Ln(res);
-Res.Divide(two,res);
-finally
-tmp.Destroy;tmp1.Destroy;
-end;end;
 
 
 
@@ -2539,19 +2876,19 @@ procedure TNumber.TaylorExp(var Res: TNumber);
 var
 tmp1,tmp4: TNumber;
 begin
-tmp1 := TNumber.Create('1',Res.FloatDigits);
-tmp4 := TNumber.Create('0',Res.FloatDigits);
-try
-Res.MakeOne;
-repeat
-tmp4.Add(one);
-tmp1.Mul(self);
-tmp1.Divide(tmp4);
-Res.Add(tmp1);
-until abs(tmp1.FExponent) > Res.FloatDigits;
+  tmp1 := TNumber.Create('1', Res.FFloatDigits);
+  tmp4 := TNumber.Create('0', Res.FFloatDigits);
+ try
+  Res.MakeOne;
+  repeat
+    tmp4.Add(one);
+    tmp1.Mul(self);
+    tmp1.Divide(tmp4);
+    Res.Add(tmp1);
+  until abs(tmp1.FExponent) > Res.FloatDigits;
 
-finally
-tmp1.Destroy;tmp4.Destroy;
+ finally
+  tmp1.Destroy;tmp4.Destroy;
 end;end;
 
 
@@ -2570,41 +2907,41 @@ z,tmp3,tmp1,a: TNumber;
 cmp:TValueRelationship;
 sgn:SignIndicator;
 begin
-tmp1 := TNumber.Create('1',Res.FloatDigits);
-a := TNumber.Create('0',Res.FloatDigits);
-tmp3 := TNumber.Create('0',Res.FloatDigits);
-z := TNumber.Create('0',Res.FloatDigits);
-Res.MakeZero;
+  tmp1 := TNumber.Create('1', Res.FFloatDigits);
+  a := TNumber.Create('0', Res.FFloatDigits);
+  tmp3 := TNumber.Create('0', Res.FFloatDigits);
+  z := TNumber.Create('0', Res.FFloatDigits);
+  Res.MakeZero;
 
-cmp := One.Compare(self);
-if cmp = EqualsValue then exit
-else
-if cmp = GreaterThanValue then
-begin sgn := Negative;one.Sub(self,z);end
-else
-begin
-cmp := Two.Compare(self);
-if cmp = GreaterThanValue then
-begin sgn := Positive;sub(one,z);end
-else
-begin
-one.Divide(self,z);
-z.TaylorLn(res);
-z.SetSign(Positive);exit;
-end;
-end;
+  cmp := One.Compare(self);
+  if cmp = EqualsValue then exit
+  else
+  if cmp = GreaterThanValue then
+    begin sgn := Negative;one.Sub(self, z);end
+  else
+    begin
+      cmp := Two.Compare(self);
+      if cmp = GreaterThanValue then
+        begin sgn := Positive;sub(one, z);end
+      else
+        begin
+          one.Divide(self, z);
+          z.TaylorLn(res);
+          z.SetSign(Positive);exit;
+        end;
+    end;
 
-i := 0;
-repeat
-inc(i);
-a.add(one);
-tmp1.Mul(z);
-tmp1.Divide(a,tmp3);
-if (odd(i)) and (sgn = positive) then
-Res.Add(tmp3)
-else
-Res.Sub(tmp3)
-until abs(tmp3.FExponent) > Res.FloatDigits;
+  i := 0;
+  repeat
+    inc(i);
+    a.add(one);
+    tmp1.Mul(z);
+    tmp1.Divide(a,tmp3);
+    if (odd(i)) and (sgn = positive) then
+      Res.Add(tmp3)
+    else
+      Res.Sub(tmp3)
+  until abs(tmp3.FExponent) > Res.FloatDigits;
 end;
 
 
@@ -2617,31 +2954,31 @@ var
 e,inve,m,tmp: TNumber;
 cmp:TValueRelationship;
 begin
-Res.MakeZero;
-inve := TNumber.Create('0',Res.FloatDigits);
-e := TNumber.Create('0',Res.FloatDigits);
-one.Exp(e);
-// find m
-m := Find2pk_N;
-//optimization
-if not m.IsZero then
-begin
-repeat
-cmp := Compare(e.FIntPower(m));
-if cmp = GreaterThanValue then break;
-m.sub(one);
-until 1 = 2;
-m.Add(one);
-end;
-one.Divide(e,inve);
-tmp := inve.FIntPower(m);
-tmp.Mul(self);
-tmp.Sqrt;tmp.Sqrt;
-//tmp.TaylorLn(res);
-Res.Assign(System.ln(tmp.GetExtended));
-Res.Mul(two);Res.Mul(two);
-Res.add(m);
-Res.Correction;
+  Res.MakeZero;
+  inve := TNumber.Create('',Res.FFloatDigits);
+  e := TNumber.Create('',Res.FFloatDigits);
+  one.Exp(e);
+  // find m
+  m := Find2pk_N;
+  //optimization
+  if not m.IsZero then
+    begin
+      repeat
+        cmp := Compare(e.FIntPower(m));
+        if cmp = GreaterThanValue then break;
+        m.sub(one);
+      until 1 = 2;
+      m.Add(one);
+    end;
+  one.Divide(e,inve);
+  tmp := inve.FIntPower(m);
+  tmp.Mul(self);
+  tmp.Sqrt;tmp.Sqrt;
+  //tmp.TaylorLn(res);
+  Res.Assign(System.ln(tmp.GetExtended));
+  Res.Mul(two);Res.Mul(two);
+  Res.add(m);
+  Res.Correction;
 end;
 
 
@@ -2654,29 +2991,32 @@ var
 x,m,tmp: TNumber;
 exptmp:Longint;
 begin
-Res.MakeZero;
-tmp := TNumber.Create('1.05',Res.FloatDigits+1);
-m := TNumber.Create('0',Res.FloatDigits);
-x := TNumber.Create(self,Res.FloatDigits);
-
-exptmp := x.FExponent;
-x.FExponent:=0;
+  Res.MakeZero;
+  tmp := TNumber.Create('1.05', Res.FFloatDigits);
+  m := TNumber.Create('0', Res.FFloatDigits);
+  x := TNumber.Create(self, Res.FFloatDigits);
+ try
+  exptmp := x.FExponent;
+  x.FExponent:=0;
 //optimization
-repeat
-x.Sqrt;
-m.IncNumber;
+  repeat
+    x.Sqrt;
+    m.IncNumber;
 
-if x.FExponent = 0 then
-if x.Compare(tmp) = LessThanValue then break;
-until 1 = 2;
+    if x.FExponent = 0 then
+    if x.Compare(tmp) = LessThanValue then break;
+  until 1 = 2;
 
-x.TaylorLn(Res);
-two.IntPower(m,tmp);
-Res.Mul(tmp);
-Ln10.Mul(TNumber.Create(exptmp),tmp);
-Res.Add(tmp);
-Res.Correction;
-end;
+  x.TaylorLn(Res);
+  two.IntPower(m,tmp);
+  Res.Mul(tmp);
+  Ln10.Mul(TNumber.Create(exptmp), tmp);
+  Res.Add(tmp);
+  Res.Correction;
+ finally
+  tmp.Destroy;m.Destroy;x.Destroy;
+end;end;
+
 
 
 
@@ -2688,10 +3028,10 @@ var
 tmp2,tmp1,tmp3,tmp4: TNumber;
 cmp:TValueRelationship;
 begin
-tmp1 := TNumber.Create('6',Res.FFloatDigits);
-tmp2 := TNumber.Create('0.7662',Res.FFloatDigits);
-tmp3 := TNumber.Create('5.9897',Res.FFloatDigits);
-tmp4 := TNumber.Create('3.7658',Res.FFloatDigits);
+tmp1 := TNumber.Create('6', Res.FFloatDigits);
+tmp2 := TNumber.Create('0.7662', Res.FFloatDigits);
+tmp3 := TNumber.Create('5.9897', Res.FFloatDigits);
+tmp4 := TNumber.Create('3.7658', Res.FFloatDigits);
 Res.MakeZero;
 
 cmp := One.Compare(self);
@@ -2718,7 +3058,6 @@ tmp2.Mul(res);
 tmp2.Add(tmp1);
 Res.mul(tmp2);
 Res.Divide(tmp4);
-
 end;
 
 
@@ -2729,49 +3068,34 @@ var
 i: Word;
 tmp,tmp1: TNumber;
 begin
-tmp := TNumber.Create('',Res.FloatDigits);
-tmp1 := TNumber.Create('',Res.FloatDigits);
-try
+  tmp := TNumber.Create('', Res.FFloatDigits);
+  tmp1 := TNumber.Create('', Res.FFloatDigits);
+ try
 // find m
-if (FSign = Negative) or (IsZero) then
+  if (FSign = Negative) or (IsZero) then
     raise ENumberInvalidInputError.Create(InvalidInputErrorStr);
-{if abs(Exponent)>4932 then
-begin tsLn(Res);exit; end
-else}
-Res.Assign(System.Ln(GetExtended));
-{m := Find2pk_N;
-Res.Mul(m);}
-for i := 1 to Res.FloatDigits div 12 do
-begin
-Res.Exp(tmp);
-divide(tmp,tmp1);
-Res.Sub(one);
-Res.Add(tmp1);
-end;
-Res.Correction;
-
-finally
-tmp.Destroy;tmp1.Destroy;
+  {if abs(Exponent)>4932 then
+  begin tsLn(Res);exit; end
+  else}
+  Res.Assign(System.Ln(GetExtended));
+  {m := Find2pk_N;
+  Res.Mul(m);}
+  for i := 1 to Res.FloatDigits div 12 do
+    begin
+      Res.Exp(tmp);
+      divide(tmp,tmp1);
+      Res.Sub(one);
+      Res.Add(tmp1);
+    end;
+  Res.Correction;
+ finally
+  tmp.Destroy;tmp1.Destroy;
 end;end;
 
 
 
 
 
-
-procedure TNumber.Log(var Res: TNumber);
-var
-tmp,tmp1: TNumber;
-begin
-tmp := TNumber.Create('10',Res.FloatDigits);
-tmp1 := TNumber.Create('',Res.FloatDigits);
-try
-Ln(res);
-tmp.Ln(tmp1);
-Res.Divide(tmp1);
-finally
-tmp.Destroy;tmp1.Destroy;
-end;end;
 
 
 
@@ -2781,23 +3105,28 @@ procedure TNumber.Exp(var Res: TNumber);
 var
 k,tmp,tmp1,y: TNumber;
 begin
-tmp1 := TNumber.Create('0',Res.FloatDigits);
-y := TNumber.Create('0',Res.FloatDigits);
-k := Find2pk_N;
-k.FFloatDigits := Res.FloatDigits;
-k.FExponent := k.FExponent + 1;
-//k.Add(four);
-tmp := two.FIntPower(k); // tmp = 2^k
-//tmp.FExponent := tmp.FExponent +1;
-one.Divide(tmp,tmp1);   // tmp1 = 2^-k
-tmp1.Mul(self);        // tmp1 =(2^-k)*x
-tmp1.Divide(two);
-tmp1.TaylorExp(y);
-y.Sub(one);
-y.Mul(two,tmp1);
-y.Mul(y);y.Add(tmp1);y.Add(one);
-y.IntPower(tmp,res)
-end;
+  tmp1 := TNumber.Create('0', Res.FFloatDigits);
+  y := TNumber.Create('0', Res.FFloatDigits);
+  k := Find2pk_N;
+ try
+  k.FFloatDigits := Res.FloatDigits;
+  k.FExponent := k.FExponent + 1;
+  //k.Add(four);
+  tmp := two.FIntPower(k); // tmp = 2^k
+  //tmp.FExponent := tmp.FExponent +1;
+  one.Divide(tmp,tmp1);   // tmp1 = 2^-k
+  tmp1.Mul(self);        // tmp1 =(2^-k)*x
+  tmp1.Divide(two);
+  tmp1.TaylorExp(y);
+  y.Sub(one);
+  y.Mul(two,tmp1);
+  y.Mul(y);
+  y.Add(tmp1);
+  y.Add(one);
+  y.IntPower(tmp,res)
+ finally
+  tmp1.Destroy;tmp.Destroy;k.Destroy;y.Destroy;
+end;end;
 
 
 
@@ -2840,14 +3169,13 @@ procedure TNumber.Add(b: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
-Add(b,tmp);
+  tmp := TNumber.Create('', FFloatDigits);
+  Add(b,tmp);
 
-FNum := tmp.FNum;
-FNumHigh := tmp.fnumHigh;
-FSign := tmp.FSign;
-FExponent := tmp.FExponent;
-
+  FNum := tmp.FNum;
+  FNumHigh := tmp.fnumHigh;
+  FSign := tmp.FSign;
+  FExponent := tmp.FExponent;
 end;
 
 
@@ -2856,59 +3184,57 @@ procedure TNumber.Sub(b: TNumber);
 var
 tmp :TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
-Sub(b,tmp);
+  tmp := TNumber.Create('', FFloatDigits);
+  Sub(b,tmp);
 
-FNum := tmp.FNum;
-FNumHigh := tmp.fnumHigh;
-FSign := tmp.FSign;
-FExponent := tmp.FExponent;
-
+  FNum := tmp.FNum;
+  FNumHigh := tmp.fnumHigh;
+  FSign := tmp.FSign;
+  FExponent := tmp.FExponent;
 end;
+
 
 
 procedure TNumber.Mul(b: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
+  tmp := TNumber.Create('', FFloatDigits);
+  mul(b,tmp);
 
-mul(b,tmp);
-
-FNum := tmp.FNum;
-FNumHigh := tmp.fnumHigh;
-FSign := tmp.FSign;
-FExponent := tmp.FExponent;
-
+  FNum := tmp.FNum;
+  FNumHigh := tmp.fnumHigh;
+  FSign := tmp.FSign;
+  FExponent := tmp.FExponent;
 end;
+
 
 
 procedure TNumber.Divide(b: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
-Divide(b,tmp);
+  tmp := TNumber.Create('', FFloatDigits);
+  Divide(b,tmp);
 
-FNum := tmp.FNum;
-FNumHigh := tmp.fnumHigh;
-FSign := tmp.FSign;
-FExponent := tmp.FExponent;
-
+  FNum := tmp.FNum;
+  FNumHigh := tmp.fnumHigh;
+  FSign := tmp.FSign;
+  FExponent := tmp.FExponent;
 end;
+
 
 
 procedure TNumber.Inverse;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
-try
-one.Divide(self,tmp);
-Assign(tmp);
-
-finally
-tmp.Destroy;
+  tmp := TNumber.Create('', FFloatDigits);
+ try
+  one.Divide(Self,tmp);
+  Assign(tmp);
+ finally
+  tmp.Destroy;
 end;end;
 
 
@@ -2918,7 +3244,7 @@ tmp: TNumber;
 begin
 tmp := FFactoriel;
 try
-Assign(tmp);
+Assign(tmp,asTheNumber);
 finally;
 tmp.Destroy;
 end;end;
@@ -2928,7 +3254,7 @@ procedure TNumber.Int;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Int(tmp);
 Assign(tmp);
@@ -2940,19 +3266,31 @@ procedure TNumber.Sqrt;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
-sqrt(tmp);
+Sqrt(tmp);
 Assign(tmp);
 finally
 tmp.Destroy
+end;end;
+
+procedure TNumber.Frac(var Res: TNumber);
+var
+tmp: TNumber;
+begin
+  tmp := TNumber.Create('', Res.FFloatDigits);
+ try
+  Int(tmp);
+  Sub(tmp,Res);
+ finally
+  tmp.Destroy;
 end;end;
 
 procedure TNumber.Frac;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Frac(tmp);
 Assign(tmp);
@@ -2960,11 +3298,12 @@ finally
 tmp.Destroy;
 end;end;
 
+
 procedure TNumber.DivInt(b: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 DivInt(b,tmp);
 Assign(tmp);
@@ -2977,9 +3316,84 @@ procedure TNumber.DivMod(b: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 DivMod(b,tmp);
+Assign(tmp);
+finally
+tmp.Destroy;
+end;end;
+
+
+procedure TNumber.BitWiseAnd(b: TNumber);
+var
+tmp: TNumber;
+begin
+tmp := TNumber.Create('', FFloatDigits);
+try
+BitWiseAnd(b,tmp);
+Assign(tmp);
+finally
+tmp.Destroy;
+end;end;
+
+procedure TNumber.BitWiseOr(b: TNumber);
+var
+tmp: TNumber;
+begin
+tmp := TNumber.Create('', FFloatDigits);
+try
+BitWiseOr(b,tmp);
+Assign(tmp);
+finally
+tmp.Destroy;
+end;end;
+
+
+procedure TNumber.BitWiseXor(b: TNumber);
+var
+tmp: TNumber;
+begin
+tmp := TNumber.Create('', FFloatDigits);
+try
+BitWiseXor(b,tmp);
+Assign(tmp);
+finally
+tmp.Destroy;
+end;end;
+
+
+procedure TNumber.BitWiseLsh(b: TNumber);
+var
+tmp: TNumber;
+begin
+tmp := TNumber.Create('', FFloatDigits);
+try
+BitWiseLsh(b,tmp);
+Assign(tmp);
+finally
+tmp.Destroy;
+end;end;
+
+procedure TNumber.BitWiseRsh(b: TNumber);
+var
+tmp: TNumber;
+begin
+tmp := TNumber.Create('', FFloatDigits);
+try
+BitWiseRsh(b,tmp);
+Assign(tmp);
+finally
+tmp.Destroy;
+end;end;
+
+procedure TNumber.BitWiseNot;
+var
+tmp: TNumber;
+begin
+tmp := TNumber.Create('', FFloatDigits);
+try
+BitWiseNot(tmp);
 Assign(tmp);
 finally
 tmp.Destroy;
@@ -2991,9 +3405,9 @@ procedure TNumber.Sinh(var Res: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',Res.FloatDigits);
+tmp := TNumber.Create('', Res.FFloatDigits);
 try
-exp(tmp);
+Exp(tmp);
 Res.Assign(tmp);
 tmp.Inverse;
 Res.Sub(tmp);
@@ -3008,9 +3422,9 @@ procedure TNumber.Cosh(var Res: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',Res.FloatDigits);
+tmp := TNumber.Create('', Res.FFloatDigits);
 try
-exp(tmp);
+Exp(tmp);
 Res.Assign(tmp);
 tmp.Inverse;
 Res.Add(tmp);
@@ -3021,11 +3435,27 @@ end;end;
 
 
 
+procedure TNumber.Log(var Res: TNumber);
+var
+tmp,tmp1: TNumber;
+begin
+tmp := TNumber.Create('10', Res.FloatDigits);
+tmp1 := TNumber.Create('', Res.FloatDigits);
+try
+Ln(res);
+tmp.Ln(tmp1);
+Res.Divide(tmp1);
+finally
+tmp.Destroy;tmp1.Destroy;
+end;end;
+
+
+
 procedure TNumber.ArcCos;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 ArcCos(tmp);
 Assign(tmp);
@@ -3038,12 +3468,13 @@ procedure TNumber.Tanh(var Res: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',Res.FloatDigits);
+tmp := TNumber.Create('', Res.FFloatDigits);
 try
 Sinh(Res);
 Cosh(tmp);
-finally
 Res.Divide(tmp);
+finally
+tmp.Destroy;
 end;end;
 
 
@@ -3051,7 +3482,7 @@ procedure TNumber.ArcSinh;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits );
 try
 ArcSinh(tmp);
 Assign(tmp);
@@ -3064,7 +3495,7 @@ procedure TNumber.ArcSin;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 ArcSin(tmp);
 Assign(tmp);
@@ -3077,7 +3508,7 @@ procedure TNumber.ArcCosh;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 ArcCosh(tmp);
 Assign(tmp);
@@ -3086,11 +3517,30 @@ tmp.Destroy;
 end;end;
 
 
+
+// ArcTanh(x)=1/2*Ln((1+x)/(1-x)).
+procedure TNumber.ArcTanh(var Res: TNumber);
+var
+tmp,tmp1: TNumber;
+begin
+tmp := TNumber.Create(Self, Res.FFloatDigits);
+tmp1 := TNumber.Create('1', Res.FFloatDigits);
+try
+tmp.Add(one);
+tmp1.Sub(self);
+tmp.Divide(tmp1);
+tmp.Ln(res);
+Res.Divide(two,res);
+finally
+tmp.Destroy;tmp1.Destroy;
+end;end;
+
+
 procedure TNumber.ArcTanh;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 ArcTanh(tmp);
 Assign(tmp);
@@ -3103,7 +3553,7 @@ procedure TNumber.ArcTan;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 ArcTan(tmp);
 Assign(tmp);
 tmp.Destroy;
@@ -3114,7 +3564,7 @@ procedure TNumber.Sin;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Sin(tmp);
 Assign(tmp);
@@ -3127,7 +3577,7 @@ procedure TNumber.Cos;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Cos(tmp);
 Assign(tmp);
@@ -3135,11 +3585,42 @@ finally
 tmp.Destroy;
 end;end;
 
+
+// ArcCosh(x)=Ln(x+Sqrt(x^2-1)),
+procedure TNumber.ArcCosh(var Res: TNumber);
+var
+tmp: TNumber;
+begin
+  tmp := FIntPower(two);
+  tmp.Sub(one);
+  tmp.Sqrt;
+  tmp.Add(self);
+  tmp.Ln(Res);
+end;
+
+
+
+//  ArcSinh(x)=Ln(x+Sqrt(x^2+1)),
+procedure TNumber.ArcSinh(var Res: TNumber);
+var
+tmp: TNumber;
+begin
+  tmp := TNumber.Create(self, Res.FFloatDigits);
+ try
+  tmp.Mul(self);
+  tmp.Add(one);
+  tmp.Sqrt;
+  tmp.Add(self);
+  tmp.Ln(Res);
+ finally
+  tmp.Destroy;
+end;end;
+
 procedure TNumber.Cosh;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Cosh(tmp);
 Assign(tmp);
@@ -3152,7 +3633,7 @@ procedure TNumber.Tanh;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Tanh(tmp);
 Assign(tmp);
@@ -3165,7 +3646,7 @@ procedure TNumber.Sinh;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Sinh(tmp);
 Assign(tmp);
@@ -3178,7 +3659,7 @@ procedure TNumber.Tan;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Tan(tmp);
 Assign(tmp);
@@ -3191,7 +3672,7 @@ procedure TNumber.Exp;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Exp(tmp);
 Assign(tmp);
@@ -3205,7 +3686,7 @@ procedure TNumber.Log;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Log(tmp);
 Assign(tmp);
@@ -3218,20 +3699,21 @@ procedure TNumber.Ln;
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FloatDigits);
-try
-Ln(tmp);
-Assign(tmp);
-finally
-tmp.Destroy;
+  tmp := TNumber.Create('', FFloatDigits);
+ try
+  Ln(tmp);
+  Assign(tmp);
+ finally
+  tmp.Destroy;
 end;end;
+
 
 
 procedure TNumber.Power(y: TNumber);
 var
 tmp: TNumber;
 begin
-tmp := TNumber.Create('',FFloatDigits);
+tmp := TNumber.Create('', FFloatDigits);
 try
 Power(y,tmp);
 Assign(tmp);
@@ -3254,10 +3736,10 @@ Pi := TNumber.Create('3.14159265358979323846264338327950288419716939937510582097
 Ln10 := TNumber.Create('2.3025850929940456840179914546843642075802774059335446778033'+
                     '186086043243380937540409102507286580713012880161850198335571'+
                     '604602551484317423808853946999887097691608826756808516382753221');
-Pi2 := TNumber.Create('0',Pi.FFloatDigits);
-Pion2 := TNumber.Create('0',Pi.FFloatDigits);
-Pi.Mul(two,pi2);
-Pi.Divide(two,pion2);
+Pi2 := TNumber.Create('', Pi.FFloatDigits);
+Pion2 := TNumber.Create('', Pi.FFloatDigits);
+Pi.Mul(two, pi2);
+Pi.Divide(two, pion2);
 
 
 finalization

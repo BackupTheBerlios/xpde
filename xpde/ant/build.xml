@@ -3,7 +3,7 @@
   XPde build file
   </description>
   <property name="kylix" location="/home/ttm/kylix3" />
-  <property name="version" value="0.1.9" />
+  <property name="version" value="0.2.0" />
   <property name="src" location="src"/>
   <property name="build" location="xpde-${version}"/>
   <property name="units" location="dcu"/>  

@@ -89,6 +89,10 @@ end;
 
 procedure TBackForm.FormCreate(Sender: TObject);
 begin
+    if (getuid<>0) then begin
+        showmessage('This application must be executed as root!');
+        application.terminate;
+    end;
     texts:=TStringList.create;
     curtext:=0;
     filltexts;
@@ -210,8 +214,12 @@ begin
                 application.terminate;
             end;
             if rs=mrOk then begin
+                tmTexts.Enabled:=true;
+                tmStars.Enabled:=true;
                 installscript;
             end;
+            tmTexts.Enabled:=false;
+            tmStars.Enabled:=false;
             showmessage('Installation finished');
             application.terminate;
         finally
@@ -262,9 +270,11 @@ begin
                 pbProgress.position:=i;
                 application.processmessages;
                 st:=libc.system(PChar(line));
+                {
                 if st<>0 then begin
                     showmessage('Script error [Line '+inttostr(i)+']: ' + line);
                 end;
+                }
                 cur:=getTickCount;
                 if ((cur-init)>5) then begin
                     eta:=(lines.count*(cur-init));

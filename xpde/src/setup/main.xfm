@@ -1,11 +1,11 @@
 object BackForm: TBackForm
-  Left = 345
-  Top = 42
+  Left = 337
+  Top = 0
   Width = 639
   Height = 526
   HorzScrollBar.Range = 201
   VertScrollBar.Range = 154
-  BorderStyle = fbsNone
+  BorderStyle = fbsSingle
   Caption = 'XPde Setup'
   Color = clBackground
   FormStyle = fsStayOnTop
@@ -29597,12 +29597,14 @@ object BackForm: TBackForm
     end
   end
   object tmStars: TTimer
+    Enabled = False
     Interval = 200
     OnTimer = tmStarsTimer
     Left = 468
     Top = 312
   end
   object tmTexts: TTimer
+    Enabled = False
     Interval = 10000
     OnTimer = tmTextsTimer
     Left = 316

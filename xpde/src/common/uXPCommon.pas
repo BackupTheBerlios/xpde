@@ -30,6 +30,7 @@ uses QForms,QGraphics,Types,
 
 procedure MergeBitmaps(source1,source2,target:TBitmap;dens:longint);
 procedure AlphaBitmap(source1,source2,target:TBitmap;dens:longint);
+procedure SelectedBitmap(source1,source2,target:TBitmap;dens:longint);
 procedure MaskedBitmap(orig:TBitmap;result:TBitmap);
 procedure spawn(const cmd:string);
 function CopyFile(const Source, Destination: string): Boolean;
@@ -143,8 +144,8 @@ begin
 		        NEG BL
 		        ADD BL, $20
 		        MOV Dens2, EBX
-		        CMP Dens1, 0
-		        JZ  @Final
+//		        CMP Dens1, 0
+//		        JZ  @Final
 
 		        MOV EDI, ptz
 		        MOV ESI, ptt
@@ -166,6 +167,11 @@ begin
                 SHR EAX, 24
 
 		        MOV EBX, EAX
+                ADD EBX, dens
+                CMP EBX, $20
+                JNG @p
+                MOV EBX, $20
+            @p:
 		        MOV Dens1, EBX
 		        NEG BL
 		        ADD BL, $20
@@ -223,6 +229,163 @@ begin
         bmf.free;
         bmt.free;
 end;
+
+
+procedure SelectedBitmap(source1,source2,target:TBitmap;dens:longint);
+var
+    aEBX, aESI, aEDI, aESP, aEDX, Dens1, Dens2, Dens3: Longint;
+    i: longint;
+    ptz: pointer;
+    ptt: pointer;
+    ptf: pointer;
+    w:longint;
+    bmz:TBitmap;
+    bmf:TBitmap;
+    bmt:TBitmap;
+    fina:integer;
+const
+    Maxize = (1294967280 Div SizeOf(TPoint));
+    MaxPixelCount = 32768;
+    Mask0101 = $00FF00FF;
+    Mask1010 = $FF00FF00;
+begin
+    bmz:=TBitmap.create;
+    bmf:=TBitmap.create;
+    bmt:=TBitmap.create;
+
+    bmz.PixelFormat:=pf32bit;
+    bmf.PixelFormat:=pf32bit;
+    bmt.PixelFormat:=pf32bit;
+
+    bmz.width:=source1.width;
+    bmz.height:=source1.height;
+
+    bmf.width:=source1.width;
+    bmf.height:=source1.height;
+
+    bmt.width:=source1.width;
+    bmt.height:=source1.height;
+
+
+    bmF.Assign(source1);
+    bmt.assign(source2);
+    bmZ.assign(bmf);
+
+    w:=bmz.width;
+
+    for i := 0 to bmz.height - 1 do begin
+        Ptz := bmz.Scanline[i];
+        Ptt := bmt.Scanline[i];
+        Ptf := bmf.Scanline[i];
+            asm
+		        MOV aEBX, EBX
+		        MOV aEDI, EDI
+		        MOV aESI, ESI
+		        MOV aESP, ESP
+		        MOV aEDX, EDX
+
+		        MOV EBX, Dens
+		        MOV Dens1, EBX
+
+		        NEG BL
+		        ADD BL, $20
+		        MOV Dens2, EBX
+//		        CMP Dens1, 0
+//		        JZ  @Final
+
+		        MOV EDI, ptz
+		        MOV ESI, ptt
+		        MOV ECX, ptf
+
+		        MOV EAX, w
+		        lea EAX, [EAX+EAX*2+3]
+		        ADD EAX,w
+		        AND EAX, $FFFFFFFC
+		        ADD EAX, EDI
+		        MOV FinA, EAX
+
+		        MOV EDX,EDI
+		        MOV ESP,ESI
+		        MOV ECX,ECX
+
+            @LOOPA:
+		        MOV  EAX, [EDX]
+                SHR EAX, 24
+
+		        MOV EBX, EAX
+                ADD EBX, dens
+                CMP EBX, $20
+                JNG @p
+                MOV EBX, $20
+            @p:
+		        MOV Dens1, EBX
+		        NEG BL
+		        ADD BL, $20
+		        MOV Dens2, EBX
+		        CMP Dens1, 0
+		        JZ  @sig
+
+		        MOV  EAX, [EDX]
+                SHR EAX, 24
+                SHL EAX, 24
+                MOV Dens3, EAX
+
+		        MOV  EAX, [EDX]
+		        MOV  EDI, [ESP]
+                CMP EAX, $FFFFFFFF
+                JZ @mask
+             @again:
+		        MOV  EBX, EAX
+
+		        AND  EAX, Mask1010
+		        AND  EBX, Mask0101
+		        SHR  EAX, 5
+		        IMUL EAX, Dens2
+		        IMUL EBX, Dens2
+		        MOV  ESI, EDI
+		        AND  EDI, Mask1010
+		        AND  ESI, Mask0101
+		        SHR  EDI, 5
+		        IMUL EDI, Dens1
+		        IMUL ESI, Dens1
+		        ADD  EAX, EDI
+		        ADD  EBX, ESI
+		        AND  EAX, Mask1010
+		        SHR  EBX, 5
+		        AND  EBX, Mask0101
+		        OR   EAX, EBX
+                SHL EAX ,8
+                SHR EAX ,8
+
+                OR   EAX, Dens3
+		        MOV [ECX], EAX
+            @sig:
+		        ADD  EDX, 4
+		        ADD  ESP, 4
+		        ADD  ECX, 4
+
+		        CMP  EDX, FinA
+		        JNE  @LOOPA
+                JE  @final
+            @mask:
+//		        MOV  EAX, EDI
+//		        MOV [ECX], EAX
+                jmp  @sig
+            @final:
+		        MOV EBX, aEBX
+		        MOV EDI, aEDI
+		        MOV ESI, aESI
+		        MOV ESP, aESP
+		        MOV EDX, aEDX
+            end;
+        end;
+        
+        target.assign(bmf);
+        bmz.free;
+        bmf.free;
+        bmt.free;
+end;
+
 
 
 procedure MergeBitmaps(source1,source2,target:TBitmap;dens:longint);

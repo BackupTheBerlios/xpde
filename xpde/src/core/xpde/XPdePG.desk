@@ -1,37 +1,25 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas',0,1,962,55,978,1,1
-File_1=SourceModule,'/home/ttm/kylix3/source/clx/QGraphics.pas',0,1,3257,1,3273,0,0
-File_2=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,1649,72,1680,0,0
-File_3=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,1,41,30,0,0
-File_4=SourceModule,'/home/ttm/kylix3/source/clx/QForms.pas',0,1,282,1,303,0,0
-File_5=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,255,49,279,1,0
-File_6=SourceModule,'/home/ttm/kylix3/source/rtl/linux/Xlib.pas',0,1,1327,32,1349,0,0
-File_7=SourceModule,'/home/ttm/xpde/src/core/xpwm/uActiveTasks.pas',0,1,75,25,93,1,0
-File_8=SourceModule,'/home/ttm/xpde/src/common/uXPPNG.pas',0,1,264,32,273,0,0
+File_0=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,668,24,674,1,0
+File_1=SourceModule,'/home/ttm/xpde/src/apps/notepad/main.pas',0,1,1,1,1,1,1
+File_2=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTurnOff.pas',0,1,1,70,4,1,0
+File_3=SourceModule,'/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas',0,1,962,55,978,1,1
+File_4=SourceModule,'/home/ttm/kylix3/source/clx/QGraphics.pas',0,1,3257,1,3273,0,0
+File_5=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,1,41,30,0,0
+File_6=SourceModule,'/home/ttm/kylix3/source/clx/QForms.pas',0,1,282,1,303,0,0
+File_7=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,255,49,279,1,0
+File_8=SourceModule,'/home/ttm/kylix3/source/rtl/linux/Xlib.pas',0,1,1327,32,1349,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-Module1=/home/ttm/xpde/src/core/xpwm/uTurnOff.pas
-Module2=/home/ttm/xpde/src/apps/notepad/main.pas
-Module3=/home/ttm/xpde/src/core/xpde/XPde.dpr
-Count=4
+Module0=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
+Module1=/home/ttm/xpde/src/core/xpde/XPde.dpr
+Count=2
 EditWindowCount=1
 PackageWindowCount=9
 
-[/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
+[/home/ttm/xpde/src/core/xpwm/uWindowManager.pas]
 ModuleType=SourceModule
-FormState=1
+FormState=0
 FormOnTop=0
-
-[/home/ttm/xpde/src/core/xpwm/uTurnOff.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[/home/ttm/xpde/src/apps/notepad/main.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=1
 
 [/home/ttm/xpde/src/core/xpde/XPde.dpr]
 ModuleType=SourceModule
@@ -135,12 +123,10 @@ FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=4
+ViewCount=2
 CurrentView=1
 View0=0
 View1=1
-View2=2
-View3=3
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -166,30 +152,16 @@ BottomPanelData=0000040000000000000000000000000000000000000000000001000000000000
 
 [View0]
 Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
-CursorX=1
-CursorY=1
+CursorX=6
+CursorY=4
 TopLine=1
 LeftCol=1
 
 [View1]
-Module=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-CursorX=24
-CursorY=674
-TopLine=668
-LeftCol=1
-
-[View2]
-Module=/home/ttm/xpde/src/apps/notepad/main.pas
-CursorX=1
-CursorY=1
-TopLine=1
-LeftCol=1
-
-[View3]
-Module=/home/ttm/xpde/src/core/xpwm/uTurnOff.pas
-CursorX=31
-CursorY=8
-TopLine=1
+Module=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
+CursorX=42
+CursorY=1250
+TopLine=1243
 LeftCol=1
 
 [PackageWindow0]
@@ -416,7 +388,7 @@ ClientHeight=87
 
 [ProjectManager]
 Create=1
-Visible=0
+Visible=1
 State=0
 Left=369
 Top=372
@@ -460,7 +432,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=Caption
+SelectedItem=
 ExpandedItems=
 HiddenCategories=
 

@@ -1247,6 +1247,8 @@ begin
     {$endif}
     result:=TWMClient.create(w,self);
     clients.insert(0,result);
+    //Ensures the grabs are not overriden
+    setupKeyboardGrab;
 end;
 
 procedure TXPWindowManager.SetActiveClient(const Value: TWMClient);

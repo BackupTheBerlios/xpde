@@ -77,14 +77,14 @@ type
         ow: longint;
         oh: longint;
         ore: TRect;
-        windowtitle:string;
+        windowtitle:widestring;
         procedure paintTitle;
         function getFrameBorderSizes:TRect;
         function getOrigin:TPoint;
         procedure setClient(AClient:TWMClient);
         procedure updatewindowtitle;
-        procedure setTitle(ATitle:string);
-        function getTitle:string;        
+        procedure setTitle(ATitle:widestring);
+        function getTitle:widestring;
         procedure updateActiveState;
   end;
 
@@ -477,13 +477,13 @@ begin
     result.Y:=23;
 end;
 
-procedure TWindowsClassic.setTitle(ATitle: string);
+procedure TWindowsClassic.setTitle(ATitle: widestring);
 begin
     windowtitle:=ATitle;
     updatewindowtitle;
 end;
 
-function TWindowsClassic.getTitle: string;
+function TWindowsClassic.getTitle: widestring;
 begin
     result:=windowtitle;
 end;
@@ -586,7 +586,7 @@ procedure TWindowsClassic.updatewindowtitle;
 var
     w: integer;
     fw: integer;
-    wc: string;
+    wc: widestring;
     k: integer;
 begin
     wc:=windowtitle;
@@ -603,7 +603,7 @@ begin
     end;
 
     lbTitle.Caption:=wc;
-
+    
 end;
 
 initialization

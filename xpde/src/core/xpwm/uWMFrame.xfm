@@ -1,6 +1,6 @@
 object WindowsClassic: TWindowsClassic
-  Left = 290
-  Top = 392
+  Left = 293
+  Top = 421
   ActiveControl = btnClose
   AutoScroll = False
   BorderStyle = fbsNone

@@ -67,7 +67,7 @@ type
         procedure updateactivestate;
         function isactive:boolean;
         procedure activate;
-        function getTitle: string;
+        function getTitle: widestring;
         function getWindow: Window;
     end;
 
@@ -119,6 +119,18 @@ var
     XPDesktop:IXPDesktop=nil;                                                   //Global Desktop variable
     XPTaskBar:IXPTaskBar=nil;                                                   //Global TaskBar variable
 
+function listtostr(const str:string):string;
+
 implementation
+
+function listtostr(const str:string):string;
+var
+    k: integer;
+begin
+    //Temp solution, puaj!
+    result:=str;
+    k:=pos(#2,result);
+    if k<>0 then result:=copy(result,k+1,length(result));
+end;
 
 end.

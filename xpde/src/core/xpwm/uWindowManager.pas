@@ -29,7 +29,7 @@ interface
 
 uses QForms, SysUtils, Types,
      Classes, Qt, Libc, XLib,
-     uWMConsts, uXPAPI;
+     uWMConsts, uXPAPI, QDialogs;
 
 type
     TWMClient=class;
@@ -39,8 +39,8 @@ type
         function getFrameBorderSizes:TRect;                                     //Must return the sizes of the borders of the frame
         function getOrigin:TPoint;                                        //Must return the point where the client window is going to be placed
         procedure setClient(AClient:TWMClient);                                 //Must store the client to perform operations with the window
-        procedure setTitle(ATitle:string);
-        function getTitle:string;
+        procedure setTitle(ATitle:widestring);
+        function getTitle:widestring;
         procedure updateActiveState;
     end;
 
@@ -136,7 +136,7 @@ type
         procedure updateactivestate;
         function isactive:boolean;
         procedure activate;
-        function getTitle: string;
+        function getTitle: widestring;
         property WindowManager:TXPWindowManager read FWindowManager write SetWindowManager;
         property UnmapCounter: integer read FUnmapCounter write FUnmapCounter;
         property Wnd: Window read xwindow write xwindow;
@@ -767,7 +767,7 @@ begin
         c:=findclient(xwindow);
         if assigned(c) then begin
             XGetWMName(FDisplay, xwindow, @name);
-            (c.frame as TWindowsClassic).setTitle(PChar(name.value));
+            (c.frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
             XPTaskBar.updatetask(c);
         end
         else begin
@@ -1631,8 +1631,10 @@ begin
         wRect:=frame.boundsrect;
     end;
 
+
     XGetWMName(FWindowManager.FDisplay, xwindow, @name);
-    (frame as TWindowsClassic).setTitle(PChar(name.value));
+
+    (frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
 
     frame.show;
 
@@ -1730,7 +1732,7 @@ begin
 
 end;
 
-function TWMClient.getTitle: string;
+function TWMClient.getTitle: widestring;
 begin
     if assigned(frame) then begin
         result:=(frame as TWindowsClassic).gettitle;

@@ -349,8 +349,9 @@ begin
             m.Caption:=verbs[i];
             FVerbs.add(m);
             s1.Add(m);
+        end;
 
-            
+        for i:=verbs.count-1 downto 0 do begin
             m:=TMenuItem.create(self);
             m.Caption:=verbs[i];
             FVerbs.add(m);

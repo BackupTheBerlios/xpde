@@ -13,8 +13,8 @@ uses
 begin
   Application.Initialize;
   SetXPStyle(application);
-  application.font.height:=12;
-  application.font.name:='Helvetica';
+//  application.font.height:=12;
+//  application.font.name:='Helvetica';
   Application.CreateForm(TExplorerForm, ExplorerForm);
   Application.Run;
 end.

@@ -42,4 +42,8 @@ cp fontview /opt/xpde/bin/apps
 cp regedit /opt/xpde/bin/apps
 cp fileexplorer /opt/xpde/bin/apps
 
+cp xinitrcDEFAULT /opt/xpde/bin/xpde
+chmod a+x /opt/xpde/bin/xpde
+ln -s /opt/xpde/bin/xpde /usr/local/bin/XPde
+
 echo "Installation completed";

@@ -44,7 +44,7 @@ ExeDescription=
 DynamicLoader=/lib/ld-linux.so.2
 
 [Directories]
-OutputDir=$(HOME)/xpde
+OutputDir=$(HOME)/xpde/bin
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
@@ -60,4 +60,14 @@ HostApplication=
 Launcher=/usr/X11R6/bin/xterm -T KylixDebuggerOutput -e bash -i -c %debuggee%
 UseLauncher=0
 DebugCWD=
+
+[HistoryLists\hlOutputDirectorry]
+Count=3
+Item0=$(HOME)/xpde/bin
+Item1=$(HOME)/xpde/bin/applets
+Item2=$(HOME)/xpde/bin/apps
+
+[HistoryLists\hlBPLOutput]
+Count=1
+Item0=$(HOME)/xpde/bin
 

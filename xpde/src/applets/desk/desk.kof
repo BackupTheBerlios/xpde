@@ -46,7 +46,7 @@ DynamicLoader=/lib/ld-linux.so.2
 [Directories]
 OutputDir=
 UnitOutputDir=
-PackageDLLOutputDir=$(HOME)/xpde
+PackageDLLOutputDir=$(HOME)/xpde/bin
 PackageDCPOutputDir=
 SearchPath=
 Packages=
@@ -62,15 +62,12 @@ UseLauncher=0
 DebugCWD=
 
 [HistoryLists\hlOutputDirectorry]
-Count=5
-Item0=$(HOME)/xpde
-Item1=/home/ttm/xpde/
-Item2=../../../
-Item3=/home/ttm/xpde
-Item4=/home/ttm/xpde/system/
+Count=3
+Item0=$(HOME)/xpde/bin
+Item1=$(HOME)/xpde/bin/applets
+Item2=$(HOME)/xpde/bin/apps
 
 [HistoryLists\hlBPLOutput]
-Count=2
-Item0=$(HOME)/xpde
-Item1=/home/ttm/xpde
+Count=1
+Item0=$(HOME)/xpde/bin
 

@@ -29,7 +29,7 @@ uses
   Classes, QGraphics, uXPStyleConsts,
   QControls, QForms, QDialogs, resample,
   QButtons, QStdCtrls, uWindowManager,
-  QExtCtrls, Qt;
+  QExtCtrls, Qt, QMenus, QTypes, uXPPopupMenu;
 
 type
     TWindowsClassic = class(TForm)
@@ -40,6 +40,14 @@ type
     restore: TImage;
     maximize: TImage;
     imgIcon: TImage;
+    PopupMenu1: TXPPopupMenu;
+    Restore1: TMenuItem;
+    Move1: TMenuItem;
+    Size1: TMenuItem;
+    Minimize1: TMenuItem;
+    Maximize1: TMenuItem;
+    N1: TMenuItem;
+    Close1: TMenuItem;
         procedure FormPaint(Sender: TObject);
         procedure FormCreate(Sender: TObject);
         procedure FormResize(Sender: TObject);
@@ -50,10 +58,16 @@ type
         procedure btnMaximizeClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnMinimizeClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormDblClick(Sender: TObject);
+    procedure imgIconClick(Sender: TObject);
+    procedure FormClick(Sender: TObject);
     private
         { Private declarations }
       public
         { Public declarations }
+        dblclickpending: boolean;
         client:TWMClient;
         mini_icon_a: TBitmap;
         mini_icon_i: TBitmap;
@@ -156,6 +170,7 @@ procedure TWindowsClassic.FormCreate(Sender: TObject);
 var
     co: TPoint;
 begin
+    dblclickpending:=false;
     mini_icon_a:=TBitmap.create;
     mini_icon_a.width:=16;
     mini_icon_a.height:=16;
@@ -298,23 +313,14 @@ var
     nw,nh: integer;
 begin
     if moving then begin
-        {
-        r:=boundsrect;
-        r.left:=r.left+(x-ox);
-        r.top:=r.top+(y-oy);
-        r.Right:=r.left+width;
-        r.Bottom:=r.top+height;
-        }
-
-
-        XSync(xpwindowmanager.display,1);
-        QWidget_move(self.handle,left+(x-ox),top+(y-oy));
-//        sendsyn(qwidget_winid(self.handle));
-        XSync(xpwindowmanager.display,0);
-
-//        XSync(XPWindowManager.Display,0);
-//        boundsrect:=r;
-//        XSync(XPWindowManager.Display,0);
+//        if th then begin
+            XSync(xpwindowmanager.display,1);
+            QWidget_move(self.handle,left+(x-ox),top+(y-oy));
+            XSync(xpwindowmanager.display,0);
+//        end
+//        else begin
+//            th:=(abs(x-ox)>1) or (abs(y-oy)>1);
+//        end;
    end
     else begin
         if resizetype<>0 then begin
@@ -440,6 +446,13 @@ begin
     resizetype:=0;
     moving:=false;
     SetCaptureControl(nil);
+    if dblclickpending then begin
+        dblclickpending:=false;
+        btnMaximizeClick(btnMaximize);
+    end
+    else begin
+
+    end;
 end;
 
 procedure TWindowsClassic.btnCloseClick(Sender: TObject);
@@ -455,11 +468,15 @@ begin
             client.maximize;
             btnMaximize.glyph.Assign(restore.picture.graphic);
             FormPaint(self);
+            Restore1.Enabled:=true;
+            Maximize1.Enabled:=false;
         end
         else begin
             client.restore;
             btnMaximize.glyph.Assign(maximize.picture.graphic);
             FormPaint(self);
+            Restore1.Enabled:=false;
+            Maximize1.Enabled:=true;
         end;
     end;
 end;
@@ -695,6 +712,32 @@ begin
         }
     finally
         m.free;
+    end;
+end;
+
+procedure TWindowsClassic.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    showmessage(inttostr(key));
+end;
+
+procedure TWindowsClassic.FormDblClick(Sender: TObject);
+begin
+    if ptinrect(point(ox,oy),rect(1,1,17,17)) then begin
+        btnClose.Click;
+    end
+    else dblclickpending:=true;
+end;
+
+procedure TWindowsClassic.imgIconClick(Sender: TObject);
+begin
+//    PopupMenu1.Popup(Mouse.CursorPos.x,Mouse.Cursorpos.y);
+end;
+
+procedure TWindowsClassic.FormClick(Sender: TObject);
+begin
+    if ptinrect(point(ox,oy),rect(1,1,17,17)) then begin
+        PopupMenu1.Popup(mouse.CursorPos.x,mouse.cursorpos.y);
     end;
 end;
 

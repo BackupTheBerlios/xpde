@@ -611,6 +611,7 @@ begin
         if not (m.bitmap.Empty) then begin
             height:=m.bitmap.height;
             if height=16 then height:=18;
+            if height<17 then height:=17;
         end;
         if (m.ImageIndex<>-1) then begin
                 if (m.getparentmenu<>nil) then begin

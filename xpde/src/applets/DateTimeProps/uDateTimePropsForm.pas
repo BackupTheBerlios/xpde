@@ -67,6 +67,7 @@ type
     m_bInitList : boolean;
     m_iDay, m_iHour, m_iMin, m_iSec : integer;
     m_bEditChangedLocked : boolean;
+    m_bRoot : boolean;
     procedure FillList;
     procedure DrawPointer( alpha : single; iXMid, iYMid, iLength, iWidth : integer);
   public
@@ -91,6 +92,14 @@ var
   i : integer;
 begin
   m_bEditChangedLocked := true;
+
+  m_bRoot := getpwuid( geteuid ).pw_name = 'root';
+  btnCancel.Visible  := m_bRoot;
+  btnApply.Visible   := m_bRoot;
+  gridDate.Enabled   := m_bRoot;
+  comboMonth.Enabled := m_bRoot;
+  spinYear.Enabled   := m_bRoot;
+  efTime.Enabled     := m_bRoot;
 
   for i := 0 to high(WeekdayChars) do
      gridDate.Rows[0][i] := '  '+WeekdayChars[i];
@@ -173,6 +182,8 @@ var
 const
   RTC_SET_TIME = $4024700A;}
 begin
+  if not m_bRoot then exit;
+
   fillchar(ut, sizeof(ut), 0);
   ut.tm_mday := m_iDay;
   ut.tm_mon  := comboMonth.itemindex;

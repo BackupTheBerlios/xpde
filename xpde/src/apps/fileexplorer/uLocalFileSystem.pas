@@ -107,6 +107,7 @@ type
     TFile=class(TLocalFile)
     private
         FPath: string;
+        smallicon: integer;
     public
         filesize: integer;
         time: integer;
@@ -296,6 +297,17 @@ implementation
 
 var
     bmp: TBitmap;
+
+function registerBitmap(const path:string):integer;
+begin
+    bmp:=TBitmap.create;
+    try
+        bmp.loadfromfile(path);
+        result:=XPExplorer.registerImage(bmp);
+    finally
+        bmp.free;
+    end;
+end;
 
 function getTickCount:integer;
 var
@@ -619,6 +631,7 @@ end;
 
 constructor TFile.Create(const APath: string);
 begin
+    smallicon:=imNOICON;
     FPath:=APath;
 end;
 
@@ -663,6 +676,10 @@ begin
         l:=TLNKFile.Create(nil);
         try
             l.loadfromfile(FPath);
+            if (l.icon<>'') then begin
+                smallicon:=registerBitmap(XPAPI.getsysinfo(siSmallSystemDir)+l.Icon);
+            end
+            else smallicon:=imNoicon;
             columns.add(l.Comment);
         finally
             l.free;
@@ -694,7 +711,7 @@ end;
 
 function TFile.getIcon: integer;
 begin
-    result:=imNOICON;
+    result:=smallicon;
 end;
 
 function TFile.getUniqueID: string;

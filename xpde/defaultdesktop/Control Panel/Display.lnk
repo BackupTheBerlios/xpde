@@ -1,5 +1,6 @@
 [Shortcut]
 Caption=Display
+Icon=video_settings.png
 Comments=Change the appearance of your desktop, such as the background, screen saver, colors, font sizes, and screen resolution.
 Command=%APPLETS%desk
 Startin=

@@ -1,5 +1,6 @@
 [Shortcut]
 Caption=Network Connections
+Icon=network.png
 Comments=Connects to other computers, networks, and the Internet.
 Command=%APPLETS%networkstatus -i eth0
 Startin=

@@ -111,6 +111,7 @@ type
         FUnmapCounter:integer;
         FWindowManager: TXPWindowManager;
         FWindowState: TWindowState;
+        minimizedstate: TWindowState;
         procedure SetWindowManager(const Value: TXPWindowManager);
         procedure SetWindowState(const Value: TWindowState);
     public
@@ -127,11 +128,11 @@ type
         procedure restore;
         procedure close;
         procedure bringtofront;
-        function getWindow: Window;        
+        function getWindow: Window;
         procedure updateactivestate;
         function isactive:boolean;
         procedure activate;
-        function getTitle: string;        
+        function getTitle: string;
         property WindowManager:TXPWindowManager read FWindowManager write SetWindowManager;
         property UnmapCounter: integer read FUnmapCounter write FUnmapCounter;
         property Wnd: Window read xwindow write xwindow;
@@ -1184,6 +1185,7 @@ end;
 
 procedure TWMClient.activate;
 begin
+    if FWindowState=wsMinimized then restore;
     FWindowManager.ActiveClient:=self;
     updateactivestate;
     XPTaskbar.activatetask(self);
@@ -1443,6 +1445,7 @@ constructor TWMClient.Create(AWindow: Window;
   AWindowManager: TXPWindowManager);
 begin
     inherited Create;
+    minimizedstate:=wsNormal;
     FWindowState:=wsNormal;
     xwindow:=AWindow;
     frame:=nil;
@@ -1709,7 +1712,14 @@ end;
 
 procedure TWMClient.minimize;
 begin
-
+    if FWindowState<>wsMinimized then begin
+        minimizedstate:=FWindowState;
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iMETHOD,'TWMClient.minimize'+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+        {$endif}
+        frame.visible:=false;
+        FWindowState:=wsMinimized;
+    end;
 end;
 
 procedure TWMClient.reparent;
@@ -1756,11 +1766,17 @@ begin
         {$ifdef DEBUG}
         xlibinterface.outputDebugString(iMETHOD,'TWMClient.restore'+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
         {$endif}
-        fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
-        co:=(frame as TWindowsClassic).getorigin;
-        frame.BoundsRect:=wRect;
-        XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
-        FWindowState:=wsNormal;
+        if FWindowState=wsMinimized then begin
+            frame.visible:=true;
+            FWindowState:=minimizedstate;
+        end
+        else begin
+            fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
+            co:=(frame as TWindowsClassic).getorigin;
+            frame.BoundsRect:=wRect;
+            XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
+            FWindowState:=wsNormal;
+        end;
     end;
 end;
 

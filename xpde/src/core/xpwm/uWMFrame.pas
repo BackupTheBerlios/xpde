@@ -49,6 +49,7 @@ type
         procedure btnCloseClick(Sender: TObject);
         procedure btnMaximizeClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btnMinimizeClick(Sender: TObject);
     private
         { Private declarations }
       public
@@ -223,7 +224,7 @@ begin
     else begin
         client.restore;
         repaint;        
-        btnMaximize.glyph.Assign(maximize.picture.graphic);        
+        btnMaximize.glyph.Assign(maximize.picture.graphic);
     end;
 end;
 
@@ -341,6 +342,16 @@ end;
 procedure TWindowsClassic.FormDestroy(Sender: TObject);
 begin
     gradbmp.free;
+end;
+
+procedure TWindowsClassic.btnMinimizeClick(Sender: TObject);
+begin
+    if client.windowstate<>wsMinimized then begin
+        client.minimize;
+    end
+    else begin
+        client.restore;
+    end;
 end;
 
 initialization

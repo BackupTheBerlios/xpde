@@ -1,6 +1,6 @@
 object TaskBar: TTaskBar
-  Left = 245
-  Top = 794
+  Left = 248
+  Top = 823
   ActiveControl = btnStart
   AutoScroll = False
   BorderStyle = fbsNone

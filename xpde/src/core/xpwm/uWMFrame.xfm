@@ -1,6 +1,6 @@
 object WindowsClassic: TWindowsClassic
-  Left = 275
-  Top = 247
+  Left = 278
+  Top = 276
   ActiveControl = btnClose
   AutoScroll = False
   BorderStyle = fbsNone
@@ -151,6 +151,7 @@ object WindowsClassic: TWindowsClassic
     Height = 14
     Color = 13554646
     TabOrder = 1
+    OnClick = btnMinimizeClick
     Glyph.Data = {
       7E010000424D7A0100000000000036000000280000000B000000090000000100
       18000000000044010000120B0000120B00000000000000000000CED3D6CED3D6

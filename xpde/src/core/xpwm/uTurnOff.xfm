@@ -1,6 +1,6 @@
 object Turnoff: TTurnoff
-  Left = 576
-  Top = 390
+  Left = 579
+  Top = 419
   Width = 314
   Height = 200
   HorzScrollBar.Range = 303
@@ -5916,7 +5916,7 @@ object Turnoff: TTurnoff
   Scaled = False
   OnCreate = FormCreate
   OnMouseMove = FormMouseMove
-  PixelsPerInch = 75
+  PixelsPerInch = 90
   object turnoff_off: TImage
     Left = 53
     Top = 157
@@ -6667,8 +6667,8 @@ object Turnoff: TTurnoff
   object Label3: TLabel
     Left = 14
     Top = 11
-    Width = 151
-    Height = 29
+    Width = 153
+    Height = 24
     Caption = 'Turn off computer'
     Font.Color = clWhite
     Font.Height = 20

@@ -34,7 +34,7 @@ interface
 
 uses
   SysUtils, Types, Classes, Variants, QTypes, QGraphics, QControls, QForms,
-  QDialogs, QStdCtrls, QGrids, QComCtrls, QMask, QExtCtrls;
+  QDialogs, QStdCtrls, QGrids, QComCtrls, QMask, QExtCtrls, uQXPComCtrls;
 
 type
   TDateTimePropsFm = class(TForm)
@@ -91,7 +91,7 @@ var
   i : integer;
 begin
   m_bEditChangedLocked := true;
-  clientwidth := 391;
+
   for i := 0 to high(WeekdayChars) do
      gridDate.Rows[0][i] := '  '+WeekdayChars[i];
   Timer1Timer(nil);

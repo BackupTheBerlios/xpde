@@ -44,11 +44,11 @@ ExeDescription=
 DynamicLoader=/lib/ld-linux.so.2
 
 [Directories]
-OutputDir=
+OutputDir=$(HOME)/xpde
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
-SearchPath=/home/vallon11/xpde/src/components/menu:/home/vallon11/xpde/src/components/style
+SearchPath=
 Packages=rtl:visualclx:visualdbclx:dataclx:xmlrtl:netdataclx:netclx:indy
 Conditionals=
 DebugSourceDirs=
@@ -67,4 +67,8 @@ Item0=/home/vallon11/xpde/src/components/menu:/home/vallon11/xpde/src/components
 Item1=/home/vallon11/xpde/src/components/menu
 Item2=/home/vallon11/xpde/src/components/style:/home/vallon11/xpde/src/components/menu
 Item3=/home/vallon11/xpde/src/components/style
+
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=$(HOME)/xpde
 

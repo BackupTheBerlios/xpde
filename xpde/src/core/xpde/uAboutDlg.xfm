@@ -1,6 +1,6 @@
 object AboutDlg: TAboutDlg
-  Left = 364
-  Top = 386
+  Left = 367
+  Top = 415
   ActiveControl = Button1
   AutoScroll = False
   BorderStyle = fbsSingle

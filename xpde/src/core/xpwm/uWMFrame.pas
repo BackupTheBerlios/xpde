@@ -173,8 +173,9 @@ begin
         r.top:=r.top+(y-oy);
         r.Right:=r.left+width;
         r.Bottom:=r.top+height;
-        XSync(XPWindowmanager.Display, 1);
+        XSync(XPWindowManager.Display,0);        
         boundsrect:=r;
+        XSync(XPWindowManager.Display,0);
    end
     else begin
     {

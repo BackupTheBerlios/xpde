@@ -169,7 +169,7 @@ const
     MouseMask=(ButtonMask or PointerMotionMask);
 
 
-function qt_set_x11_event_filter(filter:TQX11EventFilter):TQX11EventFilter; cdecl;
+//function qt_set_x11_event_filter(filter:TQX11EventFilter):TQX11EventFilter; cdecl;
 
 var
     XLibInterface: TXLibInterface;
@@ -179,7 +179,7 @@ implementation
 
 uses uWMFrame;
 
-function qt_set_x11_event_filter; external QtShareName name 'qt_set_x11_event_filter__FPFP7_XEvent_i';
+//function qt_set_x11_event_filter; external QtShareName name 'qt_set_x11_event_filter__FPFP7_XEvent_i';
 
 
 //******************************************************************************
@@ -431,7 +431,7 @@ begin
       {
         char *str;
         const char *state;
-            
+
         name := 'PropertyNotify';
             
         meta_error_trap_push (display);
@@ -511,19 +511,19 @@ begin
     {$endif}
 end;
 
-function eventhandler(var event: XEvent):integer;cdecl;
+function eventhandler(event: PXEvent):boolean;cdecl;
 begin
     {$ifdef DEBUG}
     spewEvent(xpwindowmanager.display,event);
     {$endif}
     case event.xtype of
-        maprequest: result:=xpwindowmanager.handleMapRequest(event);
-        unmapnotify: result:=xpwindowmanager.handleUnmapNotify(event);
-        enternotify: result:=xpwindowmanager.handleenternotify(event);
-        buttonpress: result:=xpwindowmanager.handlebuttonpress(event);
-        configurerequest: result:=xpwindowmanager.handleConfigurerequest(event);
-        configurenotify: result:=xpwindowmanager.handleConfigurenotify(event);
-        else result:=0;
+        maprequest: result:=(xpwindowmanager.handleMapRequest(event^)=1);
+        unmapnotify: result:=(xpwindowmanager.handleUnmapNotify(event^)=1);
+        enternotify: result:=(xpwindowmanager.handleenternotify(event^)=1);
+        buttonpress: result:=(xpwindowmanager.handlebuttonpress(event^)=1);
+        configurerequest: result:=(xpwindowmanager.handleConfigurerequest(event^)=1);
+        configurenotify: result:=(xpwindowmanager.handleConfigurenotify(event^)=1);
+        else result:=false;
     end;
 end;
 
@@ -994,7 +994,7 @@ begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.setupDisplay');
     {$endif}
-    XSynchronize (FDisplay, 1);
+//    XSynchronize (FDisplay, 1);
 
 	FScreen:= XDefaultScreen(FDisplay);
 	FRoot := XRootWindow(FDisplay, FScreen);
@@ -1068,11 +1068,14 @@ begin
 end;
 
 procedure TXPWindowManager.setupEventHandler;
+var
+    e: X11EventFilter;
 begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.setupEventHandler');
     {$endif}
-  qt_set_x11_event_filter(@eventHandler);
+    e:=application.SetX11EventFilter(eventhandler);
+//  qt_set_x11_event_filter(@eventHandler);
 end;
 
 procedure TXPWindowManager.setupSignals;
@@ -1538,8 +1541,6 @@ begin
     end;
 }
 
-    XAddToSaveSet (FWindowManager.FDisplay, xwindow);
-
     XSelectInput (FWindowManager.FDisplay, xwindow, PropertyChangeMask or EnterWindowMask or LeaveWindowMask or FocusChangeMask);
 
     {$ifdef DEBUG}
@@ -1761,6 +1762,7 @@ var
     co: TPoint;
 begin
     if not assigned(frame) then exit;
+
 	XSelectInput(FWindowManager.Fdisplay, xwindow, ColormapChangeMask or EnterWindowMask or PropertyChangeMask);
 
 	p_attr.override_redirect := 1;
@@ -1842,7 +1844,7 @@ procedure TXLibInterface.outputDebugString(const kind:integer;const str: string)
 var
     rs:string;
 begin
-    {$ifdef DEBUG}
+//    {$ifdef DEBUG}
     case kind of
         iMETHOD:  rs:='METHOD  :'+str;
         iINFO:    rs:='INFO    :'+str;
@@ -1859,7 +1861,7 @@ begin
     end;
     writeln(stringofchar(' ',indent)+rs);
     if kind=iENDPROCESS then dec(indent,10);
-    {$endif}
+//    {$endif}
 end;
 
 function TXLibInterface.GetWindowProperty(xdisplay:PDisplay;xwindow:Window;xatom:Atom;req_type:Atom):variant;

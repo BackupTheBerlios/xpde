@@ -10,8 +10,8 @@ DCC =dcc $<
 #------------------------------------------------------------------------------
 PROJECTS = bplXPCommon.so bplXPRegistry.so bplXPAPI.so bplXPMenus.so \
   bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
-  bplXPShellControls.so bplXPCommctrls.so taskmanager networkstatus bpldesk.so \
-  bplXPwm.so bplXPde.so XPshell
+  bplXPShellControls.so bplXPCommctrls.so taskmanager networkstatus \
+  networkproperties appexec bpldesk.so XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -52,19 +52,22 @@ bplXPCommon.so: ../../common/XPCommon.dpk
 taskmanager: ../../apps/taskmanager/taskmanager.dpr
 	$(DCC)
 
-XPshell: ../xpshell/XPshell.dpr
-	$(DCC)
-
-bplXPde.so: XPde.dpk
-	$(DCC)
-
 bpldesk.so: ../../applets/desk/desk.dpk
 	$(DCC)
 
-bplXPwm.so: ../xpwm/XPwm.dpk
+networkstatus: ../../apps/networkstatus/networkstatus.dpr
 	$(DCC)
 
-networkstatus: ../../apps/networkstatus/networkstatus.dpr
+networkproperties: ../../apps/networkproperties/networkproperties.dpr
+	$(DCC)
+
+XPwm: ../xpwm/XPwm.dpr
+	$(DCC)
+
+XPde: XPde.dpr
+	$(DCC)
+
+appexec: ../../apps/appexec/appexec.dpr
 	$(DCC)
 
 

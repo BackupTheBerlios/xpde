@@ -71,7 +71,9 @@ type
         client:TWMClient;
         mini_icon_a: TBitmap;
         mini_icon_i: TBitmap;
-        mini_icon_s: TBitmap;                
+        mini_icon_s: TBitmap;
+
+        icon_s: TBitmap;
         gradbmp: TBitmap;
         lastRect: TRect;                                                        //To hold the last rect drawn to prevent repaint the gradient
 
@@ -182,6 +184,10 @@ begin
     mini_icon_s:=TBitmap.create;
     mini_icon_s.width:=16;
     mini_icon_s.height:=16;
+
+    icon_s:=TBitmap.create;
+    icon_s.width:=32;
+    icon_s.height:=32;
 
     resizetype:=0;
     client:=nil;
@@ -610,7 +616,9 @@ end;
 procedure TWindowsClassic.FormDestroy(Sender: TObject);
 begin
     mini_icon_a.free;
-    mini_icon_i.free;    
+    mini_icon_i.free;
+    mini_icon_s.free;
+    icon_s.free;
     gradbmp.free;
 end;
 
@@ -691,7 +699,6 @@ begin
 
         strecth(imgIcon.picture.bitmap,mini_icon_s,resampleFilters[1].filter,resamplefilters[1].width);
 
-        m.SaveToFile('/home/ttm/t.bmp');
         for y:=0 to 15 do begin
             for x:=0 to 15 do begin
                 if m.Canvas.Pixels[x,y]=clFuchsia then begin
@@ -699,17 +706,28 @@ begin
                 end;
             end;
         end;
+    finally
+        m.free;
+    end;
 
-        {
-        s.Canvas.Brush.Color:=clFuchsia;
-        s.canvas.pen.color:=clFuchsia;
-        s.width:=imgIcon.picture.bitmap.width;
-        s.height:=imgIcon.picture.bitmap.height;
-        s.Canvas.Draw(0,0,imgIcon.picture.bitmap);
-        s.Canvas.StretchDraw(rect(0,0,16,16),imgIcon.Picture.Bitmap);
+    m:=TBitmap.create;
+    try
 
-        mini_icon_s.Assign(s);
-        }
+        m.width:=32;
+        m.height:=32;
+        m.Canvas.Brush.Color:=clFuchsia;
+        m.canvas.pen.color:=clFuchsia;
+        m.Canvas.StretchDraw(rect(0,0,32,32),imgIcon.Picture.Bitmap);
+
+        strecth(imgIcon.picture.bitmap,icon_s,resampleFilters[1].filter,resamplefilters[1].width);
+
+        for y:=0 to 31 do begin
+            for x:=0 to 31 do begin
+                if m.Canvas.Pixels[x,y]=clFuchsia then begin
+                    icon_s.Canvas.Pixels[x,y]:=clFuchsia;
+                end;
+            end;
+        end;
     finally
         m.free;
     end;

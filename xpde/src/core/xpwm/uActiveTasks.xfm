@@ -1,0 +1,38 @@
+object ActiveTasksDlg: TActiveTasksDlg
+  Left = 192
+  Top = 103
+  Width = 330
+  Height = 107
+  HorzScrollBar.Range = 123
+  Color = clBackground
+  FormStyle = fsStayOnTop
+  KeyPreview = True
+  Position = poDefault
+  Scaled = False
+  OnClose = FormClose
+  OnPaint = FormPaint
+  OnShow = FormShow
+  PixelsPerInch = 90
+  object Label1: TLabel
+    Left = 17
+    Top = 77
+    Width = 106
+    Height = 15
+    Anchors = [akLeft, akBottom]
+    Caption = 'My Network Places'
+    Font.Color = clBlack
+    Font.Height = 11
+    Font.Name = 'tahoma'
+    Font.Pitch = fpVariable
+    Font.Style = [fsBold]
+    Masked = True
+    ParentFont = False
+    Transparent = True
+  end
+  object Timer1: TTimer
+    Interval = 10
+    OnTimer = Timer1Timer
+    Left = 240
+    Top = 28
+  end
+end

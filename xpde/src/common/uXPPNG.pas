@@ -275,10 +275,12 @@ begin
 end;
 
 initialization
-    TPicture.RegisterFileFormat('PNG','PNG Alpha', TXPPNG);
+    //Removed until the desktop is ready for alpha channel
+    //TPicture.RegisterFileFormat('PNG','PNG Alpha', TXPPNG);
 
 finalization
-    TPicture.UnregisterGraphicClass(TXPPNG);
+    //Removed until the desktop is ready for alpha channel
+    //TPicture.UnregisterGraphicClass(TXPPNG);
 
 
 

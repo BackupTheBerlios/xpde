@@ -11,7 +11,8 @@ uses
   uWindowManager in 'uWindowManager.pas',
   uOpenWith in '../xpde/uOpenWith.pas' {OpenWithDlg},
   uXPAPI_imp in '../xpde/uXPAPI_imp.pas',
-  uTurnOff in 'uTurnOff.pas' {Turnoff};
+  uTurnOff in 'uTurnOff.pas' {Turnoff},
+  uActiveTasks in 'uActiveTasks.pas' {ActiveTasksDlg};
 
 {$R *.res}
 {
@@ -37,19 +38,6 @@ begin
   XPwindowmanager.install;
   Application.CreateForm(TTaskBar, TaskBar);
   Application.CreateForm(TTurnoff, Turnoff);
-
-  {
-  AddExitProc(DoneApplication);
-  application.MainForm.Show;
-
-  while not application.Terminated do begin
-     if XPending(application.display)=1 then begin
-        XPeekEvent(application.display,@event);
-        eventhandler(@event);
-     end;
-     application.HandleMessage;
-  end;
-  }
   Application.Run;
   
 end.

@@ -28,7 +28,7 @@ unit uWindowManager;
 interface
 
 uses QForms, SysUtils, Types, QGraphics,
-     Classes, Qt, Libc, XLib, Xpm,
+     Classes, Qt, Libc, XLib, Xpm, uActiveTasks,
      uWMConsts, uXPAPI, QDialogs;
 
 type
@@ -147,6 +147,7 @@ type
         property WindowState: TWindowState read FWindowState write SetWindowState;
         constructor Create(AWindow:Window; AWindowManager:TXPWindowManager);
         function getBitmap: TBitmap;
+        function getIcon: TBitmap;
         destructor Destroy;override;
     end;
 
@@ -536,6 +537,21 @@ begin
             result:=true;
         end;
         }
+        keypress: begin
+            if (event^.xkey.keycode=XKeysymToKeycode(qtdisplay, xk_tab)) then begin
+                if not assigned(activetasksdlg) then begin
+                    if xpwindowmanager.Clients.Count>1 then begin
+                        activetasksdlg:=TActiveTasksDlg.create(application);
+                        activetasksdlg.show;
+                        ActiveTasksDlg.SetFocus;
+                    end;
+                end
+                else begin
+                    ActiveTasksDlg.incActiveTask;
+                end;
+                result:=true;
+            end;
+        end;
         keyrelease: begin
             //showmessage('aaa');
             //result:=0;//result:=(xpwindowmanager.handlekeyrelease(event^)=1);
@@ -545,6 +561,16 @@ begin
                 XPWindowManager.closeactivewindow;
                 result:=true;
             end
+            {
+            else if (event^.xkey.keycode=XKeysymToKeycode(qtdisplay, xk_tab)) then begin
+                event^.xkey.state
+                if assigned(activetasksdlg) then begin
+                    activetasksdlg.free;
+                    activetasksdlg:=nil;
+                end;
+                result:=true;
+            end
+            }
             else result:=oldevent(event);
         end;
         configurerequest: result:=(xpwindowmanager.handleConfigurerequest(event^)=1);
@@ -1245,6 +1271,8 @@ begin
 //    showmessage(inttostr(XGrabKeyboard(FDisplay,FRoot,1,grabmodeasync,grabmodesync,0)));
 //    xgrabkeyboard(qtdisplay,xdefaultrootwindow(qtdisplay),1,grabmodeasync,grabmodeasync,0);
       XGrabKey(qtdisplay,XKeysymToKeycode(qtdisplay,XK_F4),Mod1Mask,xdefaultrootwindow(qtdisplay),1,grabmodeasync,grabmodeasync);
+      XGrabKey(qtdisplay,XKeysymToKeycode(qtdisplay,XK_Tab),Mod1Mask,xdefaultrootwindow(qtdisplay),1,grabmodeasync,grabmodeasync);
+//      XGrabKey(qtdisplay,AnyKey,Mod1Mask,xdefaultrootwindow(qtdisplay),1,grabmodeasync,grabmodeasync);      
 end;
 
 function TXPWindowManager.handleKeyRelease(var event: XEvent): integer;
@@ -1813,6 +1841,11 @@ end;
 function TWMClient.getBitmap: TBitmap;
 begin
     result:=(frame as TWindowsClassic).mini_icon_s;
+end;
+
+function TWMClient.getIcon: TBitmap;
+begin
+    result:=(frame as TWindowsClassic).icon_s;
 end;
 
 procedure TWMClient.getIcons;

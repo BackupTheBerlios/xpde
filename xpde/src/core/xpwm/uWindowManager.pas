@@ -556,6 +556,7 @@ begin
         ClientMessage: begin
 //            spewEvent(application.display,event^);
             result:=(xpwindowmanager.handleClientMessage(event^)=1);
+            if not result then result:=oldevent(event);
         end;
         enternotify: begin
 //            spewEvent(application.display,event^);
@@ -1520,7 +1521,10 @@ begin
     if not framed then begin
         XMapRaised(application.display,xwindow);
     end
-    else frame.BringToFront;
+    else begin
+        if assigned(frame) then frame.BringToFront
+        else XMapRaised(application.display,xwindow);
+    end;
     xptaskbar.bringtofront;
     fwindowmanager.activeclient:=self;
 end;
@@ -1772,20 +1776,20 @@ begin
 
   if ((event.xconfigurerequest.value_mask and CWStackMode)=CWStackMode) then begin
     {$ifdef DEBUG}
-    xlibinterface.outputDebugString('Stack mode');
+    xlibinterface.outputDebugString(iINFO, 'Stack mode');
     {$endif}
       case (event.xconfigurerequest.detail) of
         Above: begin
             bringtofront;
 //            activate;
     {$ifdef DEBUG}
-    xlibinterface.outputDebugString('bringtofront');
+    xlibinterface.outputDebugString(iINFO, 'bringtofront');
     {$endif}
         end;
         Below: begin
             //frame.sendtoback;
     {$ifdef DEBUG}
-    xlibinterface.outputDebugString('sendtoback');
+    xlibinterface.outputDebugString(iINFO, 'sendtoback');
     {$endif}
         end;
       end;

@@ -602,6 +602,7 @@ begin
     c:=findclient(xwindow);
     if assigned(c) then begin
         c.activate;
+        XAllowEvents (Fdisplay, ReplayPointer, event.xbutton.time);
     end
     else begin
         {$ifdef DEBUG}
@@ -1462,6 +1463,23 @@ begin
     wRect:=Rect(0,0,0,0);
     FUnmapcounter:=0;
     FWindowManager:=AWindowManager;
+
+    //Grab the three mouse buttons
+      XGrabButton (FWindowManager.FDisplay, 1, 0, awindow, 0,
+                     ButtonPressMask or ButtonReleaseMask or
+                     PointerMotionMask or PointerMotionHintMask,
+                     GrabModeSync, GrabModeAsync, 0, None);
+
+      XGrabButton (FWindowManager.FDisplay, 2, 0, awindow, 0,
+                     ButtonPressMask or ButtonReleaseMask or
+                     PointerMotionMask or PointerMotionHintMask,
+                     GrabModeSync, GrabModeAsync, 0, None);
+
+      XGrabButton (FWindowManager.FDisplay, 3, 0, awindow, 0,
+                     ButtonPressMask or ButtonReleaseMask or
+                     PointerMotionMask or PointerMotionHintMask,
+                     GrabModeSync, GrabModeAsync, 0, None);
+
     createFrame;
 end;
 

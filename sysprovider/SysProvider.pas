@@ -27,6 +27,8 @@ interface
 uses
   SysUtils, Classes,xpclasses,uRegistry,distro,hwinfo,usb;
 
+Const _MAX_FUNCS=255;
+
 type PUsbInfo=PUsbInfo_;
      PPci_Info=PPci_Info_;
      TCpuInfo=TCpuInfo_;
@@ -37,7 +39,8 @@ type
   FValidNetDevice:boolean;
   FCableOn:boolean;
     { Private declarations }
-  Function ProvideRegistryAll:PPci_Info;
+//  Function ProvideRegistryAll:PPci_Info;
+// back in private later.
   Function ProvideDistroInfo:TUname;
   Function MemoryInfo:cardinal;
   Function CPU_Info:TCpuInfo;
@@ -54,7 +57,8 @@ type
   Procedure WriteDistroInfo;
   Procedure WriteHwInfo;
 
-
+  Function ProvideRegistryAll:PPci_Info;
+  // just for testing, back it to private later
   Property PCIInfo:PPci_Info read ProvideRegistryAll;
   Property DistInfo:TUname read ProvideDistroInfo;
   Property CpuInfo:TCpuInfo read Cpu_Info;
@@ -117,7 +121,7 @@ Begin
 
         if reg.OpenKey('Hardware/XPde/'+IntToStr(pcinf[i].bus_id)+'/'+IntToStr(pcinf[i].device_id)+'/'+IntToStr(pcinf[i].device_function),true) then begin
 
-
+        
                 reg.Writestring(pci_reg[0],pcinf[i].device_type);
                 reg.Writestring(pci_reg[1],pcinf[i].device_info);
                 reg.Writeinteger(pci_reg[2],pcinf[i].device_irq);
@@ -150,42 +154,105 @@ Function TSysProvider.ProvideRegistryAll:PPci_Info;
 // provides all hw informations for ControlPanel->System
 var pin:PPci_Info;
     sr,sr1,sr2:TSearchRec;
-    fat,i,bus,j:integer;
+    x,fat,i,bus,j,jj,jjj:integer;
     busses:Array[0..1023] of integer;
+    deviids:Array[0..1023] of integer;
+    devfuncs:Array[0..1023] of integer;
     reg:TRegistry;
 Begin
-        for bus:=0 to 1023 do
+        for bus:=0 to 1023 do begin
         busses[bus]:=-1;
+        deviids[bus]:=-1;
+        devfuncs[bus]:=-1;
+        End;
 
-        SetLength(pin,128);
+        SetLength(pin,_MAX_FUNCS);
         reg:=TRegistry.Create;
         Fat:=faDirectory;
         i:=0;
         j:=0;
+        jj:=0;
+        jjj:=0;
+
         if FindFirst(reg.RootKey+'/Hardware/XPde/*',Fat,sr)=0 then
         repeat
         if (sr.Attr and Fat)=sr.Attr then begin
-        writeln(sr.Name);
+
         if TryStrToInt(sr.Name,busses[j]) then begin
         busses[j]:=StrToInt(sr.Name);
         inc(j);
-        End;
-//                --|
-//                  -> newsearch for device
-//                        |
-//                        -> newsearch for function
+
+                if FindFirst(reg.RootKey+'/Hardware/XPde/'+sr.Name+'/*',Fat,sr1)=0 then
+                repeat
+                        if (sr1.Attr and Fat)=sr1.Attr then begin
+                                if TryStrToInt(sr1.Name,deviids[jj]) then begin
+                                {$IFDEF DEBUG}
+                                writeln('Bus ',busses[j-1],' sr1.Name ',sr1.Name);
+                                {$ENDIF}
+                                deviids[jj]:=StrToInt(sr1.Name);
+                                inc(jj);
+
+                                        if FindFirst(reg.RootKey+'/Hardware/XPde/'+sr.Name+'/'+sr1.Name+'/*',Fat,sr2)=0 then
+                                        repeat
+                                                if (sr2.Attr and Fat)=sr2.Attr then begin
+
+                                                if TryStrToInt(sr2.Name,devfuncs[jjj]) then begin
+                                                pin[jjj].bus_id:=StrToInt(sr.Name);
+                                                pin[jjj].device_id:=StrToInt(sr1.Name);
+                                                pin[jjj].device_function:=StrToInt(sr2.Name);
+
+                                                if reg.OpenKey('Hardware/XPde/'+sr.Name+'/'+sr1.Name+'/'+sr2.Name,false) then begin
+                                                pin[jjj].device_type:=reg.Readstring(pci_reg[0]);
+                                                pin[jjj].device_info:=reg.Readstring(pci_reg[1]);
+                                                pin[jjj].device_irq:=reg.Readinteger(pci_reg[2]);
+                                                pin[jjj].device_add.master_capable:=reg.Readbool(pci_reg[3]);
+                                                pin[jjj].device_add.no_bursts:=reg.Readbool(pci_reg[4]);
+                                                pin[jjj].device_add.latency:=reg.Readinteger(pci_reg[5]);
+                                                pin[jjj].device_add.gnt:=reg.Readinteger(pci_reg[6]);
+                                                pin[jjj].device_add.lat:=reg.Readinteger(pci_reg[7]);
+
+                                                for x:=0 to 31 do begin
+                                                pin[jjj].device_io_from[x]:=reg.Readstring(pci_reg[8]+IntToStr(x));
+                                                pin[jjj].device_io_to[x]:=reg.Readstring(pci_reg[9]+IntToStr(x));
+                                                End;
+
+                                                pin[jjj].non_prefetch_lo:=reg.Readstring(pci_reg[10]);
+                                                pin[jjj].non_prefetch_hi:=reg.Readstring(pci_reg[11]);
+                                                pin[jjj].prefetchable_lo:=reg.Readstring(pci_reg[12]);
+                                                pin[jjj].prefetchable_hi:=reg.Readstring(pci_reg[13]);
+                                                pin[jjj].driver:=reg.Readstring(pci_reg[14]);
+
+
+
+                                                End;
+                                                {$IFDEF DEBUG}
+                                                writeln('Bus ',busses[j-1],' sr1.Name ',sr1.Name,' sr2.Name ',sr2.Name);
+                                                {$ENDIF}
+                                                // here we fill up registry struct for pciinfo
+                                                devfuncs[jjj]:=StrToInt(sr2.Name);
+                                                inc(jjj);
+                                                End;
+
+                                                End;
+
+                                        until FindNext(sr2)<>0; // functions loop
+
+                                End;
+                        End;
+
+                until FindNext(sr1)<>0;
+
+
+        End;  // end find busses
         inc(i);
-        End;
+        End; // founded attr
+
         until FindNext(sr)<>0;
         FindClose(sr);
         reg.Free;
-        
-        for bus:=0 to 1023 do
-        if busses[bus]<>-1 then
-        writeln('BUSSES [j]= ',busses[bus]);
-       // skenirat registry key i onda
-       // busses+devices+functions = SetLength(pin,x);
-       // ili setlength(pin,128) // nema ssanse da ima 128 deviceov-a
+
+        SetLength(pin,jjj+1);
+        // Set real length for pin array
        Result:=pin;
 End;
 
@@ -208,7 +275,6 @@ Begin
     finally
     reg.Free;
     End;
-    ProvideRegistryAll;
     Result:=una;
 End;
 

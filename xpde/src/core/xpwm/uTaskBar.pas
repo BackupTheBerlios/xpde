@@ -701,7 +701,7 @@ begin
     else begin
         wi:=(pnTray.ControlCount*18);
         pnTimer.width:=wi+45;
-        pnTray.width:=wi;
+        pnTray.width:=wi+2;
         pnTimer.invalidate;
         pnTimer.update;
     end;

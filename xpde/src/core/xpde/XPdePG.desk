@@ -7,13 +7,13 @@ File_4=SourceModule,'/home/ttm/kylix3/source/clx/QForms.pas',0,1,282,1,303,0,0
 
 [Modules]
 Module0=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-Module1=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
-Module2=/home/ttm/xpde/src/core/xpwm/uWMFrame.pas
-Module3=/home/ttm/xpde/src/core/xpwm/uWMConsts.pas
-Module4=/home/ttm/kylix3/source/rtl/linux/Xlib.pas
-Module5=/home/ttm/tray2/Unit1.pas
-Module6=/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas
-Module7=/home/ttm/t.txt
+Module1=/home/ttm/xpde/src/core/xpwm/uWMFrame.pas
+Module2=/home/ttm/xpde/src/core/xpwm/uWMConsts.pas
+Module3=/home/ttm/kylix3/source/rtl/linux/Xlib.pas
+Module4=/home/ttm/tray2/Unit1.pas
+Module5=/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas
+Module6=/home/ttm/t.txt
+Module7=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
 Module8=/home/ttm/xpde/src/core/xpde/XPde.dpr
 Count=9
 EditWindowCount=1
@@ -22,11 +22,6 @@ PackageWindowCount=9
 [/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
 ModuleType=SourceModule
 FormState=1
-FormOnTop=0
-
-[/home/ttm/xpde/src/core/xpwm/uWindowManager.pas]
-ModuleType=SourceModule
-FormState=0
 FormOnTop=0
 
 [/home/ttm/xpde/src/core/xpwm/uWMFrame.pas]
@@ -55,6 +50,11 @@ FormState=0
 FormOnTop=0
 
 [/home/ttm/t.txt]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
+[/home/ttm/xpde/src/core/xpwm/uWindowManager.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
@@ -184,9 +184,9 @@ Height=753
 MaxLeft=1
 MaxTop=135
 MaxWidth=1286
-MaxHeight=828
+MaxHeight=851
 ClientWidth=1286
-ClientHeight=828
+ClientHeight=851
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
@@ -218,8 +218,8 @@ LeftCol=1
 
 [View3]
 Module=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-CursorX=31
-CursorY=707
+CursorX=27
+CursorY=704
 TopLine=691
 LeftCol=1
 
@@ -471,8 +471,8 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=7
-Top=51
+Left=3
+Top=28
 Width=1273
 Height=87
 MaxLeft=-1
@@ -553,11 +553,11 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=728
+Height=751
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=728
+ClientHeight=751
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1

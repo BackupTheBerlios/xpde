@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+<article>
+  <title>Readme First</title>
+
+  <articleinfo>
+    <date>2003/01/16</date>
+
+    <author>
+      <surname>León</surname>
+
+      <firstname>José</firstname>
+    </author>
+  </articleinfo>
+
+  <sect1>
+    <title>Introduction</title>
+
+    <para>This document is intended to provide all you need to collaborate
+    with us in XPde development. This is an open document, so if you feel
+    there is something missing, don&#39;t hesitate to contact us.</para>
+  </sect1>
+
+  <sect1>
+    <title>Your account</title>
+
+    <para>As a part of the team, you will get the following:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>An @xpde.com mail account, you must setup your mail client with
+        the following data:</para>
+
+        <para>user: yourlogin%xpde.com</para>
+
+        <para>pass: the one you provided</para>
+
+        <para>POP,SMTP: mail.xpde.com</para>
+      </listitem>
+
+      <listitem>
+        <para>This account will be subscribed to the mailing list
+        development@xpde.com, it&#39;s encouraged you read this mail list,
+        this is the main method we use for communication, but if you need to
+        unsubscribe, send a mail to development-unsubscribe@xpde.com to be
+        removed.</para>
+      </listitem>
+
+      <listitem>
+        <para>You also will be added to the Team page, along with your photo,
+        your role on the team and a short paragraph about you</para>
+      </listitem>
+
+      <listitem>
+        <para>You will be also subscribed to http://dcl.xpde.com, a ticketing
+        system we are starting to use to manage the projet, it will be useful
+        when the team gets larger</para>
+      </listitem>
+
+      <listitem>
+        <para>You can also subscribe to http://bugs.xpde.com to report bugs
+        and contact with us to update your access level to developer if you
+        want to be able to fix bugs.</para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
+
+  <sect1>
+    <title>Getting the sources and building</title>
+
+    <para>In the documents directory, you can find a buildguide, this guide
+    explains how to get the sources from the CVS, how to get Kylix Open
+    Edition and how to rebuild the sources. You can also rebuild XPde by using
+    Ant, check out the build.xml file.</para>
+  </sect1>
+
+  <sect1>
+    <title>CVS</title>
+
+    <para>To submit your changes and collaborate with other members in this
+    project, you will need to use CVS, don&#39;t worry about that, it&#39;s a
+    very simple system and if you have never used it, we bet you will think
+    it&#39;s great. You can find all this information in the documents
+    directory, on the CVS guide.</para>
+  </sect1>
+
+  <sect1>
+    <title>Resources</title>
+
+    <para>As a team we have a list of resources we use, for source code, for
+    communication, etc:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Main Page (http://www.xpde.com)</para>
+
+        <para>This is the main page of the project, it&#39;s the central
+        repository of resources and news, this must be your first stop</para>
+      </listitem>
+
+      <listitem>
+        <para>Project Page (http://developer.berlios.de/projects/xpde)</para>
+
+        <para>We host our project on BerliOS, the system they use it&#39;s the
+        same than SourceForge, we only use their CVS server</para>
+      </listitem>
+
+      <listitem>
+        <para>CVS repository (http://cvs.berlios.de/cgi-bin/viewcvs.cgi/xpde/)</para>
+
+        <para>To browse the source code, you can use the Browse CVS option at
+        the project page</para>
+      </listitem>
+
+      <listitem>
+        <para>Bug tracking (http://bugs.xpde.com)</para>
+
+        <para>This is the bug tracking tool we use, it&#39;s a Mantis, you
+        will need to subscribe yourself to report bugs and also tell us to be
+        updated as developer and be able to fix bugs</para>
+      </listitem>
+
+      <listitem>
+        <para>Ticketing (http://dcl.xpde.com)</para>
+
+        <para>This is a system to manage work on a team, to send tickets to
+        each other requesting for work, or simply a common place to setup
+        things to do, right now it&#39;s not very useful due the current size
+        of the team, but it will become very important in a near future.</para>
+      </listitem>
+
+      <listitem>
+        <para>IRC Channel (irc://irc.freenode.net/xpde)</para>
+      </listitem>
+
+      <listitem>
+        <para>Forums (http://www.xpde.com/modules.php?name=Forums)</para>
+
+        <para>Users can post their questions here, right now post is only
+        allowed to registered users, maybe this change in a future. At the
+        bottom you can find a private forum for the team, contact with us to
+        get the password.</para>
+      </listitem>
+
+      <listitem>
+        <para>FAQ (http://www.xpde.com/modules.php?name=FAQ)</para>
+
+        <para>Here you can find a FAQ, it&#39;s nice to read it to know what
+        to answer in the forums to give support to users</para>
+      </listitem>
+
+      <listitem>
+        <para>Team page (http://www.xpde.com/modules.php?name=Team)</para>
+
+        <para>This is the XPde team, we are listed in joining order</para>
+      </listitem>
+
+      <listitem>
+        <para>Mailing List (mailto:development-subscribe@xpde.com)</para>
+
+        <para>This is our main way to communicate, right now there is only one
+        list, this will grow in the future</para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
+
+  <sect1>
+    <title>Coding guidelines</title>
+
+    <para>It is very important to use some coding guidelines when developing
+    in a collaborative project like this, the code must be as clearer as
+    possible and every member must be able to read it. We are not talking
+    about design patterns, but a coding style to make all source code look the
+    same. This guidelines are not closed, and we, as Delphi developers, we
+    have a very similar coding style. All this is explained in a separate
+    document, called coding guidelines, but it&#39;s not finished yet.</para>
+  </sect1>
+
+  <sect1>
+    <title>Form design</title>
+
+    <para>In this project we have little space for innovation on form design,
+    we have a model on Windows XP which we must follow to-the-pixel-point, but
+    in any other case, where the Windows XP dialogs are not what we must use
+    in Linux, we must follow some common rules. Also, this is nice to allow
+    another team members to edit our forms. To let our forms integrate with
+    the rest of the desktop and to react to user changes on desktop and
+    appearance properties, we must use the XPstyle unit, a Kylix/Qt style
+    which changes all the way our widgets look. Also we need to set the Scaled
+    properties of all our forms to false and the ParentFont to true.</para>
+  </sect1>
+
+  <sect1>
+    <title>Document creation</title>
+
+    <para>If you need to create documents to be shared with another members or
+    published to the users, we are using DocBook as publishing platform, this
+    system is based on XML and allows to write the document and publish it on
+    many formats including PDF, HTML, PS, TXT, etc. You can also use XXE, from
+    XMLMinds as editor, it&#39;s made in Java and provides CSS rendering for
+    DocBook documents, so it&#39;s just like a word processor.</para>
+  </sect1>
+
+  <sect1>
+    <title>License</title>
+
+    <para>This project is GPL, this means all the code we write is under that
+    license, you cannot join the team and develope source code under another
+    license or use source code under a non-compatible license.</para>
+  </sect1>
+</article>

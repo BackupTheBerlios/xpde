@@ -106,8 +106,10 @@ type
     procedure Timer2Timer(Sender: TObject);
     procedure Timer3Timer(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure LVNetSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
   private
-    Procedure Get_PIDS_Apps(cmdline:string);
+    Procedure Get_PIDS_Apps(__cmdline:string);
     Procedure Read_stats(statsfile_:string);
     Procedure Read_Net(netfile:string);
     Procedure Paint_PB1;
@@ -126,11 +128,52 @@ type
     { Public declarations }
   end;
 
+
+type network_info = record
+        // /proc/net/dev entries
+        device:string;
+        bytes_in:double;
+        packets_in:double;
+        errs_in:longint;
+        drop_in:longint;
+        fifo_in:longint;
+        frame:longint;
+        compr_in:longint;
+        mcast:longint;
+        bytes_out:double;
+        packets_out:double;
+        errs_out:longint;
+        drop_out:longint;
+        fifo_out:longint;
+        colls:longint;
+        carrier:longint;
+        compr_out:longint;
+        // /proc/net/arp entries
+        ip_addr:string;
+        hw_type:string;
+        flags:string;
+        hw_addr:string;
+        mask_arp:string;
+        device_kind:string; // my entry, just as an alias to look as XP ;)
+        // /proc/net/route entries
+        bcast:string;
+        dest:string;
+        mask:string;
+        gw:string;
+        mtu:string;
+        // /etc/resolv.conf
+        dns_server1:string;
+        dns_server2:string;
+        speed:string; //cheat ;)
+        state:string;
+        End;
+
 var
   WindowsTaskManagerDlg: TWindowsTaskManagerDlg;
-
+  net_info:Array [0..20] of network_info;
+  device_number:integer; // global
 implementation
-uses Libc, uAboutTaskManager, uCreateNewTask;
+uses Libc,StrUtils,uAboutTaskManager, uCreateNewTask;
 
 Const PRIO_NORMAL=10000;
       PRIO_HIGH=3000;
@@ -154,13 +197,13 @@ var tmpstr,tmpstr_stat:TStrings;
     user_matrix:Array[0..228] of longint; // width points of PB2
     syst_matrix:Array[0..228] of longint; // width points of PB4
     devs_matrix:Array[0..20,0..351] of longint; // width points of PB5
+    devs_matrix_out:Array[0..20,0..351] of longint; // transmitted bytes width points of PB5
         // FIXME now we have max 21 net device ;)
-    dev_names:Array[0..20] of string;
     diff_net:Array[0..20,0..0] of double;
+    diff_net_out:Array[0..20,0..0] of double;
     //FIXME This values will be replaced to dynamic array PB*.Width
+    device_number_:integer; // temporary or Get_Info_From_Netstat
 {$R *.xfm}
-{$INCLUDE network.inc}
-
 
 function _get_tmp_fname:String;
 begin
@@ -184,6 +227,7 @@ begin
   Result:=_cut_right(SUBSTR_RIGHT,_cut_left(SUBSTR_LEFT,FROMSTR));
 end;
 
+{$INCLUDE network.inc}
 
 procedure TWindowsTaskManagerDlg.ExitTaskManager1Click(Sender: TObject);
 begin
@@ -205,11 +249,11 @@ begin
         Action:=caFree;
 end;
 
-Procedure TWindowsTaskManagerDlg.Get_PIDS_Apps(cmdline:string);
+Procedure TWindowsTaskManagerDlg.Get_PIDS_Apps(__cmdline:string);
 var cmdline__,tmpfile__:string;
 Begin
         tmpfile__:=_get_tmp_fname;
-        cmdline__:=cmdline+' > '+tmpfile__;
+        cmdline__:=__cmdline+' > '+tmpfile__;
 // FIRST TAB WILL CONTAIN LIST OF APPS (PARENT PROCESSES)
 // SECOND TAB WILL CONTAIN TREE OF PROCESSESS
 // NAME         %CPU    %MEM    USER    PID
@@ -339,7 +383,7 @@ begin
         if PageControl1.ActivePage=TabSheet5 then
         Fill_Processes;
 
-        Fill_Net_Devices; // FILL it always, since we have history graph per device
+        Fill_Net_Devices; 
         Find_Lusers;
 end;
 
@@ -358,8 +402,17 @@ begin
         devs_matrix [jj,j]:=PB5.Height;
 
         for jj:=0 to 20 do
+        for j:=0 to PB5.Width do
+        devs_matrix_out [jj,j]:=PB5.Height;
+
+
+        for jj:=0 to 20 do
         diff_net[jj,0]:=0;
 
+        for jj:=0 to 20 do
+        diff_net_out[jj,0]:=0;
+
+        device_number:=2; // start with loopback
         CPUUser_:=1;
         CPUSyst_:=1;
         um_y:=0;
@@ -383,6 +436,10 @@ begin
         MemInfo;
         AverageLoad('/proc/loadavg');
         Read_Net('/proc/net/dev');
+        for j:=0 to 20 do begin
+        if net_info[j].device<>'' then
+        Get_Info_From_Netstat(net_info[j].device);
+        End;
         Fill_Net_Devices;
         Find_Lusers;
 end;
@@ -1088,7 +1145,7 @@ End;
 
 
 procedure TWindowsTaskManagerDlg.Paint_PB5;
-var i,xx:integer;
+var i,xx,p_i,div_me:integer;
 Begin
         PB5.Repaint;
         PB5.Canvas.Start(true);
@@ -1145,6 +1202,63 @@ Begin
         PB5.Canvas.TextOut(PB5.Left+10,PB5.Top+10,'  1 %');
         PB5.Canvas.TextOut(PB5.Left+10,PB5.Height div 2,'0.5 %');
         PB5.Canvas.TextOut(PB5.Left+10,PB5.Height - 20,'  0 %');
+
+                with PB5.Canvas do begin
+                Brush.Color:=clBlack;
+                Brush.Style:=bsSolid;
+                Pen.Color:=clRed;
+                Pen.Style:=psSolid;
+                End;
+
+
+        if net_info[device_number].device='lo' then div_me:=512
+        else
+        if copy(net_info[device_number].device,1,3)='eth' then div_me:=512
+        else
+        if copy(net_info[device_number].device,1,3)='ppp' then div_me:=51
+        else
+        if copy(net_info[device_number].device,1,3)='ipp' then div_me:=51
+        else
+        div_me:=512;
+
+        PB5.Canvas.MoveTo(42,PB5.Height);
+        for i:=0 to PB5.Width do begin
+        xx:= um_y - i;
+        if (xx < 0) then xx := xx + PB5.Width;
+        if xx >= 0 then begin
+
+        p_i:=PB5.Height-(devs_matrix[device_number,xx] div div_me);
+        if p_i<0 then p_i:=0
+        else
+        if p_i>PB5.Height-2 then p_i:=PB5.Height-2;
+        if pi>0 then
+        PB5.Canvas.LineTo(i+42,p_i);
+        End;
+        End;
+
+
+                with PB5.Canvas do begin
+                Brush.Color:=clBlack;
+                Brush.Style:=bsSolid;
+                Pen.Color:=clBlue;
+                Pen.Style:=psSolid;
+                End;
+
+        PB5.Canvas.MoveTo(42,PB5.Height);
+        for i:=0 to PB5.Width do begin
+        xx:= um_y - i;
+        if (xx < 0) then xx := xx + PB5.Width;
+        if xx >= 0 then begin
+        p_i:=PB5.Height-(devs_matrix_out[device_number,xx] div div_me);
+        if p_i<0 then p_i:=0
+        else
+        if p_i>PB5.Height-2 then p_i:=PB5.Height-2;
+        if pi>0 then
+        PB5.Canvas.LineTo(i+42,p_i);
+        End;
+        End;
+
+
 
         PB5.Canvas.Stop;
 
@@ -1227,16 +1341,14 @@ End;
 
 Procedure TWindowsTaskManagerDlg.Fill_Net_Devices;
 var i:integer;
-    res:TStrings;
     fi:TextFile;
 
-Function Sign_Device(device:string):string;
+Function Sign_Device(device__:string):string;
 var ss:string;
 Begin
-        device:=trim(device);
-        if device='lo' then Result:='Loopback'
+        if device__='lo' then Result:='Loopback'
         else begin
-        ss:=copy(device,1,3);
+        ss:=copy(device__,1,3);
         if ss='eth' then Result:='Local Area Network'
         else
         if ss='ppp' then Result:='Modem Connection'
@@ -1247,44 +1359,6 @@ Begin
         End;
 End;
 
-Function Give_Device_Arp(device:string):TStrings;
-var sbuf,s:String;
-    y,x:integer;
-Begin
-        device:=trim(device);
-        if device<>'lo' then begin
-        AssignFile(fi,'/proc/net/arp');
-        Reset(fi);
-        while not eof(fi) do begin
-        readln(fi,sbuf);
-        s:=copy(sbuf,length(sbuf)-length(device),length(device));
-        if s=device then
-        break;
-        End;
-        CloseFile(fi);
-
-        // HOPE THAT WE FOUND DEVICE :)
-        // parse sbuf and each result add to TStringList
-        sbuf:=sbuf+' ';
-        for y:=1 to length(sbuf) do begin
-        x:=pos(' ',sbuf);
-        if x<>0 then begin
-        s:=copy(sbuf,1,x-1);
-        res.Add(s);
-        sbuf:=copy(sbuf,x+1,length(sbuf));
-        sbuf:=trimleft(sbuf);
-        End;
-End;
-
-        end else begin
-                res.Add('127.0.0.1');
-                res.Add('0');
-                res.Add('0');
-                res.Add('0');
-                res.Add(device);
-        End;
-Result:=res;
-End;
 
 // HERE WE START
 Begin
@@ -1293,18 +1367,32 @@ Begin
         // look for changes, and just on changes refill list.
         LVNet.Items.BeginUpdate;
                 for i:=0 to 20 do
-                        if dev_names[i]<>'' then begin
+                        if net_info[i].device<>'' then begin
+                        device_number_:=i;
+                        LVNet.Items.Add.Caption:=Sign_Device(net_info[i].device);
+                        // hmm this takes 5% CPU per timer so it will be better
+                        // to handle it on startup and check in some other
+                        // reasonable timer so I'll put it OnShow and in timer
+                        // of processes and apps priority
+                         Get_Info_From_Netstat(net_info[i].device);
+                        // let's cheat for now
+                        if net_info[i].device='lo' then net_info[i].speed:='loop' else
+                        if copy(net_info[i].device,1,3)='eth' then net_info[i].speed:='10/100 MBps' else
+                        if copy(net_info[i].device,1,3)='ppp' then net_info[i].speed:='56 kbps' else
+                        if copy(net_info[i].device,1,3)='ipp' then net_info[i].speed:='128 kbps' else
+                        net_info[i].speed:='Unknown';
 
-                        res:=TStringList.Create;
-                        LVNet.Items.Add.Caption:=Sign_Device(dev_names[i]);
-                        res:=Give_Device_Arp(dev_names[i]);
-                        LVNet.Items.Item[i].SubItems.AddStrings(res);
+                        if (net_info[i].bytes_in<>0) and (net_info[i].bytes_out<>0)
+                        then net_info[i].state:='Operational' else
+                        net_info[i].state:='Disabled';
 
-                        res.Free;
-                        // now we parse /proc/dev/arp for ip,hw adress
+                        LVNet.Items.Item[i-2].SubItems.Add(net_info[i].ip_addr);
+                        LVNet.Items.Item[i-2].SubItems.Add(net_info[i].speed);
+                        LVNet.Items.Item[i-2].SubItems.Add(net_info[i].state);
+
                         End;
                 LVNet.Items.EndUpdate;
-                End;
+End;
 
 
 Procedure TWindowsTaskManagerDlg.Find_Lusers; // ;)
@@ -1378,5 +1466,12 @@ Begin
         End;
 
 End;
+
+procedure TWindowsTaskManagerDlg.LVNetSelectItem(Sender: TObject;
+  Item: TListItem; Selected: Boolean);
+begin
+if selected then
+device_number:=Item.Index+2;
+end;
 
 end.

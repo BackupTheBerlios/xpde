@@ -9,8 +9,8 @@ uses
 
 {$R *.res}
 begin
-  tm_version:='0.1';
-  tm_build:='20021027'; // BUILD FORMAT -> YYYYMMDD
+  tm_version:='0.2';
+  tm_build:='20021030'; // BUILD FORMAT -> YYYYMMDD
   Application.Initialize;
   SetXPStyle(application);  
   Application.CreateForm(TWindowsTaskManagerDlg, WindowsTaskManagerDlg);

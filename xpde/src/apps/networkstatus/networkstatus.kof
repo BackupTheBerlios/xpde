@@ -44,7 +44,7 @@ ExeDescription=
 DynamicLoader=/lib/ld-linux.so.2
 
 [Directories]
-OutputDir=
+OutputDir=$(HOME)/xpde
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=

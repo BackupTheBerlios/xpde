@@ -1,0 +1,69 @@
+object StatisticsForm: TStatisticsForm
+  Left = 230
+  Top = 126
+  Width = 219
+  Height = 140
+  VertScrollBar.Range = 133
+  HorzScrollBar.Range = 211
+  ActiveControl = RetBTN
+  BorderIcons = [biSystemMenu, biHelp]
+  BorderStyle = fbsSingle
+  Caption = 'Statistic Box'
+  Color = clBackground
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  TextWidth = 6
+  object RetBTN: TButton
+    Left = 10
+    Top = 84
+    Width = 42
+    Height = 23
+    Caption = 'RET'
+    TabOrder = 0
+    OnClick = RetBTNClick
+  end
+  object LoadBTN: TButton
+    Left = 65
+    Top = 84
+    Width = 42
+    Height = 23
+    Caption = 'LOAD'
+    TabOrder = 1
+    OnClick = LoadBTNClick
+  end
+  object CdBTN: TButton
+    Left = 118
+    Top = 84
+    Width = 42
+    Height = 23
+    Caption = 'CD'
+    TabOrder = 2
+    OnClick = CdBTNClick
+  end
+  object CadBTN: TButton
+    Left = 168
+    Top = 84
+    Width = 42
+    Height = 23
+    Caption = 'CAD'
+    TabOrder = 3
+    OnClick = CadBTNClick
+  end
+  object StatisticListBox: TListBox
+    Left = 5
+    Top = 5
+    Width = 206
+    Height = 52
+    BorderStyle = bsEtched
+    TabOrder = 4
+  end
+  object StaticNumsLabel: TLabel
+    Left = 104
+    Top = 120
+    Width = 18
+    Height = 13
+    Caption = 'n=0'
+  end
+end

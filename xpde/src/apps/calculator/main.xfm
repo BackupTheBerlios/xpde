@@ -1,152 +1,34 @@
 object MainForm: TMainForm
-  Left = 262
-  Top = 279
-  Width = 474
-  Height = 288
-  HorzScrollBar.Range = 252
-  VertScrollBar.Range = 201
-  ActiveControl = BackSpaceBTN
+  HelpType = htContext
+  HelpKeyword = 'start'
+  Left = 366
+  Top = 115
+  Width = 476
+  Height = 294
+  HorzScrollBar.Range = 433
+  VertScrollBar.Range = 224
+  ActiveControl = ByteGroup
   BorderStyle = fbsSingle
   Caption = 'Calculator'
   Color = clBackground
-  Icon.Data = {
-    424D360C00000000000036000000280000002000000020000000010018000000
-    0000000C0000120B0000120B00000000000000000000FF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA25555
-    AC6D6DFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA25555
-    A85D5DA25555B28282FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA25555C58683
-    F9CFC7C58682A25555A55D5DB99292FF00FFFF00FFFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA25555E8B9B3
-    FFD9D0FFD7CEE8B6AFB97573A25555A86565FF00FFFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFAB6767B36E6DFFDBD4
-    ECC6C1DEB5B2D6ACAAE1ADA8DCA59FA85D5CA25555B07A7AFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA25555DCABA6FFDDD5
-    F2D1CCFFDBD3FFDFD7D6A4A1FFD5CCF9CCC3CB8C88A25555A25555B99292FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB67B7BA85E5DFFDFD8FFDED6
-    F5E6E4FFECE8FFDAD2D79F9BFCD3CBDEB1ADD7A7A4DAA29DB97472A25555A865
-    65FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFA25555D19B98FFE1DAFFDFD8
-    F1E1E0FFFDFDFBEEECDFAEAAECC7C2FCD7D0FFE3DCD19E9CFFD2C8E2AAA3AE64
-    63A25555AD7373FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFC09090A25555F3D1CCFFE2DBFFE0DA
-    FAD9D3EDCDC9ECC5C1FFDAD2F6E2E0FFE7E2FFD7CEE1AFA9FFD3C9E9BAB3D69F
-    9BC78682A85D5CA25555B58A8AFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFAA6464C08382FFE4DFECCBC7DDB5B2
-    DAB1AFE1B3AEFFDDD6FFDCD4F1E0DFFFFBFAFFF2EFD9A6A2F0C8C2F1CCC6FAE0
-    DBD19F9CF3BFB6B36C6AA25555FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFA96161E9C4C0FAE0DBF2D1CCFFDBD3
-    FFDED7E0B3AFFFDED7EEC7C1F0CCC6EDD5D3ECD0CDF2C6BFEED2CFFFE2DBFFD9
-    D1EBBFB9EFBBB3AE6463AE7474FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFB67C7CB67776FFE8E3F6DDD8FDF2F0FFEDE9
-    FFD8CFDEADA8E4BCB8EBCAC6CF9D9CF5CCC5FFDAD1FFD8D0EFDEDDFFF7F5FFEA
-    E5D8A29DDCA29CA25555C6A9A9FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFB27171E1BBB9FFEAE5FDE6E1F1E3E3FFFEFD
-    F7E7E5D9AFADFFDFD8FFDAD2FAD8D1D5A19DFFDBD3FFD9D1F3D0CBEDDEDEECD9
-    D8E9BAB4B97472A55D5DFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFC9A0A0B97E7DFAE5E1FFEBE6FFE9E5FAE1DDE5C4C1
-    F0CFCBF6DFDCFFF5F2FFEAE6FACCC3D9A8A4E2BAB7E7C4C1CF9E9CF5C9C2FFD6
-    CDF3C5BDA25555BA8F8FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFBB8282D7AEADFFEEEAEBCFCCDCB4B2D0A2A0F0D0CB
-    FFE6E1F3D8D4F4ECECFFFDFDE5C5C3EDCCC8FFDED6FFDBD3FAD8D2D6A09BFFD7
-    CFCB8E8AA25555FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFBE8686F6E2E0FAE8E5F3D1CBFFDCD4FFE2DCD19F9C
-    FFE7E2FFE6E0F7DAD5F1D0CCFBDCD6F6DDD9FFF4F1FFE9E4FACCC3D7A29EF9D0
-    C9A85D5DB27D7DFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFC79797D4ACABFFF2EFF5E2E0FFF1EEFFE7E2FFD4CBD6A4A1
-    E6C4C2DCB3B1D0A19FF0CDC8FFE3DCF3D6D1F7F1F1FFFDFCE4C5C3F5CEC7DCA8
-    A3A25555CBB3B3FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFC69797EDD5D4FFF3F0F8E8E5F5EDEDFFFCFBF6E2DFE0BCB9
-    FAD8D2FFDBD3FFE0D9D6A5A2FFE4DEFFE2DCF4D4CFE7C1BDF7D3CDFFDDD5B36E
-    6DA86565FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFD0ABABD0A7A7FFF5F3FFF4F2FFF2F0F4E2E0F2DFDDEFD6D4F5E0DD
-    FFF4F1FFEBE6FFD5CCD7A5A2403AAF1818D3211FB3DFC5D0FFDFD8E8BCB6A255
-    55C1A0A0FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFCFA7A7E9D2D1ACD3A77ECA7B96CC90E9E9DCFFF1EEFFEFECFBE8E5
-    F3E8E8FFFDFCF2DEDC9980B62828FF0B0BFD0E0EFE8071BAFFE1DAC58986A255
-    55FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFDDC5C5D5B1B1EFEEE745AA4417CE172ED32E3FBF3F6CB967CCDCBEFFEFEB
-    F4DEDBE5C5C3EFD3CFABA1D69393FF6262FE0707F48071B4F9D9D3A25555B686
-    86FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFD8B7B7E5CDCDA9D3A521AC2118CB1807CA0712D0122BD62B33C03358B354
-    C4D6B5FFEDE9FFECE8BFB0D1BEBEEACDCDFF6260D2DFC8D4D19C99A25555FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFDBBCBCFAF5F421922167D3676FDE6F45D5451DCC1D07CA070FCF0F28D528
-    25BA25299C269FC492FFECE7BFB0D18F83BFDFCAD7FFE6E0AE6766AC6D6DFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE2
-    CACAE4CDCDFFFFFF309430A7E0A7C3F1C39DE99D74DF744BD64B16C81601C701
-    0DCE0D24D4242AC02A319E2E9FBE90FFEAE5FFE8E3E2BAB6A25555C6A9A9FF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFE3
-    CCCCE0C6C6E5D0D0E6E5DE70AF6F7CB87CC9E8C9C8F3C8A2EAA279E17916C416
-    00BF0001C6010BCD0B21D42127BE27338F2FEFE2D7BF8382A55D5DFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFE0C8C8DBBDBDDDC0C0CFCFC160A65E6DAF6DCCE9CCCCF4CC9FE99F
-    1FC61F00BD0000BF0000C50009CD09088A08C4C2AAA55959BA8F8FFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFD6B5B5D8B8B8DBCEC77CB1776EAF6DBFE1BF
-    D1F5D176DD7616C31600BD0000B50030892CCF9F9DA75D5DFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD2ACACD1ABAAD5C4BC79A970
-    5FA65DB2D9B2D6F6D68DE38D1694169FC093B37171B57F7FFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFCDA3A3CA9C9C
-    DCBBBA98B88C5FA65D58AE58107F0FE2C1BFB06E6EFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-    C99A9AC59494D5AEAEBFC1AADFE3D2C48F8FB67F7FFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-    FF00FFFF00FFC89999C08B8BC99A99B97E7ECBACACFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-    00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-    FF00FFFF00FFFF00FFFF00FFC39090BE8989FF00FFFF00FFFF00FFFF00FFFF00
-    FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+  HelpFile = 'c:\win98se\help\windows.hlp'
   Menu = MainMenu
   Position = poDefaultPosOnly
   Scaled = False
+  OnActivate = FormActivate
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnKeyDown = AveBTNKeyDown
+  OnKeyPress = KeyPressed
   PixelsPerInch = 90
   object SciencePanel: TPanel
     Left = 0
     Top = 0
-    Width = 474
-    Height = 261
+    Width = 476
+    Height = 267
     Align = alClient
     BevelOuter = bvNone
-    TabOrder = 1
-    object SciCalcEdit: TEdit
-      Left = 6
-      Top = 0
-      Width = 463
-      Height = 25
-      Alignment = taRightJustify
-      ReadOnly = True
-      TabOrder = 0
-      OnChange = CalcEditChange
-    end
-    object NumeralGroup: TRadioGroup
-      Left = 6
-      Top = 25
-      Width = 212
-      Height = 27
-      Items.Strings = (
-        'Hex'
-        'Dec'
-        'Oct'
-        'Bin')
-      ColumnLayout = clAutoSize
-      Columns = 4
-      ItemIndex = 1
-      TabOrder = 1
-      OnClick = NumeralGroupClick
-    end
+    TabOrder = 0
     object ByteGroup: TRadioGroup
       Left = 220
       Top = 25
@@ -160,10 +42,10 @@ object MainForm: TMainForm
       ColumnLayout = clAutoSize
       Columns = 4
       ItemIndex = 0
-      TabOrder = 2
+      TabOrder = 0
       OnClick = ByteGroupClick
     end
-    object FloatGroup: TRadioGroup
+    object AngleGroup: TRadioGroup
       Left = 220
       Top = 25
       Width = 249
@@ -174,469 +56,8 @@ object MainForm: TMainForm
         'Grads')
       Columns = 3
       ItemIndex = 0
-      TabOrder = 3
-      OnClick = FloatGroupClick
-    end
-    object SciMemoryLBL: TLabel
-      Left = 188
-      Top = 57
-      Width = 27
-      Height = 27
-      Alignment = taCenter
-      AutoSize = False
-      BorderStyle = bsSunken3d
-      Layout = tlCenter
-    end
-    object SciBackSpaceBTN: TButton
-      Left = 230
-      Top = 56
-      Width = 63
-      Height = 29
-      Caption = 'Backspace'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 5
-      OnClick = SciBackSpaceBTNClick
-    end
-    object SciCEBTN: TButton
-      Left = 296
-      Top = 56
-      Width = 62
-      Height = 29
-      Caption = 'CE'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 6
-      OnClick = SciCEBTNClick
-    end
-    object SciCBTN: TButton
-      Left = 361
-      Top = 56
-      Width = 62
-      Height = 29
-      Caption = 'C'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 7
-      OnClick = SciCBTNClick
-    end
-    object SciMCBTN: TButton
-      Left = 184
-      Top = 92
-      Width = 36
-      Height = 29
-      Caption = 'MC'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 8
-      OnClick = SciMCBTNClick
-    end
-    object SciSevenBTN: TButton
-      Tag = 7
-      Left = 230
-      Top = 92
-      Width = 36
-      Height = 29
-      Caption = '7'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 9
-      OnClick = SciZeroBTNClick
-    end
-    object SciEightBTN: TButton
-      Tag = 8
-      Left = 272
-      Top = 92
-      Width = 36
-      Height = 29
-      Caption = '8'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 10
-      OnClick = SciZeroBTNClick
-    end
-    object SciNineBTN: TButton
-      Tag = 9
-      Left = 312
-      Top = 92
-      Width = 36
-      Height = 29
-      Caption = '9'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 11
-      OnClick = SciZeroBTNClick
-    end
-    object SciDivideBTN: TButton
-      Tag = 1
-      Left = 352
-      Top = 92
-      Width = 36
-      Height = 29
-      Caption = '/'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 12
-      OnClick = SciDivideBTNClick
-    end
-    object SciMRBTN: TButton
-      Tag = 1
-      Left = 184
-      Top = 125
-      Width = 36
-      Height = 29
-      Caption = 'MR'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 13
-      OnClick = SciMCBTNClick
-    end
-    object SciFourBTN: TButton
-      Tag = 4
-      Left = 230
-      Top = 125
-      Width = 36
-      Height = 29
-      Caption = '4'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 14
-      OnClick = SciZeroBTNClick
-    end
-    object SciFiveBTN: TButton
-      Tag = 5
-      Left = 272
-      Top = 125
-      Width = 36
-      Height = 29
-      Caption = '5'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 15
-      OnClick = SciZeroBTNClick
-    end
-    object SciSixBTN: TButton
-      Tag = 6
-      Left = 312
-      Top = 125
-      Width = 36
-      Height = 29
-      Caption = '6'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 16
-      OnClick = SciZeroBTNClick
-    end
-    object SciMultiplyBTN: TButton
-      Tag = 2
-      Left = 352
-      Top = 125
-      Width = 36
-      Height = 29
-      Caption = '*'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 17
-      OnClick = SciDivideBTNClick
-    end
-    object SciMSBTN: TButton
-      Tag = 2
-      Left = 184
-      Top = 157
-      Width = 36
-      Height = 29
-      Caption = 'MS'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 18
-      OnClick = SciMCBTNClick
-    end
-    object SciOneBTN: TButton
-      Tag = 1
-      Left = 230
-      Top = 157
-      Width = 36
-      Height = 29
-      Caption = '1'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 19
-      OnClick = SciZeroBTNClick
-    end
-    object SciTwoBTN: TButton
-      Tag = 2
-      Left = 272
-      Top = 158
-      Width = 36
-      Height = 29
-      Caption = '2'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 20
-      OnClick = SciZeroBTNClick
-    end
-    object SciThreeBTN: TButton
-      Tag = 3
-      Left = 312
-      Top = 158
-      Width = 36
-      Height = 29
-      Caption = '3'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 21
-      OnClick = SciZeroBTNClick
-    end
-    object SciMinusBTN: TButton
-      Tag = 3
-      Left = 352
-      Top = 158
-      Width = 36
-      Height = 29
-      Caption = '-'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 22
-      OnClick = SciDivideBTNClick
-    end
-    object SciMBTN: TButton
-      Tag = 3
-      Left = 184
-      Top = 190
-      Width = 36
-      Height = 29
-      Caption = 'M+'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 23
-      OnClick = SciMCBTNClick
-    end
-    object SciZeroBTN: TButton
-      Left = 230
-      Top = 190
-      Width = 36
-      Height = 29
-      Caption = '0'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 24
-      OnClick = SciZeroBTNClick
-    end
-    object SciPlusMinusBTN: TButton
-      Left = 272
-      Top = 192
-      Width = 36
-      Height = 29
-      Caption = '+/-'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 25
-      OnClick = SciPlusMinusBTNClick
-    end
-    object SciDecimalBTN: TButton
-      Left = 312
-      Top = 192
-      Width = 36
-      Height = 29
-      Caption = '.'
-      Font.Color = clBlue
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 26
-      OnClick = SciDecimalBTNClick
-    end
-    object SciPlusBTN: TButton
-      Tag = 4
-      Left = 352
-      Top = 192
-      Width = 36
-      Height = 29
-      Caption = '+'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 27
-      OnClick = SciDivideBTNClick
-    end
-    object SciEqualBTN: TButton
-      Left = 392
-      Top = 192
-      Width = 36
-      Height = 29
-      Caption = '='
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 28
-      OnClick = SciEqualBTNClick
-    end
-    object ModBTN: TButton
-      Tag = 5
-      Left = 392
-      Top = 92
-      Width = 36
-      Height = 29
-      Caption = 'Mod'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 29
-      OnClick = SciDivideBTNClick
-    end
-    object OrBTN: TButton
-      Tag = 6
-      Left = 392
-      Top = 125
-      Width = 36
-      Height = 29
-      Caption = 'Or'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 30
-      OnClick = SciDivideBTNClick
-    end
-    object LshBTN: TButton
-      Tag = 7
-      Left = 392
-      Top = 158
-      Width = 36
-      Height = 29
-      Caption = 'Lsh'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 31
-      OnClick = SciDivideBTNClick
+      TabOrder = 1
+      OnClick = AngleGroupClick
     end
     object AndBTN: TButton
       Tag = 8
@@ -644,6 +65,7 @@ object MainForm: TMainForm
       Top = 92
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'And'
       Font.Color = clRed
       Font.Height = 11
@@ -652,8 +74,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 32
-      OnClick = SciDivideBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 2
+      TabStop = False
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object XorBTN: TButton
       Tag = 9
@@ -661,6 +90,7 @@ object MainForm: TMainForm
       Top = 125
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'Xor'
       Font.Color = clRed
       Font.Height = 11
@@ -669,8 +99,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 33
-      OnClick = SciDivideBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 3
+      TabStop = False
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object NotBTN: TButton
       Tag = 10
@@ -678,6 +115,7 @@ object MainForm: TMainForm
       Top = 158
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'Not'
       Font.Color = clRed
       Font.Height = 11
@@ -686,15 +124,23 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 34
-      OnClick = SciDivideBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 4
+      TabStop = False
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object IntBTN: TButton
-      Tag = 11
+      Tag = 16
       Left = 432
       Top = 192
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'Int'
       Font.Color = clRed
       Font.Height = 11
@@ -703,14 +149,23 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 35
-      OnClick = SciDivideBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 5
+      TabStop = False
+      OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object piBTN: TButton
       Left = 184
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'D'
       Caption = 'pi'
       Font.Color = clBlue
       Font.Height = 11
@@ -719,14 +174,24 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 36
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 6
+      TabStop = False
       OnClick = piBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object HexABTN: TButton
+      HelpType = htContext
+      HelpContext = 2
       Left = 232
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'aH'
       Caption = 'A'
       Font.Color = clBlue
       Font.Height = 11
@@ -735,13 +200,25 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 37
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 7
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object HexBBTN: TButton
+      HelpType = htContext
+      HelpContext = 2
       Left = 272
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'bH'
       Caption = 'B'
       Font.Color = clBlue
       Font.Height = 11
@@ -750,13 +227,25 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 38
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 8
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object HexCBTN: TButton
+      HelpType = htContext
+      HelpContext = 2
       Left = 312
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'cH'
       Caption = 'C'
       Font.Color = clBlue
       Font.Height = 11
@@ -765,14 +254,26 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 39
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 9
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object HexDBTN: TButton
       Tag = 4
+      HelpType = htContext
+      HelpContext = 2
       Left = 352
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'dH'
       Caption = 'D'
       Font.Color = clBlue
       Font.Height = 11
@@ -781,13 +282,25 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 40
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 10
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object HexEBTN: TButton
+      HelpType = htContext
+      HelpContext = 2
       Left = 392
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'eH'
       Caption = 'E'
       Font.Color = clBlue
       Font.Height = 11
@@ -796,13 +309,25 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 41
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 11
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object HexFBTN: TButton
+      HelpType = htContext
+      HelpContext = 2
       Left = 432
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'fH'
       Caption = 'F'
       Font.Color = clBlue
       Font.Height = 11
@@ -811,21 +336,37 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 42
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 12
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object CheckGroup: TGroupBox
       Left = 6
       Top = 57
       Width = 129
       Height = 25
-      TabOrder = 43
+      TabOrder = 13
       object InvCB: TCheckBox
         Left = 8
         Top = 5
         Width = 49
         Height = 17
         Caption = 'Inv'
+        PopupMenu = WhatsThisPUMNU
         TabOrder = 0
+        OnClick = InvCBClick
+        OnKeyDown = AveBTNKeyDown
+        OnKeyPress = KeyPressed
+        OnKeyString = AveBTNKeyString
+        OnMouseEnter = TheMouseEnter
+        OnMouseLeave = TheMouseLeave
       end
       object HypCB: TCheckBox
         Left = 64
@@ -833,12 +374,17 @@ object MainForm: TMainForm
         Width = 49
         Height = 17
         Caption = 'Hyp'
-        Checked = True
-        State = cbChecked
+        PopupMenu = WhatsThisPUMNU
         TabOrder = 1
+        OnClick = HypCBClick
+        OnKeyDown = AveBTNKeyDown
+        OnKeyPress = KeyPressed
+        OnKeyString = AveBTNKeyString
+        OnMouseEnter = TheMouseEnter
+        OnMouseLeave = TheMouseLeave
       end
     end
-    object SciOtherLBL: TLabel
+    object OtherLBL: TLabel
       Left = 141
       Top = 57
       Width = 26
@@ -849,11 +395,11 @@ object MainForm: TMainForm
       Layout = tlCenter
     end
     object StaBTN: TButton
-      Tag = 1
       Left = 6
       Top = 92
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'Sta'
       Font.Color = clBlue
       Font.Height = 11
@@ -862,8 +408,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 45
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 15
+      TabStop = False
       OnClick = StaBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object AveBTN: TButton
       Tag = 2
@@ -879,8 +432,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 46
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 16
+      TabStop = False
       OnClick = StaBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object SumBTN: TButton
       Tag = 3
@@ -896,8 +456,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 47
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 17
+      TabStop = False
       OnClick = StaBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object sBTN: TButton
       Tag = 4
@@ -913,8 +480,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 48
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 18
+      TabStop = False
       OnClick = StaBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object DatBTN: TButton
       Tag = 5
@@ -930,8 +504,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 49
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 19
+      TabStop = False
       OnClick = StaBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object FEBTN: TButton
       Tag = 1
@@ -939,6 +520,7 @@ object MainForm: TMainForm
       Top = 92
       Width = 36
       Height = 29
+      Hint = 'D'
       Caption = 'F-E'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -947,8 +529,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 50
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 20
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object OpenParBTN: TButton
       Tag = 6
@@ -956,6 +545,7 @@ object MainForm: TMainForm
       Top = 92
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = '('
       Font.Color = clFuchsia
       Font.Height = 11
@@ -964,8 +554,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 51
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 21
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object CloseParBTN: TButton
       Tag = 11
@@ -973,6 +570,7 @@ object MainForm: TMainForm
       Top = 92
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = ')'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -981,8 +579,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 52
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 22
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object dmsBTN: TButton
       Tag = 2
@@ -990,6 +595,7 @@ object MainForm: TMainForm
       Top = 125
       Width = 36
       Height = 29
+      Hint = 'D'
       Caption = 'dms'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -998,8 +604,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 53
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 23
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object ExpBTN: TButton
       Tag = 7
@@ -1007,6 +620,7 @@ object MainForm: TMainForm
       Top = 125
       Width = 36
       Height = 29
+      Hint = 'D'
       Caption = 'Exp'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1015,8 +629,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 54
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 24
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object lnBTN: TButton
       Tag = 12
@@ -1024,6 +645,7 @@ object MainForm: TMainForm
       Top = 125
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'ln'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1032,8 +654,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 55
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 25
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object sinBTN: TButton
       Tag = 3
@@ -1041,6 +670,7 @@ object MainForm: TMainForm
       Top = 158
       Width = 36
       Height = 29
+      Hint = 'D'
       Caption = 'sin'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1049,8 +679,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 56
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 26
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object xyBTN: TButton
       Tag = 8
@@ -1058,6 +695,7 @@ object MainForm: TMainForm
       Top = 158
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'x^y'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1066,8 +704,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 57
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 27
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object logBTN: TButton
       Tag = 13
@@ -1075,6 +720,7 @@ object MainForm: TMainForm
       Top = 158
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'log'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1083,8 +729,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 58
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 28
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object cosBTN: TButton
       Tag = 4
@@ -1092,6 +745,7 @@ object MainForm: TMainForm
       Top = 192
       Width = 36
       Height = 29
+      Hint = 'D'
       Caption = 'cos'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1100,8 +754,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 59
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 29
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object x3BTN: TButton
       Tag = 9
@@ -1109,6 +770,7 @@ object MainForm: TMainForm
       Top = 192
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'x^3'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1117,8 +779,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 60
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 30
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object nBTN: TButton
       Tag = 14
@@ -1126,6 +795,7 @@ object MainForm: TMainForm
       Top = 192
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'n!'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1134,8 +804,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 61
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 31
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object tanBTN: TButton
       Tag = 5
@@ -1143,6 +820,7 @@ object MainForm: TMainForm
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'D'
       Caption = 'tan'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1151,8 +829,15 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 62
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 32
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object x2BTN: TButton
       Tag = 10
@@ -1160,6 +845,7 @@ object MainForm: TMainForm
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = 'x^2'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1168,15 +854,23 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 63
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 33
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
-    object SciOneOverBTN: TButton
+    object OneOverBTN: TButton
       Tag = 15
       Left = 136
       Top = 226
       Width = 36
       Height = 29
+      Hint = 'HDOB'
       Caption = '1/x'
       Font.Color = clFuchsia
       Font.Height = 11
@@ -1185,70 +879,95 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 64
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 34
+      TabStop = False
       OnClick = FEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
+    end
+    object BasePanel: TPanel
+      Left = 8
+      Top = 24
+      Width = 212
+      Height = 27
+      BevelInner = bvLowered
+      TabOrder = 35
+      object HexRDBTN: TRadioButton
+        Left = 8
+        Top = 8
+        Width = 41
+        Height = 17
+        Caption = 'Hex'
+        PopupMenu = WhatsThisPUMNU
+        TabOrder = 0
+        OnClick = BaseRDBTNClick
+      end
+      object DecRDBTN: TRadioButton
+        Tag = 1
+        Left = 56
+        Top = 8
+        Width = 49
+        Height = 17
+        Caption = 'Dec'
+        PopupMenu = WhatsThisPUMNU
+        TabOrder = 1
+        OnClick = BaseRDBTNClick
+      end
+      object OctRDBTN: TRadioButton
+        Tag = 2
+        Left = 112
+        Top = 8
+        Width = 41
+        Height = 17
+        Caption = 'Oct'
+        PopupMenu = WhatsThisPUMNU
+        TabOrder = 2
+        OnClick = BaseRDBTNClick
+      end
+      object BinRDBTN: TRadioButton
+        Tag = 3
+        Left = 160
+        Top = 8
+        Width = 41
+        Height = 17
+        Caption = 'Bin'
+        PopupMenu = WhatsThisPUMNU
+        TabOrder = 3
+        OnClick = BaseRDBTNClick
+      end
     end
   end
+  object CalcEdit: TEdit
+    Left = 8
+    Top = 2
+    Width = 457
+    Height = 25
+    Anchors = [akLeft, akTop, akRight]
+    Alignment = taRightJustify
+    ReadOnly = True
+    TabOrder = 1
+    OnKeyDown = AveBTNKeyDown
+    OnKeyPress = KeyPressed
+    OnKeyString = AveBTNKeyString
+  end
   object StandardPanel: TPanel
-    Left = 0
-    Top = -3
+    Left = 181
+    Top = 56
     Width = 252
-    Height = 204
+    Height = 168
     BevelOuter = bvNone
-    TabOrder = 0
-    object BackSpaceBTN: TButton
-      Left = 52
-      Top = 39
-      Width = 63
-      Height = 29
-      Caption = 'Backspace'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 0
-      OnClick = BackSpaceBTNClick
-    end
-    object CBTN: TButton
-      Left = 183
-      Top = 39
-      Width = 62
-      Height = 29
-      Caption = 'C'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 1
-      OnClick = CBTNClick
-    end
-    object CEBTN: TButton
-      Left = 118
-      Top = 39
-      Width = 62
-      Height = 29
-      Caption = 'CE'
-      Font.Color = clRed
-      Font.Height = 11
-      Font.Name = 'MS Sans Serif'
-      Font.Pitch = fpVariable
-      Font.Style = []
-      Font.Weight = 40
-      ParentFont = False
-      TabOrder = 2
-      OnClick = CEBTNClick
-    end
+    TabOrder = 2
     object MCBTN: TButton
-      Left = 6
-      Top = 75
+      Left = 4
+      Top = 37
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = 'MC'
       Font.Color = clRed
       Font.Height = 11
@@ -1257,14 +976,24 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 3
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 0
+      TabStop = False
       OnClick = MCBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object MRBTN: TButton
-      Left = 6
-      Top = 108
+      Left = 4
+      Top = 70
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = 'MR'
       Font.Color = clRed
       Font.Height = 11
@@ -1273,14 +1002,23 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 4
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 1
+      TabStop = False
       OnClick = MRBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object MSBTN: TButton
-      Left = 6
-      Top = 140
+      Left = 4
+      Top = 103
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = 'MS'
       Font.Color = clRed
       Font.Height = 11
@@ -1289,15 +1027,24 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 5
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 2
+      TabStop = False
       OnClick = MSBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object MAddBTN: TButton
       Tag = 4
-      Left = 6
-      Top = 174
+      Left = 4
+      Top = 138
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = 'M+'
       Font.Color = clRed
       Font.Height = 11
@@ -1306,25 +1053,29 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 6
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 3
+      TabStop = False
       OnClick = MAddBTNClick
-    end
-    object MemoryLBL: TLabel
-      Left = 10
-      Top = 41
-      Width = 27
-      Height = 26
-      Alignment = taCenter
-      AutoSize = False
-      BorderStyle = bsSunken3d
-      Layout = tlCenter
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object SevenBTN: TButton
       Tag = 7
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.'#13#10'Keyboard equivalent' +
+        ' = 0-9'
       Left = 52
-      Top = 75
+      Top = 37
       Width = 36
       Height = 29
+      Hint = '7DHO'
+      Anchors = [akLeft, akBottom]
       Caption = '7'
       Font.Color = clBlue
       Font.Height = 11
@@ -1333,15 +1084,32 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 8
-      OnClick = ZeroBTNClick
+      ParentShowHint = False
+      PopupMenu = WhatsThisPUMNU
+      ShowHint = False
+      TabOrder = 4
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object EightBTN: TButton
       Tag = 8
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.Keyboard equivalent =' +
+        ' 0-9'
       Left = 91
-      Top = 75
+      Top = 37
       Width = 36
       Height = 29
+      Hint = '8DH'
+      Anchors = [akLeft, akBottom]
       Caption = '8'
       Font.Color = clBlue
       Font.Height = 11
@@ -1350,15 +1118,30 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 9
-      OnClick = ZeroBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 5
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object NineBTN: TButton
       Tag = 9
-      Left = 130
-      Top = 75
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.Keyboard equivalent =' +
+        ' 0-9'
+      Left = 132
+      Top = 37
       Width = 36
       Height = 29
+      Hint = '9DH'
+      Anchors = [akLeft, akBottom]
       Caption = '9'
       Font.Color = clBlue
       Font.Height = 11
@@ -1367,15 +1150,27 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 10
-      OnClick = ZeroBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 6
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object DivideBTN: TButton
       Tag = 1
-      Left = 169
-      Top = 75
+      HelpType = htContext
+      HelpContext = 3
+      Left = 172
+      Top = 37
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = '/'
       Font.Color = clRed
       Font.Height = 11
@@ -1384,31 +1179,58 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 11
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 7
+      TabStop = False
       OnClick = DivideBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
-    object SqrtBTN: TButton
-      Left = 208
-      Top = 75
+    object Sqrt_ModBTN: TButton
+      HelpType = htContext
+      HelpContext = 7
+      Left = 212
+      Top = 37
       Width = 36
       Height = 29
-      Caption = 'sqrt'
-      Font.Color = clBlue
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
+      Caption = 'Mod'
+      Font.Color = clRed
       Font.Height = 11
       Font.Name = 'MS Sans Serif'
       Font.Pitch = fpVariable
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 12
-      OnClick = SqrtBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 8
+      TabStop = False
+      OnClick = Sqrt_ModBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object FourBTN: TButton
       Tag = 4
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.Keyboard equivalent =' +
+        ' 0-9'
       Left = 52
-      Top = 108
+      Top = 70
       Width = 36
       Height = 29
+      Hint = '4DHO'
+      Anchors = [akLeft, akBottom]
       Caption = '4'
       Font.Color = clBlue
       Font.Height = 11
@@ -1417,15 +1239,30 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 13
-      OnClick = ZeroBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 9
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object FiveBTN: TButton
       Tag = 5
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.Keyboard equivalent =' +
+        ' 0-9'
       Left = 91
-      Top = 108
+      Top = 70
       Width = 36
       Height = 29
+      Hint = '5DHO'
+      Anchors = [akLeft, akBottom]
       Caption = '5'
       Font.Color = clBlue
       Font.Height = 11
@@ -1434,15 +1271,30 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 14
-      OnClick = ZeroBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 10
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object SixBTN: TButton
       Tag = 6
-      Left = 130
-      Top = 108
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.Keyboard equivalent =' +
+        ' 0-9'
+      Left = 132
+      Top = 70
       Width = 36
       Height = 29
+      Hint = '6DHO'
+      Anchors = [akLeft, akBottom]
       Caption = '6'
       Font.Color = clBlue
       Font.Height = 11
@@ -1451,15 +1303,27 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 15
-      OnClick = ZeroBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 11
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object MultiplyBTN: TButton
       Tag = 2
-      Left = 169
-      Top = 108
+      HelpType = htContext
+      HelpContext = 4
+      Left = 172
+      Top = 70
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = '*'
       Font.Color = clRed
       Font.Height = 11
@@ -1468,31 +1332,58 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 16
-      OnClick = DivideBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 12
+      TabStop = False
+      OnClick = MultiplyBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
-    object PercentBTN: TButton
-      Left = 208
-      Top = 108
+    object Percent_OrBTN: TButton
+      HelpType = htContext
+      HelpContext = 8
+      Left = 212
+      Top = 70
       Width = 36
       Height = 29
-      Caption = '%'
-      Font.Color = clBlue
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
+      Caption = 'Or'
+      Font.Color = clRed
       Font.Height = 11
       Font.Name = 'MS Sans Serif'
       Font.Pitch = fpVariable
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 17
-      OnClick = PercentBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 13
+      TabStop = False
+      OnClick = Percent_OrBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object OneBTN: TButton
       Tag = 1
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.Keyboard equivalent =' +
+        ' 0-9'
       Left = 52
-      Top = 140
+      Top = 103
       Width = 36
       Height = 29
+      Hint = '1DHOB'
+      Anchors = [akLeft, akBottom]
       Caption = '1'
       Font.Color = clBlue
       Font.Height = 11
@@ -1501,15 +1392,30 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 18
-      OnClick = ZeroBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 14
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object TwoBTN: TButton
       Tag = 2
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.Keyboard equivalent =' +
+        ' 0-9'
       Left = 91
-      Top = 140
+      Top = 103
       Width = 36
       Height = 29
+      Hint = '2DHO'
+      Anchors = [akLeft, akBottom]
       Caption = '2'
       Font.Color = clBlue
       Font.Height = 11
@@ -1518,15 +1424,30 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 19
-      OnClick = ZeroBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 15
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object ThreeBTN: TButton
       Tag = 3
-      Left = 130
-      Top = 140
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.Keyboard equivalent =' +
+        ' 0-9'
+      Left = 132
+      Top = 103
       Width = 36
       Height = 29
+      Hint = '3DHO'
+      Anchors = [akLeft, akBottom]
       Caption = '3'
       Font.Color = clBlue
       Font.Height = 11
@@ -1535,15 +1456,27 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 20
-      OnClick = ZeroBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 16
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object MinusBTN: TButton
       Tag = 3
-      Left = 169
-      Top = 140
+      HelpType = htContext
+      HelpContext = 5
+      Left = 172
+      Top = 103
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = '-'
       Font.Color = clRed
       Font.Height = 11
@@ -1552,30 +1485,57 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 21
-      OnClick = DivideBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 17
+      TabStop = False
+      OnClick = MinusBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
-    object OneOverBTN: TButton
-      Left = 208
-      Top = 140
+    object OneOver_LshBTN: TButton
+      HelpType = htContext
+      HelpContext = 9
+      Left = 212
+      Top = 103
       Width = 36
       Height = 29
-      Caption = '1/x'
-      Font.Color = clBlue
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
+      Caption = 'Lsh'
+      Font.Color = clRed
       Font.Height = 11
       Font.Name = 'MS Sans Serif'
       Font.Pitch = fpVariable
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 22
-      OnClick = OneOverBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 18
+      TabStop = False
+      OnClick = OneOver_LshBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object ZeroBTN: TButton
+      HelpType = htContext
+      HelpContext = 1
+      HelpKeyword = 
+        'Puts this number in the calculator display.Keyboard equivalent =' +
+        ' 0-9'
       Left = 52
-      Top = 173
+      Top = 137
       Width = 36
       Height = 29
+      Hint = '0DHOB'
+      Anchors = [akLeft, akBottom]
       Caption = '0'
       Font.Color = clBlue
       Font.Height = 11
@@ -1584,14 +1544,24 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 23
-      OnClick = ZeroBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 19
+      TabStop = False
+      OnClick = NumberBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object PlusMinusBTN: TButton
       Left = 91
-      Top = 173
+      Top = 137
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = '+/-'
       Font.Color = clBlue
       Font.Height = 11
@@ -1600,14 +1570,24 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 24
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 20
+      TabStop = False
       OnClick = PlusMinusBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object DecimalBTN: TButton
-      Left = 130
-      Top = 173
+      Left = 132
+      Top = 137
       Width = 36
       Height = 29
+      Hint = 'D'
+      Anchors = [akLeft, akBottom]
       Caption = '.'
       Font.Color = clBlue
       Font.Height = 11
@@ -1616,15 +1596,27 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 25
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 21
+      TabStop = False
       OnClick = DecimalBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object PlusBTN: TButton
       Tag = 4
-      Left = 169
-      Top = 173
+      HelpType = htContext
+      HelpContext = 6
+      Left = 172
+      Top = 137
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = '+'
       Font.Color = clRed
       Font.Height = 11
@@ -1633,14 +1625,26 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 26
-      OnClick = DivideBTNClick
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 22
+      TabStop = False
+      OnClick = PlusBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
     object EqualBTN: TButton
-      Left = 208
-      Top = 173
+      HelpType = htContext
+      HelpContext = 10
+      Left = 212
+      Top = 137
       Width = 36
       Height = 29
+      Hint = 'HDOB'
+      Anchors = [akLeft, akBottom]
       Caption = '='
       Font.Color = clRed
       Font.Height = 11
@@ -1649,24 +1653,113 @@ object MainForm: TMainForm
       Font.Style = []
       Font.Weight = 40
       ParentFont = False
-      TabOrder = 27
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 23
+      TabStop = False
       OnClick = EqualBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseDown = ControlMouseDown
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
-    object CalcEdit: TEdit
+    object MemoryLBL: TLabel
+      Left = 10
+      Top = 2
+      Width = 27
+      Height = 26
+      Alignment = taCenter
+      AutoSize = False
+      BorderStyle = bsSunken3d
+      Layout = tlCenter
+    end
+  end
+  object CCEPanel: TPanel
+    Left = 264
+    Top = 56
+    Width = 200
+    Height = 36
+    Anchors = [akTop, akRight]
+    BevelOuter = bvNone
+    TabOrder = 3
+    object BackSpaceBTN: TButton
       Left = 6
       Top = 4
-      Width = 241
-      Height = 25
-      Alignment = taRightJustify
-      ReadOnly = True
-      TabOrder = 28
-      OnChange = CalcEditChange
+      Width = 63
+      Height = 29
+      Anchors = [akTop, akRight]
+      Caption = 'Backspace'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 0
+      TabStop = False
+      OnClick = BackSpaceBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
+    end
+    object CEBTN: TButton
+      Left = 71
+      Top = 4
+      Width = 62
+      Height = 29
+      Anchors = [akTop, akRight]
+      Caption = 'CE'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 1
+      TabStop = False
+      OnClick = CEBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
+    end
+    object CBTN: TButton
+      Left = 135
+      Top = 4
+      Width = 62
+      Height = 29
+      Anchors = [akTop, akRight]
+      Caption = 'C'
+      Font.Color = clRed
+      Font.Height = 11
+      Font.Name = 'MS Sans Serif'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      Font.Weight = 40
+      ParentFont = False
+      PopupMenu = WhatsThisPUMNU
+      TabOrder = 2
+      TabStop = False
+      OnClick = CBTNClick
+      OnKeyDown = AveBTNKeyDown
+      OnKeyPress = KeyPressed
+      OnKeyString = AveBTNKeyString
+      OnMouseEnter = TheMouseEnter
+      OnMouseLeave = TheMouseLeave
     end
   end
   object MainMenu: TMainMenu
     Color = clBackground
-    Left = 328
-    Top = 65524
+    Left = 40
+    Top = 244
     object EditMNU: TMenuItem
       Caption = '&Edit'
       object CopyMNU: TMenuItem
@@ -1682,128 +1775,137 @@ object MainForm: TMainForm
     end
     object ViewMNU: TMenuItem
       Caption = '&View'
-      OnClick = ViewMNUClick
       object StandardMNU: TMenuItem
         Caption = '&Standard'
-        Checked = True
         GroupIndex = 1
+        Hint = 'TCHDOB'
         RadioItem = True
         OnClick = StandardMNUClick
       end
       object ScientificMNU: TMenuItem
         Caption = '&Scientific'
-        Enabled = False
+        Checked = True
         GroupIndex = 1
+        Hint = 'TCHDOB'
         RadioItem = True
         OnClick = ScientificMNUClick
       end
       object N1: TMenuItem
         Caption = '-'
         GroupIndex = 1
+        Hint = 'CHDOB'
       end
       object HexMNU: TMenuItem
-        Caption = '&Hex'
+        Caption = 'Hex'
         GroupIndex = 2
+        Hint = 'CHDOB'
         RadioItem = True
         ShortCut = 4148
         OnClick = HexMNUClick
       end
       object DecimalMNU: TMenuItem
-        Tag = 1
-        Caption = '&Decimal'
-        Checked = True
+        Caption = 'Decimal'
         GroupIndex = 2
+        Hint = 'CHDOB'
         RadioItem = True
         ShortCut = 4149
-        OnClick = HexMNUClick
+        OnClick = DecimalMNUClick
       end
       object OctalMNU: TMenuItem
-        Tag = 2
-        Caption = '&Octal'
+        Caption = 'Octal'
         GroupIndex = 2
+        Hint = 'CHDOB'
         RadioItem = True
         ShortCut = 4150
-        OnClick = HexMNUClick
+        OnClick = OctalMNUClick
       end
       object BinaryMNU: TMenuItem
-        Tag = 3
-        Caption = '&Binary'
+        Caption = 'Binary'
         GroupIndex = 2
+        Hint = 'CHDOB'
         RadioItem = True
         ShortCut = 4151
-        OnClick = HexMNUClick
+        OnClick = BinaryMNUClick
       end
       object N3: TMenuItem
         Caption = '-'
         GroupIndex = 2
+        Hint = 'CHDOB'
+      end
+      object QWordMNU: TMenuItem
+        Caption = 'QWord'
+        GroupIndex = 3
+        Hint = 'CHOB'
+        RadioItem = True
+        ShortCut = 4155
+        OnClick = ByteGroupMNUClick
+      end
+      object DWordMNU: TMenuItem
+        Tag = 1
+        Caption = 'DWord'
+        GroupIndex = 3
+        Hint = 'CHOB'
+        RadioItem = True
+        ShortCut = 4145
+        OnClick = ByteGroupMNUClick
+      end
+      object WordMNU: TMenuItem
+        Tag = 2
+        Caption = 'Word'
+        GroupIndex = 3
+        Hint = 'CHOB'
+        RadioItem = True
+        ShortCut = 4146
+        OnClick = ByteGroupMNUClick
+      end
+      object ByteMNU: TMenuItem
+        Tag = 3
+        Caption = 'Byte'
+        GroupIndex = 3
+        Hint = 'CHOB'
+        RadioItem = True
+        ShortCut = 4147
+        OnClick = ByteGroupMNUClick
+      end
+      object N5: TMenuItem
+        Caption = '-'
+        GroupIndex = 3
       end
       object DegreesMNU: TMenuItem
-        Caption = 'D&egrees'
-        Checked = True
-        GroupIndex = 3
+        Caption = 'Degrees'
+        GroupIndex = 4
+        Hint = 'CD'
         RadioItem = True
         ShortCut = 4145
         OnClick = DegreesMNUClick
       end
       object RadiansMNU: TMenuItem
-        Tag = 1
-        Caption = '&Radians'
-        GroupIndex = 3
+        Caption = 'Radians'
+        GroupIndex = 4
+        Hint = 'CD'
         RadioItem = True
         ShortCut = 4146
-        OnClick = DegreesMNUClick
+        OnClick = RadiansMNUClick
       end
       object GradsMNU: TMenuItem
-        Tag = 2
-        Caption = '&Grads'
-        GroupIndex = 3
+        Caption = 'Grads'
+        GroupIndex = 4
+        Hint = 'CD'
         RadioItem = True
         ShortCut = 4147
-        OnClick = DegreesMNUClick
+        OnClick = GradsMNUClick
       end
       object N4: TMenuItem
         Caption = '-'
-        GroupIndex = 3
-      end
-      object QwordMNU: TMenuItem
-        Caption = '&Qword'
-        Checked = True
         GroupIndex = 4
+        Hint = 'CTHDOB'
         RadioItem = True
-        ShortCut = 4155
-        OnClick = QwordMNUClick
-      end
-      object DwordMNU: TMenuItem
-        Tag = 1
-        Caption = 'Dwo&rd'
-        GroupIndex = 4
-        RadioItem = True
-        ShortCut = 4145
-        OnClick = QwordMNUClick
-      end
-      object WordMNU: TMenuItem
-        Tag = 2
-        Caption = '&Word'
-        GroupIndex = 4
-        RadioItem = True
-        ShortCut = 4146
-        OnClick = QwordMNUClick
-      end
-      object ByteMNU: TMenuItem
-        Tag = 3
-        Caption = '&Byte'
-        GroupIndex = 4
-        RadioItem = True
-        ShortCut = 4147
-        OnClick = QwordMNUClick
-      end
-      object N5: TMenuItem
-        Caption = '-'
-        GroupIndex = 5
       end
       object DigitGroupingMNU: TMenuItem
-        Caption = 'D&igit Grouping'
+        Caption = 'Digit Grouping'
         GroupIndex = 5
+        Hint = 'CTHDOB'
+        RadioItem = True
         OnClick = DigitGroupingMNUClick
       end
     end
@@ -1820,6 +1922,14 @@ object MainForm: TMainForm
         Caption = '&About Calculator'
         OnClick = AboutCalculator1Click
       end
+    end
+  end
+  object WhatsThisPUMNU: TPopupMenu
+    Left = 80
+    Top = 248
+    object WhatsThisMNU: TMenuItem
+      Caption = 'What'#39's This?'
+      OnClick = WhatsThisMNUClick
     end
   end
 end

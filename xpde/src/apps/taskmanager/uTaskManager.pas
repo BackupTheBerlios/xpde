@@ -130,7 +130,6 @@ type
     procedure NewTaskRun1Click(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
     procedure Timer3Timer(Sender: TObject);
-    procedure FormResize(Sender: TObject);
     procedure LVNetSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
     procedure FormCreate(Sender: TObject);
@@ -1435,12 +1434,6 @@ Begin
         StatusBar1.Panels[2].Text:='Free Memory (K): '+IntToStr(longint(sysinf_.freeram) div 1024);
 End;
 
-procedure TWindowsTaskManagerDlg.FormResize(Sender: TObject);
-begin
-        Height:=421;
-        Width:=398;
-end;
-
 procedure TWindowsTaskManagerDlg.AverageLoad(avg_file:string);
 var tmpstr_avg:TStrings;
     fi:TextFile;
@@ -1628,8 +1621,6 @@ begin
     //These lines are here to set the font of the menubar
     font.name:='';
     parentfont:=true;
-
-    FormResize(self);
 
     Randomize;
 end;

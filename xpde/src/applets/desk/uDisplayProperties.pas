@@ -175,7 +175,7 @@ begin
     image5.Picture.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gDESKTOPPROPERTIESMONITOR);
     b:=TBitmap.create;
     try
-        b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sNONE);
+        b.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+gNONE);
         b.width:=imgList.Width;
         b.height:=imgList.height;
         imgList.AddMasked(b,clFuchsia);

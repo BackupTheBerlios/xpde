@@ -287,6 +287,7 @@ var
     found: boolean;
     r:TRect;
 begin
+  inherited;
   if not inmove then begin
     inmove:=true;
     try
@@ -345,14 +346,16 @@ procedure TSysListItem.MouseUp(Button: TMouseButton; Shift: TShiftState; X,
   Y: Integer);
 begin
   inherited;
-  showhint:=true;
-  dummy.free;
-  moving:=false;
-  realmove:=false;
-  invalidate;
-  itemtext.invalidate;
-  background.free;
-  background:=TBitmap.create;
+  if button=mbLeft then begin
+        showhint:=true;
+         dummy.free;
+        moving:=false;
+        realmove:=false;
+        invalidate;
+        itemtext.invalidate;
+        background.free;
+        background:=TBitmap.create;
+  end;
 end;
 
 

@@ -193,6 +193,7 @@ begin
 
         for i := 0 to resources.Count-1 do begin
            (resources[i] as TResourceEntry).WriteToStream(f);
+           (resources[i] as TResourceEntry).Modified := false;
         end;
     finally
         f.free;

@@ -42,23 +42,26 @@ type
     Open1: TMenuItem;
     OpenDialog: TOpenDialog;
     StatusBar1: TStatusBar;
-    ToolBar1: TToolBar;
-    Saveas1: TMenuItem;
+    SaveAsItem: TMenuItem;
     N1: TMenuItem;
     Exit1: TMenuItem;
     SaveDialog: TSaveDialog;
-    Save1: TMenuItem;
+    SaveItem: TMenuItem;
     New1: TMenuItem;
+    Generatesharedresources: TMenuItem;
+    N2: TMenuItem;
+    Info1: TMenuItem;
     procedure Open1Click(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
-    procedure Saveas1Click(Sender: TObject);
-    procedure Save1Click(Sender: TObject);
+    procedure SaveAsItemClick(Sender: TObject);
+    procedure SaveItemClick(Sender: TObject);
     procedure New1Click(Sender: TObject);
+    procedure GeneratesharedresourcesClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure Info1Click(Sender: TObject);
   private
     { Private declarations }
-    ResourceFileFrm : TResourceFileFrm;
-    procedure OpenFile(const afilename:string);
-    procedure SaveFile(const afilename:string);
   public
     { Public declarations }
   end;
@@ -84,14 +87,43 @@ implementation
 
 {$R *.xfm}
 
-procedure TMainForm.Open1Click(Sender: TObject);
+uses
+  uGenerateSharedRes, uRegistry, uGlobals, uAboutDialog;
+
+const
+  strREGKEY = 'Software/XPde/ResourceEditor';
+
+procedure TMainForm.FormShow(Sender: TObject);
 begin
-    if OpenDialog.execute then begin
-        OpenFile(OpenDialog.filename);
+   with TRegistry.create do begin
+       if openkey(strREGKEY, false) then begin
+          if valueexists('resbind') then
+             g_strResbind := readstring('resbind');
+       end;
+       free;
    end;
 end;
 
-procedure TMainForm.Saveas1Click(Sender: TObject);
+procedure TMainForm.FormDestroy(Sender: TObject);
+begin
+   with TRegistry.create do begin
+       if openkey(strREGKEY, true) then begin
+          writestring('resbind', g_strResbind);
+       end;
+       free;
+   end;
+end;
+
+procedure TMainForm.Open1Click(Sender: TObject);
+begin
+    if OpenDialog.execute then begin
+        with TResourceFileFrm.create(application) do begin
+            loadfromfile(OpenDialog.filename);
+        end;
+   end;
+end;
+
+procedure TMainForm.SaveAsItemClick(Sender: TObject);
 begin
     if ActiveMDIChild is TResourceFileFrm then begin
        SaveDialog.FileName   := extractFilename((ActiveMDIChild as TResourceFileFrm).filename);
@@ -104,22 +136,6 @@ end;
 procedure TMainForm.Exit1Click(Sender: TObject);
 begin
    close;
-end;
-
-procedure TMainForm.OpenFile(const afilename: string);
-var
-  i : integer;
-begin
-        with TResourceFileFrm.create(application) do begin
-            loadfromfile(afilename);
-        end;
-end;
-
-procedure TMainForm.SaveFile(const afilename: string);
-begin
-        if ActiveMDIChild is TResourceFileFrm then begin
-                (ActiveMDIChild as TResourceFileFrm).savetofile(afilename);
-        end;
 end;
 
 { TResourceAPI }
@@ -166,7 +182,7 @@ begin
 end;
 
 
-procedure TMainForm.Save1Click(Sender: TObject);
+procedure TMainForm.SaveItemClick(Sender: TObject);
 begin
     if ActiveMDIChild is TResourceFileFrm then begin
         (ActiveMDIChild as TResourceFileFrm).save;
@@ -177,14 +193,40 @@ procedure TMainForm.New1Click(Sender: TObject);
 begin
     with TNewTranslationDlg.create(application) do begin
         try
-            showmodal;
+            if showmodal = mrOk then
+              with TResourceFileFrm.create(application) do begin
+                 loadfromfile(ResourceFileName);
+              end;
+
         finally
             free;
         end;
     end;
 end;
 
+procedure TMainForm.GeneratesharedresourcesClick(Sender: TObject);
+begin
+   if self.ActiveMDIChild is TResourceFileFrm and
+     (ActiveMDIChild as TResourceFileFrm).resourceFile.IsModified
+   then
+        showmessage('Resource is not saved!');
+   with TGenerateSharedResourcesDlg.create(self) do begin
+      if self.ActiveMDIChild is TResourceFileFrm then begin
+        edResFile.Text := (self.ActiveMDIChild as TResourceFileFrm).filename;
+      end;
+      showmodal;
+      free;
+   end;
+end;
+
+procedure TMainForm.Info1Click(Sender: TObject);
+begin
+   with TAboutDlg.Create(self) do begin
+      showmodal;
+      free;
+   end;
+end;
+
 initialization
     ResourceAPI:=TResourceAPI.create;
-
 end.

@@ -1,34 +1,26 @@
 object MainForm: TMainForm
-  Left = 209
-  Top = 174
+  Left = 225
+  Top = 254
   Width = 696
   Height = 480
-  VertScrollBar.Range = 48
+  VertScrollBar.Range = 19
   Caption = 'Resource Editor'
   Color = clGray
   FormStyle = fsMDIForm
   Menu = MainMenu
   Position = poDefault
   WindowState = wsMaximized
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   PixelsPerInch = 84
-  TextHeight = 20
+  TextHeight = 15
   TextWidth = 7
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 431
+    Top = 436
     Width = 696
     Height = 19
     Panels = <>
-  end
-  object ToolBar1: TToolBar
-    Left = 0
-    Top = 0
-    Width = 696
-    Height = 29
-    Caption = 'ToolBar1'
-    Color = clBackground
-    ParentColor = False
-    TabOrder = 1
   end
   object MainMenu: TMainMenu
     Left = 532
@@ -43,13 +35,17 @@ object MainForm: TMainForm
         Caption = '&Open...'
         OnClick = Open1Click
       end
-      object Save1: TMenuItem
+      object SaveItem: TMenuItem
         Caption = '&Save'
-        OnClick = Save1Click
+        OnClick = SaveItemClick
       end
-      object Saveas1: TMenuItem
+      object SaveAsItem: TMenuItem
         Caption = 'Save &as...'
-        OnClick = Saveas1Click
+        OnClick = SaveAsItemClick
+      end
+      object Generatesharedresources: TMenuItem
+        Caption = 'Generate shared resource...'
+        OnClick = GeneratesharedresourcesClick
       end
       object N1: TMenuItem
         Caption = '-'
@@ -57,6 +53,13 @@ object MainForm: TMainForm
       object Exit1: TMenuItem
         Caption = 'Exit'
         OnClick = Exit1Click
+      end
+    end
+    object N2: TMenuItem
+      Caption = '?'
+      object Info1: TMenuItem
+        Caption = '&Info...'
+        OnClick = Info1Click
       end
     end
   end

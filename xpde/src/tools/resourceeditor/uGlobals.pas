@@ -27,7 +27,7 @@
 interface
 
 var
- g_strResbind : string = '/opt/kylix3/bin/resbind----';
+ g_strResbind : string = '/opt/kylix3/bin/resbind';
 
 function striplocale(const str:string):string;
 function StartApp(name: string; arguments: array of string;waitfor:boolean=false): Integer;

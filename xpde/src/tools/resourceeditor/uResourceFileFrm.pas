@@ -51,13 +51,13 @@ type
   private
     { Private declarations }
     editors: TList;
-    resourceFile:TResourceFile;
     procedure OnEditorDestroyed(Sender:TObject);
     procedure destroyEditors;
     procedure updateResourceTree;
   public
     { Public declarations }
     filename:string;
+    resourceFile:TResourceFile;
     constructor Create(AOwner:TComponent);override;
     destructor Destroy;override;
     procedure loadFromFile(const afilename:string);

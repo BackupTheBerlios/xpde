@@ -11,15 +11,19 @@ type
         FBackground: TBitmap;
         FAlphaMask: TBitmap;
         FSelectedMask: TBitmap;
+        FCached: TBitmap;
         original: TBitmap;
         Fdone: boolean;
         FBackgroundColor: TColor;
         FUseBackground: boolean;
+        cached: boolean;
+    FSelected: boolean;
         procedure createAlphaMask(original: TBitmap);
         procedure createSelectedMask;
         procedure SetBackground(const Value: TBitmap);
         procedure SetBackgroundColor(const Value: TColor);
         procedure SetUseBackground(const Value: boolean);
+    procedure SetSelected(const Value: boolean);
 
     protected
         function GetEmpty: Boolean; override;
@@ -33,7 +37,8 @@ type
         procedure LoadFromStream(Stream: TStream); override;
         procedure SaveToStream(Stream: TStream); override;
 
-        procedure paintToCanvas(ACanvas:TCanvas; const x,y:integer; dens:integer=0; selected:boolean=false);
+        property Selected:boolean read FSelected write SetSelected;
+        procedure paintToCanvas(ACanvas:TCanvas; const x,y:integer; dens:integer=0);
         constructor Create;override;
         destructor Destroy;override;
         property Background:TBitmap read FBackground write SetBackground;
@@ -48,6 +53,9 @@ implementation
 constructor TXPPNG.Create;
 begin
   inherited;
+  FSelected:=false;
+  cached:=false;
+  FCached:=TBitmap.create;
   FSelectedMask:=TBitmap.create;
   FUseBackground:=false;
   FBackgroundColor:=clBtnFace;
@@ -59,6 +67,7 @@ end;
 
 destructor TXPPNG.Destroy;
 begin
+  FCached.free;
   original.free;
   FSelectedMask.free;
   FBackground.free;
@@ -103,49 +112,60 @@ begin
   FBackground.assign(Value);
 end;
 
-procedure TXPPNG.paintToCanvas(ACanvas: TCanvas; const x, y: integer; dens:integer=0; selected:boolean=false);
+procedure TXPPNG.paintToCanvas(ACanvas: TCanvas; const x, y: integer; dens:integer=0);
 var
     c: TBitmap;
     s: TBitmap;
     b: TBitmap;
     d: TBitmap;
 begin
-    c:=TBitmap.create;
-    s:=TBitmap.create;
-    b:=TBitmap.create;
-    d:=TBitmap.create;
-    try
-        c.Width:=falphamask.width;
-        c.height:=falphamask.height;
-        s.Width:=falphamask.width;
-        s.height:=falphamask.height;
-        b.Width:=falphamask.width;
-        b.height:=falphamask.height;
-        d.Width:=falphamask.width;
-        d.height:=falphamask.height;
-        if fusebackground then begin
-            b.Assign(fbackground);
-        end
-        else begin
-            b.Canvas.Brush.color:=FBackgroundColor;
-            b.Canvas.FillRect(rect(0,0,falphamask.width,falphamask.height));
+    if not cached then begin
+//        c:=TBitmap.create;
+        s:=TBitmap.create;
+//        b:=TBitmap.create;
+//        d:=TBitmap.create;
+        try
+//            c.Width:=falphamask.width;
+//            c.height:=falphamask.height;
+
+            s.Width:=falphamask.width;
+            s.height:=falphamask.height;
+            {
+            b.Width:=falphamask.width;
+            b.height:=falphamask.height;
+            d.Width:=falphamask.width;
+            d.height:=falphamask.height;
+            }
+            {
+            if fusebackground then begin
+                b.Assign(fbackground);
+            end
+            else begin
+                b.Canvas.Brush.color:=FBackgroundColor;
+                b.Canvas.FillRect(rect(0,0,falphamask.width,falphamask.height));
+            end;
+            }
+
+            if not fselected then begin
+                bitblt(falphamask,s,0,0,falphamask.width,falphamask.height);
+            end
+            else begin
+                bitblt(fselectedmask,s,0,0,falphamask.width,falphamask.height);
+            end;
+
+            AlphaBitmap(s,fbackground,fcached,dens);
+            ACanvas.Draw(x,y,fcached);
+            cached:=true;
+
+        finally
+//            d.free;
+//            b.free;
+            s.free;
+//            c.free;
         end;
-
-        if not selected then begin
-            bitblt(falphamask,s,0,0,falphamask.width,falphamask.height);
-        end
-        else begin
-            bitblt(fselectedmask,s,0,0,falphamask.width,falphamask.height);
-        end;
-
-        AlphaBitmap(s,b,c,dens);
-        ACanvas.Draw(x,y,c);
-
-    finally
-        d.free;
-        b.free;
-        s.free;
-        c.free;
+    end
+    else begin
+            ACanvas.Draw(x,y,fcached);
     end;
 end;
 
@@ -221,7 +241,12 @@ end;
 procedure TXPPNG.SetBackgroundColor(const Value: TColor);
 begin
     if value<>FBackgroundColor then begin
+        cached:=false;
         FBackgroundColor := Value;
+        FBackground.Width:=original.Width;
+        FBackground.height:=original.height;
+        FBackground.Canvas.Brush.Color:=FBackgroundColor;
+        FBackground.Canvas.FillRect(rect(0,0,original.width,original.height));
     end;
 end;
 
@@ -271,6 +296,14 @@ begin
         b.free;
         s.free;
         c.free;
+    end;
+end;
+
+procedure TXPPNG.SetSelected(const Value: boolean);
+begin
+    if FSelected<>Value then begin
+        FSelected := Value;
+        cached:=false;
     end;
 end;
 

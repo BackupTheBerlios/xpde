@@ -1,25 +1,29 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMConsts.pas',0,1,1,1,1,0,0
-File_1=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,1847,13,1862,0,0
-File_2=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,1,254,19,286,0,0
-File_3=SourceModule,'/home/ttm/xpde/src/core/xpde/uDesktopMain.pas',0,1,199,1,206,0,0
-File_4=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,563,1,573,0,0
-File_5=SourceModule,'/home/ttm/xpde/src/apps/appexec/uRun.pas',0,1,72,1,74,0,0
-File_6=SourceModule,'/home/ttm/xpde/src/core/xpde/uOpenWith.pas',0,1,98,53,110,0,0
-File_7=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,34,16,46,0,0
-File_8=SourceModule,'/home/ttm/xpde/install.sh',0,1,11,1,29,0,0
-File_9=SourceModule,'/home/ttm/metacity-2.4.13/src/display.c',0,1,1296,21,1318,0,0
+File_0=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,1,1,1,0,0
+File_1=SourceModule,'/home/ttm/xpde/panels/Unit1.pas',0,1,198,27,198,1,0
+File_2=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,33,29,49,1,1
+File_3=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,1,1,1,0,0
+File_4=SourceModule,'/home/ttm/xpde/src/apps/notepad/main.pas',0,1,1,1,1,0,0
+File_5=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,1,295,32,308,0,0
+File_6=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,66,63,100,0,0
+File_7=SourceModule,'/home/ttm/kylix3/source/clx/QDBGrids.pas',0,1,1,59,20,0,0
+File_8=SourceModule,'/home/ttm/kylix3/source/clx/QForms.pas',0,1,699,62,715,0,0
+File_9=SourceModule,'/home/ttm/xpde/defaultdesktop/Start Menu/Programs/Accessories/Notepad.lnk',0,1,1,22,2,0,0
 
 [Modules]
-Count=0
-EditWindowCount=0
+Module0=/home/ttm/xpde/src/applets/mouse/uMouseProperties.pas
+Module1=/home/ttm/xpde/src/applets/mouse/mouse.dpr
+Count=2
+EditWindowCount=1
 PackageWindowCount=11
 
-[/home/ttm/xpde/src/components/shellcontrols/XPShellControls.dpk]
-FormState=0
+[/home/ttm/xpde/src/applets/mouse/uMouseProperties.pas]
+ModuleType=SourceModule
+FormState=1
 FormOnTop=0
 
-[/home/ttm/xpde/src/core/xpde/XPde.dpr]
+[/home/ttm/xpde/src/applets/mouse/mouse.dpr]
+ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
@@ -59,11 +63,19 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
+[/home/ttm/xpde/src/components/shellcontrols/XPShellControls.dpk]
+FormState=0
+FormOnTop=0
+
 [/home/ttm/xpde/src/components/commctrls/XPCommctrls.dpk]
 FormState=0
 FormOnTop=0
 
 [/home/ttm/xpde/src/apps/taskmanager/taskmanager.dpr]
+FormState=0
+FormOnTop=0
+
+[/home/ttm/xpde/src/apps/notepad/notepad.dpr]
 FormState=0
 FormOnTop=0
 
@@ -87,29 +99,51 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
-[PackageWindow0]
+[/home/ttm/xpde/src/core/xpde/XPde.dpr]
+FormState=0
+FormOnTop=0
+
+[EditWindow0]
+ViewCount=2
+CurrentView=0
+View0=0
+View1=1
+CodeExplorer=CodeExplorer@EditWindow0
+MessageView=MessageView@EditWindow0
 Create=1
-Visible=0
+Visible=1
 State=0
-Left=292
-Top=336
-Width=368
-Height=244
+Left=201
+Top=152
+Width=1059
+Height=753
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=362
-ClientHeight=219
-TBDockHeight=244
-LRDockWidth=368
-Dockable=1
-StatusBar=0
-TextLabels=1
-Toolbar=1
-SectionWidth0=150
-SectionWidth1=212
-Module=/home/ttm/xpde/src/components/shellcontrols/XPShellControls.dpk
+ClientWidth=1059
+ClientHeight=753
+LeftPanelSize=140
+LeftPanelClients=CodeExplorer@EditWindow0
+LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
+RightPanelSize=0
+BottomPanelSize=0
+BottomPanelClients=MessageView@EditWindow0
+BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
 
-[PackageWindow1]
+[View0]
+Module=/home/ttm/xpde/src/applets/mouse/uMouseProperties.pas
+CursorX=7
+CursorY=117
+TopLine=111
+LeftCol=1
+
+[View1]
+Module=/home/ttm/xpde/src/applets/mouse/mouse.dpr
+CursorX=25
+CursorY=12
+TopLine=1
+LeftCol=1
+
+[PackageWindow0]
 Create=1
 Visible=0
 State=0
@@ -131,7 +165,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/common/XPCommon.dpk
 
-[PackageWindow2]
+[PackageWindow1]
 Create=1
 Visible=0
 State=0
@@ -153,7 +187,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/registry/XPRegistry.dpk
 
-[PackageWindow3]
+[PackageWindow2]
 Create=1
 Visible=0
 State=0
@@ -175,7 +209,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/toolsapi/XPAPI.dpk
 
-[PackageWindow4]
+[PackageWindow3]
 Create=1
 Visible=0
 State=0
@@ -197,7 +231,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/menu/XPMenus.dpk
 
-[PackageWindow5]
+[PackageWindow4]
 Create=1
 Visible=0
 State=0
@@ -219,7 +253,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/style/XPStyle.dpk
 
-[PackageWindow6]
+[PackageWindow5]
 Create=1
 Visible=0
 State=0
@@ -241,7 +275,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/localization/XPLocalizator.dpk
 
-[PackageWindow7]
+[PackageWindow6]
 Create=1
 Visible=0
 State=0
@@ -263,7 +297,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/localization/XPLocalizatorIDE.dpk
 
-[PackageWindow8]
+[PackageWindow7]
 Create=1
 Visible=0
 State=0
@@ -284,6 +318,28 @@ Toolbar=1
 SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/colorselect/XPColorSelect.dpk
+
+[PackageWindow8]
+Create=1
+Visible=0
+State=0
+Left=292
+Top=336
+Width=368
+Height=244
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=362
+ClientHeight=219
+TBDockHeight=244
+LRDockWidth=368
+Dockable=1
+StatusBar=0
+TextLabels=1
+Toolbar=1
+SectionWidth0=150
+SectionWidth1=212
+Module=/home/ttm/xpde/src/components/shellcontrols/XPShellControls.dpk
 
 [PackageWindow9]
 Create=1
@@ -335,7 +391,7 @@ Watch0='XPTaskbar',256,0,18,1,0,'Watches'
 
 [Breakpoints]
 Count=2
-Breakpoint0='/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',2031,'',0,1,'',1,0,0,'',1,'','',''
+Breakpoint0='/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',2033,'',0,1,'',1,0,0,'',1,'','',''
 Breakpoint1='/home/ttm/xpde/src/core/xpwm/uDisplay.pas',764,'',0,1,'',1,0,0,'',1,'','',''
 
 [AddressBreakpoints]
@@ -400,7 +456,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=
+SelectedItem=Bitmap
 ExpandedItems=
 HiddenCategories=
 
@@ -420,9 +476,41 @@ TBDockHeight=336
 LRDockWidth=190
 Dockable=1
 
+[CodeExplorer@EditWindow0]
+Create=1
+Visible=1
+State=0
+Left=0
+Top=12
+Width=140
+Height=741
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=140
+ClientHeight=741
+TBDockHeight=305
+LRDockWidth=140
+Dockable=1
+
+[MessageView@EditWindow0]
+Create=1
+Visible=0
+State=0
+Left=-3
+Top=-798
+Width=443
+Height=85
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=443
+ClientHeight=85
+TBDockHeight=85
+LRDockWidth=443
+Dockable=1
+
 [DockHosts]
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=9
+ActiveProject=15
 

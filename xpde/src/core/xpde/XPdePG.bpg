@@ -10,8 +10,8 @@ DCC =dcc $<
 #------------------------------------------------------------------------------
 PROJECTS = bplXPCommon.so bplXPRegistry.so bplXPAPI.so bplXPMenus.so \
   bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
-  bplXPShellControls.so bplXPCommctrls.so taskmanager networkstatus \
-  networkproperties appexec bpldesk.so XPwm XPde
+  bplXPShellControls.so bplXPCommctrls.so taskmanager notepad networkstatus \
+  networkproperties mouse appexec bpldesk.so XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -68,6 +68,12 @@ XPde: XPde.dpr
 	$(DCC)
 
 appexec: ../../apps/appexec/appexec.dpr
+	$(DCC)
+
+notepad: ../../apps/notepad/notepad.dpr
+	$(DCC)
+
+mouse: ../../applets/mouse/mouse.dpr
 	$(DCC)
 
 

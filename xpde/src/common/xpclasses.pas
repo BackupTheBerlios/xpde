@@ -37,6 +37,21 @@ Const diUnknown=0;
       FreeBSD=10; // ;) just a hope ....
       dist_reg:Array[0..6] of string=('distribution_enum','distribution_name','distribution_sys','distribution_version','distribution_kernel','distribution_machine','distribution_kernel_date');
 
+Const
+      RT_IFACE=0;
+      RT_DESTINATION=1;
+      RT_GATEWAY=2;
+      RT_FLAGS=3;
+      RT_REFCNT=4;
+      RT_USE=5;
+      RT_METRIC=6;
+      RT_MASK=7;
+      RT_MTU=8;
+      RT_WINDOW=9;
+      RT_IRTT=10;
+
+
+
 type  uname_r = record
         dist   : integer;
         name   :string;

@@ -31,7 +31,8 @@ type THostData = PHostEnt;
 type _Media = (meFloppy,meDisk,meCDROM,meUnknown);
 Const media_names :Array [0..3] of String=('floppy','disk','cdrom','unknown');
 
-Function Is_CableUnplugged(Const i_face:string):boolean;
+Function Is_CablePlugged(Const i_face:string):boolean;
+function IsRouteFor(Interf: String):boolean;
 Function IsValidNetDevice(device:string):boolean;
 Function GetHardDiscs:PPci_Info_;
 Function GetSCSIDiscs:PPci_Info_;
@@ -397,8 +398,35 @@ Begin
         Result:=pinf;
 End;
 
+function IsRouteFor(Interf: String):boolean;
+// check is ppp0 or ippp0 UP
+var F: TextFile;
+    S: string;
+    SL:TStrings;
+begin
+        Result:=false;
+        SL:=TStringList.create;
+        try
+        AssignFile(F, '/proc/net/route');
+        Reset(F);
+                While Not Eof(F) do
+                begin
+                        Readln(F, S);
+                        SL.CommaText := S; //Splits the entire line into the Stringlist.
+                        if (SL[RT_IFACE]=Interf) then
+                                begin
+                                        Result:=true;
+                                        break;
+                                end;
+                end;
+        CloseFile(F);
+        finally
+        SL.free;
+        End;
+end;
 
-Function Is_CableUnplugged(Const i_face:string):boolean;
+
+Function Is_CablePlugged(Const i_face:string):boolean;
 // this doesn't work on all ethernet drivers (chipsets)
 // if IFF_RUNNING is not supported in chipset Result will be true !
 var ifr:IFreq;

@@ -40,11 +40,9 @@ type
         function getClipboard:TStringList;
         procedure clearclipboard;
         procedure copycurrentselectiontoclipboard;
-        {
         procedure copytoclipboard(const item:string); overload;
         procedure copytoclipboard(const items:TStrings); overload;
-        }
-        procedure copytoclipboard(const item:IXPVirtualFile); overload;        
+       
         procedure setclipboard;
         function getcurrentpath:string;
         function createNewProgressDlg(const title:string):TForm;
@@ -69,7 +67,7 @@ begin
     sclipboard.clear;
 end;
 
-{
+
 procedure TXPExplorer.copytoclipboard(const item: string);
 var
     m: TMemoryStream;
@@ -77,17 +75,6 @@ begin
     clearclipboard;
     sclipboard.add(item);
     setclipboard;
-end;
-}
-procedure TXPExplorer.copytoclipboard(const item: IXPVirtualFile);
-var
-    m: TMemoryStream;
-begin
-{
-    clearclipboard;
-    sclipboard.add(item);
-    setclipboard;
-}
 end;
 
 function TXPExplorer.ClipboardEmpty: boolean;

@@ -74,9 +74,8 @@ type
         procedure clearclipboard;                                               //Clears the clipboard
         //Clipboard functions, must change
         procedure copycurrentselectiontoclipboard;
-//        procedure copytoclipboard(const item:string); overload;
-        procedure copytoclipboard(const item:IXPVirtualFile);
-//        procedure copytoclipboard(const items:TStrings); overload;
+        procedure copytoclipboard(const item:string); overload;
+        procedure copytoclipboard(const items:TStrings); overload;
         function ClipboardEmpty:boolean;                                        //Returns true if the clipboard is empty
         function getcurrentpath:string;                                         //Returns the current path using the getUniqueID of the selected folder
         function createNewProgressDlg(const title:string):TForm;                //Creates a progressdlg

@@ -1,6 +1,6 @@
 object TaskBar: TTaskBar
-  Left = 223
-  Top = 658
+  Left = 235
+  Top = 727
   Width = 676
   Height = 31
   HorzScrollBar.Range = 118
@@ -8,12 +8,13 @@ object TaskBar: TTaskBar
   ActiveControl = btnStart
   BorderStyle = fbsNone
   Color = clBackground
+  PopupMenu = propertiesmenu
   Scaled = False
   Visible = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnPaint = FormPaint
-  PixelsPerInch = 81
+  PixelsPerInch = 96
   object imgProgramFolder: TImage
     Left = 476
     Top = 15
@@ -62,6 +63,7 @@ object TaskBar: TTaskBar
     List = True
     ParentColor = False
     ParentFont = False
+    PopupMenu = propertiesmenu
     ShowCaptions = True
     TabOrder = 1
   end
@@ -962,7 +964,7 @@ object TaskBar: TTaskBar
     Top = 8
   end
   object XPDictionary1: TXPDictionary
-    Active = True
+    Active = False
     Left = 464
     Top = 8
   end
@@ -971,5 +973,42 @@ object TaskBar: TTaskBar
     Active = True
     Left = 532
     Top = 4
+  end
+  object propertiesmenu: TXPPopupMenu
+    Left = 324
+    object Toolbars1: TMenuItem
+      Caption = 'Toolbars'
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object CascadeWindows1: TMenuItem
+      Caption = 'Cascade Windows'
+    end
+    object TileWindowsHorizontally1: TMenuItem
+      Caption = 'Tile Windows Horizontally'
+    end
+    object TileWindowsVertically1: TMenuItem
+      Caption = 'Tile Windows Vertically'
+    end
+    object ShowtheDesktop1: TMenuItem
+      Caption = 'Show the Desktop'
+    end
+    object N2: TMenuItem
+      Caption = '-'
+    end
+    object TaskManager1: TMenuItem
+      Caption = 'Task Manager'
+      OnClick = TaskManager1Click
+    end
+    object N3: TMenuItem
+      Caption = '-'
+    end
+    object LocktheTaskbar1: TMenuItem
+      Caption = 'Lock the Taskbar'
+    end
+    object Properties1: TMenuItem
+      Caption = 'Properties'
+    end
   end
 end

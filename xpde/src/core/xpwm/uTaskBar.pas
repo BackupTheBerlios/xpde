@@ -60,6 +60,18 @@ type
     ImageList1: TImageList;
     XPDictionary1: TXPDictionary;
     XPLocalizator1: TXPLocalizator;
+    propertiesmenu: TXPPopupMenu;
+    Toolbars1: TMenuItem;
+    N1: TMenuItem;
+    CascadeWindows1: TMenuItem;
+    TileWindowsHorizontally1: TMenuItem;
+    TileWindowsVertically1: TMenuItem;
+    ShowtheDesktop1: TMenuItem;
+    N2: TMenuItem;
+    TaskManager1: TMenuItem;
+    N3: TMenuItem;
+    LocktheTaskbar1: TMenuItem;
+    Properties1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
@@ -75,6 +87,7 @@ type
     procedure startmenuHide(Sender: TObject);
     procedure LogOffAdministrator1Click(Sender: TObject);
     procedure Run1Click(Sender: TObject);
+    procedure TaskManager1Click(Sender: TObject);
   private
     menupaths: TStringList;
     procedure OnMenuItemClick(Sender: TObject);
@@ -89,6 +102,12 @@ type
     function addwindow(w:TWindow):boolean;
     procedure createTask(w:TWindow;title:string);
     function GetParent(display:PDisplay;w:TWindow):TWindow;
+  end;
+
+  TXPTaskBar=class(TInterfacedObject, IXPTaskBar)
+  end;
+
+  TXPWindowManager=class(TInterfacedObject, IXPWindowManager)
   end;
 
 var
@@ -480,7 +499,7 @@ end;
 
 procedure TTaskBar.LogOffAdministrator1Click(Sender: TObject);
 begin
-    close;
+    application.terminate;
 end;
 
 procedure TTaskBar.Run1Click(Sender: TObject);
@@ -603,6 +622,17 @@ begin
         folders.free;
     end;
 end;
+
+procedure TTaskBar.TaskManager1Click(Sender: TObject);
+begin
+    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppdir)+'/taskmanager',false);
+end;
+
+initialization
+  XPTaskBar:=TXPTaskbar.create;
+  XPWindowManager:=TXPWindowManager.create;
+  Application.CreateForm(TTaskBar, TaskBar);
+  Application.CreateForm(TRunDlg, RunDlg);
 
 
 end.

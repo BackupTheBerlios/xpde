@@ -1,0 +1,168 @@
+object New_User: TNew_User
+  Left = 352
+  Top = 207
+  Width = 380
+  Height = 380
+  HorzScrollBar.Range = 369
+  VertScrollBar.Range = 374
+  ActiveControl = edName
+  Caption = 'New User'
+  Color = clBackground
+  Position = poDesktopCenter
+  Scaled = False
+  PixelsPerInch = 78
+  object Label1: TLabel
+    Left = 12
+    Top = 20
+    Width = 64
+    Height = 15
+    Caption = 'User Name:'
+  end
+  object Label2: TLabel
+    Left = 12
+    Top = 52
+    Width = 60
+    Height = 15
+    Caption = 'Full Name:'
+  end
+  object Label3: TLabel
+    Left = 12
+    Top = 83
+    Width = 66
+    Height = 15
+    Caption = 'Description:'
+  end
+  object Label4: TLabel
+    Left = 12
+    Top = 141
+    Width = 57
+    Height = 15
+    Caption = 'Password:'
+  end
+  object Label5: TLabel
+    Left = 12
+    Top = 175
+    Width = 102
+    Height = 15
+    Caption = 'Confirm password:'
+  end
+  object cbChange: TCheckBox
+    Left = 12
+    Top = 208
+    Width = 253
+    Height = 20
+    Caption = 'User must  change password at next logon'
+    Checked = True
+    State = cbChecked
+    TabOrder = 12
+  end
+  object cbNotChange: TCheckBox
+    Left = 12
+    Top = 232
+    Width = 253
+    Height = 20
+    Caption = 'User cannot change password'
+    Enabled = False
+    TabOrder = 13
+  end
+  object cbExpires: TCheckBox
+    Left = 12
+    Top = 256
+    Width = 253
+    Height = 20
+    Caption = 'Password newer expires'
+    Enabled = False
+    TabOrder = 14
+  end
+  object cbDisable: TCheckBox
+    Left = 12
+    Top = 280
+    Width = 253
+    Height = 20
+    Caption = 'Account is disabled'
+    TabOrder = 15
+  end
+  object btnCreate: TButton
+    Left = 207
+    Top = 349
+    Width = 75
+    Height = 25
+    Caption = 'Create'
+    TabOrder = 17
+    OnClick = btnCreateClick
+  end
+  object btnClose: TButton
+    Left = 294
+    Top = 348
+    Width = 75
+    Height = 25
+    Caption = 'Close'
+    TabOrder = 18
+    OnClick = btnCloseClick
+  end
+  object Panel1: TPanel
+    Left = 12
+    Top = 119
+    Width = 357
+    Height = 2
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    TabOrder = 5
+  end
+  object Panel2: TPanel
+    Left = 13
+    Top = 336
+    Width = 356
+    Height = 2
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    TabOrder = 6
+  end
+  object edName: TEdit
+    Left = 116
+    Top = 16
+    Width = 253
+    Height = 23
+    TabOrder = 7
+  end
+  object edFullName: TEdit
+    Left = 116
+    Top = 48
+    Width = 253
+    Height = 23
+    TabOrder = 8
+  end
+  object edDescrip: TEdit
+    Left = 116
+    Top = 80
+    Width = 253
+    Height = 23
+    TabOrder = 9
+  end
+  object edPasswd: TEdit
+    Left = 116
+    Top = 139
+    Width = 253
+    Height = 23
+    EchoMode = emPassword
+    TabOrder = 10
+  end
+  object edPasswd2: TEdit
+    Left = 116
+    Top = 171
+    Width = 253
+    Height = 23
+    EchoMode = emPassword
+    TabOrder = 11
+  end
+  object cbSamba: TCheckBox
+    Left = 13
+    Top = 305
+    Width = 252
+    Height = 20
+    Caption = 'Enable login on SMB server'
+    Checked = True
+    State = cbChecked
+    TabOrder = 16
+  end
+end

@@ -5,8 +5,10 @@ uses
   uXPStyle,
   uSystemProperties in 'uSystemProperties.pas' {SystemPropertiesDlg},
   uDeviceManager in 'uDeviceManager.pas' {frmSystem},
+  uHWProperties in 'uHWProperties.pas' {frmProp},
+  uXPImageList in '../../components/xpimagelist/uXPImageList.pas',
   uXPListview in '../../components/xplistview/uXPListview.pas',
-  uXPImageList in '../../components/xpimagelist/uXPImageList.pas';
+  uXPAPI in '../../components/toolsapi/uXPAPI.pas';
 
 {$R *.res}
 

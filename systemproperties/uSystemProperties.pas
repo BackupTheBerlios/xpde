@@ -161,11 +161,12 @@ var sp:TSysProvider;
 Begin
       sp:=TSysProvider.Create;
       pci_i:=sp.ProvideRegistryAll;
-
+        {$IFDEF DEBUG}
         for i:=0 to length(pci_i)-1 do begin
         writeln('BUS ',pci_i[i].bus_id,' devid ',pci_i[i].device_id,' func ',pci_i[i].device_function,' type ',pci_i[i].device_type,' info ',pci_i[i].device_info);
         // this informations should be filled into syslistview -> cPanel->System
         End;
+        {$ENDIF}
         
       Label2.Caption:=sp.DistInfo.sys+' '+sp.DistInfo.kernel;
       Label3.Caption:=sp.DistInfo.name;

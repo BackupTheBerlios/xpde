@@ -31,6 +31,9 @@ interface
 uses
     Classes, Sysutils, QForms, Qt, XLib;
 
+const
+    XPDE_DESKTOPCHANGED=3569;
+
 type
     //To notify about communications
     TIPCNotification=procedure(Sender:TObject; msg:integer; data: integer) of object;

@@ -31,7 +31,7 @@ uses
   QComCtrls,Qt, QImgList,
   uXPAPI, uQXPComCtrls, QButtons,
   uXPColorSelector, uXPStyleConsts,
-  uRegistry, uXPDictionary,
+  uRegistry, uXPDictionary, uXPIPC,
   uXPLocalizator, uXPCommon, uXPStyle;
 
 type
@@ -382,7 +382,7 @@ end;
 procedure TDisplayPropertiesDlg.btnOkClick(Sender: TObject);
 begin
     storeproperties;
-    XPDesktop.applychanges;
+    XPIPC.broadcastMessage(XPDE_DESKTOPCHANGED,0);
     close;
 end;
 
@@ -529,7 +529,7 @@ end;
 procedure TDisplayPropertiesDlg.btnApplyClick(Sender: TObject);
 begin
     storeproperties;
-    XPDesktop.applychanges;
+    XPIPC.broadcastMessage(XPDE_DESKTOPCHANGED,0);
 end;
 
 procedure TDisplayPropertiesDlg.FormClose(Sender: TObject;
@@ -538,10 +538,6 @@ begin
     action:=caFree;
     DisplayPropertiesDlg:=nil;
 end;
-
-initialization
-    XPDesktop.registerCustomizeProcedure(customizeDesktop);
-
 
 
 end.

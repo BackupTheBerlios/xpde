@@ -11,8 +11,8 @@ DCC =dcc $<
 PROJECTS = bplXPRegistry.so bplXPCommon.so bplXPAPI.so bplXPMenus.so \
   bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
   bplXPShellControls.so bplXPCommctrls.so taskmanager controlpanel notepad \
-  networkstatus networkproperties mouse keyboard regional appexec bpldesk.so XPwm \
-  XPde
+  networkstatus networkproperties fileexplorer mouse keyboard desk regional \
+  appexec XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -53,9 +53,6 @@ bplXPCommon.so: ../../common/XPCommon.dpk
 taskmanager: ../../apps/taskmanager/taskmanager.dpr
 	$(DCC)
 
-bpldesk.so: ../../applets/desk/desk.dpk
-	$(DCC)
-
 networkstatus: ../../apps/networkstatus/networkstatus.dpr
 	$(DCC)
 
@@ -84,6 +81,12 @@ keyboard: ../../applets/keyboard/keyboard.dpr
 	$(DCC)
 
 regional: ../../applets/regional/regional.dpr
+	$(DCC)
+
+fileexplorer: ../../apps/fileexplorer/fileexplorer.dpr
+	$(DCC)
+
+desk: ../../applets/desk/desk.dpr
 	$(DCC)
 
 

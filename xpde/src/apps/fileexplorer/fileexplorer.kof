@@ -44,12 +44,12 @@ ExeDescription=
 DynamicLoader=/lib/ld-linux.so.2
 
 [Directories]
-OutputDir=$(HOME)/xpde/bin/applets
+OutputDir=$(HOME)/xpde/bin/apps
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
-Packages=rtl:visualclx:dataclx:visualdbclx:netclx:netdataclx:xmlrtl:indy:webdsnapclx:websnapclx:soaprtl:toolsap:XPCommon:XPRegistry:XPAPI:XPMenus:XPStyle:XPLocalizator:XPColorSelect:XPShellControls:XPCommctrls
+Packages=rtl:visualclx:dataclx:visualdbclx:netclx:netdataclx:xmlrtl:indy:webdsnapclx:websnapclx:soaprtl:dclelpK3:elpackK3
 Conditionals=
 DebugSourceDirs=
 UsePackages=0

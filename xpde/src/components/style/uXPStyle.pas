@@ -25,7 +25,7 @@ unit uXPStyle;
 interface
 uses
     Classes, QForms, QGraphics, uMouseAPI,
-    Types, QMenus, Qt, uXPStyleConsts,
+    Types, QMenus, Qt, uXPStyleConsts, uXPIPC,
     QDialogs, QStyle, QControls, uXPPopupMenu,
     QStdCtrls, Sysutils;
 
@@ -87,6 +87,8 @@ end;
 procedure TXPStyle.setXPStyle(app: TApplication);
 begin
     app.OnShowHint:=self.OnShowHint;
+
+    XPIPC.setupApplication;
 
     //Sets the default style
     app.Style.DefaultStyle:=dsWindows;

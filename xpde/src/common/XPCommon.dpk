@@ -33,6 +33,9 @@ requires
 contains
   uXPCommon in 'uXPCommon.pas',
   distro in 'distro.pas',
-  uMouseAPI in 'uMouseAPI.pas';
+  uMouseAPI in 'uMouseAPI.pas',
+  numlock in 'numlock.pas',
+  uXPIPC in 'uXPIPC.pas',
+  xlib_binds in 'xlib_binds.pas';
 
 end.

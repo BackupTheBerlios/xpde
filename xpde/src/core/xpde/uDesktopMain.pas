@@ -34,7 +34,7 @@ uses
   uXPAPI_imp, uLNKFile, uCreateShortcut,
   uMouseAPI, uLNKProperties, Qt,
   uXPDictionary, uXPLocalizator, uXPStyle,
-  uXPdeconsts;
+  uXPdeconsts, uXPIPC;
 
 type
   TMainForm = class(TForm)
@@ -94,6 +94,7 @@ type
     desktop:TSysListView;
     method: integer;
     desktopimage: string;
+    procedure IPCNotification(Sender:TObject; msg:integer; data: integer);
     procedure initTheme;
     procedure DesktopOnDblClick(Sender:TObject);
     function addIcon(const caption,image,fullpath:string;islnk:boolean):TSysListItem;
@@ -202,7 +203,10 @@ procedure TMainForm.FormCreate(Sender: TObject);
 var
     reg: TRegistry;
     appdir: string;
+
 begin
+    XPIPC.OnNotification:=IPCNotification;
+
     reg:=TRegistry.create;
     try
         if reg.OpenKey('Software/XPde/System',true) then begin
@@ -322,6 +326,7 @@ begin
         end
         else desktop.color:=dclDesktopBackground;
     finally
+        desktop.clearbackground;
         reg.Free;
     end;
 end;
@@ -423,10 +428,13 @@ end;
 
 procedure TXPDesktop.customize;
 begin
+    XPAPI.ShellExecute(XPAPI.getSysInfo(siAppletsDir)+'desk',false);
+    {
     if not assigned(customizeproc) then begin
         loadpackage(XPAPI.getSysInfo(siAppDir)+'/bpldesk.so');
     end;
     if assigned(customizeproc) then customizeproc;
+    }
 end;
 
 function TXPDesktop.GetClientArea: TRect;
@@ -438,6 +446,15 @@ procedure TXPDesktop.registerCustomizeProcedure(
   const proc: TXPDesktopCustomize);
 begin
     customizeproc:=proc;    
+end;
+
+procedure TMainForm.IPCNotification(Sender: TObject; msg, data: integer);
+begin
+    case msg of
+        XPDE_DESKTOPCHANGED: begin
+            XPDesktop.applychanges;
+        end;
+    end;
 end;
 
 initialization

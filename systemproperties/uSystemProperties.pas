@@ -119,6 +119,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure Button10Click(Sender: TObject);
   private
     Procedure FillTabs;
     { Private declarations }
@@ -130,6 +131,8 @@ var
   SystemPropertiesDlg: TSystemPropertiesDlg;
 
 implementation
+
+uses uDeviceManager;
 {$R *.xfm}
 
 procedure TSystemPropertiesDlg.FormClose(Sender: TObject;
@@ -153,8 +156,17 @@ Procedure TSystemPropertiesDlg.FillTabs;
 var sp:TSysProvider;
     cc:double;
     hna:String;
+    pci_i:PPci_Info;
+    i:integer;
 Begin
       sp:=TSysProvider.Create;
+      pci_i:=sp.ProvideRegistryAll;
+
+        for i:=0 to length(pci_i)-1 do begin
+        writeln('BUS ',pci_i[i].bus_id,' devid ',pci_i[i].device_id,' func ',pci_i[i].device_function,' type ',pci_i[i].device_type,' info ',pci_i[i].device_info);
+        // this informations should be filled into syslistview -> cPanel->System
+        End;
+        
       Label2.Caption:=sp.DistInfo.sys+' '+sp.DistInfo.kernel;
       Label3.Caption:=sp.DistInfo.name;
       Label4.Caption:='Version '+sp.DistInfo.version;
@@ -177,6 +189,16 @@ End;
 procedure TSystemPropertiesDlg.FormShow(Sender: TObject);
 begin
       FillTabs;
+end;
+
+procedure TSystemPropertiesDlg.Button10Click(Sender: TObject);
+begin
+        frmSystem:=TFrmSystem.Create(self);
+        try
+        frmSystem.ShowModal;
+        finally
+        frmSystem.Free;
+        End;
 end;
 
 end.

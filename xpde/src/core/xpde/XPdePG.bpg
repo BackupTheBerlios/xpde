@@ -10,8 +10,8 @@ DCC =dcc $<
 #------------------------------------------------------------------------------
 PROJECTS = bplXPCommon.so bplXPRegistry.so bplXPAPI.so bplXPMenus.so \
   bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
-  bplXPShellControls.so bplXPCommctrls.so taskmanager bpldesk.so bplXPwm.so \
-  bplXPde.so XPshell
+  bplXPShellControls.so bplXPCommctrls.so taskmanager networkstatus bpldesk.so \
+  bplXPwm.so bplXPde.so XPshell
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -62,6 +62,9 @@ bpldesk.so: ../../applets/desk/desk.dpk
 	$(DCC)
 
 bplXPwm.so: ../xpwm/XPwm.dpk
+	$(DCC)
+
+networkstatus: ../../apps/networkstatus/networkstatus.dpr
 	$(DCC)
 
 

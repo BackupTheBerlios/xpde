@@ -47,14 +47,16 @@ type
     N1: TMenuItem;
     Exit1: TMenuItem;
     SaveDialog: TSaveDialog;
+    Save1: TMenuItem;
     procedure Open1Click(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
     procedure Saveas1Click(Sender: TObject);
+    procedure Save1Click(Sender: TObject);
   private
     { Private declarations }
     ResourceFileFrm : TResourceFileFrm;
-    procedure OpenFile(const filename:string);
-    procedure SaveFile(const filename:string);
+    procedure OpenFile(const afilename:string);
+    procedure SaveFile(const afilename:string);
   public
     { Public declarations }
   end;
@@ -88,18 +90,13 @@ begin
 end;
 
 procedure TMainForm.Saveas1Click(Sender: TObject);
-var
-  strFileName : string;
 begin
-    if assigned(ResourceFileFrm) then begin
-       strFileName := OpenDialog.filename;
-       SaveDialog.InitialDir := extractFilePath(strFileName);
-       SaveDialog.FileName   := '_'+extractFilename(strFileName);
-       if SaveDialog.execute then
-          SaveFile(SaveDialog.filename);
-    end else begin
-       application.messagebox('No resource file opened!');
-   end;
+    if ActiveMDIChild is TResourceFileFrm then begin
+       SaveDialog.FileName   := extractFilename((ActiveMDIChild as TResourceFileFrm).filename);
+       if SaveDialog.execute then begin
+           (ActiveMDIChild as TResourceFileFrm).savetofile(SaveDialog.filename);
+       end;
+    end;
 end;
 
 procedure TMainForm.Exit1Click(Sender: TObject);
@@ -107,19 +104,20 @@ begin
    close;
 end;
 
-procedure TMainForm.OpenFile(const filename: string);
+procedure TMainForm.OpenFile(const afilename: string);
 var
   i : integer;
 begin
-    ResourceFileFrm.free;
-
-    ResourceFileFrm := TResourceFileFrm.create(application);
-    ResourceFileFrm.loadfromfile(filename);
+        with TResourceFileFrm.create(application) do begin
+            loadfromfile(afilename);
+        end;
 end;
 
-procedure TMainForm.SaveFile(const filename: string);
+procedure TMainForm.SaveFile(const afilename: string);
 begin
-    ResourceFileFrm.savetofile(filename);
+        if ActiveMDIChild is TResourceFileFrm then begin
+                (ActiveMDIChild as TResourceFileFrm).savetofile(afilename);
+        end;
 end;
 
 { TResourceAPI }
@@ -165,6 +163,13 @@ begin
     editors.addobject(ansilowercase(resourcetype),TObject(editorclass));
 end;
 
+
+procedure TMainForm.Save1Click(Sender: TObject);
+begin
+    if ActiveMDIChild is TResourceFileFrm then begin
+        (ActiveMDIChild as TResourceFileFrm).save;
+    end;
+end;
 
 initialization
     ResourceAPI:=TResourceAPI.create;

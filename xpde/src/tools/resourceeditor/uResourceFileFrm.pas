@@ -57,10 +57,12 @@ type
     procedure updateResourceTree;
   public
     { Public declarations }
+    filename:string;
     constructor Create(AOwner:TComponent);override;
     destructor Destroy;override;
-    procedure loadFromFile(const filename:string);
-    procedure SaveToFile(const filename: string);
+    procedure loadFromFile(const afilename:string);
+    procedure SaveToFile(const afilename: string);
+    procedure Save;
   end;
 
 var
@@ -88,17 +90,20 @@ begin
 end;
 
 //Loads a resource file
-procedure TResourceFileFrm.loadFromFile(const filename: string);
+procedure TResourceFileFrm.loadFromFile(const afilename: string);
 begin
+    filename:=afilename;
     resourcefile.loadfromfile(filename);
     caption:=filename;
     //Updates the tree
     updateResourceTree;
 end;
 
-procedure TResourceFileFrm.SaveToFile(const filename: string);
+procedure TResourceFileFrm.SaveToFile(const afilename: string);
 begin
-    resourcefile.savetofile(filename);
+    filename:=afilename;
+    caption:=filename;    
+    resourcefile.savetofile(afilename);
 end;
 
 procedure TResourceFileFrm.updateResourceTree;
@@ -213,6 +218,11 @@ end;
 procedure TResourceFileFrm.tvEntriesDblClick(Sender: TObject);
 begin
    Edit1Click(nil);
+end;
+
+procedure TResourceFileFrm.Save;
+begin
+    savetofile(self.filename);
 end;
 
 end.

@@ -9,14 +9,14 @@ File_6=SourceModule,'/home/ttm/xpde/src/common/uXPCommon.pas',0,1,50,18,57,0,0
 
 [Modules]
 Module0=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-Module1=/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas
-Module2=/home/ttm/xpde/src/apps/fileexplorer/main.pas
-Module3=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
-Module4=/home/ttm/xpde/src/common/numlock.pas
-Module5=/home/ttm/xpde/src/apps/fileexplorer/uXPExplorer.pas
-Module6=/home/ttm/xpde/src/apps/fileexplorer/uExplorerAPI.pas
-Module7=/home/ttm/kylix3/source/rtl/sys/SysUtils.pas
-Module8=/home/ttm/xpde/src/common/uMouseAPI.pas
+Module1=/home/ttm/xpde/src/apps/fileexplorer/main.pas
+Module2=/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas
+Module3=/home/ttm/xpde/src/apps/fileexplorer/uXPExplorer.pas
+Module4=/home/ttm/xpde/src/apps/fileexplorer/uExplorerAPI.pas
+Module5=/home/ttm/kylix3/source/rtl/sys/SysUtils.pas
+Module6=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
+Module7=/home/ttm/xpde/src/common/uMouseAPI.pas
+Module8=/home/ttm/xpde/src/common/numlock.pas
 Module9=/home/ttm/xpde/src/core/xpde/XPde.dpr
 Count=10
 EditWindowCount=1
@@ -27,25 +27,15 @@ ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=1
-
 [/home/ttm/xpde/src/apps/fileexplorer/main.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=1
 
-[/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas]
+[/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas]
 ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/common/numlock.pas]
-ModuleType=SourceModule
-FormState=0
-FormOnTop=0
+FormState=1
+FormOnTop=1
 
 [/home/ttm/xpde/src/apps/fileexplorer/uXPExplorer.pas]
 ModuleType=SourceModule
@@ -62,7 +52,17 @@ ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
+[/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
 [/home/ttm/xpde/src/common/uMouseAPI.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
+[/home/ttm/xpde/src/common/numlock.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
@@ -117,10 +117,6 @@ FormState=0
 FormOnTop=0
 
 [/home/ttm/xpde/src/apps/networkstatus/networkstatus.dpr]
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/apps/controlpanel/controlpanel.dpr]
 FormState=0
 FormOnTop=0
 
@@ -204,9 +200,9 @@ LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=85
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
@@ -224,8 +220,8 @@ LeftCol=1
 
 [View2]
 Module=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-CursorX=114
-CursorY=615
+CursorX=6
+CursorY=622
 TopLine=601
 LeftCol=1
 
@@ -555,8 +551,8 @@ HiddenCategories=
 Create=1
 Visible=1
 State=0
-Left=6
-Top=147
+Left=2
+Top=124
 Width=190
 Height=336
 MaxLeft=-1
@@ -574,26 +570,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=751
+Height=745
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=751
+ClientHeight=745
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=12
-Top=0
-Width=1274
+Left=-2
+Top=-631
+Width=443
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1274
+ClientWidth=443
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443
@@ -603,5 +599,5 @@ Dockable=1
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=24
+ActiveProject=1
 

@@ -157,13 +157,7 @@ begin
     //*****************************************************
     Programs1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gPROGRAMS);
     Documents1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gDOCUMENTS);
-    b:=TBitmap.create;
-    try
-        b.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSETTINGS);
-        Settings1.bitmap.assign(b);
-    finally
-        b.free;
-    end;
+    Settings1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSETTINGS);
     Search1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSEARCH);
     HelpandSupport1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gHELPANDSUPPORT);
     Run1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gRUN);

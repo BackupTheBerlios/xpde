@@ -1,5 +1,5 @@
 object TaskBar: TTaskBar
-  Left = 257
+  Left = 263
   Top = 855
   ActiveControl = btnStart
   AutoScroll = False
@@ -128,6 +128,8 @@ object TaskBar: TTaskBar
     Height = 48
     Align = alClient
     AutoSize = True
+    ButtonHeight = 24
+    ButtonWidth = 86
     Caption = 'tbTasks'
     Color = 13554646
     EdgeBorders = []
@@ -516,6 +518,7 @@ object TaskBar: TTaskBar
         FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
       Caption = 'Settings'
+      OnClick = Settings1Click
     end
     object Search1: TMenuItem
       Bitmap.Data = {

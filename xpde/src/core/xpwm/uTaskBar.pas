@@ -32,7 +32,7 @@ uses
   QTypes, Libc, QExtCtrls,
   QComCtrls, QImgList,
   uXPStyleConsts, Qt, QActnList,
-  uQXPComCtrls,
+  uQXPComCtrls, 
   uXPPopupMenu,
   uXPAPI, uLNKFile, uXPStyle, 
   uXPLocalizator, uXPDictionary;
@@ -98,6 +98,7 @@ type
     procedure imNetDblClick(Sender: TObject);
     procedure TurnOffComputer1Click(Sender: TObject);
     procedure pnTimerDblClick(Sender: TObject);
+    procedure Settings1Click(Sender: TObject);
   private
     menupaths: TStringList;
     procedure OnMenuItemClick(Sender: TObject);
@@ -576,6 +577,11 @@ begin
     command:=format('%s/xpsu root "%s %s"',[appletsdir, stub, applet]);
 
     XPAPI.ShellExecute(command,false);
+end;
+
+procedure TTaskBar.Settings1Click(Sender: TObject);
+begin
+    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppsdir)+'controlpanel',false);
 end;
 
 initialization

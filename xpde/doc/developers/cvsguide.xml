@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+<article>
+  <title>CVS Guide</title>
+
+  <articleinfo>
+    <date>2003/01/16</date>
+
+    <author>
+      <surname>León</surname>
+
+      <firstname>José</firstname>
+    </author>
+
+    <author>
+      <surname>Kühner</surname>
+
+      <firstname>Jens</firstname>
+    </author>
+  </articleinfo>
+
+  <sect1>
+    <title>Introduction</title>
+
+    <para>This document is intended to provide a brief introduction to CVS,
+    it&#39;s recommended you read another tutorials about this matter, there
+    are many on the net.</para>
+
+    <para><emphasis>Note: Don&#39;t play with the XPde CVS server, use your
+    local system for practice.</emphasis></para>
+  </sect1>
+
+  <sect1>
+    <title>CVS</title>
+
+    <sect2>
+      <title>What is CVS?</title>
+
+      <para>CVS is a system for concurrent source code management, it allows
+      several developers to work on the same project and also provides version
+      control over the source code. The working philosofy is fair simple:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>You request the sources from the server</para>
+        </listitem>
+
+        <listitem>
+          <para>Make your changes to the sources</para>
+        </listitem>
+
+        <listitem>
+          <para>Commit the changes to the CVS server</para>
+        </listitem>
+
+        <listitem>
+          <para>Then your changes are be available to the rest of the team</para>
+        </listitem>
+
+        <listitem>
+          <para>You can now delete the project on your system, because the
+          real code is stored on the server, not on your machine</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>This sounds strange the first time you try, but after that, you
+      cannot live without it ;-)</para>
+    </sect2>
+  </sect1>
+
+  <sect1>
+    <title>Checkout</title>
+
+    <para>Checkout is the operation to extract/get the sources from the CVS
+    server to make any modification, you just need an anonymous access, follow
+    this instructions:</para>
+
+    <programlisting>cvs -d:pserver:anonymous@cvs.xpde.berlios.de:/cvsroot/xpde login
+
+cvs -z3 -d:pserver:anonymous@cvs.xpde.berlios.de:/cvsroot/xpde co xpde</programlisting>
+
+    <para>These commands download the last version of the source code to your
+    system, if you look the directories, all of them will have a CVS subdir,
+    this subdir contains information for the cvs command about the files
+    stored on this directory.</para>
+  </sect1>
+
+  <sect1>
+    <title>Commit</title>
+
+    <para>After you perform your changes, you must commit them to the server,
+    this way, your changes will be available to the rest of the team. You must
+    execute this command on the directory you performed the changes.</para>
+
+    <programlisting>cvs commit</programlisting>
+  </sect1>
+
+  <sect1>
+    <title>Write access</title>
+
+    <para>You cannot commit your changes to the XPde server until you get
+    write access to the XPde CVS repository, to get write access to the XPde
+    server you will need to be member of the project on BerliOS, subscribe to
+    BerliOS as developer and after that, contact with us to add you to the
+    project. All the CVS operations are made using SSH, so you need first to
+    add the CVS host to your list of trusted hosts:</para>
+
+    <programlisting>ssh cvs.xpde.berlios.de</programlisting>
+
+    <para>And answer yes when prompted.</para>
+  </sect1>
+
+  <sect1>
+    <title>gCVS</title>
+
+    <para>You can use a GUI frontend for CVS, is called gCVS, you can download
+    it from http://www.wincvs.org/, it&#39;s a GTK application and you must
+    configure it following these steps:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Select the Admin | Preferences menu item</para>
+      </listitem>
+
+      <listitem>
+        <para>Enter yourberliosuser@cvs.xpde.berlios.de:/cvsroot/xpde on the
+        CVSROOT field</para>
+      </listitem>
+
+      <listitem>
+        <para>Select Secure Shell (ssh) as authetication method</para>
+      </listitem>
+
+      <listitem>
+        <para>Check also &#34;Run CVS on a terminal (xterm)&#34;, this is done
+        this way to allow you enter your password, read below to know how to
+        prevent be prompted by a password everytime</para>
+      </listitem>
+
+      <listitem>
+        <para>Check out the full project using the command Create | Check out
+        and entering xpde as the module to check out</para>
+      </listitem>
+
+      <listitem>
+        <para>Enter your password when prompted, and that&#39;s all ;-)</para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
+</article>

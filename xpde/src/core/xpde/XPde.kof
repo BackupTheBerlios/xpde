@@ -44,12 +44,12 @@ ExeDescription=
 DynamicLoader=/lib/ld-linux.so.2
 
 [Directories]
-OutputDir=/home/ttm/xpde/
+OutputDir=
 UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
-Packages=designide
+Packages=
 Conditionals=
 DebugSourceDirs=
 UsePackages=0

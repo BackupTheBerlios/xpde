@@ -10,12 +10,12 @@ DCC =dcc $<
 #------------------------------------------------------------------------------
 PROJECTS = bplXPCommon.so bplXPRegistry.so bplXPAPI.so bplXPMenus.so \
   bplXPStyle.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
-  bplXPShellControls.so bplXPCommctrls.so desk.cpl XPwm XPde
+  bplXPShellControls.so bplXPCommctrls.so taskmanager desk.cpl XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
 
-XPde: XPde.dpr
+taskmanager: ../../apps/taskmanager/taskmanager.dpr
 	$(DCC)
 
 bplXPColorSelect.so: ../../components/colorselect/XPColorSelect.dpk
@@ -52,6 +52,12 @@ desk.cpl: ../../applets/desk/desk.dpr
 	$(DCC)
 
 bplXPCommon.so: ../../common/XPCommon.dpk
+	$(DCC)
+
+XPde: XPde.dpr
+	$(DCC)
+
+taskmanager: ../../apps/taskmanager/taskmanager.dpr
 	$(DCC)
 
 

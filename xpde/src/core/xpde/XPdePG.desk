@@ -1,36 +1,31 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/components/shellcontrols/uSysListItem.pas',0,1,1,39,28,0,0
-File_1=SourceModule,'/home/ttm/xpde/src/common/uXPCommon.pas',0,1,30,11,30,0,0
-File_2=SourceModule,'/home/ttm/xpde/src/components/menu/uXPPopupMenu.pas',0,1,25,31,30,0,0
-File_3=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyle.pas',0,1,20,42,29,0,0
-File_4=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,1,1,1,1,0,0
-File_5=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,1,13,12,0,0
-File_6=SourceModule,'/home/ttm/xpde/src/core/xpwm/uRun.pas',0,1,1,1,1,0,0
+File_0=SourceModule,'/home/ttm/xpde/src/core/xpde/main.pas',0,1,1,8,3,0,0
+File_1=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyleConsts.pas',0,1,19,23,31,0,0
+File_2=SourceModule,'/home/ttm/xpde/src/applets/desk/uDisplayProperties.pas',0,1,197,10,199,0,0
+File_3=SourceModule,'/home/ttm/xpde/src/core/xpde/uChangeIcon.pas',0,1,1,1,1,0,0
+File_4=SourceModule,'/home/ttm/xpde/src/components/shellcontrols/uSysListItem.pas',0,1,1,39,28,0,0
+File_5=SourceModule,'/home/ttm/xpde/src/common/uXPCommon.pas',0,1,30,11,30,0,0
+File_6=SourceModule,'/home/ttm/xpde/src/components/menu/uXPPopupMenu.pas',0,1,25,31,30,0,0
+File_7=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyle.pas',0,1,20,42,29,0,0
+File_8=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,1,1,1,1,0,0
+File_9=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,1,13,12,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/components/style/uXPStyleConsts.pas
-Module1=/home/ttm/xpde/src/applets/desk/uDisplayProperties.pas
-Module2=/home/ttm/xpde/src/core/xpde/uChangeIcon.pas
-Module3=/home/ttm/xpde/src/applets/desk/desk.dpr
-Module4=/home/ttm/xpde/src/core/xpde/XPde.dpr
-Module5=/home/ttm/xpde/src/core/xpde/main.pas
-Count=6
+Module0=/home/ttm/xpde/src/apps/taskmanager/taskmanager.dpr
+Module1=/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas
+Module2=/home/ttm/xpde/src/applets/desk/desk.dpr
+Count=3
 EditWindowCount=1
 PackageWindowCount=10
 
-[/home/ttm/xpde/src/components/style/uXPStyleConsts.pas]
+[/home/ttm/xpde/src/apps/taskmanager/taskmanager.dpr]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/applets/desk/uDisplayProperties.pas]
+[/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas]
 ModuleType=SourceModule
-FormState=0
-FormOnTop=1
-
-[/home/ttm/xpde/src/core/xpde/uChangeIcon.pas]
-ModuleType=SourceModule
-FormState=0
+FormState=1
 FormOnTop=1
 
 [/home/ttm/xpde/src/applets/desk/desk.dpr]
@@ -39,20 +34,18 @@ FormState=0
 FormOnTop=0
 
 [/home/ttm/xpde/src/core/xpde/XPde.dpr]
-ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/core/xpde/main.pas]
-ModuleType=SourceModule
+[/home/ttm/xpde/src/core/xpde/XPdePG.bpg]
 FormState=0
 FormOnTop=0
 
 [/home/ttm/xpde/src/common/XPCommon.dpk]
 FormState=0
-FormOnTop=1
+FormOnTop=0
 
-[/home/ttm/xpde/src/core/xpde/XPdePG.bpg]
+[/home/ttm/xpde/src/components/registry/XPRegistry.dpk]
 FormState=0
 FormOnTop=0
 
@@ -65,10 +58,6 @@ FormState=0
 FormOnTop=0
 
 [/home/ttm/xpde/src/components/style/XPStyle.dpk]
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/components/registry/XPRegistry.dpk]
 FormState=0
 FormOnTop=0
 
@@ -97,82 +86,56 @@ FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=6
-CurrentView=3
+ViewCount=3
+CurrentView=1
 View0=0
 View1=1
 View2=2
-View3=3
-View4=4
-View5=5
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
 Visible=1
-State=2
+State=0
 Left=139
 Top=189
 Width=885
 Height=482
-MaxLeft=-7
-MaxTop=218
-MaxWidth=1286
-MaxHeight=746
-ClientWidth=1286
-ClientHeight=746
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=885
+ClientHeight=482
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=182
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=0000040000000000060500000000000002B600000000000000010000000000000000000000000100000000F8030000000000000100000000060500000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
 
 [View0]
-Module=/home/ttm/xpde/src/core/xpde/main.pas
-CursorX=8
-CursorY=3
-TopLine=1
+Module=/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas
+CursorX=1
+CursorY=83
+TopLine=83
 LeftCol=1
 
 [View1]
-Module=/home/ttm/xpde/src/applets/desk/desk.dpr
-CursorX=23
+Module=/home/ttm/xpde/src/apps/taskmanager/taskmanager.dpr
+CursorX=10
 CursorY=8
 TopLine=1
 LeftCol=1
 
 [View2]
-Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
-CursorX=8
+Module=/home/ttm/xpde/src/applets/desk/desk.dpr
+CursorX=27
 CursorY=17
-TopLine=1
-LeftCol=1
-
-[View3]
-Module=/home/ttm/xpde/src/components/style/uXPStyleConsts.pas
-CursorX=23
-CursorY=31
-TopLine=19
-LeftCol=1
-
-[View4]
-Module=/home/ttm/xpde/src/applets/desk/uDisplayProperties.pas
-CursorX=10
-CursorY=199
-TopLine=197
-LeftCol=1
-
-[View5]
-Module=/home/ttm/xpde/src/core/xpde/uChangeIcon.pas
-CursorX=1
-CursorY=1
 TopLine=1
 LeftCol=1
 
 [PackageWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
 Left=252
 Top=241
@@ -196,6 +159,28 @@ Module=/home/ttm/xpde/src/common/XPCommon.dpk
 Create=1
 Visible=0
 State=0
+Left=284
+Top=317
+Width=368
+Height=244
+MaxLeft=-1
+MaxTop=-1
+ClientWidth=362
+ClientHeight=219
+TBDockHeight=244
+LRDockWidth=368
+Dockable=1
+StatusBar=0
+TextLabels=1
+Toolbar=1
+SectionWidth0=150
+SectionWidth1=212
+Module=/home/ttm/xpde/src/components/registry/XPRegistry.dpk
+
+[PackageWindow2]
+Create=1
+Visible=0
+State=0
 Left=308
 Top=374
 Width=368
@@ -214,7 +199,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/toolsapi/XPAPI.dpk
 
-[PackageWindow2]
+[PackageWindow3]
 Create=1
 Visible=0
 State=0
@@ -236,7 +221,7 @@ SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/menu/XPMenus.dpk
 
-[PackageWindow3]
+[PackageWindow4]
 Create=1
 Visible=0
 State=0
@@ -257,28 +242,6 @@ Toolbar=1
 SectionWidth0=150
 SectionWidth1=212
 Module=/home/ttm/xpde/src/components/style/XPStyle.dpk
-
-[PackageWindow4]
-Create=1
-Visible=0
-State=0
-Left=284
-Top=317
-Width=368
-Height=244
-MaxLeft=-1
-MaxTop=-1
-ClientWidth=362
-ClientHeight=219
-TBDockHeight=244
-LRDockWidth=368
-Dockable=1
-StatusBar=0
-TextLabels=1
-Toolbar=1
-SectionWidth0=150
-SectionWidth1=212
-Module=/home/ttm/xpde/src/components/registry/XPRegistry.dpk
 
 [PackageWindow5]
 Create=1
@@ -403,7 +366,7 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=-8
+Left=4
 Top=23
 Width=1273
 Height=87
@@ -416,8 +379,8 @@ ClientHeight=87
 Create=1
 Visible=1
 State=0
-Left=362
-Top=352
+Left=199
+Top=571
 Width=448
 Height=311
 MaxLeft=-1
@@ -458,7 +421,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=
+SelectedItem=ParentFont
 ExpandedItems=Font
 HiddenCategories=
 
@@ -485,28 +448,28 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=549
+Height=470
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=549
+ClientHeight=470
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=12
-Top=0
-Width=1274
-Height=182
+Left=59
+Top=-564
+Width=443
+Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1274
-ClientHeight=182
-TBDockHeight=182
+ClientWidth=443
+ClientHeight=85
+TBDockHeight=85
 LRDockWidth=443
 Dockable=1
 

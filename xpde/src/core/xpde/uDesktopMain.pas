@@ -82,6 +82,7 @@ type
     procedure Shortcut1Click(Sender: TObject);
     procedure Properties2Click(Sender: TObject);
     procedure Folder1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     procedure createFolder(ix, iy: integer);
@@ -354,6 +355,7 @@ begin
     if paramstr(1)='full' then begin
     end;
     CheckSystem;
+   
 end;
 
 procedure TMainform.loadDesktopProperties;
@@ -467,6 +469,11 @@ begin
             XPDesktop.applychanges;
         end;
     end;
+end;
+
+procedure TMainForm.Button1Click(Sender: TObject);
+begin
+    sendtoback;
 end;
 
 initialization

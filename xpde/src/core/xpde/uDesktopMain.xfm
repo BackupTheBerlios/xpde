@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 492
-  Top = 3
+  Left = 443
+  Top = 126
   Width = 778
   Height = 255
   BorderStyle = fbsNone

@@ -10,9 +10,10 @@ DCC =dcc $<
 #------------------------------------------------------------------------------
 PROJECTS = bplXPRegistry.so bplXPCommon.so bplXPAPI.so bplXPMenus.so \
   bplXPTrayIcon.so bplXPStyle.so bplXPColorSelect.so bplXPShellControls.so \
-  bplXPCommctrls.so bplXPsysprovider.so taskmanager networkstatus notepad \
-  calculator networkproperties systemproperties fontview fileexplorer mouse \
-  keyboard desk regional appexec DateTimeProps xpsu XPwm XPde
+  bplXPCommctrls.so bplXPsysprovider.so bplXPPrinting.so VTClx_K3.so \
+  dclVTClx_K3.so regedit taskmanager networkstatus notepad calculator \
+  networkproperties systemproperties fontview fileexplorer mouse keyboard desk \
+  regional appexec DateTimeProps xpsu XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -99,6 +100,18 @@ systemproperties: ../../applets/systemproperties/systemproperties.dpr
 	$(DCC)
 
 fontview: ../../apps/fontview/fontview.dpr
+	$(DCC)
+
+VTClx_K3.so: ../../components/vt/VTClx_K3.dpk
+	$(DCC)
+
+dclVTClx_K3.so: ../../components/vt/dclVTClx_K3.dpk
+	$(DCC)
+
+bplXPPrinting.so: ../../components/printing/XPPrinting.dpk
+	$(DCC)
+
+regedit: ../../apps/regedit/regedit.dpr
 	$(DCC)
 
 

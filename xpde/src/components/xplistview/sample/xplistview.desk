@@ -18,7 +18,7 @@ EditWindowCount=1
 [/home/ttm/xpde/src/components/xplistview/sample/main.pas]
 ModuleType=SourceModule
 FormState=1
-FormOnTop=0
+FormOnTop=1
 
 [/home/ttm/xpde/src/components/xplistview/sample/xplistview.dpr]
 ModuleType=SourceModule
@@ -53,9 +53,9 @@ LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=85
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/components/xplistview/sample/xplistview.dpr
@@ -86,8 +86,8 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=3
-Top=28
+Left=7
+Top=51
 Width=1273
 Height=87
 MaxLeft=-1
@@ -97,7 +97,7 @@ ClientHeight=87
 
 [ProjectManager]
 Create=1
-Visible=1
+Visible=0
 State=0
 Left=369
 Top=372
@@ -168,26 +168,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=751
+Height=745
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=751
+ClientHeight=745
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=12
-Top=0
-Width=1274
+Left=-2
+Top=-631
+Width=443
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1274
+ClientWidth=443
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443

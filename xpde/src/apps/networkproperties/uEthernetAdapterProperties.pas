@@ -138,6 +138,7 @@ end;
 
 Procedure TEthernetAdapterPropertiesDlg.GetDeviceInfo(device:string);
 Begin
+{
         if not
         IsValidNetDevice(device) then
         ShowMessage('Unknown device '+device)
@@ -148,6 +149,7 @@ Begin
         // else
         // put in tray
         End;
+}
 End;
 
 procedure TEthernetAdapterPropertiesDlg.FormShow(Sender: TObject);

@@ -26,9 +26,11 @@ package XPRegistry;
 {$IMPLICITBUILD OFF}
 
 requires
-  rtl;
+  rtl,
+  visualclx;
 
 contains
-  uRegistry in 'uRegistry.pas';
+  uRegistry in 'uRegistry.pas',
+  RegLib in 'RegLib.pas';
 
 end.

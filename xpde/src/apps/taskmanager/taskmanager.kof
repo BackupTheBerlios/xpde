@@ -65,6 +65,7 @@ DebugCWD=
 /home/linda/My_Documents/Kylix_Downloads/SDL_Apps/SDLAppSuite-0-2-0/bplFileNameContainerDT.so.0.1=Filename Containers
 
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=$(HOME)/xpde/bin/applets
+Count=2
+Item0=$(HOME)/xpde/bin/apps
+Item1=$(HOME)/xpde/bin
 

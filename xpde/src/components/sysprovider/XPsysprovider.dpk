@@ -32,7 +32,6 @@ requires
   XPCommon;
 
 contains
-  SysProvider in 'SysProvider.pas',
-  xpclasses in '../../common/xpclasses.pas';
+  SysProvider in 'SysProvider.pas';
 
 end.

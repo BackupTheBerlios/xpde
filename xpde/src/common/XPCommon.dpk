@@ -38,6 +38,7 @@ contains
   numlock in 'numlock.pas',
   uXPIPC in 'uXPIPC.pas',
   xlib_binds in 'xlib_binds.pas',
-  uXPPNG in 'uXPPNG.pas';
+  uXPPNG in 'uXPPNG.pas',
+  xpclasses in 'xpclasses.pas';
 
 end.

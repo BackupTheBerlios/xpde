@@ -60,7 +60,8 @@ type
         procedure OutputDebugString(const str:string);
         procedure setWaitCursor;
         function getExecutable(ext:string):string;
-        procedure showAboutDlg;
+        procedure showAboutDlg(const programname:string);
+        function getVersionString:string;
         procedure storeExecutable(ext:string;executable:string);
         function ReplaceSystemPaths(const path:string):string;
         function ShellExecute(const theprog:string;waitfor:boolean):integer;
@@ -491,15 +492,22 @@ begin
     result:=StringReplace(path,'%APPS%',getAppsDir,[rfReplaceAll, rfIgnoreCase]);
 end;
 
-procedure TXPAPI.showAboutDlg;
+procedure TXPAPI.showAboutDlg(const programname:string);
 begin
     with TAboutDlg.create(nil) do begin
         try
+            caption:='About '+programname;
+            lbProgram.caption:=programname;
             showmodal;
         finally
             free;
         end;
     end;
+end;
+
+function TXPAPI.getVersionString: string;
+begin
+    result:='Version 0.2.1 (Build 20030226.xpdeclient)';
 end;
 
 initialization

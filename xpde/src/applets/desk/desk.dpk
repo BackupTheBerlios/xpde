@@ -30,8 +30,8 @@ requires
   XPCommon,
   XPRegistry,
   XPAPI,
-  XPStyle,
   XPMenus,
+  XPStyle,
   XPLocalizator,
   XPColorSelect,
   XPCommctrls;

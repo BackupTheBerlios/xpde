@@ -122,6 +122,7 @@ type
     procedure btnBrowseClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -143,12 +144,22 @@ type
     end;
 
 var
-  DisplayPropertiesDlg: TDisplayPropertiesDlg;
+  DisplayPropertiesDlg: TDisplayPropertiesDlg=nil;
   desktop:TDesktop;
+
+procedure customizeDesktop;
 
 implementation
 
 {$R *.xfm}
+
+procedure customizeDesktop;
+begin
+    if not assigned(DisplayPropertiesDlg) then begin
+        Application.CreateForm(TDisplayPropertiesDlg,DisplayPropertiesDlg);
+    end;
+end;
+
 
 procedure TDisplayPropertiesDlg.FormCreate(Sender: TObject);
 var
@@ -518,8 +529,16 @@ begin
     XPDesktop.applychanges;
 end;
 
+procedure TDisplayPropertiesDlg.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+    action:=caFree;
+    DisplayPropertiesDlg:=nil;
+end;
+
 initialization
-    Application.CreateForm(TDisplayPropertiesDlg,DisplayPropertiesDlg);
+    XPDesktop.registerCustomizeProcedure(customizeDesktop);
+
 
 
 end.

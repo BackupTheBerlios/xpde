@@ -554,6 +554,7 @@ begin
             if bw<>tbtasks.buttonwidth then tbTasks.ButtonWidth:=bw;
         end;
         tbTasks.ButtonHeight:=22;
+        tbTasks.Invalidate;
 end;
 
 procedure TTaskBar.activatetask(const task: IWMClient);

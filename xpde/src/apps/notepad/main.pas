@@ -83,7 +83,7 @@ uses
 
 resourcestring
  CapText = ' - Notepad';
- sUntitled='Untitled'
+ sUntitled='Untitled';
 
 procedure TMainForm.NewMNUClick(Sender: TObject);
 begin

@@ -1,12 +1,12 @@
 object XPColorDialog: TXPColorDialog
-  Left = 388
-  Top = 484
+  Left = 0
+  Top = 0
   ActiveControl = btnOther
   AutoScroll = False
   BorderStyle = fbsNone
   Caption = 'XPColorDialog'
   ClientHeight = 151
-  ClientWidth = 100
+  ClientWidth = 101
   Color = clBackground
   KeyPreview = True
   Position = poDefault
@@ -16,7 +16,7 @@ object XPColorDialog: TXPColorDialog
   OnMouseMove = FormMouseMove
   OnPaint = FormPaint
   OnShow = FormShow
-  PixelsPerInch = 81
+  PixelsPerInch = 90
   object btnOther: TButton
     Left = 4
     Top = 124

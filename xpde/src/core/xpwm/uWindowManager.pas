@@ -2,10 +2,9 @@
 {                                                                             }
 { This file is part of the XPde project                                       }
 {                                                                             }
-{ Copyright (C) 2001 Havoc Pennington                                         }
-{                                                                             }
-{ Kylix conversion and modifications are                                      }
 { Copyright (c) 2002 José León Serna <ttm@xpde.com>                           }
+{                                                                             }
+{ Portions translated from Metacity Copyright (c) Havoc Pennington            }
 {                                                                             }
 { This program is free software; you can redistribute it and/or               }
 { modify it under the terms of the GNU General Public                         }
@@ -23,871 +22,513 @@
 { Boston, MA 02111-1307, USA.                                                 }
 {                                                                             }
 { *************************************************************************** }
+
 unit uWindowManager;
 
 interface
 
-uses Classes, Sysutils, Types,
-     Qt, QForms, uSpecial, uTitle,
-     QGraphics, Libc, uGlobal,
-     QDialogs, uXPAPI, uDisplay, XLib;
+uses QForms, SysUtils, Types,
+     Classes, Qt, Libc, XLib,
+     uWMConsts, uXPAPI;
 
 type
-    TXPWindowManager=class(TInterfacedObject, IXPWindowManager)
+    TWMClient=class;
+
+    IWMFrame=interface
+    ['{3CC8B247-43EF-D611-88C2-000244219999}']
+        function getFrameBorderSizes:TRect;                                     //Must return the sizes of the borders of the frame
+        function getOrigin:TPoint;                                        //Must return the point where the client window is going to be placed
+        procedure setClient(AClient:TWMClient);                                 //Must store the client to perform operations with the window
+        procedure setTitle(ATitle:string);
+        function getTitle:string;
+        procedure updateActiveState;
+    end;
+
+    TXPWindowManager=class(TObject)
     private
-        display:TWMDisplay;
-        screen: TWMScreen;
-        atom_names: TStringList;
+        FServerGrabCount: integer;
+        FDisplay: PDisplay;
+        FScreen: integer;
+        FRoot: Window;
+        FClients: TList;
+        FAtoms: array [0..maxAtoms] of Atom;
+        FFrame: TFormClass;
+        FActiveClient: TWMClient;
+        procedure setupSignals;
+        procedure setupEventHandler;
+        procedure setupErrorHandler;
+        procedure setupAtoms;
+        procedure createExistingWindows;
+        procedure setupDisplay;
+        function set_wm_icon_size_hint: integer;
+        function set_wm_check_hint: integer;
+
+        function GetAtoms(Index: Integer): Atom;
+        procedure SetAtoms(Index: Integer; const Value: Atom);
+        procedure setFrame(AFrameClass: TFormClass);
+        procedure SetActiveClient(const Value: TWMClient);
     public
-        procedure create_new_client(w:Window);
-        procedure setup;
-        procedure add_atom_names;
-        procedure display_open;
+        procedure grabDisplay;
+        procedure ungrabDisplay;
+        procedure install;
+        function getDesktopClientRect:TRect;
+        function findClient(w: Window):TWMClient;
+        function createNewClient(w:Window):TWMClient;
+        //**********************************
+        function handleButtonPress(var event:XEvent):integer;
+        function handleButtonRelease(var event:XEvent):integer;
+        function handleMotionNotify(var event:XEvent):integer;
+        function handleEnterNotify(var event:XEvent):integer;
+        function handleLeaveNotify(var event:XEvent):integer;
+        function handleFocusInOut(var event:XEvent):integer;
+        function handleDestroyNotify(var event:XEvent):integer;
+        function handleUnmapNotify(var event:XEvent):integer;
+        function handleMapRequest(var event:XEvent):integer;
+        function handleConfigureNotify(var event:XEvent):integer;
+        function handleConfigureRequest(var event:XEvent):integer;
+        function handlePropertyNotify(var event:XEvent):integer;
+        function handleSelectionClear(var event:XEvent):integer;
+        function handleSelectionRequest(var event:XEvent):integer;
+        function handleColorMapNotify(var event:XEvent):integer;
+        function handleClientMessage(var event:XEvent):integer;
+        function handleMappingNotify(var event:XEvent):integer;
+        //**********************************
+        property Atoms[Index: Integer]: Atom read GetAtoms write SetAtoms;
+        property Clients:TList read FClients;
+        property Frame: TFormClass read FFrame write SetFrame;
+        property Display: PDisplay read FDisplay write FDisplay;
+        property Root: Window read FRoot write FRoot;
+        property ActiveClient: TWMClient read FActiveClient write SetActiveClient;
         constructor Create;
         destructor Destroy;override;
     end;
 
+    TWMClient=class(TInterfacedObject, IWMClient)
+    private
+        xwindow: Window;
+        frame: TForm;
+        wRect: TRect;
+        FUnmapCounter:integer;
+        FWindowManager: TXPWindowManager;
+        FWindowState: TWindowState;
+        procedure SetWindowManager(const Value: TXPWindowManager);
+        procedure SetWindowState(const Value: TWindowState);
+    public
+        procedure configure_request(event: XEvent);
+        procedure gravitate;
+        procedure reparent;
+        procedure resize;
+        procedure map;
+        procedure focus;
+        procedure createFrame;
+        procedure getSizeHints;
+        procedure minimize;
+        procedure maximize;
+        procedure restore;
+        procedure close;
+        procedure bringtofront;
+        function getWindow: Window;        
+        procedure updateactivestate;
+        function isactive:boolean;
+        procedure activate;
+        function getTitle: string;        
+        property WindowManager:TXPWindowManager read FWindowManager write SetWindowManager;
+        property UnmapCounter: integer read FUnmapCounter write FUnmapCounter;
+        property Wnd: Window read xwindow write xwindow;
+        property WindowState: TWindowState read FWindowState write SetWindowState;
+        constructor Create(AWindow:Window; AWindowManager:TXPWindowManager);
+        destructor Destroy;override;
+    end;
+
+    TXLibInterface=class(TObject)
+    public
+        indent: integer;
+        function formatWindow(w:Window):string;
+        procedure outputDebugString(const kind:integer;const str:string);
+        constructor Create;
+        function GetWindowProperty(xdisplay: PDisplay; xwindow: Window; xatom, req_type: Atom): variant;
+    end;
+
+
+    TQX11EventFilter=function(var ev:XEvent):integer;cdecl;
+
+const
+    iMETHOD=1;
+    iINFO=2;
+    iWARNING=3;
+    iERROR=4;
+    iBEGINPROCESS=5;
+    iENDPROCESS=6;
+    iEVENT=7;
+
+    QtShareName = '';
+
+    ChildMask=(SubstructureRedirectMask or SubstructureNotifyMask);
+    ButtonMask=(ButtonPressMask or ButtonReleaseMask);
+    MouseMask=(ButtonMask or PointerMotionMask);
+
+
+function qt_set_x11_event_filter(filter:TQX11EventFilter):TQX11EventFilter; cdecl;
+
 var
-    wm: TXPWindowManager;
+    XLibInterface: TXLibInterface;
+    XPWindowManager: TXPWindowManager;
 
 implementation
 
-function event_get_time(display:TWMDisplay; var event:XEvent):cardinal;
+uses uWMFrame;
+
+function qt_set_x11_event_filter; external QtShareName name 'qt_set_x11_event_filter__FPFP7_XEvent_i';
+
+
+//******************************************************************************
+procedure handleSignal(signo:integer);
 begin
-  case(event.xtype) of
-    KeyPress,
-    KeyRelease: result:=event.xkey.time;
 
-    ButtonPress,
-    ButtonRelease: result:=event.xbutton.time;
-
-    MotionNotify: result:=event.xmotion.time;
-
-    PropertyNotify: result:=event.xproperty.time;
-
-    SelectionClear,
-    SelectionRequest,
-    SelectionNotify: result:=event.xselection.time;
-
-    EnterNotify,
-    LeaveNotify: result:=event.xcrossing.time;
-
-    else result:=xlib.CurrentTime;
-  end
 end;
 
-function event_get_modified_window(display:TWMDisplay; var event:XEvent): Window;
-begin
-  case(event.xtype) of
-    KeyPress,
-    KeyRelease,
-    ButtonPress,
-    ButtonRelease,
-    MotionNotify,
-    FocusIn,
-    FocusOut,
-    KeymapNotify,
-    Expose,
-    GraphicsExpose,
-    NoExpose,
-    VisibilityNotify,
-    ResizeRequest,
-    PropertyNotify,
-    SelectionClear,
-    SelectionRequest,
-    SelectionNotify,
-    ColormapNotify,
-    ClientMessage,
-    EnterNotify,
-    LeaveNotify: result:=event.xany.xwindow;
-
-    CreateNotify: result:=event.xcreatewindow.xwindow;
-
-    DestroyNotify: result:=event.xdestroywindow.xwindow;
-
-    UnmapNotify: result:=event.xunmap.xwindow;
-
-    MapNotify: result:=event.xmap.xwindow;
-
-    MapRequest: result:=event.xmaprequest.xwindow;
-
-    ReparentNotify: result:=event.xreparent.xwindow;
-
-    ConfigureNotify: result:=event.xconfigure.xwindow;
-
-    ConfigureRequest: result:=event.xconfigurerequest.xwindow;
-
-    GravityNotify: result:=event.xgravity.xwindow;
-
-    CirculateNotify: result:=event.xcirculate.xwindow;
-
-    CirculateRequest: result:=event.xcirculaterequest.xwindow;
-
-    MappingNotify: result:=none;
-
-    else result:=none;
-  end;
-end;
-
-
-//Main function, it processes the X11 events and performs the creation/destruction tasks
-function event_callback(var event: XEvent):integer;cdecl;
+function event_detail_to_string (d:integer):string;
 var
-    window: TWMWindow;
-    display: TWMDisplay;
-    modified: XLib.Window;
-    frame_was_receiver: boolean;
-    filter_out_event: boolean;
+    detail: string;
 begin
-    result:=0;
-  display:=wm.display;
-
-//  if (dump_events)
-//    meta_spew_event (display, event);
-
-  filter_out_event := false;
-  display.current_time := event_get_time (display, event);
-
-  modified := event_get_modified_window (display, event);
-
-  if (event.xtype = ButtonPress) then begin
-//        XPAPI.OutputDebugString('ButtonPress');
-        (*
-            /* filter out scrollwheel */
-            if (event.xbutton.button == 4 || event.xbutton.button == 5) return FALSE;
-
-            /* mark double click events, kind of a hack, oh well. */
-            if (((int)event.xbutton.button) ==  display.last_button_num && event.xbutton.window == display.last_button_xwindow && event.xbutton.time < (display.last_button_time + display.double_click_time))
-            {
-                display.is_double_click = TRUE;
-                meta_topic (META_DEBUG_EVENTS, "This was the second click of a double click\n");
-            }
-            else
-            {
-                display.is_double_click = FALSE;
-            }
-
-            display.last_button_num = event.xbutton.button;
-            display.last_button_xwindow = event.xbutton.window;
-            display.last_button_time = event.xbutton.time;
-        *)
-  end
-  else if (event.xtype = UnmapNotify) then begin
-//        XPAPI.OutputDebugString('UnmapNotify');
-    (*
-      if (meta_ui_window_should_not_cause_focus (display.xdisplay, modified))
-        {
-          add_ignored_serial (display, event.xany.serial);
-          meta_topic (META_DEBUG_FOCUS,
-                      "Adding EnterNotify serial %lu to ignored focus serials\n",
-                      event.xany.serial);
-        }
-    *)
-  end
-  else if (event.xtype = LeaveNotify) and (event.xcrossing.mode = NotifyUngrab) and (modified = display.ungrab_should_not_cause_focus_window) then begin
-//        XPAPI.OutputDebugString('LeavNotify');
-    (*
-      add_ignored_serial (display, event.xany.serial);
-      meta_topic (META_DEBUG_FOCUS,
-                  "Adding LeaveNotify serial %lu to ignored focus serials\n",
-                  event.xany.serial);
-    *)
+  detail := '???';
+  case (d) of
+    // We are an ancestor in the A<->B focus change relationship
+    NotifyAncestor: detail := 'NotifyAncestor';
+    NotifyDetailNone: detail := 'NotifyDetailNone';
+    // We are a descendant in the A<->B focus change relationship
+    NotifyInferior: detail := 'NotifyInferior';
+    NotifyNonlinear: detail := 'NotifyNonlinear';
+    NotifyNonlinearVirtual: detail := 'NotifyNonlinearVirtual';
+    NotifyPointer: detail := 'NotifyPointer';
+    NotifyPointerRoot: detail := 'NotifyPointerRoot';
+    NotifyVirtual: detail := 'NotifyVirtual';
   end;
+  result:=detail;
+end;
 
-  if (modified<>None) then begin
-    window := display.lookup_x_window (modified);
-  end
-  else window := nil;
 
-  frame_was_receiver := false;
-  if (assigned(window)) and (assigned(window.frame)) and (modified=window.frame.xwindow) then begin
-    (*
-      /* Note that if the frame and the client both have an
-       * XGrabButton (as is normal with our setup), the event
-       * goes to the frame.
-       */
-      frame_was_receiver = TRUE;
-      meta_topic (META_DEBUG_EVENTS, "Frame was receiver of event\n");
-    *)
-  end;
-
-  case(event.xtype) of
-    KeyPress,
-    KeyRelease: begin
-//        XPAPI.OutputDebugString('KeyPress,KeyRelease');
-        //meta_display_process_key_event (display, window, event);
+function event_mode_to_string (m: integer):string;
+var
+    mode: string;
+begin
+    mode:='???';
+    case (m) of
+        NotifyNormal: mode := 'NotifyNormal';
+        NotifyGrab: mode := 'NotifyGrab';
+        NotifyUngrab: mode := 'NotifyUngrab';
+        NotifyWhileGrabbed: mode := 'NotifyWhileGrabbed';
     end;
-    
+    result:=mode;
+end;
+
+function stack_mode_to_string(mode:integer):string;
+begin
+  case (mode) of
+    Above: result:='Above';
+    Below: result:='Below';
+    TopIf: result:='TopIf';
+    BottomIf: result:='BottomIf';
+    Opposite: result:='Opposite';
+    else result:='Unknown';
+  end;
+end;
+
+function key_event_description (xdisplay: PDisplay; var event: XEvent):string;
+var
+  key:KeySym;
+  str: string;
+begin
+  key := XKeycodeToKeysym (xdisplay, event.xkey.keycode, 0);
+
+  str := XKeysymToString (key);
+
+  if (trim(str)='') then str:='(nil)';
+
+  result:=format('Key ''%s'' state $%x',[str,event.xkey.state]);
+
+end;
+
+
+procedure spewEvent(xdisplay:PDisplay;var event: XEvent);
+var
+    name: string;
+    extra: string;
+//    winname: string;
+    s1,s2,s3,s4,s5,s6,s7: string;
+begin
+  // filter overnumerous events
+  if (event.xtype = Expose) or  (event.xtype = MotionNotify) or (event.xtype = NoExpose) then exit;
+
+  case (event.xtype) of
+    KeyPress: begin
+      name := 'KeyPress';
+      extra := key_event_description (xdisplay, event);
+    end;
+    KeyRelease: begin
+      name := 'KeyRelease';
+      extra := key_event_description (xdisplay, event);
+    end;
     ButtonPress: begin
-//        XPAPI.OutputDebugString('ButtonPress');
-        (*
-        if ((window && grab_op_is_mouse (display.grab_op) && display.grab_button != (int) event.xbutton.button && display.grab_window == window) || grab_op_is_keyboard (display.grab_op))
-        {
-          meta_verbose ("Ending grab op %d on window %s due to button press\n",
-                        display.grab_op,
-                        (display.grab_window ?
-                         display.grab_window.desc :
-                         "none"));
-          meta_display_end_grab_op (display,
-                                    event.xbutton.time);
-        }
-      else if (window && display.grab_op == META_GRAB_OP_NONE)
-        {
-          gboolean begin_move = FALSE;
-          unsigned int grab_mask;
-          gboolean unmodified;
-
-          grab_mask = display.window_grab_modifiers;
-          if (g_getenv ("METACITY_DEBUG_BUTTON_GRABS"))
-            grab_mask |= ControlMask;
-
-          /* Two possible sources of an unmodified event; one is a
-           * client that's letting button presses pass through to the
-           * frame, the other is our focus_window_grab on unmodified
-           * button 1.  So for all such events we focus the window.
-           */
-          unmodified = (event.xbutton.state & grab_mask) == 0;
-
-          if ((unmodified && event.xbutton.button != 2) ||
-              event.xbutton.button == 1)
-            {
-              if (!frame_was_receiver)
-                {
-                  /* don't focus if frame received, will be
-                   * done in frames.c if the click wasn't on
-                   * the minimize/close button.
-                   */
-                  meta_window_raise (window);
-
-                  meta_topic (META_DEBUG_FOCUS,
-                              "Focusing %s due to unmodified button %d press (display.c)\n",
-                              window.desc, event.xbutton.button);
-                  meta_window_focus (window, event.xbutton.time);
-                }
-
-              /* you can move on alt-click but not on
-               * the click-to-focus
-               */
-              if (!unmodified)
-                begin_move = TRUE;
-            }
-          else if (!unmodified && event.xbutton.button == 2)
-            {
-              if (window.has_resize_func)
-                {
-                  gboolean north;
-                  gboolean west;
-                  int root_x, root_y;
-                  MetaGrabOp op;
-
-                  meta_window_get_position (window, &root_x, &root_y);
-
-                  west = event.xbutton.x_root < (root_x + window.rect.width / 2);
-                  north = event.xbutton.y_root < (root_y + window.rect.height / 2);
-
-                  if (west && north)
-                    op = META_GRAB_OP_RESIZING_NW;
-                  else if (west)
-                    op = META_GRAB_OP_RESIZING_SW;
-                  else if (north)
-                    op = META_GRAB_OP_RESIZING_NE;
-                  else
-                    op = META_GRAB_OP_RESIZING_SE;
-
-                  meta_display_begin_grab_op (display,
-                                              window.screen,
-                                              window,
-                                              op,
-                                              TRUE,
-                                              event.xbutton.button,
-                                              0,
-                                              event.xbutton.time,
-                                              event.xbutton.x_root,
-                                              event.xbutton.y_root);
-                }
-            }
-          else if (event.xbutton.button == 3)
-            {
-              meta_window_show_menu (window,
-                                     event.xbutton.x_root,
-                                     event.xbutton.y_root,
-                                     event.xbutton.button,
-                                     event.xbutton.time);
-            }
-
-          if (!frame_was_receiver && unmodified)
-            {
-              /* This is from our synchronous grab since
-               * it has no modifiers and was on the client window
-               */
-              int mode;
-              
-              /* When clicking a different app in click-to-focus
-               * in application-based mode, and the different
-               * app is not a dock or desktop, eat the focus click.
-               */
-              if (meta_prefs_get_focus_mode () == META_FOCUS_MODE_CLICK &&
-                  meta_prefs_get_application_based () &&
-                  !window.has_focus &&
-                  window.type != META_WINDOW_DOCK &&
-                  window.type != META_WINDOW_DESKTOP &&
-                  (display.focus_window == NULL ||
-                   !meta_window_same_application (window,
-                                                  display.focus_window)))
-                mode = AsyncPointer; /* eat focus click */
-              else
-                mode = ReplayPointer; /* give event back */
-              
-              XAllowEvents (display.xdisplay,
-                            mode, event.xbutton.time);
-            }
-          
-          if (begin_move && window.has_move_func)
-            {
-              meta_display_begin_grab_op (display,
-                                          window.screen,
-                                          window,
-                                          META_GRAB_OP_MOVING,
-                                          TRUE,
-                                          event.xbutton.button,
-                                          0,
-                                          event.xbutton.time,
-                                          event.xbutton.x_root,
-                                          event.xbutton.y_root);
-            }
-        }
-      break;
-      *)
+      name := 'ButtonPress';
+      extra := format ('button %d state 0x%x x %d y %d root 0x%x same_screen %d',
+                              [event.xbutton.button,
+                               event.xbutton.state,
+                               event.xbutton.x,
+                               event.xbutton.y,
+                               event.xbutton.root,
+                               event.xbutton.same_screen]);
     end;
     ButtonRelease: begin
-//        XPAPI.OutputDebugString('ButtonRelease');
-      (*
-      if (grab_op_is_mouse (display.grab_op) &&
-          display.grab_window == window)
-        meta_window_handle_mouse_grab_op_event (window, event);
-      break;
-      *)
+      name := 'ButtonRelease';
+      extra := format('button %d state 0x%x x %d y %d root 0x%x same_screen %d',
+                               [event.xbutton.button,
+                               event.xbutton.state,
+                               event.xbutton.x,
+                               event.xbutton.y,
+                               event.xbutton.root,
+                               event.xbutton.same_screen]);
     end;
     MotionNotify: begin
-//        XPAPI.OutputDebugString('MotionNotify');
-        (*
-      if (grab_op_is_mouse (display.grab_op) &&
-          display.grab_window == window)
-        meta_window_handle_mouse_grab_op_event (window, event);
-      break;
-      *)
+      name := 'MotionNotify';
+      extra := format ('win: 0x%x x: %d y: %d',
+                               [event.xmotion.xwindow,
+                               event.xmotion.x,
+                               event.xmotion.y]);
     end;
     EnterNotify: begin
-//        XPAPI.OutputDebugString('EnterNotify');
-        (*
-      /* do this even if window.has_focus to avoid races */
-      if (window && !serial_is_ignored (display, event.xany.serial) &&
-	  event.xcrossing.detail != NotifyInferior)
-        {
-          switch (meta_prefs_get_focus_mode ())
-            {
-            case META_FOCUS_MODE_SLOPPY:
-            case META_FOCUS_MODE_MOUSE:
-              if (window.type != META_WINDOW_DOCK &&
-                  window.type != META_WINDOW_DESKTOP)
-                {
-                  meta_topic (META_DEBUG_FOCUS,
-                              "Focusing %s due to enter notify with serial %lu\n",
-                              window.desc, event.xany.serial);
-
-		  meta_window_focus (window, event.xcrossing.time);
-
-		  /* stop ignoring stuff */
-		  reset_ignores (display);
-		  
-		  if (meta_prefs_get_auto_raise ()) 
-		    {
-		      MetaAutoRaiseData *auto_raise_data;
-
-		      meta_topic (META_DEBUG_FOCUS,
-				  "Queuing an autoraise timeout for %s with delay %d\n",
-				  window.desc, 
-				  meta_prefs_get_auto_raise_delay ());
-		      
-		      auto_raise_data = g_new (MetaAutoRaiseData, 1);
-		      auto_raise_data.display = window.display;
-		      auto_raise_data.xwindow = window.xwindow;
-
-		      if (display.autoraise_timeout_id != 0)
-			g_source_remove (display.autoraise_timeout_id);
-
-		      display.autoraise_timeout_id = 
-			g_timeout_add_full (G_PRIORITY_DEFAULT,
-					    meta_prefs_get_auto_raise_delay (),
-					    window_raise_with_delay_callback,
-					    auto_raise_data,
-					    g_free);
-		    }
-		  else
-		    {
-		      meta_topic (META_DEBUG_FOCUS,
-				  "Auto raise is disabled\n");		      
-		    }
-                }
-              break;
-            case META_FOCUS_MODE_CLICK:
-              break;
-            }
-          
-          if (window.type == META_WINDOW_DOCK)
-            meta_window_raise (window);
-        }
-      break;
-      *)
+      name := 'EnterNotify';
+      extra := format ('win: 0x%x root: 0x%x subwindow: 0x%x mode: %s detail: %s focus: %d x: %d y: %d',[
+                               event.xcrossing.xwindow,
+                               event.xcrossing.root,
+                               event.xcrossing.subwindow,
+                               event_mode_to_string (event.xcrossing.mode),
+                               event_detail_to_string (event.xcrossing.detail),
+                               event.xcrossing.focus,
+                               event.xcrossing.x,
+                               event.xcrossing.y]);
     end;
     LeaveNotify: begin
-//        XPAPI.OutputDebugString('LeaveNotify');
-      (*
-      if (window)
-        {
-          switch (meta_prefs_get_focus_mode ())
-            {
-            case META_FOCUS_MODE_MOUSE:
-              /* This is kind of questionable; but we normally
-               * set focus to RevertToPointerRoot, so I guess
-               * leaving it on PointerRoot when nothing is focused
-               * is probably right. Anyway, unfocus the
-               * focused window.
-               */
-              if (window.has_focus &&
-		  event.xcrossing.mode != NotifyGrab && 
-		  event.xcrossing.mode != NotifyUngrab &&
-		  event.xcrossing.detail != NotifyInferior)
-                {
-                  meta_verbose ("Unsetting focus from %s due to LeaveNotify\n",
-                                window.desc);
-                  XSetInputFocus (display.xdisplay,
-                                  display.no_focus_window,
-                                  RevertToPointerRoot,
-                                  event.xcrossing.time);
-                }
-              break;
-            case META_FOCUS_MODE_SLOPPY:
-            case META_FOCUS_MODE_CLICK:
-              break;
-            }
-          
-          if (window.type == META_WINDOW_DOCK &&
-              event.xcrossing.mode != NotifyGrab &&
-              event.xcrossing.mode != NotifyUngrab &&
-              !window.has_focus)
-            meta_window_lower (window);
-        }
-      break;
-      *)
+      name := 'LeaveNotify';
+      extra := format ('win: 0x%x root: 0x%x subwindow: 0x%x mode: %s detail: %s focus: %d x: %d y: %d',[
+                               event.xcrossing.xwindow,
+                               event.xcrossing.root,
+                               event.xcrossing.subwindow,
+                               event_mode_to_string (event.xcrossing.mode),
+                               event_detail_to_string (event.xcrossing.detail),
+                               event.xcrossing.focus,
+                               event.xcrossing.x,
+                               event.xcrossing.y]);
     end;
-    FocusIn,
+    FocusIn: begin
+      name := 'FocusIn';
+      extra := format ('detail: %s mode: %s\n',[
+                               event_detail_to_string (event.xfocus.detail),
+                               event_mode_to_string (event.xfocus.mode)]);
+    end;
     FocusOut: begin
-//        XPAPI.OutputDebugString('FocusIn,FocusOut');
-        (*
-      if (window)
-        {
-          meta_window_notify_focus (window, event);
-        }
-      else if (event.xany.window == display.no_focus_window)
-        {
-          meta_topic (META_DEBUG_FOCUS,
-                      "Focus %s event received on no_focus_window 0x%lx "
-                      "mode %s detail %s\n",
-                      event.type == FocusIn ? "in" :
-                      event.type == FocusOut ? "out" :
-                      "???",
-                      event.xany.window,
-                      meta_event_mode_to_string (event.xfocus.mode),
-                      meta_event_detail_to_string (event.xfocus.mode));
-        }
-      else if (meta_display_screen_for_root (display,
-                                             event.xany.window) != NULL)
-        {
-          meta_topic (META_DEBUG_FOCUS,
-                      "Focus %s event received on root window 0x%lx "
-                      "mode %s detail %s\n",
-                      event.type == FocusIn ? "in" :
-                      event.type == FocusOut ? "out" :
-                      "???",
-                      event.xany.window,
-                      meta_event_mode_to_string (event.xfocus.mode),
-                      meta_event_detail_to_string (event.xfocus.mode));
-        }
-      break;
-      *)
+      name := 'FocusOut';
+      extra := format ('detail: %s mode: %s\n',[
+                               event_detail_to_string (event.xfocus.detail),
+                               event_mode_to_string (event.xfocus.mode)]);
     end;
     KeymapNotify: begin
-//        XPAPI.OutputDebugString('KeymapNotify');
-      //break;
+      name := 'KeymapNotify';
     end;
     Expose: begin
-//        XPAPI.OutputDebugString('Expose');
-      //break;
+      name := 'Expose';
     end;
-    GraphicsExpose:begin
-//        XPAPI.OutputDebugString('GraphicsExpose');
-      //break;
+    GraphicsExpose: begin
+      name := 'GraphicsExpose';
     end;
     NoExpose: begin
-//        XPAPI.OutputDebugString('NoExpose');
-      //break;
+      name := 'NoExpose';
     end;
-    VisibilityNotify: begin
-//        XPAPI.OutputDebugString('VisibilityNotify');
-      //break;
-    end;
-    CreateNotify: begin
-//        XPAPI.OutputDebugString('CreateNotify');
-      //break;
-    end;
-    DestroyNotify: begin
-//        XPAPI.OutputDebugString('DestroyNotify');
-        (*
-      if (window)
-        {
-          if (display.grab_op != META_GRAB_OP_NONE &&
-              display.grab_window == window)
-            meta_display_end_grab_op (display, CurrentTime);
-
-          if (frame_was_receiver)
-            {
-              meta_warning ("Unexpected destruction of frame 0x%lx, not sure if this should silently fail or be considered a bug\n",
-                            window.frame.xwindow);
-              meta_error_trap_push (display);
-              meta_window_destroy_frame (window.frame.window);
-              meta_error_trap_pop (display, FALSE);
-            }
-          else
-            {
-              meta_window_free (window); /* Unmanage destroyed window */
-            }
-        }
-      break;
-      *)
-    end;
-
-    UnmapNotify: begin
-        // XPAPI.OutputDebugString('UnmapNotify');
-        (*
-      if (window)
-        {
-          if (display.grab_op != META_GRAB_OP_NONE &&
-              display.grab_window == window)
-            meta_display_end_grab_op (display, CurrentTime);
-
-          if (!frame_was_receiver)
-            {
-              if (window.unmaps_pending == 0)
-                {
-                  meta_topic (META_DEBUG_WINDOW_STATE,
-                              "Window %s withdrawn\n",
-                              window.desc);
-                  window.withdrawn = TRUE;
-                  meta_window_free (window); /* Unmanage withdrawn window */
-                  window = NULL;
-                }
-              else
-                {
-                  window.unmaps_pending -= 1;
-                  meta_topic (META_DEBUG_WINDOW_STATE,
-                              "Received pending unmap, %d now pending\n",
-                              window.unmaps_pending);
-                }
-            }
-
-          /* Unfocus on UnmapNotify, do this after the possible
-           * window_free above so that window_free can see if window.has_focus
-           * and move focus to another window
-           */
-          if (window)
-            meta_window_notify_focus (window, event);
-        }
-      break;
-      *)
-    end;
-    MapNotify: begin
-//        XPAPI.OutputDebugString('MapNotify');
-      //break;
-    end;
-    MapRequest: begin
-//        XPAPI.OutputDebugString('Maprequest');
-//        wm.create_new_client(event.xmaprequest.xwindow);
-        result:=1;
-
-      if (window=nil) then begin
-          if event.xmaprequest.xwindow<>display.no_focus_window then begin
-              window:=TWMWindow.create;
-              window.new(display,event.xmaprequest.xwindow,false);
-          end;
-      end
-      // if frame was receiver it's some malicious send event or something
-      else if (not (frame_was_receiver)) and assigned(window) then begin
-          if (window.minimized) then window.unminimize;
+     VisibilityNotify: begin
+      name := 'VisibilityNotify';
       end;
+     CreateNotify: begin
+      name := 'CreateNotify';
+      end;
+     DestroyNotify: begin
+      name := 'DestroyNotify';
+      end;
+     UnmapNotify: begin
+      name := 'UnmapNotify';
+      extra := format ('event: 0x%x window: 0x%x from_configure: %d',[
+                               event.xunmap.event,
+                               event.xunmap.xwindow,
+                               event.xunmap.from_configure]);
+      end;
+     MapNotify: begin
+      name := 'MapNotify';
+      extra := format ('event: 0x%x window: 0x%x override_redirect: %d',[
+                               event.xmap.event,
+                               event.xmap.xwindow,
+                               event.xmap.override_redirect]);
+      end;
+     MapRequest: begin
+      name := 'MapRequest';
+      end;
+     ReparentNotify: begin
+      name := 'ReparentNotify';
+      end;
+     ConfigureNotify: begin
+      name := 'ConfigureNotify';
+      extra := format ('x: %d y: %d w: %d h: %d above: 0x%x override_redirect: %d',[
+                               event.xconfigure.x,
+                               event.xconfigure.y,
+                               event.xconfigure.width,
+                               event.xconfigure.height,
+                               event.xconfigure.above,
+                               event.xconfigure.override_redirect]);
+      end;
+     ConfigureRequest: begin
+     s1:='(unset)';
+     s2:=s1;
+     s3:=s1;
+     s4:=s1;
+     s5:=s1;
+     s6:=s1;
+     s7:=s1;
+     if ((event.xconfigurerequest.value_mask and CWX)=CWX) then s1:='';
+     if ((event.xconfigurerequest.value_mask and CWY)=CWY) then s2:='';
+     if ((event.xconfigurerequest.value_mask and CWWidth)=CWWidth) then s3:='';
+     if ((event.xconfigurerequest.value_mask and CWHeight)=CWHeight) then s4:='';
+     if ((event.xconfigurerequest.value_mask and CWBorderWidth)=CWBorderWidth) then s5:='';
+     if ((event.xconfigurerequest.value_mask and CWSibling)=CWSibling) then s6:='';
+     if ((event.xconfigurerequest.value_mask and CWStackMode)=CWStackMode) then s7:='';
 
-    end;
-    ReparentNotify: begin
-//        XPAPI.OutputDebugString('ReparentNotify');
-      //break;
-    end;
-    ConfigureNotify: begin
-//        XPAPI.OutputDebugString('ConfigureNotify');
-     (*
-      /* Handle screen resize */
+      name := 'ConfigureRequest';
+      extra := format ('parent: 0x%x window: 0x%x x: %d %sy: %d %sw: %d %sh: %d %sborder: %d %sabove: %x %sstackmode: %s %s',[
+                               event.xconfigurerequest.parent,
+                               event.xconfigurerequest.xwindow,
+                               event.xconfigurerequest.x, s1,
+                               event.xconfigurerequest.y, s2,
+                               event.xconfigurerequest.width, s3,
+                               event.xconfigurerequest.height, s4,
+                               event.xconfigurerequest.border_width, s5,
+                               event.xconfigurerequest.above, s6,
+                               stack_mode_to_string (event.xconfigurerequest.detail), s7]);
+      end;
+     GravityNotify: begin
+      name := 'GravityNotify';
+      end;
+     ResizeRequest: begin
+      name := 'ResizeRequest';
+      extra := format ('width := %d height := %d',[
+                               event.xresizerequest.width,
+                               event.xresizerequest.height]);
+      end;
+     CirculateNotify: begin
+      name := 'CirculateNotify';
+      end;
+     CirculateRequest: begin
+      name := 'CirculateRequest';
+      end;
+     PropertyNotify: begin
       {
-	MetaScreen *screen;
+        char *str;
+        const char *state;
+            
+        name := 'PropertyNotify';
+            
+        meta_error_trap_push (display);
+        str := XGetAtomName (display.xdisplay,
+                            event.xproperty.atom);
+        meta_error_trap_pop (display, TRUE);
 
-        screen = meta_display_screen_for_root (display,
-                                               event.xconfigure.window);
-
-	if (screen != NULL)
-          {
-#ifdef HAVE_RANDR
-            /* do the resize the official way */
-            XRRUpdateConfiguration (event);
-#else
-            /* poke around in Xlib */
-            screen.xscreen.width   = event.xconfigure.width;
-            screen.xscreen.height  = event.xconfigure.height;
-#endif
-
-            meta_screen_resize (screen,
-                                event.xconfigure.width,
-                                event.xconfigure.height);
-          }
+        if (event.xproperty.state == PropertyNewValue)
+          state := 'PropertyNewValue';
+        else if (event.xproperty.state == PropertyDelete)
+          state := 'PropertyDelete';
+        else
+          state := '???';
+            
+        extra := format ('atom: %s state: %s',
+                                 str ? str : '(unknown atom)',
+                                 state);
+        meta_XFree (str);
       }
-      break;
-      *)
-    end;
-    ConfigureRequest: begin
-//        XPAPI.OutputDebugString('ConfigureRequest');
-        (*
-      /* This comment and code is found in both twm and fvwm */
-      /*
-       * According to the July 27, 1988 ICCCM draft, we should ignore size and
-       * position fields in the WM_NORMAL_HINTS property when we map a window.
-       * Instead, we'll read the current geometry.  Therefore, we should respond
-       * to configuration requests for windows which have never been mapped.
-       */
-      if (window == NULL)
-        {
-          unsigned int xwcm;
-          XWindowChanges xwc;
-          
-          xwcm = event.xconfigurerequest.value_mask &
-            (CWX | CWY | CWWidth | CWHeight | CWBorderWidth);
-
-          xwc.x = event.xconfigurerequest.x;
-          xwc.y = event.xconfigurerequest.y;
-          xwc.width = event.xconfigurerequest.width;
-          xwc.height = event.xconfigurerequest.height;
-          xwc.border_width = event.xconfigurerequest.border_width;
-
-          meta_verbose ("Configuring withdrawn window to %d,%d %dx%d border %d (some values may not be in mask)\n",
-                        xwc.x, xwc.y, xwc.width, xwc.height, xwc.border_width);
-          meta_error_trap_push (display);
-          XConfigureWindow (display.xdisplay, event.xconfigurerequest.window,
-                            xwcm, &xwc);
-          meta_error_trap_pop (display, FALSE);
-        }
-      else
-        {
-          if (!frame_was_receiver)
-            meta_window_configure_request (window, event);
-        }
-      break;
-      *)
-    end;
-    GravityNotify: begin
-//        XPAPI.OutputDebugString('GravityNotify');
-      //break;
-    end;
-    ResizeRequest: begin
-//        XPAPI.OutputDebugString('ResizeRequest');
-      //break;
-    end;
-    CirculateNotify: begin
-//        XPAPI.OutputDebugString('CirculateNotify');
-      //break;
-    end;
-    CirculateRequest: begin
-//        XPAPI.OutputDebugString('CirculateRequest');
-      //break;
-    end;
-    PropertyNotify: begin
-//        XPAPI.OutputDebugString('PropertyNotify');
-        (*
-      if (window && !frame_was_receiver)
-        meta_window_property_notify (window, event);
-      else
-        {
-          MetaScreen *screen;
-
-          screen = meta_display_screen_for_root (display,
-                                                 event.xproperty.window);
-
-          if (screen)
-            {
-              if (event.xproperty.atom ==
-                  display.atom_net_desktop_layout)
-                meta_screen_update_workspace_layout (screen);
-              else if (event.xproperty.atom ==
-                       display.atom_net_desktop_names)
-                meta_screen_update_workspace_names (screen);
-            }
-        }
-      break;
-      *)
-    end;
-    SelectionClear: begin
-//        XPAPI.OutputDebugString('SelectionClear');
-        (*
-      /* do this here instead of at end of function
-       * so we can return
-       */
-      display.current_time = CurrentTime;
-      process_selection_clear (display, event);
-      /* Note that processing that may have resulted in
-       * closing the display... so return right away.
-       */
-      return FALSE;
-      break;
-      *)
-    end;
-    SelectionRequest: begin
-//        XPAPI.OutputDebugString('SelectionRequest');
-      //process_selection_request (display, event);
-      //break;
-    end;
-    SelectionNotify: begin
-//        XPAPI.OutputDebugString('SelectionNotify');
-      //break;
-    end;
-    ColormapNotify: begin
-//        XPAPI.OutputDebugString('ColormapNotify');
-        {
-      if (window && !frame_was_receiver)
-        window.colormap = event.xcolormap.colormap;
-      break;
+      end;
+     SelectionClear: begin
+      name := 'SelectionClear';
+      end;
+     SelectionRequest: begin
+      name := 'SelectionRequest';
+      end;
+     SelectionNotify: begin
+      name := 'SelectionNotify';
+      end;
+     ColormapNotify: begin
+      name := 'ColormapNotify';
+      end;
+     ClientMessage: begin
+      {
+        char *str;
+        name := 'ClientMessage';
+        meta_error_trap_push (display);
+        str := XGetAtomName (display.xdisplay,
+                            event.xclient.message_type);
+        meta_error_trap_pop (display, TRUE);
+        extra := format ('type: %s format: %d\n',
+                                 str ? str : '(unknown atom)',
+                                 event.xclient.format);
+        meta_XFree (str);
       }
+      end;
+     MappingNotify: begin
+      name := 'MappingNotify';
+      end;
+    else begin
+      name := '(Unknown event)';
+      extra := format ('type: %d', [event.xany.xtype]);
+      end;
+  end;
+
+{
+  screen := meta_display_screen_for_root (display, event.xany.xwindow);
+
+  if (screen)
+    winname := format ('root %d', screen.number);
+  else
+    winname := format ('0x%x', event.xany.xwindow);
+
+  meta_topic (META_DEBUG_EVENTS,
+              '%s on %s%s %s %sserial %u\n', name, winname,
+              extra ? ':' : '', extra ? extra : '',
+              event.xany.send_event ? 'SEND ' : '',
+              event.xany.serial);
+
+  g_free (winname);
+
+  if (extra)
+    g_free (extra);
+}
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iEVENT,name+' '+extra);
+    {$endif}
+end;
+
+function eventhandler(var event: XEvent):integer;cdecl;
+begin
+    {$ifdef DEBUG}
+    spewEvent(xpwindowmanager.display,event);
+    {$endif}
+    case event.xtype of
+        maprequest: result:=xpwindowmanager.handleMapRequest(event);
+        unmapnotify: result:=xpwindowmanager.handleUnmapNotify(event);
+        enternotify: result:=xpwindowmanager.handleenternotify(event);
+        buttonpress: result:=xpwindowmanager.handlebuttonpress(event);
+        configurerequest: result:=xpwindowmanager.handleConfigurerequest(event);
+        configurenotify: result:=xpwindowmanager.handleConfigurenotify(event);
+        else result:=0;
     end;
-    ClientMessage: begin
-//        XPAPI.OutputDebugString('ClientMessage');
-        (*
-      if (window)
-        {
-          if (!frame_was_receiver)
-            meta_window_client_message (window, event);
-        }
-      else
-        {
-          MetaScreen *screen;
+end;
 
-          screen = meta_display_screen_for_root (display,
-                                                 event.xclient.window);
-
-          if (screen)
-            {
-              if (event.xclient.message_type ==
-                  display.atom_net_current_desktop)
-                {
-                  int space;
-                  MetaWorkspace *workspace;
-
-                  space = event.xclient.data.l[0];
-
-                  meta_verbose ("Request to change current workspace to %d\n",
-                                space);
-
-                  workspace =
-                    meta_screen_get_workspace_by_index (screen,
-                                                        space);
-
-                  if (workspace)
-                    meta_workspace_activate (workspace);
-                  else
-                    meta_verbose ("Don't know about workspace %d\n", space);
-                }
-              else if (event.xclient.message_type ==
-                       display.atom_net_number_of_desktops)
-                {
-                  int num_spaces;
-
-                  num_spaces = event.xclient.data.l[0];
-
-                  meta_verbose ("Request to set number of workspaces to %d\n",
-                                num_spaces);
-
-                  meta_prefs_set_num_workspaces (num_spaces);
-                }
-	      else if (event.xclient.message_type ==
-		       display.atom_net_showing_desktop)
-		{
-		  gboolean showing_desktop;
-
-		  showing_desktop = event.xclient.data.l[0] != 0;
-		  meta_verbose ("Request to %s desktop\n", showing_desktop ? "show" : "hide");
-
-		  if (showing_desktop)
-		    meta_screen_show_desktop (screen);
-		  else
-		    meta_screen_unshow_desktop (screen);
-		}
-              else if (event.xclient.message_type ==
-                       display.atom_metacity_restart_message)
-                {
-                  meta_verbose ("Received restart request\n");
-                  meta_restart ();
-                }
-              else if (event.xclient.message_type ==
-                       display.atom_metacity_reload_theme_message)
-                {
-                  meta_verbose ("Received reload theme request\n");
-                  meta_ui_set_current_theme (meta_prefs_get_theme (),
-                                             TRUE);
-                  meta_display_retheme_all ();
-                }
-              else if (event.xclient.message_type ==
-                       display.atom_metacity_set_keybindings_message)
-                {
-                  meta_verbose ("Received set keybindings request = %d\n",
-                                (int) event.xclient.data.l[0]);
-                  meta_set_keybindings_disabled (!event.xclient.data.l[0]);
-                }
-	      else if (event.xclient.message_type ==
-		       display.atom_wm_protocols) 
-		{
-                  meta_verbose ("Received WM_PROTOCOLS message\n");
-                  
-		  if ((Atom)event.xclient.data.l[0] == display.atom_net_wm_ping)
-                    {
-                      process_pong_message (display, event);
-
-                      /* We don't want ping reply events going into
-                       * the GTK+ event loop because gtk+ will treat
-                       * them as ping requests and send more replies.
-                       */
-                      filter_out_event = TRUE;
-                    }
-		}
-            }
-        }
-      break;
-        *)
-    end;
-    MappingNotify: begin
-//        XPAPI.OutputDebugString('MappingNotify');
-        (*
-      /* Let XLib know that there is a new keyboard mapping.
-       */
-      XRefreshKeyboardMapping (&event.xmapping);
-      meta_display_process_mapping_event (display, event);
-      break;
-      *)
-    end;
-    end;
-  display.current_time := XLib.CurrentTime;
+function handleXerror(var dpy:Display;var e:XErrorEvent):integer;
+begin
+    result:=0;
 end;
 
 //******************************************************************************
@@ -897,500 +538,1311 @@ end;
 constructor TXPWindowManager.Create;
 begin
     inherited;
-    display:=TWMDisplay.create;
-    screen:=TWMScreen.create;
-    atom_names:=TStringList.create;
-    add_atom_names;
+    FServerGrabCount:=0;
+    FDisplay:=nil;
+    FRoot:=none;
+    FClients:=TList.create;
+end;
+
+procedure TXPWindowManager.createExistingWindows;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.createExistingWindows');
+    {$endif}
 end;
 
 destructor TXPWindowManager.Destroy;
 begin
-    atom_names.free;
-    screen.free;
-    display.free;
-    inherited;
+   FClients.free;
+   inherited;
 end;
 
-procedure TXPWindowManager.add_atom_names;
+function TXPWindowManager.GetAtoms(Index: Integer): Atom;
 begin
-    with atom_names do begin
-        add('_NET_WM_NAME');
-        add('WM_PROTOCOLS');
-        add('WM_TAKE_FOCUS');
-        add('WM_DELETE_WINDOW');
-        add('WM_STATE');
-        add('_NET_CLOSE_WINDOW');
-        add('_NET_WM_STATE');
-        add('_MOTIF_WM_HINTS');
-        add('_NET_WM_STATE_SHADED');
-        add('_NET_WM_STATE_MAXIMIZED_HORZ');
-        add('_NET_WM_STATE_MAXIMIZED_VERT');
-        add('_NET_WM_DESKTOP');
-        add('_NET_NUMBER_OF_DESKTOPS');
-        add('WM_CHANGE_STATE');
-        add('SM_CLIENT_ID');
-        add('WM_CLIENT_LEADER');
-        add('WM_WINDOW_ROLE');
-        add('_NET_CURRENT_DESKTOP');
-        add('_NET_SUPPORTING_WM_CHECK');
-        add('_NET_SUPPORTED');
-        add('_NET_WM_WINDOW_TYPE');
-        add('_NET_WM_WINDOW_TYPE_DESKTOP');
-        add('_NET_WM_WINDOW_TYPE_DOCK');
-        add('_NET_WM_WINDOW_TYPE_TOOLBAR');
-        add('_NET_WM_WINDOW_TYPE_MENU');
-        add('_NET_WM_WINDOW_TYPE_DIALOG');
-        add('_NET_WM_WINDOW_TYPE_NORMAL');
-        add('_NET_WM_STATE_MODAL');
-        add('_NET_CLIENT_LIST');
-        add('_NET_CLIENT_LIST_STACKING');
-        add('_NET_WM_STATE_SKIP_TASKBAR');
-        add('_NET_WM_STATE_SKIP_PAGER');
-        add('_WIN_WORKSPACE');
-        add('_WIN_LAYER');
-        add('_WIN_PROTOCOLS');
-        add('_WIN_SUPPORTING_WM_CHECK');
-        add('_NET_WM_ICON_NAME');
-        add('_NET_WM_ICON');
-        add('_NET_WM_ICON_GEOMETRY');
-        add('UTF8_STRING');
-        add('WM_ICON_SIZE');
-        add('_KWM_WIN_ICON');
-        add('_NET_WM_MOVERESIZE');
-        add('_NET_ACTIVE_WINDOW');
-        add('_METACITY_RESTART_MESSAGE');
-        add('_NET_WM_STRUT');
-        add('_WIN_HINTS');
-        add('_METACITY_RELOAD_THEME_MESSAGE');
-        add('_METACITY_SET_KEYBINDINGS_MESSAGE');
-        add('_NET_WM_STATE_HIDDEN');
-        add('_NET_WM_WINDOW_TYPE_UTILITY');
-        add('_NET_WM_WINDOW_TYPE_SPLASHSCREEN');
-        add('_NET_WM_STATE_FULLSCREEN');
-        add('_NET_WM_PING');
-        add('_NET_WM_PID');
-        add('WM_CLIENT_MACHINE');
-        add('_NET_WORKAREA');
-        add('_NET_SHOWING_DESKTOP');
-        add('_NET_DESKTOP_LAYOUT');
-        add('MANAGER');
-        add('TARGETS');
-        add('MULTIPLE');
-        add('TIMESTAMP');
-        add('VERSION');
-        add('ATOM_PAIR');
-        add('_NET_DESKTOP_NAMES');
-        add('_NET_WM_ALLOWED_ACTIONS');
-        add('_NET_WM_ACTION_MOVE');
-        add('_NET_WM_ACTION_RESIZE');
-        add('_NET_WM_ACTION_SHADE');
-        add('_NET_WM_ACTION_STICK');
-        add('_NET_WM_ACTION_MAXIMIZE_HORZ');
-        add('_NET_WM_ACTION_MAXIMIZE_VERT');
-        add('_NET_WM_ACTION_CHANGE_DESKTOP');
-        add('_NET_WM_ACTION_CLOSE');
-        add('_NET_WM_STATE_ABOVE');
-        add('_NET_WM_STATE_BELOW');
-    end;
+    result:=FAtoms[Index];
 end;
 
-procedure TXPWindowManager.display_open;
+function TXPWindowManager.getDesktopClientRect: TRect;
 var
-    xdisplay: PDisplay;
-    i: integer;
-    atomn: array[0..76] of PChar;
-    atoms: array[0..76] of Atom;
-    data: array[0..1] of integer;
+    r: TRect;
+    t: TRect;
 begin
-    for i:=0 to atom_names.count-1 do begin
-        atomn[i]:=stralloc(length(atom_names[i])+1);
-        strpcopy(atomn[i],atom_names[i]);
-    end;
-//  Atom atoms[G_N_ELEMENTS(atom_names)];
-    xdisplay := application.Display;
-
-    if not (assigned(xdisplay)) then XPAPI.OutputDebugString('Failed to open X Window System display');
-
-    XSynchronize (xdisplay, 1);
-
-    display.closing:= 0;
-
-
-  {* here we use XDisplayName which is what the user
-   * probably put in, vs. DisplayString(display) which is
-   * canonicalized by XOpenDisplay()
-   *}
-   display.name := '';
-   display.xdisplay := xdisplay;
-   display.error_trap_synced_at_last_pop := true;
-   display.error_traps := 0;
-   display.error_trap_handler := nil;
-   display.server_grab_count := 0;
-
-   display.pending_pings := nil;
-   display.autoraise_timeout_id := false;
-   display.focus_window := nil;
-   display.expected_focus_window := nil;
-   display.mru_list := nil;
-
-   display.static_gravity_works:=false;
-
-   // display_init_keys (display);
-
-   //update_window_grab_modifiers (display);
-//   XInternAtoms (display.xdisplay, atom_names, G_N_ELEMENTS (atom_names), False, atoms);
-   XInternAtoms (display.xdisplay, @atomn, atom_names.count, 0, @atoms);
-
-    for i:=0 to atom_names.count-1 do begin
-        strdispose(atomn[i]);
-    end;
-
-  display.atom_net_wm_name := atoms[0];
-  display.atom_wm_protocols := atoms[1];
-  display.atom_wm_take_focus := atoms[2];
-  display.atom_wm_delete_window := atoms[3];
-  display.atom_wm_state := atoms[4];
-  display.atom_net_close_window := atoms[5];
-  display.atom_net_wm_state := atoms[6];
-  display.atom_motif_wm_hints := atoms[7];
-  display.atom_net_wm_state_shaded := atoms[8];
-  display.atom_net_wm_state_maximized_horz := atoms[9];
-  display.atom_net_wm_state_maximized_vert := atoms[10];
-  display.atom_net_wm_desktop := atoms[11];
-  display.atom_net_number_of_desktops := atoms[12];
-  display.atom_wm_change_state := atoms[13];
-  display.atom_sm_client_id := atoms[14];
-  display.atom_wm_client_leader := atoms[15];
-  display.atom_wm_window_role := atoms[16];
-  display.atom_net_current_desktop := atoms[17];
-  display.atom_net_supporting_wm_check := atoms[18];
-  display.atom_net_supported := atoms[19];
-  display.atom_net_wm_window_type := atoms[20];
-  display.atom_net_wm_window_type_desktop := atoms[21];
-  display.atom_net_wm_window_type_dock := atoms[22];
-  display.atom_net_wm_window_type_toolbar := atoms[23];
-  display.atom_net_wm_window_type_menu := atoms[24];
-  display.atom_net_wm_window_type_dialog := atoms[25];
-  display.atom_net_wm_window_type_normal := atoms[26];
-  display.atom_net_wm_state_modal := atoms[27];
-  display.atom_net_client_list := atoms[28];
-  display.atom_net_client_list_stacking := atoms[29];
-  display.atom_net_wm_state_skip_taskbar := atoms[30];
-  display.atom_net_wm_state_skip_pager := atoms[31];
-  display.atom_win_workspace := atoms[32];
-  display.atom_win_layer := atoms[33];
-  display.atom_win_protocols := atoms[34];
-  display.atom_win_supporting_wm_check := atoms[35];
-  display.atom_net_wm_icon_name := atoms[36];
-  display.atom_net_wm_icon := atoms[37];
-  display.atom_net_wm_icon_geometry := atoms[38];
-  display.atom_utf8_string := atoms[39];
-  display.atom_wm_icon_size := atoms[40];
-  display.atom_kwm_win_icon := atoms[41];
-  display.atom_net_wm_moveresize := atoms[42];
-  display.atom_net_active_window := atoms[43];
-  display.atom_metacity_restart_message := atoms[44];
-  display.atom_net_wm_strut := atoms[45];
-  display.atom_win_hints := atoms[46];
-  display.atom_metacity_reload_theme_message := atoms[47];
-  display.atom_metacity_set_keybindings_message := atoms[48];
-  display.atom_net_wm_state_hidden := atoms[49];
-  display.atom_net_wm_window_type_utility := atoms[50];
-  display.atom_net_wm_window_type_splashscreen := atoms[51];
-  display.atom_net_wm_state_fullscreen := atoms[52];
-  display.atom_net_wm_ping := atoms[53];
-  display.atom_net_wm_pid := atoms[54];
-  display.atom_wm_client_machine := atoms[55];
-  display.atom_net_workarea := atoms[56];
-  display.atom_net_showing_desktop := atoms[57];
-  display.atom_net_desktop_layout := atoms[58];
-  display.atom_manager := atoms[59];
-  display.atom_targets := atoms[60];
-  display.atom_multiple := atoms[61];
-  display.atom_timestamp := atoms[62];
-  display.atom_version := atoms[63];
-  display.atom_atom_pair := atoms[64];
-  display.atom_net_desktop_names := atoms[65];
-  display.atom_net_wm_allowed_actions := atoms[66];
-  display.atom_net_wm_action_move := atoms[67];
-  display.atom_net_wm_action_resize := atoms[68];
-  display.atom_net_wm_action_shade := atoms[69];
-  display.atom_net_wm_action_stick := atoms[70];
-  display.atom_net_wm_action_maximize_horz := atoms[71];
-  display.atom_net_wm_action_maximize_vert := atoms[72];
-  display.atom_net_wm_action_change_desktop := atoms[73];
-  display.atom_net_wm_action_close := atoms[74];
-  display.atom_net_wm_state_above := atoms[75];
-  display.atom_net_wm_state_below := atoms[76];
-
-  {* Offscreen unmapped window used for _NET_SUPPORTING_WM_CHECK,
-   * created in screen_new
-   *}
-  display.leader_window := none;
-  display.no_focus_window := none;
-  qt_set_x11_event_filter(@event_callback);
-
-
-  display.double_click_time := 250;
-  display.last_button_time := 0;
-  display.last_button_xwindow := None;
-  display.last_button_num := 0;
-  display.is_double_click := FALSE;
-
-  i := 0;
-  while (i < N_IGNORED_SERIALS) do begin
-      display.ignored_serials[i] := 0;
-      inc(i);
+    r:=rect(0,0,qforms.screen.width,qforms.screen.height);
+    t:=XPTaskbar.getRect;
+    //This needs more work, to know the real position of the taskbar
+    //it only supports the taskbar at the bottom
+    result:=rect(0,0,r.Right,t.top);
+end;
+// Grab/ungrab routines taken from fvwm
+procedure TXPWindowManager.grabDisplay;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iBEGINPROCESS,'Grabdisplay');    
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.grabdisplay, FServerGrabCount='+inttostr(FServerGrabCount));
+    {$endif}
+  if (FServerGrabCount = 0) then begin
+      XSync (FDisplay, 0);
+      XGrabServer (FDisplay);
   end;
-  display.ungrab_should_not_cause_focus_window := None;
-
-  display.current_time := CurrentTime;
-
-  display.grab_op := gbGRAB_OP_NONE;
-  display.grab_window := nil;
-  display.grab_screen := nil;
-
-  screen.create_new(display, XDefaultScreen (xdisplay));
-
-
-
-  (* display.leader_window was created as a side effect of
-   * initializing the screens
-   *)
-  {
-  set_utf8_string_hint (display,
-                        display.leader_window,
-                        display.atom_net_wm_name,
-                        "XPwm");
-  }
-
-
-    {* The legacy GNOME hint is to set a cardinal which is the window
-     * id of the supporting_wm_check window on the supporting_wm_check
-     * window itself
-     *}
-
-    data[0] := display.leader_window;
-    XChangeProperty (display.xdisplay,
-                     display.leader_window,
-                     display.atom_win_supporting_wm_check,
-                     XA_CARDINAL,
-                     32, PropModeReplace, @data, 1);
-
-    XChangeProperty (display.xdisplay,
-                     display.leader_window,
-                     display.atom_net_supporting_wm_check,
-                     XA_WINDOW,
-                     32, PropModeReplace, @data, 1);
-
-
-    display.grab;
-
-(*
-  /* Now manage all existing windows */
-  tmp := display.screens;
-  while (tmp != NULL)
-    {
-      meta_screen_manage_all_windows (tmp.data);
-      tmp := tmp.next;
-    }
-
-  {
-    Window focus;
-    int ret_to;
-
-    /* kinda bogus because GetInputFocus has no possible errors */
-    meta_error_trap_push (display);
-
-    focus := None;
-    ret_to := RevertToNone;
-    XGetInputFocus (display.xdisplay, &focus, &ret_to);
-
-    /* Force a new FocusIn (does this work?) */
-    XSetInputFocus (display.xdisplay, focus, ret_to, CurrentTime);
-
-    meta_error_trap_pop (display, FALSE);
-  }
-*)
-
-  display.ungrab;
+  XSync (FDisplay, 0);
+  inc(FServerGrabCount);
 end;
 
-//Functions that must not own to any object
-//It handles the registered signals
-procedure handleSignal(signo:integer);
+function TXPWindowManager.handleButtonPress(var event:XEvent): integer;
+var
+    c: TWMClient;
+    xwindow: window;
 begin
-(*
-	if (signo = SIGCHLD) then begin
-		wait(nil);
-		exit;
-	end;
-
-    { TODO : Handle the exit command from a console that stops the wm }
-    //Maybe it's due to this lines, I have to test it
-    wm.free;
-	XSetInputFocus(wm.dpy, PointerRoot, RevertToPointerRoot, CurrentTime);
-	XInstallColormap(wm.dpy, XDefaultColormap(wm.dpy, wm.screen));
-	XCloseDisplay(wm.dpy);
-*)    
+    xwindow:=event.xany.xwindow;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleButtonPress %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
+    c:=findclient(xwindow);
+    if assigned(c) then begin
+        c.activate;
+    end
+    else begin
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iWARNING,format('Not client found to activate on BUTTONPRESS %s',[xlibinterface.formatwindow(xwindow)]));
+        {$endif}
+    end;
+    result:=0;
 end;
 
-procedure TXPWindowManager.setup;
+function TXPWindowManager.handleButtonRelease(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleClientMessage(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleColorMapNotify(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleConfigureNotify(var event:XEvent): integer;
+var
+    xwindow: window;
+begin
+    {$ifdef DEBUG}
+    xwindow:=event.xconfigure.xwindow;    
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleconfigurenotify %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
+    result:=1;
+end;
+
+function TXPWindowManager.handleConfigureRequest(var event:XEvent): integer;
+var
+    c: TWMClient;
+    xwindow: window;
+    xwcm: cardinal;
+    xwc: XWindowChanges;
+begin
+      {* This comment and code is found in both twm and fvwm
+       *
+       * According to the July 27, 1988 ICCCM draft, we should ignore size and
+       * position fields in the WM_NORMAL_HINTS property when we map a window.
+       * Instead, we'll read the current geometry.  Therefore, we should respond
+       * to configuration requests for windows which have never been mapped.
+       *}
+    xwindow:=event.xconfigurerequest.xwindow;
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iBEGINPROCESS,'HANDLE_CONFIGURE_REQUEST');
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleconfigurerequest %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
+    c:=findclient(xwindow);
+    if (not(assigned(c))) then begin
+        xwcm := event.xconfigurerequest.value_mask and (CWX or CWY or CWWidth or CWHeight or CWBorderWidth);
+
+        xwc.x := event.xconfigurerequest.x;
+        xwc.y := event.xconfigurerequest.y;
+        xwc.width := event.xconfigurerequest.width;
+        xwc.height := event.xconfigurerequest.height;
+        xwc.border_width := event.xconfigurerequest.border_width;
+
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iINFO,format('Configuring withdrawn window %s to %d,%d %dx%d border %d (some values may not be in mask)',[xlibinterface.formatwindow(xwindow),xwc.x, xwc.y, xwc.width, xwc.height, xwc.border_width]));
+        {$endif}
+
+        XConfigureWindow (Fdisplay, event.xconfigurerequest.xwindow, xwcm, @xwc);
+    end
+    else begin
+        c.configure_request(event);
+    end;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iENDPROCESS,'HANDLE_CONFIGURE_REQUEST');
+    {$endif}
+    result:=0;
+end;
+
+function TXPWindowManager.handleDestroyNotify(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleEnterNotify(var event:XEvent): integer;
+var
+    c: TWMClient;
+    xwindow: window;
+begin
+    xwindow:=event.xany.xwindow;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleenternotify %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
+    c:=findclient(xwindow);
+    if assigned(c) then begin
+        if (c.isactive) then c.focus
+    end
+    else begin
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iWARNING,format('Not client found to focus %s',[xlibinterface.formatwindow(xwindow)]));
+        {$endif}
+    end;
+    result:=0;
+end;
+
+function TXPWindowManager.handleFocusInOut(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleLeaveNotify(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleMappingNotify(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleMapRequest(var event:XEvent): integer;
+var
+    c: TWMClient;
+    xwindow: window;
+begin
+    xwindow:=event.xmaprequest.xwindow;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iBEGINPROCESS,'HANDLE_MAP_REQUEST');
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handlemaprequest %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
+    c:=findclient(xwindow);
+    if assigned(c) then c.restore
+    else begin
+        createNewClient(xwindow);
+    end;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iENDPROCESS,'HANDLE_MAP_REQUEST');
+    {$endif}
+    result:=0;    
+end;
+
+function TXPWindowManager.handleMotionNotify(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handlePropertyNotify(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleSelectionClear(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleSelectionRequest(var event:XEvent): integer;
+begin
+    result:=0;
+end;
+
+function TXPWindowManager.handleUnmapNotify(var event:XEvent): integer;
+var
+    c: TWMClient;
+    xwindow: window;
+begin
+    xwindow:=event.xunmap.xwindow;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iBEGINPROCESS,'HANDLE_UNMAP_NOTIFY');
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.handleunmapNotify '+xlibinterface.formatwindow(xwindow));
+    {$endif}
+    c:=findclient(xwindow);
+    if assigned(c) then begin
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iINFO,format('Checking client unmap counter: %d for window %s',[c.unmapcounter,xlibinterface.formatwindow(xwindow)]));
+        {$endif}
+        if (c.UnmapCounter=0) then begin
+           {$ifdef DEBUG}
+           xlibinterface.outputDebugString(iINFO,format('Removing client %s',[xlibinterface.formatwindow(xwindow)]));
+           {$endif}
+            clients.Remove(c);
+            if c=FActiveClient then ActiveClient:=nil;
+            c.free;
+        end
+        else c.UnmapCounter:=c.UnmapCounter-1;
+    end
+    else begin
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iINFO,'Client for window '+xlibinterface.formatwindow(xwindow)+' not found in handleUnmapNotify');
+        {$endif}
+    end;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iENDPROCESS,'HANDLE_UNMAP_NOTIFY');
+    {$endif}
+    result:=0;
+end;
+
+procedure TXPWindowManager.install;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iBEGINPROCESS,'WINDOW_MANAGER_INSTALLATION');
+    xlibinterface.outputDebugString(iMETHOD, 'TXPWindowManager.install');
+    {$endif}
+
+    FDisplay := application.Display;
+    setupErrorHandler;
+    setupSignals;
+    setupAtoms;
+    setupDisplay;
+    createExistingWindows;
+    setupEventHandler;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iENDPROCESS,'WINDOW_MANAGER_INSTALLATION');
+    {$endif}
+end;
+
+procedure TXPWindowManager.SetAtoms(Index: Integer; const Value: Atom);
+begin
+
+end;
+
+procedure TXPWindowManager.setupAtoms;
+var
+    i: integer;
+    atomn: array[0..maxAtoms] of PChar;
+    atomNames: TStringList;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.setupAtoms');
+    {$endif}
+    atomNames:=TStringList.create;
+    try
+        with atomNames do begin
+            add('_NET_WM_NAME');
+            add('WM_PROTOCOLS');
+            add('WM_TAKE_FOCUS');
+            add('WM_DELETE_WINDOW');
+            add('WM_STATE');
+            add('_NET_CLOSE_WINDOW');
+            add('_NET_WM_STATE');
+            add('_MOTIF_WM_HINTS');
+            add('_NET_WM_STATE_SHADED');
+            add('_NET_WM_STATE_MAXIMIZED_HORZ');
+            add('_NET_WM_STATE_MAXIMIZED_VERT');
+            add('_NET_WM_DESKTOP');
+            add('_NET_NUMBER_OF_DESKTOPS');
+            add('WM_CHANGE_STATE');
+            add('SM_CLIENT_ID');
+            add('WM_CLIENT_LEADER');
+            add('WM_WINDOW_ROLE');
+            add('_NET_CURRENT_DESKTOP');
+            add('_NET_SUPPORTING_WM_CHECK');
+            add('_NET_SUPPORTED');
+            add('_NET_WM_WINDOW_TYPE');
+            add('_NET_WM_WINDOW_TYPE_DESKTOP');
+            add('_NET_WM_WINDOW_TYPE_DOCK');
+            add('_NET_WM_WINDOW_TYPE_TOOLBAR');
+            add('_NET_WM_WINDOW_TYPE_MENU');
+            add('_NET_WM_WINDOW_TYPE_DIALOG');
+            add('_NET_WM_WINDOW_TYPE_NORMAL');
+            add('_NET_WM_STATE_MODAL');
+            add('_NET_CLIENT_LIST');
+            add('_NET_CLIENT_LIST_STACKING');
+            add('_NET_WM_STATE_SKIP_TASKBAR');
+            add('_NET_WM_STATE_SKIP_PAGER');
+            add('_WIN_WORKSPACE');
+            add('_WIN_LAYER');
+            add('_WIN_PROTOCOLS');
+            add('_WIN_SUPPORTING_WM_CHECK');
+            add('_NET_WM_ICON_NAME');
+            add('_NET_WM_ICON');
+            add('_NET_WM_ICON_GEOMETRY');
+            add('UTF8_STRING');
+            add('WM_ICON_SIZE');
+            add('_KWM_WIN_ICON');
+            add('_NET_WM_MOVERESIZE');
+            add('_NET_ACTIVE_WINDOW');
+            add('_METACITY_RESTART_MESSAGE');
+            add('_NET_WM_STRUT');
+            add('_WIN_HINTS');
+            add('_METACITY_RELOAD_THEME_MESSAGE');
+            add('_METACITY_SET_KEYBINDINGS_MESSAGE');
+            add('_NET_WM_STATE_HIDDEN');
+            add('_NET_WM_WINDOW_TYPE_UTILITY');
+            add('_NET_WM_WINDOW_TYPE_SPLASHSCREEN');
+            add('_NET_WM_STATE_FULLSCREEN');
+            add('_NET_WM_PING');
+            add('_NET_WM_PID');
+            add('WM_CLIENT_MACHINE');
+            add('_NET_WORKAREA');
+            add('_NET_SHOWING_DESKTOP');
+            add('_NET_DESKTOP_LAYOUT');
+            add('MANAGER');
+            add('TARGETS');
+            add('MULTIPLE');
+            add('TIMESTAMP');
+            add('VERSION');
+            add('ATOM_PAIR');
+            add('_NET_DESKTOP_NAMES');
+            add('_NET_WM_ALLOWED_ACTIONS');
+            add('_NET_WM_ACTION_MOVE');
+            add('_NET_WM_ACTION_RESIZE');
+            add('_NET_WM_ACTION_SHADE');
+            add('_NET_WM_ACTION_STICK');
+            add('_NET_WM_ACTION_MAXIMIZE_HORZ');
+            add('_NET_WM_ACTION_MAXIMIZE_VERT');
+            add('_NET_WM_ACTION_CHANGE_DESKTOP');
+            add('_NET_WM_ACTION_CLOSE');
+            add('_NET_WM_STATE_ABOVE');
+            add('_NET_WM_STATE_BELOW');
+        end;
+
+        for i:=0 to atomNames.count-1 do begin
+            atomn[i]:=stralloc(length(atomNames[i])+1);
+            strpcopy(atomn[i],atomNames[i]);
+        end;
+
+        XInternAtoms (Fdisplay, @atomn, atomNames.count, 0, @FAtoms);
+
+        for i:=0 to atomNames.count-1 do begin
+            strdispose(atomn[i]);
+        end;
+    finally
+        atomNames.free;
+    end;
+end;
+
+function TXPWindowManager.set_wm_icon_size_hint: integer;
+const
+    N_VALS=6;
+var
+    vals:array[0..N_VALS] of integer;
+begin
+  // min width, min height, max w, max h, width inc, height inc
+  vals[0] := ICON_WIDTH;
+  vals[1] := ICON_HEIGHT;
+  vals[2] := ICON_WIDTH;
+  vals[3] := ICON_HEIGHT;
+  vals[4] := 0;
+  vals[5] := 0;
+
+  XChangeProperty (Fdisplay, Froot, Atoms[atom_wm_icon_size], XA_CARDINAL, 32, PropModeReplace, @vals, N_VALS);
+
+  result:=Success;
+end;
+
+function TXPWindowManager.set_wm_check_hint:integer;
+var
+    data:array[0..1] of cardinal;
+begin
+  data[0] := FRoot;
+
+  XChangeProperty (FDisplay, FRoot, atoms[atom_net_supporting_wm_check],
+                   XA_WINDOW,
+                   32, PropModeReplace, @data, 1);
+
+  // Legacy GNOME hint (uses cardinal, dunno why)
+
+  {* do this after setting up window fully, to avoid races
+   * with clients listening to property notify on root.
+   *}
+  XChangeProperty (FDisplay, FRoot,
+                   atoms[atom_win_supporting_wm_check],
+                   XA_CARDINAL,
+                   32, PropModeReplace, @data, 1);
+
+  result:=Success;
+end;
+
+procedure TXPWindowManager.setupDisplay;
+var
+    buf: string;
+    wm_sn_atom: Atom;
+    wm_sn_owner: Window;
+    attr:XWindowAttributes;
+    attrs: XSetWindowAttributes;
+    event: XEvent;
+    manager_timestamp: TTime;
+
+    i:integer;
+
+    ev: XClientMessageEvent;
+
+    ats: array[0..atomsSupported] of Atom;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.setupDisplay');
+    {$endif}
+    XSynchronize (FDisplay, 1);
+
+	FScreen:= XDefaultScreen(FDisplay);
+	FRoot := XRootWindow(FDisplay, FScreen);
+
+    buf:='WM_S'+inttostr(FScreen);
+    wm_sn_atom := XInternAtom (FDisplay, PChar(buf), 0);
+    wm_sn_owner := XGetSelectionOwner (FDisplay, wm_sn_atom);
+
+    if (wm_sn_owner <> None) then begin
+        XLibInterface.outputdebugstring(iWARNING,'There is already a window manager active!!');
+        exit;
+    end;
+
+
+    // Generate a timestamp
+    //attrs.event_mask := PropertyChangeMask;
+    attrs.event_mask := ChildMask or PropertyChangeMask or ColormapChangeMask or ButtonMask;
+    XChangeWindowAttributes (FDisplay, FRoot, CWEventMask, @attrs);
+
+    XChangeProperty (FDisplay, FRoot, XA_WM_CLASS, XA_STRING, 8, PropModeAppend, nil, 0);
+
+    XWindowEvent (FDisplay, FRoot, PropertyChangeMask, @event);
+
+    attrs.event_mask := NoEventMask;
+
+    XChangeWindowAttributes (FDisplay, FRoot, CWEventMask, @attrs);
+
+    manager_timestamp := event.xproperty.time;
+
+    XSetSelectionOwner (FDisplay, wm_sn_atom, FRoot, manager_timestamp);
+
+    if (XGetSelectionOwner (FDisplay, wm_sn_atom) <> FRoot) then begin
+      XLibInterface.OutputDebugString(iWARNING,'Could not acquire window manager selection');
+      exit;
+    end;
+
+    // Send client message indicating that we are now the WM
+    ev.xtype := ClientMessage;
+    ev.xwindow := FRoot;
+    ev.message_type := Atoms[atom_manager];
+    ev.format := 32;
+    ev.data.l[0] := manager_timestamp;
+    ev.data.l[1] := wm_sn_atom;
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,'XSendEvent');
+    {$endif}
+
+    XSendEvent (FDisplay, FRoot, 0, StructureNotifyMask, @ev);
+
+    XGetWindowAttributes (FDisplay, FRoot, @attr);
+    XSelectInput (FDisplay, FRoot,
+                  SubstructureRedirectMask or SubstructureNotifyMask or
+                  ColormapChangeMask or PropertyChangeMask or
+                  LeaveWindowMask or EnterWindowMask or
+                  ButtonPressMask or ButtonReleaseMask or
+                  KeyPressMask or KeyReleaseMask or
+                  FocusChangeMask or StructureNotifyMask or attr.your_event_mask);
+
+
+    set_wm_icon_size_hint;
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,'XChangeProperty');
+    {$endif}
+    for i:=0 to atomsSupported do ats[i]:=FAtoms[i];
+    XChangeProperty (Fdisplay, FRoot, Atoms[atom_net_supported], XA_ATOM, 32, PropModeReplace,@ats, atomsSupported);
+
+    set_wm_check_hint;
+
+end;
+
+procedure TXPWindowManager.setupEventHandler;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.setupEventHandler');
+    {$endif}
+  qt_set_x11_event_filter(@eventHandler);
+end;
+
+procedure TXPWindowManager.setupSignals;
 var
     act: TSigaction;
     empty_mask: sigset_t;
-    i:integer;
 begin
-  sigemptyset (empty_mask);
-  act.__sigaction_handler := @handlesignal;
-  act.sa_mask    := empty_mask;
-  act.sa_flags   := 0;
-  if (sigaction (SIGPIPE,  @act, nil) < 0) then XPAPI.OutputDebugString('Failed to register SIGPIPE handler');
-  if (sigaction (SIGXFSZ,  @act, nil) < 0) then XPAPI.OutputDebugString('Failed to register SIGXFSZ handler');
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.setupSignals');
+    {$endif}
+    sigemptyset (empty_mask);
+    act.__sigaction_handler := @handlesignal;
+    act.sa_mask    := empty_mask;
+    act.sa_flags   := 0;
+    if (sigaction (SIGPIPE,  @act, nil) < 0) then xlibinterface.OutputDebugString(iERROR,'Failed to register SIGPIPE handler');
+    if (sigaction (SIGXFSZ,  @act, nil) < 0) then xlibinterface.OutputDebugString(iERROR,'Failed to register SIGXFSZ handler');
 
-  display_open;
 end;
 
-procedure TXPWindowManager.create_new_client(w: Window);
-var
-//    c: TXClient;
-    p_attr:XSetWindowAttributes;
-	attr:XWindowAttributes;
-	dummy:longint;
-	hints: PXWMHints;
-	name:XTextProperty;
-    nw,nh: longint;
-    title: TTitleForm;
-    dpy: PDisplay;
-    parent: Window;
-	ce:XConfigureEvent;
-    data:array[0..1] of longint;
+procedure TXPWindowManager.ungrabDisplay;
 begin
-    dpy:=display.xdisplay;
-	hints := XGetWMHints(dpy, w);
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.ungrabdisplay, FServerGrabCount '+inttostr(FServerGrabcount));
+    xlibinterface.outputDebugString(iENDPROCESS,'Ungrabdisplay');
+    {$endif}
+  if (FServerGrabCount = 0) then XLibInterface.outputdebugstring(iWARNING,'Ungrabbed non-grabbed server');
 
-	XGrabServer(dpy);
+  dec(FServerGrabCount);
 
-//    c:=TXClient.create(self);
-//    clients.add(c);
+  if (FServerGrabCount= 0) then begin
+      {* FIXME we want to purge all pending "queued" stuff
+       * at this point, such as window hide/show
+       *}
+      XSync (FDisplay, 0);
+      XUngrabServer (FDisplay);
+  end;
+  XSync (FDisplay, 0);
+end;
 
-//	c.window := w;
-//	c.unmapCounter:= 0;
+procedure TXPWindowManager.setupErrorHandler;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.setupErrorHandler');
+    {$endif}
+    XSetErrorHandler(@handleXerror);
+end;
 
-	XGetWindowAttributes(dpy, w, @attr);
+procedure TXPWindowManager.setFrame(AFrameClass: TFormClass);
+begin
+//    FFrame:=AFrameClass;
+end;
 
-    title:=TTitleForm.create(application);
+function TXPWindowManager.findClient(w: Window): TWMClient;
+var
+    i:longint;
+    c: TWMClient;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,'Finding Client for window '+xlibinterface.formatwindow(w));
+    {$endif}
+    result:=nil;
+    for i:=0 to clients.count-1 do begin
+        c:=clients[i];
+        if (c.xwindow=w) then begin
+            result:=c;
+            break;
+        end;
+    end;
+    {$ifdef DEBUG}
+    if assigned(result) then xlibinterface.outputDebugString(iINFO,'Client found for window '+xlibinterface.formatWindow(w))
+    else begin
+        xlibinterface.outputDebugString(iWARNING,'Client NOT found for window '+xlibinterface.formatWindow(w))
+    end;
+    {$endif}
+end;
 
+function TXPWindowManager.createNewClient(w: Window): TWMClient;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.createNewClient');
+    {$endif}
+    result:=TWMClient.create(w,self);
+    clients.add(result);
+end;
+
+procedure TXPWindowManager.SetActiveClient(const Value: TWMClient);
+var
+    old: TWMClient;
+begin
+    //Here
+    if FActiveClient<>Value then begin
+        old:=FActiveClient;
+        FActiveClient := Value;
+        if assigned(old) then old.updateactivestate;
+        if assigned(FActiveClient) then FActiveClient.updateactivestate;
+    end;
+end;
+
+{ TWMClient }
+
+function send_xmessage(w:Window;a:Atom;x:Atom):integer;
+var
+	ev:XEvent;
+begin
+	ev.xtype := ClientMessage;
+	ev.xclient.xwindow := w;
+	ev.xclient.message_type := a;
+	ev.xclient.format := 32;
+	ev.xclient.data.l[0] := x;
+	ev.xclient.data.l[1] := CurrentTime;
+
+	result:=XSendEvent(XPWindowManager.Display, w, 0, NoEventMask, @ev);
+end;
+
+procedure TWMClient.activate;
+begin
+    FWindowManager.ActiveClient:=self;
+    updateactivestate;
+    XPTaskbar.activatetask(self);
+    bringtofront;
+    focus;
+end;
+
+procedure TWMClient.bringtofront;
+begin
+    if not assigned(frame) then exit;
+    frame.BringToFront;
+    xptaskbar.bringtofront;
+    fwindowmanager.activeclient:=self;
+end;
+
+procedure TWMClient.close;
+var
+    i,n,found:integer;
+	protocols : array of Atom;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TWMClient.close '+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+    {$endif}
+
+	found := 0;
+    if (XGetWMProtocols(FWindowManager.FDisplay, xwindow, @protocols, @n)<>0) then begin
+            for i:=0 to n-1 do begin
+                if (protocols[i] = FWindowManager.Atoms[atom_wm_delete_window]) then inc(found);
+            end;
+			XFree(protocols);
+    end;
+
+    if found<>0 then begin
+        send_xmessage(xwindow, FWindowManager.Atoms[atom_wm_protocols], FWindowManager.Atoms[atom_wm_delete_window]);
+    end
+    else begin
+        XKillClient(FWindowManager.FDisplay, xwindow);
+    end;
+end;
+
+procedure TWMClient.configure_request(event: XEvent);
+var
+  x, y, width, height:integer;
+//  only_resize:boolean;
+  allow_position_change:boolean;
+//  in_grab_op:boolean;
+  fbs: TRect;
+  co: TPoint;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iBEGINPROCESS,'CONFIGURE_REQUEST');
+    xlibinterface.outputDebugString(iINFO,'configure request for window '+xlibinterface.formatWindow(event.xconfigurerequest.xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+    {$endif}
+    if not assigned(frame) then exit;
+//*******************
+  {* We ignore configure requests while the user is moving/resizing
+   * the window, since these represent the app sucking and fighting
+   * the user, most likely due to a bug in the app (e.g. pfaedit
+   * seemed to do this)
+   *
+   * Still have to do the ConfigureNotify and all, but pretend the
+   * app asked for the current size/position instead of the new one.
+   *}
+  (*
+  in_grab_op = FALSE;
+  if (window.display.grab_op != META_GRAB_OP_NONE &&
+      window == window.display.grab_window)
     {
-    title.left:=x;
-    title.Top:=y;
-    title.width:=width+(border*2)+1;
-    title.height:=height+26+border;
+      switch (window.display.grab_op)
+        {
+        case META_GRAB_OP_MOVING:
+        case META_GRAB_OP_RESIZING_SE:
+        case META_GRAB_OP_RESIZING_S:
+        case META_GRAB_OP_RESIZING_SW:
+        case META_GRAB_OP_RESIZING_N:
+        case META_GRAB_OP_RESIZING_NE:
+        case META_GRAB_OP_RESIZING_NW:
+        case META_GRAB_OP_RESIZING_W:
+        case META_GRAB_OP_RESIZING_E:
+          in_grab_op = TRUE;
+          break;
+        default:
+          break;
+        }
     }
-	title.left := attr.x;
-	title.top := attr.y;
-	title.width := attr.width;
-	title.height := attr.height;
-//	c.border := opt_bw;
-    showmessage('ok0');
-    title.show;
-    showmessage('ok1');
+    *)
 
-    XGetWMName(dpy, w, @name);
-    showmessage('ok2');
-//    title.lbTitle.caption:=PChar(name.value);
-    showmessage('ok3');
+  {* it's essential to use only the explicitly-set fields,
+   * and otherwise use our current up-to-date position.
+   *
+   * Otherwise you get spurious position changes when the app changes
+   * size, for example, if window.rect is not in sync with the
+   * server-side position in effect when the configure request was
+   * generated.
+   *}
 
-//	c.size := XAllocSizeHints();
-//	XGetWMNormalHints(dpy, c.window, c.size, @dummy);
+  (*
+  meta_window_get_gravity_position (window, &x, &y);
 
+  only_resize = TRUE;
+  *)
+
+  allow_position_change := true;
+
+{
+  if ((window.size_hints.flags & PPosition) ||
+               /* USPosition is just stale if window is placed;
+                * no --geometry involved here.
+                */
+               ((window.size_hints.flags & USPosition) &&
+                !window.placed))
+        allow_position_change = TRUE;
+}
+
+(*
+  if (in_grab_op)
+    allow_position_change = FALSE;
+  *)
+  fbs:=(frame as TWindowsClassic).getframebordersizes;
+  co:=(frame as TWindowsClassic).getorigin;
+  x:=frame.left;
+  y:=frame.top;
+
+  if (allow_position_change) then begin
+      if ((event.xconfigurerequest.value_mask and CWX)=CWX) then x := event.xconfigurerequest.x;
+
+      if ((event.xconfigurerequest.value_mask and CWY)=CWY) then y := event.xconfigurerequest.y;
+
+      {
+      if (event.xconfigurerequest.value_mask and (CWX or CWY)) then begin
+          only_resize = FALSE;
+
+          /* Once manually positioned, windows shouldn't be placed
+           * by the window manager.
+           */
+          window.placed = TRUE;
+      end;
+      }
+  end
+  else begin
     {
-	if (attr.map_state = IsViewable) then inc(c.unmapCounter,1)
+      meta_topic (META_DEBUG_GEOMETRY,
+		  "Not allowing position change for window %s PPosition 0x%x USPosition 0x%x type %d\n",
+		  window.desc, window.size_hints.flags & PPosition,
+		  window.size_hints.flags & USPosition,
+		  window.type);
+    }
+  end;
+
+  width := frame.Width-(fbs.left+fbs.right);
+  height := frame.Height-(co.y+fbs.bottom);
+
+//  if (!in_grab_op) then begin
+      if ((event.xconfigurerequest.value_mask and CWWidth)=CWWidth) then width := event.xconfigurerequest.width;
+
+      if ((event.xconfigurerequest.value_mask and CWHeight)=CWHeight) then height := event.xconfigurerequest.height;
+//  end;
+
+  // ICCCM 4.1.5
+
+  {* Note that x, y is the corner of the window border,
+   * and width, height is the size of the window inside
+   * its border, but that we always deny border requests
+   * and give windows a border of 0. But we save the
+   * requested border here.
+   *}
+  //window.border_width = event.xconfigurerequest.border_width;
+
+  {* We're ignoring the value_mask here, since sizes
+   * not in the mask will be the current window geometry.
+   *}
+
+  {
+  window.size_hints.x = x;
+  window.size_hints.y = y;
+  window.size_hints.width = width;
+  window.size_hints.height = height;
+  }
+
+  {* FIXME passing the gravity on only_resize thing is kind of crack-rock.
+   * Basically I now have several ways of handling gravity, and things
+   * don't make too much sense. I think I am doing the math in a couple
+   * places and could do it in only one function, and remove some of the
+   * move_resize_internal arguments.
+   *}
+
+   {
+  meta_window_move_resize_internal (window, META_IS_CONFIGURE_REQUEST,
+                                    only_resize ?
+                                    window.size_hints.win_gravity : NorthWestGravity,
+                                    window.size_hints.x,
+                                    window.size_hints.y,
+                                    window.size_hints.width,
+                                    window.size_hints.height);
+  }
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,format('CONFIGURE_REQUEST: setting frame to (%d,%d)-(%d,%d) (some values are not set)',[x,y,width,height]));
+    {$endif}
+
+  if ((event.xconfigurerequest.value_mask and CWX)=CWX) then frame.Left:=x;
+  if ((event.xconfigurerequest.value_mask and CWY)=CWY) then frame.top:=y;
+  if ((event.xconfigurerequest.value_mask and CWWidth)=CWWidth) then frame.width:=width+(fbs.Left+fbs.right);
+  if ((event.xconfigurerequest.value_mask and CWHeight)=CWHeight) then frame.height:=height+(fbs.bottom+co.y);
+
+  if FWindowState=wsNormal then begin
+    wRect:=frame.boundsrect;
+  end;
+
+    if ((event.xconfigurerequest.value_mask and CWWidth)=CWWidth) or ((event.xconfigurerequest.value_mask and CWHeight)=CWHeight) then begin
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iINFO,format('CONFIGURE_REQUEST: resizing window %s to (%d,%d)',[xlibinterface.formatwindow(xwindow),width,height]));
+        {$endif}
+        XResizeWindow(FWindowManager.FDisplay,xwindow,width,height);
+    end;
+
+  {* Handle stacking. We only handle raises/lowers, mostly because
+   * stack.c really can't deal with anything else.  I guess we'll fix
+   * that if a client turns up that really requires it. Only a very
+   * few clients even require the raise/lower (and in fact all client
+   * attempts to deal with stacking order are essentially broken,
+   * since they have no idea what other clients are involved or how
+   * the stack looks).
+   *
+   * I'm pretty sure no interesting client uses TopIf, BottomIf, or
+   * Opposite anyway, so the only possible missing thing is
+   * Above/Below with a sibling set. For now we just pretend there's
+   * never a sibling set and always do the full raise/lower instead of
+   * the raise-just-above/below-sibling.
+   *}
+   (*
+  if ((event.xconfigurerequest.value_mask and CWStackMode)=CWStackMode) then begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString('Stack mode');
+    {$endif}
+      case (event.xconfigurerequest.detail) of
+        Above: begin
+            frame.bringtofront;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString('bringtofront');
+    {$endif}
+        end;
+        Below: begin
+            frame.sendtoback;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString('sendtoback');
+    {$endif}
+        end;
+      end;
+  end;
+  *)
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iENDPROCESS,'CONFIGURE_REQUEST');
+    {$endif}
+end;
+
+constructor TWMClient.Create(AWindow: Window;
+  AWindowManager: TXPWindowManager);
+begin
+    inherited Create;
+    FWindowState:=wsNormal;
+    xwindow:=AWindow;
+    frame:=nil;
+    wRect:=Rect(0,0,0,0);
+    FUnmapcounter:=0;
+    FWindowManager:=AWindowManager;
+    createFrame;
+end;
+
+procedure TWMClient.createFrame;
+var
+	attr:XWindowAttributes;
+    attrs:XSetWindowAttributes;
+//	dummy:longint;
+	hints: PXWMHints;
+//    sizehints: PXSizeHints;
+	name:XTextProperty;
+//    nw,nh: longint;
+//    state: variant;
+    fbs: TRect;
+    co: TPoint;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TWMClient.createframe');
+    {$endif}
+    FWindowManager.grabDisplay;
+	hints := XGetWMHints(FWindowManager.FDisplay, xwindow);
+
+//    sizehints:=XAllocSizeHints();
+//    XGetWMNormalHints(FWindowManager.FDisplay, xwindow, sizehints, @dummy);
+
+	XGetWindowAttributes(FWindowManager.FDisplay, xwindow, @attr);
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,format('*****attr (%d,%d) %dx%d',[attr.x,attr.y,attr.width,attr.height]));
+    {$endif}
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,format('attr.override_redirect:%d',[attr.override_redirect]));
+    {$endif}
+
+    if (attr.override_redirect<>0) then begin
+      xlibinterface.outputdebugstring(iINFO,format('Deciding not to manage override_redirect window %s',[xlibinterface.formatwindow(xwindow)]));
+      FWindowManager.ungrabDisplay;
+      exit;
+    end;
+
+{
+    if (attr.map_state <> IsViewable) then begin
+      // Only manage if WM_STATE is IconicState or NormalState */
+      state:=xlibinterface.GetWindowProperty(FWindowManager.FDisplay,xwindow,FWindowManager.Atoms[atom_wm_state],FWindowManager.Atoms[atom_wm_state]);
+
+      if (state<>IconicState) or (state<>NormalState) then begin
+          xlibinterface.outputdebugstring(format('Deciding not to manage unmapped or unviewable window %d',[xwindow]));
+          FWindowManager.ungrabDisplay;
+          exit;
+      end;
+
+      //existing_wm_state = state;
+      //meta_verbose ("WM_STATE of %x = %s\n", xwindow,
+      //              wm_state_to_string (existing_wm_state));
+    end;
+}
+
+    XAddToSaveSet (FWindowManager.FDisplay, xwindow);
+
+    XSelectInput (FWindowManager.FDisplay, xwindow, PropertyChangeMask or EnterWindowMask or LeaveWindowMask or FocusChangeMask);
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,format('attr.border_width:%d',[attr.border_width]));
+    {$endif}
+    // Get rid of any borders
+    if (attr.border_width <> 0) then XSetWindowBorderWidth (FWindowManager.FDisplay, xwindow, 0);
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,format('attr.win_gravity:%d',[attr.win_gravity]));
+    {$endif}
+    // Get rid of weird gravities
+    if (attrs.win_gravity <> NorthWestGravity) then begin
+      attrs.win_gravity := NorthWestGravity;
+
+      XChangeWindowAttributes (FWindowManager.FDisplay, xwindow, CWWinGravity, @attrs);
+    end;
+
+//    frame:=FWindowManager.Frame.create(application);
+    frame:=TWindowsClassic.create(application);
+    (frame as TWindowsClassic).setclient(self);
+
+//    (frame as TWindowsClassic).setclientarea(Rect(attr.x,attr.y,attr.x+attr.width,attr.y+attr.height));
+//   (frame as TWindowsClassic).setclientarea(Rect(sizehints.x,sizehints.y,sizehints.x+sizehints.width,sizehints.y+sizehints.height));
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,format('Frame(%d,%d)-(%d,%d)',[attr.x,attr.y, attr.width,attr.height]));
+    {$endif}
+
+    //This lines are temporary just to load Gimp and take screenshots
+    {
+    if sizehints.x<0 then sizehints.x:=0;
+    if sizehints.y<0 then sizehints.y:=0;
+
+    if sizehints.x>qforms.screen.width+200 then sizehints.x:=0;
+    if sizehints.y>qforms.screen.Height+200 then sizehints.y:=0;
+
+    if sizehints.width>qforms.Screen.width+200 then sizehints.width:=200;
+    if sizehints.height>qforms.screen.height+200 then sizehints.height:=350;
+    }
+
+    fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
+    co:=(frame as TWindowsClassic).getorigin;
+    frame.left:=attr.x;
+    frame.top:=attr.y;
+    frame.width:=attr.width+(fbs.left+fbs.right);
+    frame.height:=attr.height+(fbs.bottom+co.y);
+
+    if FWindowState=wsNormal then begin
+        wRect:=frame.boundsrect;
+    end;
+
+    XGetWMName(FWindowManager.FDisplay, xwindow, @name);
+    (frame as TWindowsClassic).setTitle(PChar(name.value));
+
+    frame.show;
+
+    bringtofront;
+
+    XPTaskbar.addtask(self);
+
+    XPTaskbar.activatetask(self);
+
+	if (attr.map_state = IsViewable) then inc(FUnmapcounter,1)
     else begin
 //		c.initPosition;
-		if (assigned(hints)) and  ((hints.flags and StateHint)<>0) then c.setWindowState(hints.initial_state);
+//		if (assigned(hints)) and  ((hints.flags and StateHint)<>0) then c.setWindowState(hints.initial_state);
 	end;
-    }
 
-	//if assigned(hints) then XFree(hints);
+	reparent;
+{
+    nw:=c.width;
+    nh:=c.height;
+}
 
-//	c.gravitate;
-//	c.reparent;
-//********************************
-	XSelectInput(dpy, w, ColormapChangeMask or EnterWindowMask or PropertyChangeMask);
-    showmessage('ok4');
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,format('Resizing window to (%d,%d)',[attr.width,attr.height]));
+    xlibinterface.outputDebugString(iINFO,format('Frame size (%d,%d)',[frame.width,frame.height]));
+    {$endif}
+    //XResizeWindow(FWindowManager.FDisplay,xwindow,sizehints.width,sizehints.height);
+    
+
+	if assigned(hints) then XFree(hints);
+//	if assigned(sizehints) then XFree(sizehints);
+
+
+    map;
+//	c.title.BringToFront;
+//	c.setWindowState(NormalState);
+
+	XSync(FWindowManager.FDisplay, 0);
+    FWindowManager.ungrabDisplay;
+
+end;
+
+destructor TWMClient.Destroy;
+begin
+  {$ifdef DEBUG}
+  xlibinterface.outputDebugString(iMETHOD,'TWMClient.destroy');
+  {$endif}
+  if assigned(frame) then begin
+    WindowManager.grabdisplay;
+
+	XRemoveFromSaveSet(WindowManager.Display, xwindow);
+	XReparentWindow(WindowManager.Display, xwindow, WindowManager.Root, frame.left, frame.top);
+	XSetWindowBorderWidth(WindowManager.Display, xwindow, 1);
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'RemoveTask');
+    {$endif}
+    XPTaskbar.removetask(self);
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'Frame.Free and nil');
+    {$endif}
+    frame.free;
+    frame:=nil;
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'XSync');
+    {$endif}
+	XSync(WindowManager.Display, 0);
+
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'UngrabDisplay');
+    {$endif}
+    WindowManager.ungrabdisplay;
+  end;
+  inherited;
+end;
+
+procedure TWMClient.focus;
+begin
+    if not assigned(frame) then exit;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TWMClient.focus '+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+    {$endif}
+    XSetInputFocus (WindowManager.Display,xwindow, RevertToPointerRoot, CurrentTime);
+end;
+
+procedure TWMClient.getSizeHints;
+begin
+
+end;
+
+function TWMClient.getTitle: string;
+begin
+    if assigned(frame) then begin
+        result:=(frame as TWindowsClassic).gettitle;
+    end;
+end;
+
+function TWMClient.getWindow: Window;
+begin
+    result:=xwindow;
+end;
+
+procedure TWMClient.gravitate;
+begin
+
+end;
+
+function TWMClient.isactive: boolean;
+begin
+    result:=(FWindowManager.ActiveClient=self);
+end;
+
+procedure TWMClient.map;
+begin
+	XMapWindow(FWindowManager.FDisplay, xwindow);
+end;
+
+procedure TWMClient.maximize;
+var
+    r: TRect;
+    fbs: TRect;
+    co: TPoint;
+begin
+    if FWindowState<>wsMaximized then begin
+        if FWindowState=wsNormal then begin
+            wrect:=frame.boundsrect;
+        end;
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iMETHOD,'TWMClient.maximize'+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+        {$endif}
+        r:=FWindowManager.getDesktopClientRect;
+        fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
+        co:=(frame as TWindowsClassic).getorigin;
+        r.left:=r.left-fbs.left;
+        r.top:=r.top-fbs.top;
+        r.right:=r.right+fbs.right;
+        r.bottom:=r.bottom+fbs.bottom;
+        frame.BoundsRect:=r;
+        XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
+        FWindowState:=wsMaximized;
+    end;
+end;
+
+procedure TWMClient.minimize;
+begin
+
+end;
+
+procedure TWMClient.reparent;
+var
+    p_attr:XSetWindowAttributes;
+    parent: window;
+    fbs: TRect;
+    co: TPoint;
+begin
+    if not assigned(frame) then exit;
+	XSelectInput(FWindowManager.Fdisplay, xwindow, ColormapChangeMask or EnterWindowMask or PropertyChangeMask);
 
 	p_attr.override_redirect := 1;
 //	p_attr.background_pixel := wm.bg.pixel;
 	p_attr.event_mask := ChildMask or ButtonPressMask or ExposureMask or EnterWindowMask;
 
 
-    parent:=QWidget_winID(title.Handle);
-(*
-    title.left:=x;
-    title.Top:=y;
-    title.width:=width+(border*2)+1;
-    title.height:=height+26+border;
-//    title.height:=26;
-*)
-    showmessage('ok5');
-	XAddToSaveSet(dpy, w);
-	XSetWindowBorderWidth(dpy, w, 0);
-    showmessage('ok6');
-    {
-	c->parent = XCreateWindow(dpy, root, c->x-c->border, c->y-c->border,
-		c->width+(c->border*2), c->height + (c->border*2), 0,
-		DefaultDepth(dpy, screen), CopyFromParent,
-		DefaultVisual(dpy, screen),
-		CWOverrideRedirect | CWBackPixel | CWEventMask, &p_attr);
-    }
-    XChangeWindowAttributes(dpy,parent,CWOverrideRedirect or CWBackPixel or CWEventMask, @p_attr);
+    parent:=QWidget_winID(frame.Handle);
 
-    showmessage('ok7');
+    fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
+    co:=(frame as TWindowsClassic).getorigin;
+
+	XAddToSaveSet(FWindowManager.Fdisplay, xwindow);
+	XSetWindowBorderWidth(FWindowManager.Fdisplay, xwindow, 0);
+//    XChangeWindowAttributes(FWindowManager.Fdisplay,parent,CWOverrideRedirect or CWBackPixel or CWEventMask, @p_attr);
+    XChangeWindowAttributes(FWindowManager.Fdisplay,parent,CWOverrideRedirect or CWEventMask, @p_attr);
+
 	// Hmm, why resize this?
-	// XResizeWindow(dpy, c.window, c.width, c.height);
-	XReparentWindow(dpy, w, parent, 2, 22);
-    showmessage('ok7.1');
-	ce.xtype := ConfigureNotify;
-	ce.event := w;
-	ce.xwindow := w;
-	ce.x := title.left;
-	ce.y := title.top;
-	ce.width := title.width;
-	ce.height := title.height;
-	ce.border_width := 0;
-	ce.above := None;
-	ce.override_redirect := 0;
-    showmessage('ok8');
+    XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
+	XReparentWindow(FWindowManager.Fdisplay, xwindow, parent, co.x, co.y);
+end;
 
-	XSendEvent(dpy, w, 0, StructureNotifyMask, @ce);
-//***************************
+procedure TWMClient.resize;
+begin
 
-    nw:=title.width;
-    nh:=title.height;
-    XResizeWindow(dpy,w,nw,nh);
+end;
 
-    showmessage('ok9');
+procedure TWMClient.restore;
+var
+    fbs: TRect;
+    co: TPoint;
+begin
+    if FWindowState<>wsNormal then begin
+        {$ifdef DEBUG}
+        xlibinterface.outputDebugString(iMETHOD,'TWMClient.restore'+xlibinterface.formatwindow(xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
+        {$endif}
+        fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
+        co:=(frame as TWindowsClassic).getorigin;
+        frame.BoundsRect:=wRect;
+        XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
+        FWindowState:=wsNormal;
+    end;
+end;
 
+procedure TWMClient.SetWindowManager(const Value: TXPWindowManager);
+begin
+  FWindowManager := Value;
+end;
 
-//    w2kTaskbar.addTask(c);
+procedure TWMClient.SetWindowState(const Value: TWindowState);
+begin
+    if (FWindowState<>Value) then begin
+      FWindowState := Value;
+      case FWindowState of
+        wsNormal: restore;
+        wsMinimized: minimize;
+        wsMaximized: maximize;
+      end;
+    end;
+end;
 
-	XMapWindow(dpy, w);
-	title.BringToFront;
+procedure TWMClient.updateactivestate;
+begin
+    if not assigned(frame) then exit;
+    if assigned(frame) then begin
+        (frame as TWindowsClassic).updateactivestate;
+    end;
+end;
 
-	data[0] := normalstate;
-	data[1] := None; // icon window
+{ TXLibInterface }
 
-	XChangeProperty(dpy, w, display.atom_wm_state, display.atom_wm_state, 32, PropModeReplace, @data, 2);
+procedure TXLibInterface.outputDebugString(const kind:integer;const str: string);
+var
+    rs:string;
+begin
+    case kind of
+        iMETHOD:  rs:='METHOD  :'+str;
+        iINFO:    rs:='INFO    :'+str;
+        iWARNING: rs:='WARNING :'+str;
+        iERROR:   rs:='ERROR   :'+str;
+        iEVENT:   rs:='EVENT   :'+str;
+        iBEGINPROCESS : begin
+            inc(indent,10);
+            rs:=stringofchar('>',20)+str;
+        end;
+        iENDPROCESS   : begin
+            rs:=stringofchar('<',20)+str;
+        end;
+    end;
+    writeln(stringofchar(' ',indent)+rs);
+    if kind=iENDPROCESS then dec(indent,10);
+end;
 
-	XSync(dpy, 0);
-	XUngrabServer(dpy);
-    showmessage('ok10');    
+function TXLibInterface.GetWindowProperty(xdisplay:PDisplay;xwindow:Window;xatom:Atom;req_type:Atom):variant;
+var
+    treturn: Atom;
+    freturn: longint;
+    nitems,bafter: cardinal;
+    preturn: PChar;
+begin
+    XGetWindowProperty(xdisplay,xwindow,xatom,0,MaxInt,0,req_type,@treturn,@freturn,@nitems,@bafter,@preturn);
+    result:=cardinal(preturn^);
+    XFree(preturn);
+end;
+
+function TXLibInterface.formatWindow(w: Window): string;
+begin
+    result:=format('($%s)',[inttohex(w,8)]);
+end;
+
+constructor TXLibInterface.Create;
+begin
+    inherited;
+    indent:=0;
 end;
 
 initialization
-  wm:=TXPWindowManager.create;
-  XPWindowManager:=wm;
+    XLibInterface:=TXLibInterface.create;
+    XPWindowManager:=TXPWindowManager.create;
 
+
+finalization
+    XPWindowManager.free;
+    XLibInterface.free;
 
 end.

@@ -25,15 +25,16 @@ unit uTaskBar;
 interface
 
 uses
-  Xlib,SysUtils, Types, 
+  Xlib,SysUtils, Types,
   Classes, Variants, QGraphics,
   QControls, QForms, QDialogs,
   QStdCtrls, QButtons, QMenus,
   QTypes, Libc, QExtCtrls,
-  uSpecial, QComCtrls, QImgList,
+  QComCtrls, QImgList,
   uXPStyleConsts, Qt, QActnList,
-  uQXPComCtrls, uXPPopupMenu, uRun,
-  uXPAPI, uLNKFile, uXPStyle,
+  uQXPComCtrls,
+  uXPPopupMenu,
+  uXPAPI, uLNKFile, uXPStyle, 
   uXPLocalizator, uXPDictionary;
 
 type
@@ -46,7 +47,6 @@ type
     btnStart: TBitBtn;
     topPanel: TPanel;
     pbLine: TPaintBox;
-    Timer1: TTimer;
     startmenu: TXPPopupMenu;
     Programs1: TMenuItem;
     Documents1: TMenuItem;
@@ -73,6 +73,14 @@ type
     N3: TMenuItem;
     LocktheTaskbar1: TMenuItem;
     Properties1: TMenuItem;
+    emptytask: TImage;
+    imNet: TImage;
+    netpopup: TXPPopupMenu;
+    Disable1: TMenuItem;
+    Status1: TMenuItem;
+    Repair1: TMenuItem;
+    N4: TMenuItem;
+    OpenNetworkConnections1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
@@ -87,6 +95,7 @@ type
     procedure LogOffAdministrator1Click(Sender: TObject);
     procedure Run1Click(Sender: TObject);
     procedure TaskManager1Click(Sender: TObject);
+    procedure imNetDblClick(Sender: TObject);
   private
     menupaths: TStringList;
     procedure OnMenuItemClick(Sender: TObject);
@@ -94,15 +103,21 @@ type
     { Private declarations }
   public
     { Public declarations }
-    activetasks:TList;                                                          //TToolButton list for active tasks    
+    activetasks:TList;                                                          //TToolButton list for active tasks
     //Menu related functions
     procedure ShowMenu;
-    procedure createTask(w:TWindow;title:string);
+    procedure updatetaskswidth;
+    procedure createTask(const client:IWMClient);
+    procedure activatetask(const task:IWMClient);
+    procedure removeTask(const client:IWMClient);
   end;
 
   TXPTaskBar=class(TInterfacedObject, IXPTaskBar)
-        procedure addtask(task:IWMClient);
-        procedure removetask(task:IWMClient);
+        procedure addtask(const task:IWMClient);
+        procedure activatetask(const task:IWMClient);
+        procedure removetask(const task:IWMClient);
+        function getRect:TRect;
+        procedure bringtofront;
   end;
 
 var
@@ -114,6 +129,8 @@ var
 implementation
 
 {$R *.xfm}
+
+uses uWindowManager;
 
 function GetTickCount:integer;
 var
@@ -233,30 +250,21 @@ begin
     end;
 end;
 
-procedure TTaskBar.createTask(w:TWindow;title:string);
-{
+procedure TTaskbar.createTask(const client:IWMClient);
 var
     t: TToolButton;
     found: boolean;
     i:integer;
-    hints: PXWMHints;
-    rr: TWindow;
-    xr,yr:integer;
-    res:integer;
-    wr,hr,br,dr:cardinal;
-    b: TBitmap;
-
-    par: TWindow;
-}
+    w: TWindow;
 begin
-(*
+    w:=client.getwindow;
     found:=false;
     for i := 0 to tbTasks.ControlCount - 1 do begin
         if (tbTasks.Controls[I] is TToolButton) then begin
             t:=(tbTasks.Controls[I] as TToolButton);
             if cardinal(t.tag)=w then begin
-                t.caption:=title;
-                t.hint:=title;
+                t.caption:=client.gettitle;
+                t.hint:=client.getTitle;
                 activetasks.add(t);
                 found:=true;
                 break;
@@ -265,50 +273,19 @@ begin
     end;
     if not found then begin
         t:=TToolButton.create(tbTasks);
-        t.Caption:=title;
-        t.Hint:=title;
-        {
-        hints := XGetWMHints (application.display, w);
-        if hints<>nil then begin
-            if (hints^.icon_window<>0) and (hints^.icon_pixmap<>0) then begin
-                b:=TBitmap.create;
-                try
-                    res:=XGetGeometry(application.Display,hints^.icon_pixmap,@rr,@xr,@yr,@wr,@hr,@br,@dr);
-                    if res<>0 then begin
-                        wr:=wr+(br*2);
-                        hr:=hr+(br*2);
-                        b.width:=wr;
-                        b.height:=hr;
-                        case dr of
-                            1: b.Pixelformat:=pf1bit;
-                            8: b.Pixelformat:=pf8bit;
-                            16: b.PixelFormat:=pf16bit;
-                            32: b.PixelFormat:=pf32bit;
-                            else b.PixelFormat:=pf32bit;
-                        end;
-                        QPixmap_grabWindow(b.handle,hints^.icon_pixmap,0,0,wr,hr);
-                        t.bitmap.Canvas.StretchDraw(rect(0,0,17,17),b);
-                        t.bitmap.transparent:=true;
-                        t.bitmap.transparentcolor:=t.Bitmap.canvas.pixels[0,0];
-                     end;
-                finally
-                    b.free;
-                end;
-            end;
-            XFree(hints);
-        end;
-        }
-
-        t.showhint:=true;
+        t.Caption:=client.gettitle;
+        t.Hint:=client.gettitle;
+        t.OnMouseUp:=toolbutton1mouseup;
+        t.Bitmap.Assign(emptytask.picture.graphic);
+        t.showhint:=false;
         t.Tag:=w;
         t.allowallup:=true;
         t.grouped:=true;
         t.style:=tbsCheck;
-        t.Parent:=tbTasks;
         activetasks.add(t);
-
+        updatetaskswidth;
+        t.Parent:=tbTasks;
     end;
-*)    
 end;
 
 procedure TTaskBar.FormDestroy(Sender: TObject);
@@ -320,11 +297,12 @@ end;
 procedure TTaskBar.ToolButton1MouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
-    w:TWindow;
+    w: Window;
+    c: TWMClient;
 begin
     w:=(Sender as TToolButton).tag;
-    XSetInputFocus(application.display,w,RevertToNone,CurrentTime);
-    XRaiseWindow(application.display,w);
+    c:=XPWindowManager.findClient(w);
+    if assigned(c) then c.activate;
 end;
 
 procedure TTaskBar.startmenuHide(Sender: TObject);
@@ -340,7 +318,7 @@ end;
 
 procedure TTaskBar.Run1Click(Sender: TObject);
 begin
-    showRunDlg;
+    XPAPI.ShellExecute(XPAPI.getSysInfo(siAppDir)+'/appexec',false);
 end;
 
 procedure TTaskBar.OnMenuItemClick(Sender: TObject);
@@ -467,20 +445,118 @@ end;
 
 { TXPTaskBar }
 
-procedure TXPTaskBar.addtask(task: IWMClient);
+procedure TXPTaskBar.activatetask(const task: IWMClient);
 begin
-    taskbar.createTask(task.getWindow,task.getTitle);
+    taskbar.activatetask(task);
 end;
 
-procedure TXPTaskBar.removetask(task: IWMClient);
+procedure TXPTaskBar.addtask(const task: IWMClient);
 begin
+    taskbar.createTask(task);
+end;
 
+procedure TXPTaskBar.bringtofront;
+begin
+    taskbar.BringToFront;
+end;
+
+function TXPTaskBar.getRect: TRect;
+begin
+    result:=taskbar.BoundsRect;
+end;
+
+procedure TXPTaskBar.removetask(const task: IWMClient);
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TXPTaskbar.removetask');
+    {$endif}
+    taskbar.removeTask(task);
+end;
+
+procedure TTaskBar.removeTask(const client: IWMClient);
+var
+    t: TToolButton;
+    i:integer;
+    w: TWindow;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TTaskBar.RemoveTask');
+    {$endif}
+    w:=client.getwindow;
+    for i := 0 to tbTasks.ControlCount - 1 do begin
+        if (tbTasks.Controls[I] is TToolButton) then begin
+            t:=(tbTasks.Controls[I] as TToolButton);
+            if cardinal(t.tag)=w then begin
+                {$ifdef DEBUG}
+                xlibinterface.outputDebugString(iMETHOD,'ActiveTasks.remove');
+                {$endif}
+                activetasks.remove(t);
+                {$ifdef DEBUG}
+                xlibinterface.outputDebugString(iMETHOD,'ToolButton.free');
+                {$endif}
+                t.free;
+                {$ifdef DEBUG}
+                xlibinterface.outputDebugString(iMETHOD,'updatetaskswidth');
+                {$endif}
+                updatetaskswidth;
+                break;
+            end;
+        end;
+    end;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TTaskBar.RemoveTask, end');
+    {$endif}
+end;
+
+procedure TTaskBar.updatetaskswidth;
+var
+    bw: integer;
+begin
+        if activetasks.count>0 then begin
+            bw:=trunc((tbtasks.clientWidth-2) / activetasks.count);
+            if bw>163 then bw:=163;
+            if bw<>tbtasks.buttonwidth then tbTasks.ButtonWidth:=bw;
+        end;
+        tbTasks.ButtonHeight:=22;
+end;
+
+procedure TTaskBar.activatetask(const task: IWMClient);
+var
+    t: TToolButton;
+    i:integer;
+    w: TWindow;
+    k: integer;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,'TTaskBar.activatetask');
+    {$endif}
+    w:=task.getwindow;
+    for i := 0 to tbTasks.ControlCount - 1 do begin
+        if (tbTasks.Controls[I] is TToolButton) then begin
+            t:=(tbTasks.Controls[I] as TToolButton);
+            if cardinal(t.tag)=w then begin
+                {$ifdef DEBUG}
+                xlibinterface.outputDebugString(iINFO,'new activetask found');
+                {$endif}
+                for k := 0 to tbTasks.ControlCount - 1 do begin
+                    if (tbTasks.Controls[k] is TToolButton) then begin
+                        (tbTasks.Controls[k] as TToolButton).Down:=false;
+                    end;
+                end;
+                t.Down:=true;
+            end;
+        end;
+    end;
+end;
+
+procedure TTaskBar.imNetDblClick(Sender: TObject);
+begin
+    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppDir)+'/networkstatus -i eth0',false);
 end;
 
 initialization
   XPTaskBar:=TXPTaskbar.create;
-  Application.CreateForm(TTaskBar, TaskBar);
-  Application.CreateForm(TRunDlg, RunDlg);
+
 
 
 end.

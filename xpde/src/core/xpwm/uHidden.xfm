@@ -1,0 +1,12 @@
+object Hidden: THidden
+  Left = 555
+  Top = 363
+  Width = 502
+  Height = 233
+  Caption = 'Hidden'
+  Color = clBackground
+  OnCreate = FormCreate
+  PixelsPerInch = 90
+  TextHeight = 17
+  TextWidth = 7
+end

@@ -98,7 +98,8 @@ type
         function ShellExecute(const prog:string;waitfor:boolean):integer;       //Executes a program
         function getSysInfo(const info: TSysInfo):string;                       //Return system information
         function ReplaceSystemPaths(const path:string):string;
-        procedure showAboutDlg;              
+        procedure showAboutDlg(const programname:string);
+        function getVersionString:string;              
         procedure OutputDebugString(const str:string);
     end;
 

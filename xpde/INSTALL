@@ -24,3 +24,59 @@ and also will copy xinitrcDEFAULT file to your HOME dir, this
 file contain the lines you must add to your system to load XPde. 
 In most cases you just need to rename this file to .xinitrc
 
+ADDITIONAL INSTRUCTIONS FOR RH 8.0
+----------------------------------
+If you want to install XPde 0.2.0 on Red Hat 8.0, you must follow 
+the previous instructions and also perform some additional steps 
+to be able to select XPde on your GDM login:
+
+1º type this on your console:
+su
+
+2º Enter your root password when prompted
+
+3. type this
+cd /etc/X11/gdm/Sessions
+
+4º Create an executable script, you need to create a new file using 
+a text editor, for example, joe.
+
+This script must be named xpde, and must contain:
+#!/bin/bash
+exec /etc/X11/xdm/Xsession xpde
+
+5º After you save that file, you must type this:
+
+chmod a+x xpde
+
+This will make that script "executable"
+
+6º Go to /etc/X11/xdm and open the file Xsession
+
+7º Goto line which says : case $# in (it's around line 86) and under 
+kde entry put this lines:
+
+xpde)
+exec -l $SHELL -c "$HOME/.xinitrc"
+;;
+
+8º Now, login as a normal user, or press Ctrl+D to log out to your 
+previous user and type this:
+
+cd
+
+This will return to your $HOME dir and type this:
+
+mv xinitrcDEFAULT .xinitrc
+
+to rename the XPde loading script to .xinitrc
+
+9º Type this:
+
+chmod a+x .xinitrc
+
+This will make your loading script executable
+
+10º Log out from Gnome and if you select the Session Menu at the bottom, 
+you could choose to run XPde
+

@@ -174,7 +174,11 @@ var MS: TMemoryStream;
   i: integer;
 begin
   CurrentColor := XPColor;
+
+  //These lines are to setup the main menu font
+  Font.assign(application.font);
   Font.Name := '';
+  ParentFont:=true;
 
   List := TRegList.Create(self);
   List.Parent := Panel2;

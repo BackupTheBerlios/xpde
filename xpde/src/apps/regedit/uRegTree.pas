@@ -84,7 +84,6 @@ uses RTLConsts, DmFrame, Math;
 constructor TRegTree.Create;
 begin
   inherited;
-  BevelInner := bvNone;
   fReg := TRegistry.Create;
   fReg.RootKey := '';
   fReg.OpenKey('', false);

@@ -88,7 +88,6 @@ begin
   fReg.RootKey := '';
   fReg.OpenKey('', false);
   Header.Style := hsXPStyle;
-  BevelInner := bvNone;
   TreeOptions.SelectionOptions :=
     TreeOptions.SelectionOptions + [toRightClickSelect] - [tofullRowSelect];
   TreeOptions.MiscOptions :=

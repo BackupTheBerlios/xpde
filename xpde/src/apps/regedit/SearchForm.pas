@@ -9,13 +9,13 @@ uses
 type
   TFSearchForm = class(TForm)
     GroupBox1: TGroupBox;
-    CBKeys: TCheckBox;
-    CBValues: TCheckBox;
-    CBData: TCheckBox;
     EdFind: TEdit;
     Label1: TLabel;
     Button1: TButton;
     Button2: TButton;
+    CBKeys: TCheckBox;
+    CBValues: TCheckBox;
+    CBData: TCheckBox;
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }

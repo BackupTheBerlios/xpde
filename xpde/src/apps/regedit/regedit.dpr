@@ -35,8 +35,8 @@ uses
   EdString in 'EdString.pas',
   EdBin in 'EdBin.pas',
   Sysutils,
-  uRegistry;
-
+  uRegistry,
+  HexEd in 'HexEd.pas';
 
 {$R *.res}
 
@@ -49,9 +49,9 @@ begin
   SetXPStyle(Application);
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TFSearchForm, FSearchForm);
-  Application.CreateForm(TEdDword1, EdDword1);
-  Application.CreateForm(TFrmEditString, FrmEditString);
-  Application.CreateForm(TForm2, Form2);
+   Application.CreateForm(TEdDword1, EdDword1);
+   Application.CreateForm(TFrmEditString, FrmEditString);
+   Application.CreateForm(TForm2, Form2);
   Application.Run;
   end else
   begin

@@ -27,7 +27,7 @@ interface
 
 uses
   SysUtils, Types, Classes, Variants, QTypes, QGraphics, QControls, QForms, 
-  QDialogs, QStdCtrls, uXPPNG, QExtCtrls, uRegistry;
+  QDialogs, QStdCtrls,  uXPPNG, uXPAPI, QExtCtrls, uRegistry;
 
 type
   TsmbOption = class(TForm)
@@ -48,9 +48,6 @@ type
     btnRemove: TButton;
     WinsStr: TMemo;
     cbxWins: TCheckBox;
-    Image1: TImage;
-    Image2: TImage;
-    Image3: TImage;
     procedure btnOkClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure btnAddClick(Sender: TObject);

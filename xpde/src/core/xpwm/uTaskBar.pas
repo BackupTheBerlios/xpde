@@ -97,6 +97,7 @@ type
     procedure TaskManager1Click(Sender: TObject);
     procedure imNetDblClick(Sender: TObject);
     procedure TurnOffComputer1Click(Sender: TObject);
+    procedure pnTimerDblClick(Sender: TObject);
   private
     menupaths: TStringList;
     procedure OnMenuItemClick(Sender: TObject);
@@ -319,7 +320,7 @@ end;
 
 procedure TTaskBar.Run1Click(Sender: TObject);
 begin
-    XPAPI.ShellExecute(XPAPI.getSysInfo(siAppDir)+'/appexec',false);
+    XPAPI.ShellExecute(XPAPI.getSysInfo(siAppletsDir)+'appexec',false);
 end;
 
 procedure TTaskBar.OnMenuItemClick(Sender: TObject);
@@ -440,7 +441,7 @@ end;
 
 procedure TTaskBar.TaskManager1Click(Sender: TObject);
 begin
-    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppdir)+'/taskmanager',false);
+    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppsdir)+'taskmanager',false);
 end;
 
 
@@ -552,12 +553,29 @@ end;
 
 procedure TTaskBar.imNetDblClick(Sender: TObject);
 begin
-    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppDir)+'/networkstatus -i eth0',false);
+    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppletsDir)+'networkstatus -i eth0',false);
 end;
 
 procedure TTaskBar.TurnOffComputer1Click(Sender: TObject);
 begin
     turnoff.showmodal;
+end;
+
+procedure TTaskBar.pnTimerDblClick(Sender: TObject);
+var
+    appletsdir: string;
+    stub: string;
+    applet: string;
+    command: string;
+begin
+    appletsdir:=XPAPI.getsysinfo(siAppletsDir);
+
+    stub:=XPAPI.getsysinfo(siAppDir)+'stub.sh';
+    applet:=appletsdir+'DateTimeProps';
+
+    command:=format('%s/xpsu root "%s %s"',[appletsdir, stub, applet]);
+
+    XPAPI.ShellExecute(command,false);
 end;
 
 initialization

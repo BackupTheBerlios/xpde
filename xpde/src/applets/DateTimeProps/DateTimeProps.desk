@@ -73,9 +73,9 @@ LeftCol=1
 
 [View1]
 Module=/home/ttm/xpde/src/applets/DateTimeProps/uDateTimePropsForm.pas
-CursorX=33
-CursorY=190
-TopLine=160
+CursorX=1
+CursorY=1
+TopLine=1
 LeftCol=1
 
 [View2]

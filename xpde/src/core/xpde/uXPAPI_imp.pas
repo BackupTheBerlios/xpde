@@ -41,6 +41,9 @@ type
     function GetIconsDir: string;
     function GetBitmapsDir: string;
     function GetSystemDir: string;
+    function GetBaseDir: string;
+    function GetAppletsDir: string;
+    function GetAppsDir: string;
     public
         timer: TTimer;
         defaultcursor: QCursorH;
@@ -50,7 +53,7 @@ type
         procedure updateWidgets(aowner:TComponent);
         function setCursor(bmp:TBitmap):QCursorH;
         procedure setDefaultCursor;
-        procedure OutputDebugString(const str:string);        
+        procedure OutputDebugString(const str:string);
         procedure setWaitCursor;
         function getExecutable(ext:string):string;
         procedure storeExecutable(ext:string;executable:string);
@@ -59,6 +62,9 @@ type
         property UserDir:string read FUserDir;
         property Username:string read FUserName;
         property Appdir:string read GetAppDir;
+        property Appsdir:string read GetAppsDir;
+        property Appletsdir: string read GetAppletsDir;
+        property Basedir: string read GetBaseDir;
         property Desktopdir:string read GetDesktopDir;
         property ThemesDir:string read GetThemesDir;
         property SystemDir:string read GetSystemDir;
@@ -201,12 +207,13 @@ end;
 
 function TXPAPI.GetSystemDir: string;
 begin
-    result:=Appdir+'system/';
+
+    result:=CurrentThemeDir+'system/';
 end;
 
 function TXPAPI.GetThemesDir: string;
 begin
-    result:=Appdir+'themes/';
+    result:=Basedir+'themes/';
 end;
 
 function TXPAPI.setCursor(bmp: TBitmap):QCursorH;
@@ -411,11 +418,13 @@ begin
         siUserDir: result:=UserDir;
         siUsername: result:=UserName;
         siAppDir: result:=AppDir;
+        siAppsDir: result:=AppsDir;        
+        siAppletsDir: result:=AppletsDir;
         siDesktopDir: result:=DesktopDir;
         siThemesDir: result:=ThemesDir;
         siCurrentThemeDir: result:=CurrentThemeDir;
         siFileTypesDir: result:=CurrentThemeDir+'/filetypes/';
-        siSystemDir: result:=CurrentThemeDir+'/system/';
+        siSystemDir: result:=GetSystemDir;
         siApplicationsDir: result:=CurrentThemeDir+'/applications/';
     end;
 end;
@@ -424,6 +433,31 @@ procedure TXPAPI.OutputDebugString(const str: string);
 begin
     showmessage(str);
     writeln(str);
+end;
+
+function TXPAPI.GetBaseDir: string;
+var
+    reg: TRegistry;
+begin
+    reg:=TRegistry.create;
+    try
+        if reg.OpenKey('Software/XPde/System',false) then begin
+            result:=reg.ReadString('basedir');
+        end
+        else result:=copy(Appdir,1,length(appdir)-4);
+    finally
+        reg.free;
+    end;
+end;
+
+function TXPAPI.GetAppletsDir: string;
+begin
+    result:=Appdir+'applets/';
+end;
+
+function TXPAPI.GetAppsDir: string;
+begin
+    result:=Appdir+'apps/';
 end;
 
 initialization

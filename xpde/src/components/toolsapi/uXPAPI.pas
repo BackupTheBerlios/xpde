@@ -37,6 +37,8 @@ type
     siUserDir,                                                                  //User directory
     siUsername,                                                                 //User name
     siAppDir,                                                                   //Where the executable resides
+    siAppsDir,                                                                  //Where the apps reside    
+    siAppletsDir,                                                               //Where the applets reside
     siDesktopDir,                                                               //User desktop directory
     siThemesDir,                                                                //Themes directory
     siCurrentThemeDir,                                                          //Current theme directory

@@ -1842,6 +1842,7 @@ procedure TXLibInterface.outputDebugString(const kind:integer;const str: string)
 var
     rs:string;
 begin
+    {$ifdef DEBUG}
     case kind of
         iMETHOD:  rs:='METHOD  :'+str;
         iINFO:    rs:='INFO    :'+str;
@@ -1858,6 +1859,7 @@ begin
     end;
     writeln(stringofchar(' ',indent)+rs);
     if kind=iENDPROCESS then dec(indent,10);
+    {$endif}
 end;
 
 function TXLibInterface.GetWindowProperty(xdisplay:PDisplay;xwindow:Window;xatom:Atom;req_type:Atom):variant;

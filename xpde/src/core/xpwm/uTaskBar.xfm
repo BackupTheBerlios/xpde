@@ -1,6 +1,6 @@
 object TaskBar: TTaskBar
-  Left = 248
-  Top = 823
+  Left = 257
+  Top = 855
   ActiveControl = btnStart
   AutoScroll = False
   BorderStyle = fbsNone
@@ -81,6 +81,7 @@ object TaskBar: TTaskBar
     Font.Weight = 0
     ParentFont = False
     TabOrder = 0
+    OnDblClick = pnTimerDblClick
     object imNet: TImage
       Left = 4
       Top = 5

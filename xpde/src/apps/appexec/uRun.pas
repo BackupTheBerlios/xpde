@@ -72,7 +72,7 @@ end;
 procedure TRunDlg.FormCreate(Sender: TObject);
 begin
     image1.Picture.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+sRUN);
-    left:=5;
+    left:=5;
     top:=screen.Height-height-60;
     activecontrol:=nil;
     activecontrol:=cbOpen;

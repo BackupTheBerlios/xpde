@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 556
-  Top = 186
+  Left = 562
+  Top = 244
   Width = 587
   Height = 340
   BorderStyle = fbsNone
@@ -11,8 +11,8 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 90
-  TextHeight = 17
-  TextWidth = 7
+  TextHeight = 18
+  TextWidth = 8
   object ListBox: TListBox
     Left = 128
     Top = 28

@@ -168,7 +168,6 @@ begin
             end;
         end;
 
-
         font.Name:=SDefaultFontName;
         font.size:=iDefaultFontSize;
         font.height:=iDefaultFontHeight;

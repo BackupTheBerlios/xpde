@@ -197,7 +197,21 @@ begin
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
+var
+    reg: TRegistry;
+    appdir: string;
 begin
+    reg:=TRegistry.create;
+    try
+        if reg.OpenKey('Software/XPde/System',true) then begin
+            appdir:=extractfilepath(application.exename);
+            appdir:=copy(appdir,1,length(appdir)-4);
+            reg.WriteString('basedir',appdir);
+        end;
+    finally
+        reg.free;
+    end;
+
     initTheme;
     if paramstr(1)='full' then begin
         borderstyle:=fbsNone;
@@ -380,6 +394,7 @@ end;
 
 procedure TMainForm.initTheme;
 begin
+
         shortcut1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sSHORTCUTSMALL);
         folder1.Bitmap.LoadFromFile(XPAPI.getSysInfo(siSystemDir)+sFOLDERSMALL);
 end;

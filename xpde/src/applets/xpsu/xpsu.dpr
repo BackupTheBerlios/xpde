@@ -343,7 +343,8 @@ begin
   xauth_env := getenv ('XAUTHORITY');
   ld_library_path:= strdup('$LD_LIBRARY_PATH:/home/ttm/xpde');
 
-  setenv ('LD_LIBRARY_PATH', ld_library_path, 1);
+  setenv('LD_LIBRARY_PATH',PChar(String(getenv('LD_LIBRARY_PATH') + ':/home/ttm/xpde')),1);
+  //setenv ('LD_LIBRARY_PATH', ld_library_path, 1);
   setenv ('XAUTHORITY', xauth, 1);
 
 

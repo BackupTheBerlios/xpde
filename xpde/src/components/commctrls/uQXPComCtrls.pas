@@ -6310,12 +6310,15 @@ begin
             try
               Brush.Style := bsSolid;
               Pen.Color:= clBackground;
+//              Pen.Color:= clYellow;
+//              brush.color:=clRed;
               Inc(R.Bottom, 1);
+              Inc(R.top, 1);
               Rectangle(R);
               InflateRect(R, -1, -1);
               Rectangle(R);
               InflateRect(R, 1, 1);
-              Dec(R.Bottom, 1);
+              if (tab.index<>tabindex) then Inc(R.Bottom, 2);
               if TabIndex = Tab.Index then
               begin
                 InflateRect(R, -SELECTED_TAB_SIZE_DELTA, -SELECTED_TAB_SIZE_DELTA);

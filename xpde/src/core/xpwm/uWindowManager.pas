@@ -126,6 +126,7 @@ type
         procedure minimize;
         procedure maximize;
         procedure restore;
+        procedure setMapState(state:integer);
         procedure close;
         procedure bringtofront;
         function getWindow: Window;
@@ -1800,6 +1801,8 @@ begin
 	// Hmm, why resize this?
     XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
 	XReparentWindow(FWindowManager.Fdisplay, xwindow, parent, co.x, co.y);
+
+    setMapState(NormalState);
 end;
 
 procedure TWMClient.resize;
@@ -1828,6 +1831,16 @@ begin
             FWindowState:=wsNormal;
         end;
     end;
+end;
+
+procedure TWMClient.setMapState(state: integer);
+var
+    data: array[0..1] of integer;
+begin
+  data[0] := state;
+  data[1] := 0;
+
+  XChangeProperty(FWindowManager.Display, xwindow, FWindowManager.Atoms[atom_wm_state], FWindowManager.Atoms[atom_wm_state], 32, PropModeReplace, @data, 2);
 end;
 
 procedure TWMClient.SetWindowManager(const Value: TXPWindowManager);

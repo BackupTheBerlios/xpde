@@ -29,6 +29,12 @@ uses
     QForms;
 
 type
+    IXPVirtualFile=interface;
+
+    TXPChildrenOperation=(coAdd, coRemove);
+    
+    TXPChildrenModified=procedure(const sender: IXPVirtualFile; const op: TXPChildrenOperation; const item: IXPVirtualFile) of object;
+
     IXPVirtualFile=interface
     ['{58DC80AF-0C3D-D711-9EF1-0002443C1C5D}']
         function hasChild: boolean;
@@ -36,13 +42,14 @@ type
         function getDisplayName: string;
         procedure getColumns(const columns:TStrings);
         procedure setNode(node:TObject);
-        function getNode:TObject; 
+        function getNode:TObject;
         procedure getColumnData(const columns:TStrings);
         procedure doubleClick;
         function getUniqueID:string;
         procedure getStatusData(const status:TStrings);
         procedure getVerbItems(const verbs:TStrings);
         procedure executeVerb(const verb:integer);
+        procedure setChildrenModified(value: TXPChildrenModified);
         function getIcon: integer;
         function getCategory: string;
     end;

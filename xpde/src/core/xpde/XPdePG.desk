@@ -1,23 +1,21 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,1,80,22,0,0
-File_1=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMConsts.pas',0,1,1,1,1,0,0
-File_2=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,1,1,1,0,0
-File_3=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,620,13,620,0,0
-File_4=SourceModule,'/home/ttm/metacity-2.4.3/src/core.c',0,1,1,39,4,0,0
-File_5=SourceModule,'/home/ttm/xpde/src/core/xpde/uOpenWith.pas',0,1,1,1,1,0,0
-File_6=SourceModule,'/home/ttm/xpde/src/apps/networkproperties/uEthernetAdapterProperties.pas',0,1,1,1,1,1,1
-File_7=SourceModule,'/home/ttm/xpde/src/components/shellcontrols/uSysListView.pas',0,1,191,1,195,0,0
-File_8=SourceModule,'/home/ttm/xpde/src/components/shellcontrols/uSysListItem.pas',0,1,636,18,641,0,0
-File_9=SourceModule,'/home/ttm/xpde/src/common/uXPCommon.pas',0,1,1,1,1,0,0
+File_0=SourceModule,'/home/ttm/xpde/src/core/xpde/uDesktopMain.pas',0,1,1,1,1,1,0
+File_1=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,1,80,22,0,0
+File_2=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMConsts.pas',0,1,1,1,1,0,0
+File_3=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,1,1,1,0,0
+File_4=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,620,13,620,0,0
+File_5=SourceModule,'/home/ttm/metacity-2.4.3/src/core.c',0,1,1,39,4,0,0
+File_6=SourceModule,'/home/ttm/xpde/src/core/xpde/uOpenWith.pas',0,1,1,1,1,0,0
+File_7=SourceModule,'/home/ttm/xpde/src/apps/networkproperties/uEthernetAdapterProperties.pas',0,1,1,1,1,1,1
+File_8=SourceModule,'/home/ttm/xpde/src/components/shellcontrols/uSysListView.pas',0,1,191,1,195,0,0
+File_9=SourceModule,'/home/ttm/xpde/src/components/shellcontrols/uSysListItem.pas',0,1,636,18,641,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/core/xpde/XPde.dpr
-Count=1
-EditWindowCount=1
+Count=0
+EditWindowCount=0
 PackageWindowCount=11
 
 [/home/ttm/xpde/src/core/xpde/XPde.dpr]
-ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
@@ -88,38 +86,6 @@ FormOnTop=0
 [/home/ttm/xpde/src/core/xpwm/XPwm.dpr]
 FormState=0
 FormOnTop=0
-
-[EditWindow0]
-ViewCount=1
-CurrentView=0
-View0=0
-CodeExplorer=CodeExplorer@EditWindow0
-MessageView=MessageView@EditWindow0
-Create=1
-Visible=1
-State=0
-Left=249
-Top=186
-Width=885
-Height=482
-MaxLeft=-1
-MaxTop=-1
-ClientWidth=885
-ClientHeight=482
-LeftPanelSize=140
-LeftPanelClients=CodeExplorer@EditWindow0
-LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
-RightPanelSize=0
-BottomPanelSize=0
-BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
-
-[View0]
-Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
-CursorX=1
-CursorY=1
-TopLine=1
-LeftCol=1
 
 [PackageWindow0]
 Create=1
@@ -471,41 +437,9 @@ TBDockHeight=250
 LRDockWidth=190
 Dockable=1
 
-[CodeExplorer@EditWindow0]
-Create=1
-Visible=1
-State=0
-Left=0
-Top=12
-Width=140
-Height=470
-MaxLeft=-1
-MaxTop=-1
-ClientWidth=140
-ClientHeight=470
-TBDockHeight=305
-LRDockWidth=140
-Dockable=1
-
-[MessageView@EditWindow0]
-Create=1
-Visible=0
-State=0
-Left=-51
-Top=-561
-Width=443
-Height=85
-MaxLeft=-1
-MaxTop=-1
-ClientWidth=443
-ClientHeight=85
-TBDockHeight=85
-LRDockWidth=443
-Dockable=1
-
 [DockHosts]
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=16
+ActiveProject=17
 

@@ -61,10 +61,12 @@ type
         moving: boolean;
         ox:longint;
         oy:longint;
+        windowtitle:string;
         procedure paintTitle;
         function getFrameBorderSizes:TRect;
-        function getOrigin:TPoint;        
+        function getOrigin:TPoint;
         procedure setClient(AClient:TWMClient);
+        procedure updatewindowtitle;
         procedure setTitle(ATitle:string);
         function getTitle:string;        
         procedure updateActiveState;
@@ -112,8 +114,12 @@ begin
         pen.style:=psSolid;
         rectangle(fbs.left-2,fbs.top-2,clientwidth-fbs.right+2,clientheight-fbs.bottom+2);
         rectangle(fbs.left-1,fbs.top-1,clientwidth-fbs.right+1,clientheight-fbs.bottom+1);
-        brush.Style:=bsSolid;        
+        brush.Style:=bsSolid;
         paintTitle;
+
+        pen.color:=clBtnFace;
+        moveto(fbs.left-2,co.y-1);
+        lineto(clientwidth-2, co.y-1);
      end;
 end;
 
@@ -121,6 +127,7 @@ procedure TWindowsClassic.FormCreate(Sender: TObject);
 var
     co: TPoint;
 begin
+    client:=nil;
     lbTitle.font.color:=clSilver;
     co:=getorigin;
     moving:=false;
@@ -146,18 +153,22 @@ begin
     brRight.top:=clientheight-13;
     brRight.right:=clientwidth;
     brRight.bottom:=clientheight;
+
+    FormPaint(self);
 end;
 
 procedure TWindowsClassic.FormMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-    if (not client.isactive) then client.activate;
-    SetCaptureControl((sender as TControl));
-    if (ptInRect(Point(x,y),lastRect)) then begin
-        if client.windowstate=wsNormal then begin
-            moving:=true;
-            ox:=x;
-            oy:=y;
+    if assigned(client) then begin
+        if (not client.isactive) then client.activate;
+        SetCaptureControl((sender as TControl));
+        if (ptInRect(Point(x,y),lastRect)) then begin
+            if client.windowstate=wsNormal then begin
+                moving:=true;
+                ox:=x;
+                oy:=y;
+            end;
         end;
     end;
 end;
@@ -221,21 +232,23 @@ end;
 
 procedure TWindowsClassic.btnCloseClick(Sender: TObject);
 begin
-    client.close;
+    if assigned(client) then client.close;
 end;
 
 
 procedure TWindowsClassic.btnMaximizeClick(Sender: TObject);
 begin
-    if client.windowstate<>wsMaximized then begin
-        client.maximize;
-        repaint;
-        btnMaximize.glyph.Assign(restore.picture.graphic);
-    end
-    else begin
-        client.restore;
-        repaint;        
-        btnMaximize.glyph.Assign(maximize.picture.graphic);
+    if assigned(client) then begin
+        if client.windowstate<>wsMaximized then begin
+            client.maximize;
+            repaint;
+            btnMaximize.glyph.Assign(restore.picture.graphic);
+        end
+        else begin
+            client.restore;
+            repaint;
+            btnMaximize.glyph.Assign(maximize.picture.graphic);
+        end;
     end;
 end;
 
@@ -254,10 +267,12 @@ end;
 
 procedure TWindowsClassic.updateActiveState;
 begin
-    lastrect.right:=lastrect.right-1;
-    if client.isactive then lbTitle.Font.color:=clWhite
-    else lbTitle.Font.color:=clSilver;
-    paintTitle;
+    if assigned(client) then begin
+        lastrect.right:=lastrect.right-1;
+        if client.isactive then lbTitle.Font.color:=clWhite
+        else lbTitle.Font.color:=clSilver;
+        paintTitle;
+    end;
 end;
 
 function TWindowsClassic.getOrigin: TPoint;
@@ -268,12 +283,13 @@ end;
 
 procedure TWindowsClassic.setTitle(ATitle: string);
 begin
-    lbTitle.caption:=ATitle;
+    windowtitle:=ATitle;
+    updatewindowtitle;
 end;
 
 function TWindowsClassic.getTitle: string;
 begin
-    result:=lbTitle.caption;
+    result:=windowtitle;
 end;
 
 procedure TWindowsClassic.paintTitle;
@@ -340,13 +356,16 @@ var
     fbs: TRect;
     co: TPoint;
 begin
-    fbs:=getframebordersizes;
-    co:=getorigin;
-    if client.isactive then begin
-        gradient($6b2408,$f7cba5,Rect(fbs.left,fbs.top,clientWidth-(fbs.right),co.y-1));
-    end
-    else begin
-        gradient(clGray,clSilver,Rect(fbs.left,fbs.top,clientWidth-(fbs.right),co.y-1))
+    if assigned(client) then begin
+        fbs:=getframebordersizes;
+        co:=getorigin;
+        if client.isactive then begin
+            gradient($6b2408,$f7cba5,Rect(fbs.left,fbs.top,clientWidth-(fbs.right),co.y-1));
+        end
+        else begin
+            gradient(clGray,clSilver,Rect(fbs.left,fbs.top,clientWidth-(fbs.right),co.y-1))
+        end;
+        updatewindowtitle;
     end;
 end;
 
@@ -357,12 +376,38 @@ end;
 
 procedure TWindowsClassic.btnMinimizeClick(Sender: TObject);
 begin
-    if client.windowstate<>wsMinimized then begin
-        client.minimize;
-    end
-    else begin
-        client.restore;
+    if assigned(client) then begin
+        if client.windowstate<>wsMinimized then begin
+            client.minimize;
+        end
+        else begin
+            client.restore;
+        end;
     end;
+end;
+
+procedure TWindowsClassic.updatewindowtitle;
+var
+    w: integer;
+    fw: integer;
+    wc: string;
+    k: integer;
+begin
+    wc:=windowtitle;
+
+    k:=1;
+    canvas.Font.assign(lbTitle.font);
+    w:=canvas.TextWidth(wc);
+    fw:=(btnMinimize.left-lbTitle.Left)-2;
+
+    while w>fw do begin
+        wc:=copy(windowtitle,1,length(windowtitle)-k)+'...';
+        w:=canvas.TextWidth(wc);
+        inc(k);
+    end;
+
+    lbTitle.Caption:=wc;
+
 end;
 
 initialization

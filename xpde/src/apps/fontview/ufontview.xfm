@@ -1,0 +1,363 @@
+object MainForm: TMainForm
+  Left = 299
+  Top = 137
+  ActiveControl = DoneBTN
+  AutoScroll = False
+  Caption = ' '
+  ClientHeight = 414
+  ClientWidth = 371
+  Color = clBase
+  Constraints.MinHeight = 387
+  Position = poScreenCenter
+  Scaled = False
+  OnCreate = FormCreate
+  OnShow = FormShow
+  PixelsPerInch = 90
+  object ScrollBox: TScrollBox
+    Left = 0
+    Top = 41
+    Width = 371
+    Height = 373
+    HorzScrollBar.Visible = False
+    Align = alClient
+    AutoScroll = False
+    TabOrder = 0
+    object Bevel2: TBevel
+      Left = 2
+      Top = 98
+      Width = 367
+      Height = 3
+      Align = alTop
+      Shape = bsBottomLine
+    end
+    object Bevel3: TBevel
+      Left = 2
+      Top = 152
+      Width = 367
+      Height = 3
+      Align = alTop
+      Shape = bsBottomLine
+    end
+    object Bevel1: TBevel
+      Left = 2
+      Top = 35
+      Width = 367
+      Height = 3
+      Align = alTop
+      Shape = bsBottomLine
+    end
+    object FontNameLBL: TLabel
+      Left = 2
+      Top = 2
+      Width = 367
+      Height = 33
+      Align = alTop
+      Caption = 'FontNameLBL'
+      Font.Color = clBlack
+      Font.Height = 28
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object TypeFaceLBL: TLabel
+      Left = 2
+      Top = 38
+      Width = 367
+      Height = 15
+      Align = alTop
+      Caption = 'TypeFaceLBL'
+    end
+    object FileSizeLBL: TLabel
+      Left = 2
+      Top = 53
+      Width = 367
+      Height = 15
+      Align = alTop
+      Caption = 'FileSizeLBL'
+    end
+    object VersionLBL: TLabel
+      Left = 2
+      Top = 68
+      Width = 367
+      Height = 15
+      Align = alTop
+      Caption = 'VersionLBL'
+    end
+    object CopyrightLBL: TLabel
+      Left = 2
+      Top = 83
+      Width = 367
+      Height = 15
+      Align = alTop
+      Caption = 'CopyrightLBL'
+    end
+    object LCaseLBL: TLabel
+      Left = 2
+      Top = 101
+      Width = 367
+      Height = 17
+      Align = alTop
+      Caption = 'abcdefghijklmnopqrstuvwxyz'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object UCaseLBL: TLabel
+      Left = 2
+      Top = 118
+      Width = 367
+      Height = 17
+      Align = alTop
+      Caption = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object OtherCharsLBL: TLabel
+      Left = 2
+      Top = 135
+      Width = 367
+      Height = 17
+      Align = alTop
+      Caption = '1234567890.:,;("*!?)'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Pt12LBL: TLabel
+      Left = 26
+      Top = 155
+      Width = 371
+      Height = 17
+      Caption = 'The quick brown fox jumps over the lazy dog. 1234567890'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt18LBL: TLabel
+      Left = 26
+      Top = 172
+      Width = 481
+      Height = 22
+      Caption = 'The quick brown fox jumps over the lazy dog. 1234567890'
+      Font.Color = clBlack
+      Font.Height = 21
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt24LBL: TLabel
+      Left = 26
+      Top = 197
+      Width = 624
+      Height = 29
+      Caption = 'The quick brown fox jumps over the lazy dog. 1234567890'
+      Font.Color = clBlack
+      Font.Height = 28
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt36LBL: TLabel
+      Left = 26
+      Top = 230
+      Width = 624
+      Height = 29
+      Caption = 'The quick brown fox jumps over the lazy dog. 1234567890'
+      Font.Color = clBlack
+      Font.Height = 42
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt48LBL: TLabel
+      Left = 26
+      Top = 279
+      Width = 624
+      Height = 29
+      Caption = 'The quick brown fox jumps over the lazy dog. 1234567890'
+      Font.Color = clBlack
+      Font.Height = 56
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt60LBL: TLabel
+      Left = 26
+      Top = 344
+      Width = 624
+      Height = 29
+      Caption = 'The quick brown fox jumps over the lazy dog. 1234567890'
+      Font.Color = clBlack
+      Font.Height = 70
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt72LBL: TLabel
+      Left = 26
+      Top = 425
+      Width = 624
+      Height = 29
+      Caption = 'The quick brown fox jumps over the lazy dog. 1234567890'
+      Font.Color = clBlack
+      Font.Height = 84
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt12CapLBL: TLabel
+      Left = 0
+      Top = 155
+      Width = 16
+      Height = 17
+      Caption = '12'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt18CapLBL: TLabel
+      Left = 0
+      Top = 179
+      Width = 16
+      Height = 17
+      Caption = '18'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt24CapLBL: TLabel
+      Left = 0
+      Top = 203
+      Width = 16
+      Height = 17
+      Caption = '24'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt36CapLBL: TLabel
+      Left = 0
+      Top = 251
+      Width = 16
+      Height = 17
+      Caption = '36'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt48CapLBL: TLabel
+      Left = 0
+      Top = 315
+      Width = 16
+      Height = 17
+      Caption = '48'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt60CapLBL: TLabel
+      Left = 0
+      Top = 395
+      Width = 16
+      Height = 17
+      Caption = '60'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object Pt72CapLBL: TLabel
+      Left = 0
+      Top = 491
+      Width = 16
+      Height = 17
+      Caption = '72'
+      Font.Color = clBlack
+      Font.Height = 14
+      Font.Name = 'helvetica'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+    end
+    object DumbyLBL: TLabel
+      Left = 88
+      Top = 520
+      Width = 32
+      Height = 17
+      Caption = '        '
+    end
+  end
+  object TopPanel: TPanel
+    Left = 0
+    Top = 0
+    Width = 371
+    Height = 41
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 1
+    object DoneBTN: TButton
+      Left = 8
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = '&Done'
+      TabOrder = 0
+      OnClick = DoneBTNClick
+    end
+    object PrintPanel: TPanel
+      Left = 282
+      Top = 0
+      Width = 89
+      Height = 41
+      Align = alRight
+      BevelOuter = bvNone
+      TabOrder = 1
+      object PrintBTN: TButton
+        Left = 6
+        Top = 8
+        Width = 75
+        Height = 25
+        Caption = '&Print'
+        Enabled = False
+        TabOrder = 0
+      end
+    end
+  end
+end

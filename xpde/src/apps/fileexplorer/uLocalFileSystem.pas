@@ -75,6 +75,7 @@ type
         function getUniqueID:string; override;
         procedure getColumnData(const columns:TStrings); override;
         constructor Create(const APath:string); virtual;
+        procedure executeVerb(const verb:integer); override;
         function getIcon: integer; override;
     end;
 
@@ -218,6 +219,20 @@ type
         destructor Destroy;override;
     end;
 
+    TFileCopier=class(TObject)
+    public
+        sourcepaths: TStringList;
+        sources: TStringList;
+        target: string;
+
+        procedure copyFile(const source:string; const target:string);
+        procedure OnFileProgress(const position:integer; const size:integer);
+        procedure fillSources;
+        procedure start;
+        constructor Create;
+        destructor Destroy;override;
+    end;
+
 var
     imDESKTOP: integer=-1;
     imMYDOCUMENTS: integer=-1;
@@ -229,7 +244,7 @@ var
     imHARDDISK: integer=-1;
     imCDDRIVE: integer=-1;
     imCONTROLPANEL: integer=-1;
-    imNOICON: integer=-1;    
+    imNOICON: integer=-1;
 
 implementation
 
@@ -459,6 +474,28 @@ begin
     XPAPI.ShellDocument(FPath);
 end;
 
+procedure TFile.executeVerb(const verb: integer);
+var
+    f: TFileCopier;
+begin
+    if verb=iCopy then begin
+        XPExplorer.copytoclipboard(getUniqueID);
+    end;
+
+    if verb=iPaste then begin
+        copydlg:=XPExplorer.createNewProgressDlg('Copying....');
+        copydlg.show;
+        f:=TFileCopier.create;
+        try
+            f.target:=extractfilepath(FPath);
+            f.sourcepaths.assign(XPExplorer.getClipboard);
+            f.start;
+        finally
+            f.free;
+        end;
+    end;
+end;
+
 procedure TFile.getColumnData(const columns: TStrings);
 var
     f: extended;
@@ -609,14 +646,7 @@ end;
 
 procedure TLocalFile.executeVerb(const verb: integer);
 begin
-    if verb=iCopy then begin
-        XPExplorer.copytoclipboard(getUniqueID);
-    end;
 
-    if verb=iPaste then begin
-        copydlg:=XPExplorer.createNewProgressDlg('Copying....');
-        copydlg.show;
-    end;
 end;
 
 function TLocalFile.getCategory: string;
@@ -927,6 +957,94 @@ begin
         add('Copy');
         add('-');
         add('Properties');
+    end;
+end;
+
+{ TFileCopier }
+
+procedure TFileCopier.copyFile(const source, target: string);
+var
+    s: TFileStream;
+    t: TFileStream;
+    sourcename:string;
+    targetname:string;
+    k: integer;
+    //This number I supose it must be greater
+    buf: array [0..1023] of byte;
+    rsize: integer;
+begin
+    sourcename:=extractfilename(source);
+
+    targetname:=target+sourcename;
+    if fileexists(targetname) then begin
+        targetname:=target+'Copy of '+sourcename;
+        if fileexists(targetname) then begin
+            k:=1;
+            while fileexists(targetname) do begin
+                targetname:=target+'Copy ('+inttostr(k)+') of '+sourcename;
+                inc(k);
+            end;
+
+        end;
+    end;
+
+    s:=TFileStream.Create(source, fmOpenRead);
+    t:=TFileStream.Create(targetname, fmOpenWrite or fmCreate);
+    try
+        while t.size<s.size do begin
+            rsize:=s.Read(buf,1024);
+            t.Write(buf,rsize);
+            OnFileProgress(t.size,s.size);
+        end;
+    finally
+        t.free;
+        s.free;
+    end;
+end;
+
+constructor TFileCopier.Create;
+begin
+    sources:=TStringList.create;
+    sourcepaths:=TStringList.create;
+end;
+
+destructor TFileCopier.Destroy;
+begin
+    sourcepaths.free;
+    sources.free;
+    inherited;
+end;
+
+procedure TFileCopier.fillSources;
+var
+    i: integer;
+    path: string;
+begin
+    for i:=0 to sourcepaths.count-1 do begin
+        path:=sourcepaths[i];
+        if DirectoryExists(path) then begin
+        end
+        else if fileexists(path) then begin
+            sources.add(path);
+        end
+        else showmessage(path);
+    end;
+end;
+
+procedure TFileCopier.OnFileProgress(const position, size: integer);
+begin
+
+end;
+
+procedure TFileCopier.start;
+var
+    i:longint;
+    source: string;
+begin
+    fillsources;
+    for i:=0 to sources.count-1 do begin
+        source:=sources[i];
+        copyFile(source,target);
     end;
 end;
 

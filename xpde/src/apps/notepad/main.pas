@@ -81,14 +81,15 @@ uses
 
 {$R *.xfm}
 
-const
+resourcestring
  CapText = ' - Notepad';
+ sUntitled='Untitled'
 
 procedure TMainForm.NewMNUClick(Sender: TObject);
 begin
 Memo.Lines.Clear;
-CurrentFile := 'Untitled';
-MainForm.Caption := 'Untitled' + CapText;
+CurrentFile := sUntitled;
+MainForm.Caption := sUntitled + CapText;
 Changed := False;
 end;
 

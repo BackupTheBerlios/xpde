@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 415
-  Top = 216
+  Left = 418
+  Top = 245
   Width = 696
   Height = 480
   ActiveControl = Memo

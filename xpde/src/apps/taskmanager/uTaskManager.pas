@@ -167,6 +167,22 @@ begin
         Format('.%d.%d.%d',[Random($FFFF),Random($FFFF),Random($FFFF)]);
 end;
 
+function _cut_left(const SUBSTR, FROMSTR:string):string;
+begin
+  Result:=Copy(FROMSTR,Pos(SUBSTR,FROMSTR)+Length(SUBSTR),$FFFFFFF);
+end;
+
+function _cut_right(const SUBSTR, FROMSTR:string):string;
+begin
+  Result:=FROMSTR;
+  Delete(Result,Pos(SUBSTR,Result),$FFFFFFF);
+end;
+
+function _cut_token(const SUBSTR_LEFT, SUBSTR_RIGHT, FROMSTR:string):string;
+begin
+  Result:=_cut_right(SUBSTR_RIGHT,_cut_left(SUBSTR_LEFT,FROMSTR));
+end;
+
 
 procedure TWindowsTaskManagerDlg.ExitTaskManager1Click(Sender: TObject);
 begin
@@ -1268,9 +1284,8 @@ procedure TWindowsTaskManagerDlg.AverageLoad(avg_file:string);
 var tmpstr_avg:TStrings;
     fi:TextFile;
     sbuf,ss:string;
-    i,j,x,xx:integer;
+    i,j,x:integer;
     results:Array[1..7] of string;
-    avg_:single;
 Begin
         tmpstr_avg:=TStringList.Create;
         try
@@ -1318,10 +1333,8 @@ var i:integer;
 
 Function Sign_Device(device:string):string;
 var ss:string;
-    i,j:integer;
 Begin
         device:=trim(device);
-        // writeln('DEVICE Is ',device);
         if device='lo' then Result:='Loopback'
         else begin
         ss:=copy(device,1,3);
@@ -1394,60 +1407,80 @@ Begin
                 LVNet.Items.EndUpdate;
                 End;
 
+
 Procedure TWindowsTaskManagerDlg.Find_Lusers; // ;)
-var i,j,x,xx,jj,uc:integer;
+var i,x,jj:integer;
     fi:TextFile;
     tmp_users:TStrings;
     tmpfile_,sbuf,ss:string;
-    lusers_:Array of String;
+    lusers_:Array[0..100] of String;
+    username_,us_id,us_cli,us_idle:string;
+    neki:Double;
+    uzer:rusage;
+    luzer:rlimit;
 Begin
-// OK, here we will parse output from 'who' and look
-// for users,don't care about eventually double logins
-// This is just first release , next days I will rewrite this also
-// because I need UID etc..
         Lusers.Items.Clear;
         tmp_users:=TStringList.Create;
         tmpfile_:=_get_tmp_fname;
         try
-        ss:='who > '+tmpfile_;
+        ss:='who -i > '+tmpfile_;
         Libc.System(PChar(ss));
-        sleep(50); //
-        tmp_users.LoadFromFile(tmpfile_);
+        AssignFile(fi,tmpfile_);
+        Reset(fi);
+        i:=0;
+        jj:=0;
+        while not eof(fi) do begin
+        ReadLn(fi,sbuf);
+        try
+        username_:=_cut_right(' ',sbuf);
+        us_id:=IntToStr(getpwnam(PChar(username_))^.pw_uid);
+        except
+        username_:='unknown';
+        End;
+        // NOW WE WILL CHECK FOR DUPLICATE USERNAMES
+        // WHICH WILL NOT BE SHOWN
+
+        if username_<>'unknown' then begin
+
+                        for x:=0 to 100 do begin
+                        if username_=lusers_[x] then inc(jj);
+                        End;
+                        if jj=0 then begin
+
+                        lusers_[i]:=username_;
+
+                                try
+                                us_cli:=Trim(_cut_left(_cut_right(' ',sbuf),sbuf));
+                                us_cli:=_cut_right(' ',us_cli);
+                                except
+                                us_cli:='unknown';
+                                End;
+                                try
+                                us_idle:=Trim(Copy(sbuf,Length(sbuf)-5,$FFFFF));
+                                if Pos(':',us_idle)<=0 then us_idle:='Active';
+                                except
+                                us_idle:='Active';
+                                End;
+                                if us_idle<>'Active' then us_idle:='Idle';
+                                sbuf:=trim(us_id+' '+us_idle+' '+us_cli);
+                                Lusers.Items.Add.Caption:=username_;
+                                tmp_users.Add(sbuf);
+                                Lusers.Items.Item[i].SubItems.Add(us_id);
+                                Lusers.Items.Item[i].SubItems.Add(us_idle);
+                                Lusers.Items.Item[i].SubItems.Add(us_cli);
+                                inc(i);
+                        End;
+                        jj:=0;
+                        End;
+
+
+        End;
+        CloseFile(fi);
         finally
         DeleteFile(tmpfile_);
-        uc:=tmp_users.Count;
-        SetLength(lusers_,uc);
-        jj:=0;
-        for i:=0 to uc-1 do begin
-        j:=pos(' ',tmp_users.Strings[i]);
-        if j<>0 then begin
-        ss:=copy(tmp_users.Strings[i],1,j-1);
-        tmp_users.Strings[i]:=trimleft(copy(tmp_users.Strings[i],j+1,length(tmp_users.Strings[i])));
-        xx:=pos(' ',tmp_users.Strings[i]);
-        if xx<>0 then
-        tmp_users.Strings[i]:=trimleft(copy(tmp_users.Strings[i],xx+1,length(tmp_users.Strings[i])));
-                // now we check for duplicates
-                for x:=0 to uc - 1 do begin
-                if ss=lusers_[x] then inc(jj);
-                End;
-                if jj=0 then lusers_[i]:=ss;
-                jj:=0;
-        End;
-        End;
-        Lusers.Items.BeginUpdate;
-        for i:=0 to uc -1 do begin
-        if lusers_[i]<>'' then begin
-        Lusers.Items.Add.Caption:=lusers_[i];
-        Lusers.Items.Item[i].SubItems.Add('UID');
-        // FIXME  need to find UID
-        Lusers.Items.Item[i].SubItems.Add(tmp_users[i]);
-        Lusers.Items.Item[i].SubItems.Add('Active');
-        // Need to better handle 'who' so we can find is Idle or Active
-        End;
-        End;
-        Lusers.Items.EndUpdate;
         tmp_users.Free;
         End;
+
 End;
 
 end.

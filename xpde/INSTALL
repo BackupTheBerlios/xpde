@@ -1,0 +1,26 @@
+XPDE INSTALL INSTRUCTIONS
+-------------------------
+
+To install XPde on your computer, follow these steps:
+
+-Decompress the tar.gz file you downloaded
+
+tar xvzf xpdeXXXXXXX.tar.gz
+
+-Change the current directory to the one is created
+
+-Change the current user to root using the su command
+
+-Execute the install script
+
+./install.sh
+
+This script will create all the directory structure and will also 
+copy all the files to the default locations.
+
+Now, as a normal user, execute the setup.sh script, this script 
+will copy the default desktop settings to your ~/.xpde directory 
+and also will copy xinitrcDEFAULT file to your HOME dir, this 
+file contain the lines you must add to your system to load XPde. 
+In most cases you just need to rename this file to .xinitrc
+

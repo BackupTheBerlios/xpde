@@ -8,15 +8,15 @@ File_5=SourceModule,'/home/ttm/kylix3/source/rtl/linux/Xlib.pas',0,1,2100,1,2099
 
 [Modules]
 Module0=/home/ttm/xpde/src/apps/appexec/uRun.pas
-Module1=/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas
-Module2=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
-Module3=/home/ttm/xpde/src/core/xpde/uDesktopMain.pas
+Module1=/home/ttm/xpwm/uClient.pas
+Module2=/home/ttm/metacity-2.4.13/src/display.c
+Module3=/home/ttm/xpde/install.sh
 Module4=/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas
 Module5=/home/ttm/xpde/src/core/xpde/uOpenWith.pas
 Module6=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-Module7=/home/ttm/xpde/install.sh
-Module8=/home/ttm/xpwm/uClient.pas
-Module9=/home/ttm/metacity-2.4.13/src/display.c
+Module7=/home/ttm/xpde/src/core/xpde/uDesktopMain.pas
+Module8=/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas
+Module9=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
 Module10=/home/ttm/xpde/src/core/xpwm/XPwm.dpr
 Module11=/home/ttm/xpde/src/core/xpwm/uWMConsts.pas
 Count=12
@@ -28,17 +28,17 @@ ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas]
+[/home/ttm/xpwm/uClient.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/core/xpwm/uWindowManager.pas]
+[/home/ttm/metacity-2.4.13/src/display.c]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/core/xpde/uDesktopMain.pas]
+[/home/ttm/xpde/install.sh]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
@@ -58,17 +58,17 @@ ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/install.sh]
+[/home/ttm/xpde/src/core/xpde/uDesktopMain.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpwm/uClient.pas]
+[/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/metacity-2.4.13/src/display.c]
+[/home/ttm/xpde/src/core/xpwm/uWindowManager.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
@@ -185,9 +185,9 @@ LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=317
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/core/xpwm/uWMConsts.pas
@@ -542,7 +542,7 @@ ClientHeight=87
 
 [ProjectManager]
 Create=1
-Visible=1
+Visible=0
 State=0
 Left=369
 Top=372
@@ -613,28 +613,28 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=519
+Height=743
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=519
+ClientHeight=743
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=12
-Top=0
-Width=1261
-Height=317
+Left=-2
+Top=-631
+Width=443
+Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1261
-ClientHeight=317
-TBDockHeight=317
+ClientWidth=443
+ClientHeight=85
+TBDockHeight=85
 LRDockWidth=443
 Dockable=1
 

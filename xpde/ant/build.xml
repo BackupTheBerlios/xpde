@@ -3,7 +3,7 @@
   XPde build file
   </description>
   <property name="kylix" location="/home/ttm/kylix3" />
-  <property name="version" value="0.2.0" />
+  <property name="version" value="0.2.1" />
   <property name="src" location="src"/>
   <property name="build" location="xpde-${version}"/>
   <property name="units" location="dcu"/>  
@@ -11,7 +11,7 @@
   <property name="base" location="${src}/xpde" />  
   <property name="sources" location="${base}/src" />
   <property name="libpath" value="${kylix}/bin:${build}" />
-  <property name="dcupath" value="${sources}/common:${sources}/components/style:${sources}/components/menu:${sources}/components/commctrls:${sources}/components/toolsapi:${sources}/components/localization:${sources}/components/registry:${sources}/components/shellcontrols" />  
+  <property name="dcupath" value="${sources}/common:${sources}/components/style:${sources}/components/menu:${sources}/components/commctrls:${sources}/components/toolsapi:${sources}/components/localization:${sources}/components/registry:${sources}/components/shellcontrols:${sources}/components/colorselect" />  
   <property name="params" value="-B -E${build} -LE${build} -LN${units} -U${units}:${dcupath} -N${units}" />
 
   <target name="init">
@@ -118,17 +118,54 @@
 	  <arg line="networkproperties.dpr" />
   </exec>    
   
+  <exec dir="${sources}/apps/fileexplorer" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="fileexplorer.dpr" />
+  </exec>      
+  
+  <exec dir="${sources}/applets/mouse" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="mouse.dpr" />
+  </exec>    
+
+  <exec dir="${sources}/applets/keyboard" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="keyboard.dpr" />
+  </exec>  
+  
+ 
+  <exec dir="${sources}/applets/desk" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="desk.dpr" />
+  </exec>  
+  
+  <exec dir="${sources}/applets/regional" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="regional.dpr" />
+  </exec>    
+  
   <exec dir="${sources}/apps/appexec" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
 	  <arg line="${params}" />
 	  <arg line="appexec.dpr" />
-  </exec>      
+  </exec>        
   
-  <exec dir="${sources}/applets/desk" executable="${dcc}">
+  <exec dir="${sources}/applets/DateTimeProps" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
 	  <arg line="${params}" />
-	  <arg line="desk.dpk" />
+	  <arg line="DateTimeProps.dpr" />
   </exec>  
+  
+  <exec dir="${sources}/applets/xpsu" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="xpsu.dpr" />
+  </exec>      
 
   <exec dir="${sources}/core/xpwm" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
@@ -142,36 +179,7 @@
 	  <arg line="XPde.dpr" />
   </exec>
   
-  <exec dir="${sources}/applets/DateTimeProps" executable="${dcc}">
-	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
-	  <arg line="DateTimeProps.dpr" />
-  </exec>  
-
-  <exec dir="${sources}/applets/mouse" executable="${dcc}">
-	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
-	  <arg line="mouse.dpr" />
-  </exec>  
-
-  <exec dir="${sources}/applets/keyboard" executable="${dcc}">
-	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
-	  <arg line="keyboard.dpr" />
-  </exec>  
-
-  <exec dir="${sources}/applets/regional" executable="${dcc}">
-	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
-	  <arg line="regional.dpr" />
-  </exec>  
-  
-  <exec dir="${sources}/applets/xpsu" executable="${dcc}">
-	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
-	  <arg line="xpsu.dpr" />
-  </exec>    
-  
+ 
   </target>
 
   <target name="dist" depends="compile" description="Generate the distribution" >

@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs,
-  QStdCtrls, QComCtrls, QExtCtrls, uQXPComCtrls,SysProvider;
+  QStdCtrls, QComCtrls, QExtCtrls, uQXPComCtrls, SysProvider;
 
 type
   TSystemPropertiesDlg = class(TForm)

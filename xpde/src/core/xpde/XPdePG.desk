@@ -1,35 +1,34 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/apps/fileexplorer/uExplorerAPI.pas',0,1,31,41,52,0,0
-File_1=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,525,55,540,0,0
-File_2=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,408,26,434,0,0
-File_3=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyle.pas',0,1,204,40,217,0,0
-File_4=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMConsts.pas',0,1,38,28,59,0,0
-File_5=SourceModule,'/home/ttm/kylix3/source/rtl/linux/Xlib.pas',0,1,6353,19,6377,0,0
-File_6=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,1,1,1,1,1
-File_7=SourceModule,'/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas',0,1,1609,13,1625,1,0
-File_8=SourceModule,'/home/ttm/t.txt',0,1,860,43,898,0,0
-File_9=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,77,9,94,0,0
+File_0=SourceModule,'/home/ttm/xpde/src/applets/system/uSystemProperties.pas',0,1,1,48,7,1,1
+File_1=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyleConsts.pas',0,1,16,45,17,0,0
+File_2=SourceModule,'/home/ttm/xpde/src/core/xpde/uDesktopMain.pas',0,1,145,27,163,1,0
+File_3=SourceModule,'/home/ttm/xpde/src/apps/calculator/main.pas',0,1,259,19,294,0,0
+File_4=SourceModule,'/home/ttm/xpde/src/apps/calculator/BigNumber.pas',0,1,346,1,365,0,0
+File_5=SourceModule,'/home/ttm/kylix3/source/rtl/sys/SysUtils.pas',0,1,3033,25,3050,0,0
+File_6=SourceModule,'/home/ttm/xpde/src/apps/fileexplorer/uExplorerAPI.pas',0,1,31,41,52,0,0
+File_7=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,525,55,540,0,0
+File_8=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,408,26,434,0,0
 
 [Modules]
-Module0=/home/ttm/kylix3/source/rtl/sys/SysUtils.pas
-Module1=/home/ttm/xpde/src/apps/calculator/main.pas
-Module2=/home/ttm/xpde/src/apps/calculator/BigNumber.pas
+Module0=/home/ttm/xpde/src/components/style/uXPStyle.pas
+Module1=/home/ttm/xpde/src/common/uXPPNG.pas
+Module2=/home/ttm/kylix3/source/clx/QGraphics.pas
 Module3=/home/ttm/xpde/src/core/xpde/XPde.dpr
 Count=4
 EditWindowCount=1
 PackageWindowCount=9
 
-[/home/ttm/kylix3/source/rtl/sys/SysUtils.pas]
+[/home/ttm/xpde/src/components/style/uXPStyle.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/apps/calculator/main.pas]
+[/home/ttm/xpde/src/common/uXPPNG.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/apps/calculator/BigNumber.pas]
+[/home/ttm/kylix3/source/clx/QGraphics.pas]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
@@ -111,6 +110,10 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
+[/home/ttm/xpde/src/applets/system/systemproperties.dpr]
+FormState=0
+FormOnTop=0
+
 [/home/ttm/xpde/src/applets/desk/desk.dpr]
 FormState=0
 FormOnTop=0
@@ -137,7 +140,7 @@ FormOnTop=0
 
 [EditWindow0]
 ViewCount=4
-CurrentView=3
+CurrentView=2
 View0=0
 View1=1
 View2=2
@@ -151,46 +154,46 @@ Left=201
 Top=152
 Width=1079
 Height=753
-MaxLeft=1
-MaxTop=135
-MaxWidth=1286
-MaxHeight=828
-ClientWidth=1286
-ClientHeight=828
+MaxLeft=3
+MaxTop=54
+MaxWidth=1273
+MaxHeight=851
+ClientWidth=1273
+ClientHeight=851
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=85
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
-CursorX=1
-CursorY=1
+CursorX=22
+CursorY=11
 TopLine=1
 LeftCol=1
 
 [View1]
-Module=/home/ttm/xpde/src/apps/calculator/main.pas
-CursorX=19
-CursorY=294
-TopLine=259
+Module=/home/ttm/kylix3/source/clx/QGraphics.pas
+CursorX=1
+CursorY=1194
+TopLine=1173
 LeftCol=1
 
 [View2]
-Module=/home/ttm/xpde/src/apps/calculator/BigNumber.pas
+Module=/home/ttm/xpde/src/components/style/uXPStyle.pas
 CursorX=1
-CursorY=365
-TopLine=346
+CursorY=485
+TopLine=559
 LeftCol=1
 
 [View3]
-Module=/home/ttm/kylix3/source/rtl/sys/SysUtils.pas
-CursorX=25
-CursorY=3050
-TopLine=3033
+Module=/home/ttm/xpde/src/common/uXPPNG.pas
+CursorX=24
+CursorY=125
+TopLine=112
 LeftCol=1
 
 [PackageWindow0]
@@ -406,8 +409,8 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=7
-Top=51
+Left=3
+Top=28
 Width=1273
 Height=87
 MaxLeft=-1
@@ -417,7 +420,7 @@ ClientHeight=87
 
 [ProjectManager]
 Create=1
-Visible=0
+Visible=1
 State=0
 Left=369
 Top=372
@@ -488,26 +491,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=750
+Height=745
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=750
+ClientHeight=745
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=12
-Top=0
-Width=1274
+Left=-2
+Top=-631
+Width=443
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1274
+ClientWidth=443
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443
@@ -517,5 +520,5 @@ Dockable=1
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=13
+ActiveProject=24
 

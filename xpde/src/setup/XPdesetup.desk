@@ -10,18 +10,18 @@ File_7=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,1,1,1,
 File_8=SourceModule,'/home/ttm/xpde/src/core/xpde/uDesktopMain.pas',0,1,1,17,11,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/setup/main.pas
-Module1=/home/ttm/xpde/src/setup/uPersonalizeDlg.pas
+Module0=/home/ttm/xpde/src/setup/uPersonalizeDlg.pas
+Module1=/home/ttm/xpde/src/setup/main.pas
 Module2=/home/ttm/xpde/src/setup/XPdesetup.dpr
 Count=3
 EditWindowCount=1
 
-[/home/ttm/xpde/src/setup/main.pas]
+[/home/ttm/xpde/src/setup/uPersonalizeDlg.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=1
 
-[/home/ttm/xpde/src/setup/uPersonalizeDlg.pas]
+[/home/ttm/xpde/src/setup/main.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=1
@@ -50,11 +50,11 @@ Left=201
 Top=152
 Width=1079
 Height=753
-MaxLeft=3
-MaxTop=54
-MaxWidth=1273
+MaxLeft=1
+MaxTop=135
+MaxWidth=1286
 MaxHeight=851
-ClientWidth=1273
+ClientWidth=1286
 ClientHeight=851
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
@@ -73,8 +73,8 @@ LeftCol=1
 
 [View1]
 Module=/home/ttm/xpde/src/setup/main.pas
-CursorX=22
-CursorY=69
+CursorX=29
+CursorY=68
 TopLine=56
 LeftCol=1
 
@@ -100,8 +100,8 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=3
-Top=28
+Left=7
+Top=51
 Width=1273
 Height=87
 MaxLeft=-1

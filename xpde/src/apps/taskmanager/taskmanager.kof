@@ -65,3 +65,7 @@ DebugCWD=
 /home/ttm/xpde/bin/bplXPColorSelect.so=XPColorSelect components
 /home/ttm/xpde/bin/bplXPCommctrls.so=XPCommctrls unit
 
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=$(HOME)/xpde/bin/applets
+

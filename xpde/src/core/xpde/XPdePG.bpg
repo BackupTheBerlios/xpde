@@ -10,9 +10,9 @@ DCC =dcc $<
 #------------------------------------------------------------------------------
 PROJECTS = bplXPRegistry.so bplXPCommon.so bplXPAPI.so bplXPMenus.so \
   bplXPTrayIcon.so bplXPStyle.so bplXPColorSelect.so bplXPShellControls.so \
-  bplXPCommctrls.so taskmanager networkstatus notepad calculator \
-  networkproperties fileexplorer mouse keyboard desk regional appexec \
-  DateTimeProps xpsu XPwm XPde
+  bplXPCommctrls.so bplXPsysprovider.so taskmanager networkstatus notepad \
+  calculator networkproperties systemproperties fileexplorer mouse keyboard desk \
+  regional appexec DateTimeProps xpsu XPwm XPde
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -90,6 +90,12 @@ bplXPTrayIcon.so: ../../components/trayicon/XPTrayIcon.dpk
 	$(DCC)
 
 calculator: ../../apps/calculator/calculator.dpr
+	$(DCC)
+
+bplXPsysprovider.so: ../../components/sysprovider/XPsysprovider.dpk
+	$(DCC)
+
+systemproperties: ../../applets/systemproperties/systemproperties.dpr
 	$(DCC)
 
 

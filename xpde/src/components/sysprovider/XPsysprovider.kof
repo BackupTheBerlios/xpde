@@ -46,7 +46,7 @@ DynamicLoader=/lib/ld-linux.so.2
 [Directories]
 OutputDir=
 UnitOutputDir=
-PackageDLLOutputDir=
+PackageDLLOutputDir=$(HOME)/xpde/bin
 PackageDCPOutputDir=
 SearchPath=
 Packages=baseclx:visualclx:visualdbclx:dataclx:Linux:ZCommonK:ZDbwareK:ZPgSqlK:netdataclx:netclx:indy:rppack:rppackdesign:rppackv:RLibLinuxK2:rtl:dclelpK3:elpackK3:RLibLinuxK3:G113_R60:XPAPI:XPRegistry:XPMenus:XPCommon:XPStyle:XPShellControls:XPTrayIcon:XPCommctrls:XPColorSelect:clx4thgui
@@ -62,7 +62,14 @@ UseLauncher=0
 DebugCWD=
 
 [Excluded Packages]
-/home/linda/xpde/src/components/sysprovider/bplXPsysprovider.so=XPdeSysProvider
-/home/linda/Projects/4th/FthLib/GUI_CLX/Packages/bpldclclx4thgui.so=4th GUI Library (CLX Edition)
-/home/linda/My_Documents/Kylix_Downloads/SDL_Apps/SDLAppSuite-0-2-0/bplFileNameContainerDT.so.0.1=Filename Containers
+/home/ttm/xpde/bin/bplXPCommon.so=XPde utility functions
+/home/ttm/xpde/bin/bplXPStyle.so=XPStyle component
+/home/ttm/xpde/bin/bplXPColorSelect.so=XPColorSelect components
+/home/ttm/xpde/bin/bplXPCommctrls.so=XPCommctrls unit
+/home/ttm/xpde/bin/bplXPShellControls.so=XPShell Controls
+/home/ttm/xpde/bin/bplXPTrayIcon.so=XPde Tray Icon component
+
+[HistoryLists\hlOutputDirectorry]
+Count=1
+Item0=$(HOME)/xpde/bin/applets
 

@@ -372,7 +372,7 @@ Begin
         End;
 
                 for i:=1 to tmpstr.Count-1 do begin
-                        Application.ProcessMessages;                
+                        Application.ProcessMessages;
                 ss:='';
                 ss:=tmpstr.Strings[i];
                 ss:=trimleft(ss);
@@ -472,7 +472,7 @@ begin
 
          pb2.PixelFormat:=pf32bit;
          pb2.Height:=60;
-         pb2.Width:=228;
+         pb2.Width:=238;
 
          with PB2.Canvas do begin
                 Brush.Color:=clBlack;
@@ -489,7 +489,7 @@ begin
 
          pb4.PixelFormat:=pf32bit;
          pb4.Height:=60;
-         pb4.Width:=228;
+         pb4.Width:=238;
 
          with PB4.Canvas do begin
                 Brush.Color:=clBlack;
@@ -691,8 +691,9 @@ end;
 Procedure TWindowsTaskManagerDlg.Read_stats(statsfile_:string);
 var i,j:integer;
     sbuf,ss,numfks:string;
-    fi:Textfile;
     CPUuser, CPUnice, CPUsyst, CPUidle:longint;
+    pif:PIOFile;
+    p:PChar;
 Begin
     CPUuser:=0;
     CPUSyst:=0;
@@ -707,7 +708,22 @@ Begin
        in the uptime pseudo-file. *)
 
         tmpstr_stat:=TStringList.Create;
+        try       
+        p:=StrAlloc(1024*64);
 
+        pif:=Libc.fopen(PChar(statsfile_),'r');
+                libc.fseek(pif,0,SEEK_END);
+                libc.fread(p,256,64,pif);
+        Libc.fclose(pif);
+        ss:=StrPas(p);
+
+        tmpstr_stat.Text:=ss;
+
+        StrDispose(p);
+
+
+        (*     tmpstr_stat:=TStringList.Create;
+        THIS IS ABANDONED
         try
         AssignFile(fi,statsfile_);
         Reset(fi);
@@ -716,7 +732,7 @@ Begin
         tmpstr_stat.Add(sbuf);
         End;
         CloseFile(fi);
-
+        *)
         sbuf:=tmpstr_stat.Strings[0];
 
 
@@ -1014,7 +1030,7 @@ Begin
         PB2.Canvas.MoveTo(i,0);
         PB2.Canvas.LineTo(i,PB2.Height);
         inc(i,12);
-        until i>=PB2.Width-10;
+        until i>=PB2.Width;
 
                 with PB2.Canvas do begin
                 Brush.Color:=clBlack;
@@ -1270,7 +1286,7 @@ Begin
         PB4.Canvas.MoveTo(i,0);
         PB4.Canvas.LineTo(i,PB4.Height);
         inc(i,12);
-        until i>=PB4.Width-10;
+        until i>=PB4.Width;
 
                 with PB4.Canvas do begin
                 Brush.Color:=clBlack;

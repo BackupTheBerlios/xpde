@@ -26,7 +26,7 @@ interface
 
 uses
     Classes, SysUtils, QGraphics,
-    uExplorerAPI, QDialogs, uXPAPI,
+    uExplorerAPI, QDialogs, uXPAPI, uXPStyleConsts,
     QForms, Libc, uLNKFile;
 
 type
@@ -1499,37 +1499,37 @@ initialization
         bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'desktop.png');
         imDESKTOP:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'home.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'folder_home.png');
         imHOME:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'folder_documents.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'fileopen.png');
         imMYDOCUMENTS:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'monitor.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'konsole2.png');
         imMYCOMPUTER:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'network.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'linneighborhood.png');
         imMYNETWORKPLACES:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'recyclebinempty.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'trashcan_empty.png');
         imRECYCLEBIN:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'floppy.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'3floppy_unmount.png');
         imFLOPPY:=XPExplorer.registerImage(bmp);
 
         bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'folder.png');
         imCLOSEDFOLDER:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'harddrive.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'hdd_unmount.png');
         imHARDDISK:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'cdrom.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'cdrom_unmount.png');
         imCDDRIVE:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'control_panel.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'package_settings.png');
         imCONTROLPANEL:=XPExplorer.registerImage(bmp);
 
-        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png');
+        bmp.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+gNOICON);
         imNOICON:=XPExplorer.registerImage(bmp);
     finally
         bmp.free;

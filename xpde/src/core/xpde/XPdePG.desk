@@ -1,32 +1,27 @@
 [Closed Files]
-File_0=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,1,491,42,517,0,0
-File_1=SourceModule,'/home/ttm/xpde/src/apps/appexec/uRun.pas',0,1,1,35,7,1,0
-File_2=SourceModule,'/home/ttm/xpde/src/core/xpde/uOpenWith.pas',0,1,1,11,35,1,0
-File_3=SourceModule,'/home/ttm/xpde/src/apps/fileexplorer/main.pas',0,1,507,17,511,1,1
-File_4=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,70,9,86,0,0
-File_5=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWindowManager.pas',0,1,752,57,767,0,0
-File_6=SourceModule,'/home/ttm/xpde/src/common/numlock.pas',0,1,73,22,89,0,0
-File_7=SourceModule,'/home/ttm/xpde/src/applets/keyboard/uKeyboardProperties.pas',0,1,350,33,365,1,1
+File_0=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyleConsts.pas',0,1,42,28,42,0,0
+File_1=SourceModule,'/home/ttm/xpde/src/core/xpwm/uTaskBar.pas',0,1,180,75,183,0,1
+File_2=SourceModule,'/home/ttm/xpde/src/apps/appexec/uRun.pas',0,1,66,17,73,0,1
+File_3=SourceModule,'/home/ttm/xpde/src/applets/mouse/uMouseProperties.pas',0,1,158,65,165,0,1
+File_4=SourceModule,'/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas',0,1,1,1,1,0,0
+File_5=SourceModule,'/home/ttm/xpde/src/apps/fileexplorer/main.pas',0,1,339,45,349,0,0
+File_6=SourceModule,'/home/ttm/xpde/src/core/xpde/uOpenWith.pas',0,1,103,65,110,0,0
+File_7=SourceModule,'/home/ttm/xpde/src/core/xpde/uXPAPI_imp.pas',0,1,491,42,517,0,0
+File_8=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,70,9,86,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-Module1=/home/ttm/xpde/src/core/xpwm/XPwm.dpr
-Module2=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
-Count=3
+Module0=/home/ttm/xpde/src/core/xpde/uDesktopMain.pas
+Module1=/home/ttm/xpde/src/core/xpde/XPde.dpr
+Count=2
 EditWindowCount=1
 PackageWindowCount=9
 
-[/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
+[/home/ttm/xpde/src/core/xpde/uDesktopMain.pas]
 ModuleType=SourceModule
 FormState=1
-FormOnTop=0
+FormOnTop=1
 
-[/home/ttm/xpde/src/core/xpwm/XPwm.dpr]
-ModuleType=SourceModule
-FormState=0
-FormOnTop=0
-
-[/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas]
+[/home/ttm/xpde/src/core/xpde/XPde.dpr]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
@@ -123,16 +118,15 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
-[/home/ttm/xpde/src/core/xpde/XPde.dpr]
+[/home/ttm/xpde/src/core/xpwm/XPwm.dpr]
 FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=3
+ViewCount=2
 CurrentView=1
 View0=0
 View1=1
-View2=2
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -142,38 +136,31 @@ Left=201
 Top=152
 Width=1079
 Height=753
-MaxLeft=1
-MaxTop=135
-MaxWidth=1286
+MaxLeft=3
+MaxTop=54
+MaxWidth=1273
 MaxHeight=851
-ClientWidth=1286
+ClientWidth=1273
 ClientHeight=851
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=150
+BottomPanelSize=85
 BottomPanelClients=MessageView@EditWindow0
 BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
-Module=/home/ttm/xpde/src/apps/fileexplorer/uLocalFileSystem.pas
-CursorX=31
-CursorY=1311
-TopLine=1306
+Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
+CursorX=18
+CursorY=12
+TopLine=1
 LeftCol=1
 
 [View1]
-Module=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
-CursorX=18
-CursorY=217
-TopLine=194
-LeftCol=1
-
-[View2]
-Module=/home/ttm/xpde/src/core/xpwm/XPwm.dpr
-CursorX=14
-CursorY=18
+Module=/home/ttm/xpde/src/core/xpde/uDesktopMain.pas
+CursorX=4
+CursorY=6
 TopLine=1
 LeftCol=1
 
@@ -448,7 +435,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=BorderWidth
+SelectedItem=BorderStyle
 ExpandedItems=
 HiddenCategories=
 
@@ -456,8 +443,8 @@ HiddenCategories=
 Create=1
 Visible=1
 State=0
-Left=6
-Top=147
+Left=2
+Top=124
 Width=190
 Height=336
 MaxLeft=-1
@@ -475,11 +462,11 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=686
+Height=751
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=686
+ClientHeight=751
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
@@ -490,13 +477,13 @@ Visible=1
 State=0
 Left=12
 Top=0
-Width=1274
-Height=150
+Width=1261
+Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1274
-ClientHeight=150
-TBDockHeight=150
+ClientWidth=1261
+ClientHeight=85
+TBDockHeight=85
 LRDockWidth=443
 Dockable=1
 
@@ -504,5 +491,5 @@ Dockable=1
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=23
+ActiveProject=24
 

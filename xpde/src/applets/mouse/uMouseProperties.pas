@@ -26,7 +26,7 @@ unit uMouseProperties;
 interface
 
 uses
-  SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs,
+  SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs, uXPAPI,
   QStdCtrls, QExtCtrls, QComCtrls, Qt, uQXPComCtrls,uRegistry, uMouseAPI, Xlib;
 
 
@@ -161,6 +161,8 @@ end;
 
 procedure TMousePropertiesDlg.FormCreate(Sender: TObject);
 begin
+        imClosed.Picture.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+'folder_slin.png');
+        imOpen.Picture.LoadFromFile(XPAPI.getsysinfo(siSystemDir)+'folder_slin_open.png');        
         readMousePropertiesFromRegistry;
         applyMouseProperties;
         Fill_Components;

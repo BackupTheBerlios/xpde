@@ -1,6 +1,6 @@
 [Shortcut]
 Caption=Keyboard
-Icon=keyboard.png
+Icon=key_enter.png
 Comments=Customize your keyboard settings, such as the cursor blink rate and the character repeat rate.
 Command=%APPLETS%keyboard
 Startin=

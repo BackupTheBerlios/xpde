@@ -26,7 +26,9 @@ program mouse;
 uses
   QForms,
   uXPStyle,
-  uMouseProperties in 'uMouseProperties.pas' {MousePropertiesDlg};
+  uMouseProperties in 'uMouseProperties.pas' {MousePropertiesDlg},
+  uOpenWith in '../../core/xpde/uOpenWith.pas' {OpenWithDlg},
+  uXPAPI_imp in '../../core/xpde/uXPAPI_imp.pas';
 
 {$R *.res}
 

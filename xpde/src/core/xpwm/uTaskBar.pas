@@ -182,16 +182,16 @@ begin
     //*****************************************************
     btnStart.Glyph.LoadFromFile(XPAPI.getsysinfo(siMiscDir)+gSTARTBUTTON);
     startmenu.backbitmap.loadfromfile(XPAPI.getsysinfo(siMiscDir)+gSTARTMENU);
-    imgProgramFolder.picture.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'programs_develop.png');
+    imgProgramFolder.picture.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'folder.png');
     //*****************************************************
-    loadMenuBitmap(programs1.bitmap,'programs_develop.png');
-    loadMenuBitmap(documents1.bitmap,'programs_productivity.png');
-    loadMenuBitmap(settings1.bitmap,'programs_system.png');
+    loadMenuBitmap(programs1.bitmap,'folder.png');
+    loadMenuBitmap(documents1.bitmap,'contents.png');
+    loadMenuBitmap(settings1.bitmap,'configure.png');
     loadMenuBitmap(search1.bitmap,gSearch);
     loadMenuBitmap(helpandsupport1.bitmap,'help.png');
-    loadMenuBitmap(run1.bitmap,'reload.png');
+    loadMenuBitmap(run1.bitmap,'run.png');
     loadMenuBitmap(logoffadministrator1.bitmap,'stop.png');
-    loadMenuBitmap(turnoffcomputer1.bitmap,'power_off.png');
+    loadMenuBitmap(turnoffcomputer1.bitmap,'exit.png');
     //*****************************************************
 
 
@@ -406,29 +406,29 @@ begin
                     if trim(l.caption)<>'' then d.caption:=l.Caption
                     else d.caption:=changefileext(files[i],'');
 
-                    iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png';
+                    iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+gNOICON;
                     if trim(l.icon)<>'' then begin
                         if (fileexists(l.icon)) then iconfile:=l.icon
                         else begin
                             if (fileexists(XPAPI.getsysinfo(siSystemDir)+l.Icon)) then begin
                                 iconfile:=XPAPI.getsysinfo(siSystemDir)+l.Icon;
                             end
-                            else iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png'
+                            else iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+gNOICON;
                         end;
                     end
                     else begin
                         iconfile:=XPAPI.getsysinfo(siSystemDir)+changefileext(files[i],'.ico');
                         if not fileexists(iconfile) then begin
-                            iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png'
+                            iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+gNOICON;
                         end;
                     end;
-                    
+
                     try
                         f.LoadFromFile(iconfile);
                         f.graphic.width:=16;
                         f.graphic.height:=16;
                     except
-                        iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+'textdoc.png';
+                        iconfile:=XPAPI.getsysinfo(siSmallSystemDir)+gNOICON;
                         f.LoadFromFile(iconfile);
                         f.graphic.width:=16;
                         f.graphic.height:=16;

@@ -10,20 +10,20 @@ File_7=SourceModule,'/home/ttm/xpde/src/components/style/uXPStyleConsts.pas',0,1
 File_8=SourceModule,'/home/ttm/xpde/src/components/menu/uXPPopupMenu.pas',0,1,39,15,39,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/components/trayicon/demo/main.pas
-Module1=/home/ttm/xpde/src/components/trayicon/demo/traydemo.dpr
+Module0=/home/ttm/xpde/src/components/trayicon/demo/traydemo.dpr
+Module1=/home/ttm/xpde/src/components/trayicon/demo/main.pas
 Count=2
 EditWindowCount=1
-
-[/home/ttm/xpde/src/components/trayicon/demo/main.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
 
 [/home/ttm/xpde/src/components/trayicon/demo/traydemo.dpr]
 ModuleType=SourceModule
 FormState=0
 FormOnTop=0
+
+[/home/ttm/xpde/src/components/trayicon/demo/main.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=1
 
 [/home/ttm/ProjectGroup1.bpg]
 FormState=0
@@ -31,7 +31,7 @@ FormOnTop=0
 
 [EditWindow0]
 ViewCount=2
-CurrentView=1
+CurrentView=0
 View0=0
 View1=1
 CodeExplorer=CodeExplorer@EditWindow0
@@ -43,11 +43,11 @@ Left=201
 Top=152
 Width=1079
 Height=753
-MaxLeft=1
-MaxTop=135
-MaxWidth=1286
+MaxLeft=3
+MaxTop=54
+MaxWidth=1273
 MaxHeight=851
-ClientWidth=1286
+ClientWidth=1273
 ClientHeight=851
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
@@ -59,15 +59,15 @@ BottomPanelData=00000400010000000B0000004D65737361676556696577000000000000000000
 
 [View0]
 Module=/home/ttm/xpde/src/components/trayicon/demo/traydemo.dpr
-CursorX=1
-CursorY=1
+CursorX=16
+CursorY=9
 TopLine=1
 LeftCol=1
 
 [View1]
 Module=/home/ttm/xpde/src/components/trayicon/demo/main.pas
-CursorX=16
-CursorY=12
+CursorX=15
+CursorY=6
 TopLine=1
 LeftCol=1
 
@@ -84,8 +84,8 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=7
-Top=51
+Left=3
+Top=28
 Width=1273
 Height=87
 MaxLeft=-1
@@ -97,8 +97,8 @@ ClientHeight=87
 Create=1
 Visible=0
 State=0
-Left=370
-Top=373
+Left=369
+Top=372
 Width=535
 Height=368
 MaxLeft=-1
@@ -147,8 +147,8 @@ HiddenCategories=
 Create=1
 Visible=1
 State=0
-Left=6
-Top=147
+Left=2
+Top=124
 Width=190
 Height=336
 MaxLeft=-1

@@ -342,11 +342,11 @@ begin
     sbUp.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'up.png');
     sbSearch.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'find.png');
     sbFolders.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'folder.png');
-//    sbMove.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'moveto.png');
-//    sbCopy.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'copyto.png');
+    sbMove.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'make_kdevelop.png');
+    sbCopy.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'editcopy.png');
     sbStop.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'stop.png');
     sbUndo.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'reload.png');
-    sbView.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'view_folders.png');                            
+    sbView.Glyph.LoadFromFile(XPAPI.getsysinfo(siMediumSystemDir)+'view_icon.png');
 
     //These lines are here to set the font of the menubar
     font.name:='';

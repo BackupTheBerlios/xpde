@@ -39,15 +39,15 @@ const
     dclDesktopBackground=$A56D39;
 
     gDEFAULTCURSOR='defaultcursor.png';
-    gNOICON='textdoc.png';
+    gNOICON='document.png';
     gNOICONSMALL='noiconsm.png';
     gSHORTCUT='shortcut.png';
     gFOLDER='folder.png';
-    gMYDOCUMENTS='folder_documents.png';
-    gMYCOMPUTER='monitor.png';
-    gMYHOME='home.png';
-    gMYNETWORKPLACES='network.png';
-    gRECYCLEBINEMPTY='recyclebinempty.png';
+    gMYDOCUMENTS='folder2.png';
+    gMYCOMPUTER='computer.png';
+    gMYHOME='folder_home.png';
+    gMYNETWORKPLACES='package_network.png';
+    gRECYCLEBINEMPTY='trashcan_empty.png';
     gFOLDERSMALL='foldersmall.png';
     gSHORTCUTSMALL='shortcutsmall.png';
     gCREATESHORTCUTWIZARD='createshortcutwizard.png';
@@ -55,7 +55,7 @@ const
     gPROGRAMS='programs.png';
     gDOCUMENTS='documents.png';
     gSETTINGS='settings.png';
-    gSEARCH='find.png';
+    gSEARCH='filefind.png';
     gHELPANDSUPPORT='helpandsupport.png';
     gRUN='run.png';
     gLOGOFF='logoff.png';

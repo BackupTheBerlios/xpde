@@ -30,5 +30,6 @@ cp networkstatus /opt/xpde/bin/applets
 cp xpsu /opt/xpde/bin/applets
 
 cp taskmanager /opt/xpde/bin/apps
+cp notepad /opt/xpde/bin/apps
 
 echo "Installation completed";

@@ -1,0 +1,204 @@
+<project name="XPde" default="dist" basedir=".">
+  <description>
+  XPde build file
+  </description>
+  <property name="kylix" location="/home/ttm/kylix3" />
+  <property name="version" value="0.1.9" />
+  <property name="src" location="src"/>
+  <property name="build" location="xpde-${version}"/>
+  <property name="units" location="dcu"/>  
+  <property name="dcc" location="${kylix}/bin/dcc" />
+  <property name="base" location="${src}/xpde" />  
+  <property name="sources" location="${base}/src" />
+  <property name="libpath" value="${kylix}/bin:${build}" />
+  <property name="dcupath" value="${sources}/components/style:${sources}/components/menu:${sources}/components/commctrls:${sources}/components/toolsapi:${sources}/components/localization:${sources}/components/registry:${sources}/components/shellcontrols" />  
+  <property name="params" value="-B -E${build} -LE${build} -LN${units} -U${units}:${dcupath} -N${units}" />
+
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${src}"/>	
+	<cvs cvsroot=":pserver:anonymous@cvs.xpde.berlios.de:/cvsroot/xpde" compression="true" compressionlevel="9" package="xpde" dest="${src}" />
+	<exec dir="${src}/xpde" executable="perl">
+	<arg line="${src}/xpde/cvs2cl.pl" />
+	</exec>
+  </target>
+
+  <target name="compile" depends="init" description="Compile the source" >
+  
+  <mkdir dir="${build}"/>
+  <mkdir dir="${units}"/>
+
+  <exec dir="${sources}/common" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
+	  <arg line="${params}" />
+	  <arg line="XPCommon.dpk" />
+  </exec>
+  
+  <exec dir="${sources}/components/registry" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
+	  <arg line="${params}" />
+	  <arg line="XPRegistry.dpk" />
+  </exec>  
+  
+  <exec dir="${sources}/components/toolsapi" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
+	  <arg line="${params}" />
+	  <arg line="XPAPI.dpk" />
+  </exec>    
+  
+  <exec dir="${sources}/components/menu" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
+	  <arg line="${params}" />
+	  <arg line="XPMenus.dpk" />
+  </exec>      
+  
+  <exec dir="${sources}/components/style" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
+	  <arg line="${params}" />
+	  <arg line="XPStyle.dpk" />
+  </exec>        
+  
+  <exec dir="${sources}/components/localization" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
+	  <arg line="${params}" />
+	  <arg line="XPLocalizator.dpk" />
+  </exec>          
+  
+  <exec dir="${sources}/components/localization" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="XPLocalizatorIDE.dpk" />
+  </exec>            
+  
+  <exec dir="${sources}/components/colorselect" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="XPColorSelect.dpk" />
+  </exec>              
+  
+  <exec dir="${sources}/components/shellcontrols" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="XPShellControls.dpk" />
+  </exec>                
+  
+  <exec dir="${sources}/components/commctrls" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="XPCommctrls.dpk" />
+  </exec>
+  
+  <exec dir="${sources}/apps/taskmanager" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="taskmanager.dpr" />
+  </exec>
+  
+  <exec dir="${sources}/apps/networkstatus" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="networkstatus.dpr" />
+  </exec>  
+  
+  <exec dir="${sources}/apps/networkproperties" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="networkproperties.dpr" />
+  </exec>    
+  
+  <exec dir="${sources}/apps/appexec" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="appexec.dpr" />
+  </exec>      
+  
+  <exec dir="${sources}/applets/desk" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="desk.dpk" />
+  </exec>  
+  
+  <exec dir="${sources}/core/xpwm" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="XPwm.dpr" />
+  </exec>        
+  
+  <exec dir="${sources}/core/xpde" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="XPde.dpr" />
+  </exec>
+  
+  <exec dir="${sources}/applets/DateTimeProps" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="DateTimeProps.dpr" />
+  </exec>  
+  
+  <exec dir="${sources}/applets/xpsu" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="xpsu.dpr" />
+  </exec>    
+  
+  </target>
+
+  <target name="dist" depends="compile" description="Generate the distribution" >
+  
+	<tstamp/>  
+  
+    <copy todir="${build}" >
+		<fileset dir="${base}">
+		</fileset>
+	</copy>
+	
+	<exec dir="${build}" executable="chmod">
+		<arg line="a+x install.sh" />
+	</exec>	
+	
+	<exec dir="${build}" executable="chmod">
+		<arg line="a+x setup.sh" />
+	</exec>		
+	
+	<exec dir="${build}" executable="chmod">
+		<arg line="a+x stub.sh" />
+	</exec>		
+	
+	<exec dir="${build}" executable="rm">
+		<arg line="cvs2cl.pl" />
+	</exec>			
+	
+	<copy todir="${build}/themes">
+		<fileset dir="${base}/themes" excludes="CVS" />
+	</copy>	
+	
+	<copy todir="${build}/doc">
+		<fileset dir="${base}/doc" excludes="CVS" />
+	</copy>
+	
+	<copy todir="${build}/defaultdesktop">
+		<fileset dir="${base}/defaultdesktop" excludes="CVS" />
+	</copy>
+	
+	<exec dir="." executable="tar">
+		<arg line="cvzf xpde-${version}-nolibs-${DSTAMP}.tar.gz xpde-${version}" />
+	</exec>	
+	
+    <copy file="${kylix}/bin/bplvisualclx.so.6.9" todir="${build}" />
+    <copy file="${kylix}/bin/bplrtl.so.6.9" todir="${build}" />	
+    <copy file="${kylix}/bin/libborqt-6.9-qt2.3.so" todir="${build}" />	
+	<copy file="${kylix}/bin/libqt.so.2" todir="${build}" />	
+	<copy file="${kylix}/bin/libqtintf-6.9-qt2.3.so" todir="${build}" />			
+	
+	<exec dir="." executable="tar">
+		<arg line="cvzf xpde-${version}-${DSTAMP}.tar.gz xpde-${version}" />
+	</exec>		
+
+  </target>
+
+  <target name="clean" description="Clean up" >
+    <delete dir="${build}"/>
+    <delete dir="${units}"/>	
+  </target>
+</project>

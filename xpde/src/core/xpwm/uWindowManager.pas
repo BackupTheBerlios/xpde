@@ -1925,6 +1925,14 @@ begin
         fbs:=(frame as TWindowsClassic).getFrameBorderSizes;
         co:=(frame as TWindowsClassic).getorigin;
 
+        {
+        writeln('x:'+inttostr(attr.x));
+        writeln('y:'+inttostr(attr.y));
+        writeln('width:'+inttostr(attr.width));
+        writeln('height:'+inttostr(attr.height));
+        writeln('----------');
+        }                
+
         frame.left:=attr.x-co.x;
         if frame.left<0 then frame.left:=0;
 
@@ -1966,11 +1974,18 @@ begin
 
     	if (attr.map_state = IsViewable) then inc(FUnmapcounter,1)
         else begin
+            {
     //		c.initPosition;
-    //		if (assigned(hints)) and  ((hints.flags and StateHint)<>0) then c.setWindowState(hints.initial_state);
+    		if (assigned(hints)) and  ((hints.flags and StateHint)<>0) then begin
+                writeln(hints.initial_state);
+            end;
+            }
     	end;
 
         if framed then reparent;
+
+        //A bit of hack, shit!
+        if (attr.width>=qforms.Screen.Width) then maximize;
 
 
         {$ifdef DEBUG}
@@ -2263,6 +2278,7 @@ begin
         frame.BoundsRect:=r;
         XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
         FWindowState:=wsMaximized;
+        (frame as TWindowsClassic).updateWindowState;
     end;
 end;
 
@@ -2358,6 +2374,7 @@ begin
                 XResizeWindow(FWindowManager.FDisplay, xwindow, frame.width-(fbs.left+fbs.right), frame.height-(fbs.bottom+co.Y));
                 FWindowState:=wsNormal;
             end;
+            (frame as TWindowsClassic).updateWindowState;
         end;
     end;
 end;

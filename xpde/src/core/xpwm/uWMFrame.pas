@@ -104,6 +104,7 @@ type
         function getOrigin:TPoint;
         procedure setClient(AClient:TWMClient);
         procedure updatewindowtitle;
+        procedure updateWindowState;
         procedure setTitle(ATitle:widestring);
         function getTitle:widestring;
         procedure updateActiveState;
@@ -476,14 +477,12 @@ begin
     if assigned(client) then begin
         if client.windowstate<>wsMaximized then begin
             client.maximize;
-            btnMaximize.glyph.Assign(restore.picture.graphic);
             FormPaint(self);
             Restore1.Enabled:=true;
             Maximize1.Enabled:=false;
         end
         else begin
             client.restore;
-            btnMaximize.glyph.Assign(maximize.picture.graphic);
             FormPaint(self);
             Restore1.Enabled:=false;
             Maximize1.Enabled:=true;
@@ -772,6 +771,16 @@ procedure TWindowsClassic.btnCloseMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
     client.activate;
+end;
+
+procedure TWindowsClassic.updateWindowState;
+begin
+    if client.WindowState=wsMaximized then begin
+        btnMaximize.glyph.Assign(restore.picture.graphic);
+    end
+    else begin
+            btnMaximize.glyph.Assign(maximize.picture.graphic);    
+    end;
 end;
 
 initialization

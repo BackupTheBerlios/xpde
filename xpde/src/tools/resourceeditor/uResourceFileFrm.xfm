@@ -1,6 +1,6 @@
 object ResourceFileFrm: TResourceFileFrm
-  Left = 331
-  Top = 391
+  Left = 334
+  Top = 420
   Width = 378
   Height = 248
   VertScrollBar.Range = 19
@@ -21,6 +21,8 @@ object ResourceFileFrm: TResourceFileFrm
     Align = alClient
     Columns = <>
     TabOrder = 0
+    OnDblClick = tvEntriesDblClick
+    OnEditing = tvEntriesEditing
   end
   object StatusBar1: TStatusBar
     Left = 0

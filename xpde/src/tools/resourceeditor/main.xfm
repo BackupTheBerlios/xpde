@@ -1,9 +1,9 @@
 object MainForm: TMainForm
-  Left = 210
-  Top = 177
+  Left = 216
+  Top = 233
   Width = 696
   Height = 480
-  VertScrollBar.Range = 276
+  VertScrollBar.Range = 48
   Caption = 'Resource Editor'
   Color = clGray
   FormStyle = fsMDIForm

@@ -1,3 +1,25 @@
+{ *************************************************************************** }
+{                                                                             }
+{ This file is part of the XPde project                                       }
+{                                                                             }
+{ Copyright (c) 2002 José León Serna <ttm@xpde.com>                           }
+{                                                                             }
+{ This program is free software; you can redistribute it and/or               }
+{ modify it under the terms of the GNU General Public                         }
+{ License as published by the Free Software Foundation; either                }
+{ version 2 of the License, or (at your option) any later version.            }
+{                                                                             }
+{ This program is distributed in the hope that it will be useful,             }
+{ but WITHOUT ANY WARRANTY; without even the implied warranty of              }
+{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           }
+{ General Public License for more details.                                    }
+{                                                                             }
+{ You should have received a copy of the GNU General Public License           }
+{ along with this program; see the file COPYING.  If not, write to            }
+{ the Free Software Foundation, Inc., 59 Temple Place - Suite 330,            }
+{ Boston, MA 02111-1307, USA.                                                 }
+{                                                                             }
+{ *************************************************************************** }
 unit uResourceFileFrm;
 
 interface
@@ -6,18 +28,24 @@ uses
   SysUtils, Types, Classes,
   Variants, QTypes, QGraphics,
   QControls, QForms, QDialogs,
-  QStdCtrls, QComCtrls, uResources, QExtCtrls;
+  QStdCtrls, QComCtrls, uResources,
+  QExtCtrls, uResourceAPI;
 
 type
   TResourceFileFrm = class(TForm)
     tvEntries: TTreeView;
     StatusBar1: TStatusBar;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure tvEntriesDblClick(Sender: TObject);
+    procedure tvEntriesEditing(Sender: TObject; Node: TTreeNode;
+      var AllowEdit: Boolean);
   private
     { Private declarations }
   public
     { Public declarations }
+    editors: TList;
     resourceFile:TResourceFile;
+    procedure destroyEditors;
     procedure updateResourceTree;
     procedure loadFromFile(const filename:string);
     constructor Create(AOwner:TComponent);override;
@@ -37,12 +65,14 @@ constructor TResourceFileFrm.Create(AOwner: TComponent);
 begin
   inherited;
   resourceFile:=TResourceFile.create(nil);
+  editors:=TList.create;
 end;
 
 destructor TResourceFileFrm.Destroy;
 begin
-  resourceFile.free;
-  inherited;
+    editors.free;
+    resourceFile.free;
+    inherited;
 end;
 
 procedure TResourceFileFrm.loadFromFile(const filename: string);
@@ -94,8 +124,43 @@ end;
 procedure TResourceFileFrm.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-    //Check for modifications before close
+    //Check for modifications before close!!!
     action:=caFree;
+    destroyEditors;
+end;
+
+procedure TResourceFileFrm.tvEntriesDblClick(Sender: TObject);
+var
+    node: TTreeNode;
+    entry: TResourceEntry;
+    ed: TResourceEditor;
+begin
+    node:=tvEntries.Selected;
+    entry:=node.data;
+    if assigned(entry) then begin
+        //Call the right editor for this entry
+        ed:=ResourceAPI.callEditor(entry);
+        if assigned(ed) then editors.add(ed);
+    end;
+end;
+
+procedure TResourceFileFrm.tvEntriesEditing(Sender: TObject;
+  Node: TTreeNode; var AllowEdit: Boolean);
+begin
+    allowedit:=false;
+end;
+
+procedure TResourceFileFrm.destroyEditors;
+var
+    ed: TResourceEditor;
+    i:longint;
+begin
+    //Destroys all the editors
+    for i:=editors.count-1 downto 0 do begin
+        ed:=editors[i];
+        ed.close;
+        ed.free;
+    end;
 end;
 
 end.

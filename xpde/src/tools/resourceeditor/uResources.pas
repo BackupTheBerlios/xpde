@@ -1,3 +1,29 @@
+{ *************************************************************************** }
+{                                                                             }
+{ This file is part of the XPde project                                       }
+{                                                                             }
+{ Copyright (c) 2002                                                          }
+{ José León Serna <ttm@xpde.com>                                              }
+{ Jens Kühner <jens@xpde.com>                                                 }
+{                                                                             }
+{                                                                             }
+{ This program is free software; you can redistribute it and/or               }
+{ modify it under the terms of the GNU General Public                         }
+{ License as published by the Free Software Foundation; either                }
+{ version 2 of the License, or (at your option) any later version.            }
+{                                                                             }
+{ This program is distributed in the hope that it will be useful,             }
+{ but WITHOUT ANY WARRANTY; without even the implied warranty of              }
+{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           }
+{ General Public License for more details.                                    }
+{                                                                             }
+{ You should have received a copy of the GNU General Public License           }
+{ along with this program; see the file COPYING.  If not, write to            }
+{ the Free Software Foundation, Inc., 59 Temple Place - Suite 330,            }
+{ Boston, MA 02111-1307, USA.                                                 }
+{                                                                             }
+{ *************************************************************************** }
+
 unit uResources;
 
 interface
@@ -6,6 +32,18 @@ uses SysUtils, Classes, QDialogs;
 
 type
     TResourceType=(rtCursor, rtBitmap, rtIcon, rtMenu, rtDialog, rtString, rtFontdir, rtFont, rtAccelerator, rtRCData, rtGroupCursor, rtGroupIcon, rtMessageTable, rtVersion, rtDLGInclude, rtPlugPlay, rtVXD, rtAnicursor, rtNone);
+
+    //A resource file, just a list of resource entries
+    TResourceFile=class(TComponent)
+    private
+        procedure destroyresources;
+    public
+        resources: TList;
+        procedure getResourceNames(strings: TStrings);
+        procedure loadfromfile(const filename:string);
+        constructor Create(AOwner:TComponent);override;
+        destructor Destroy;override;
+    end;
 
     //A resource entry
     TResourceEntry=class(TObject)
@@ -24,24 +62,13 @@ type
             version:integer;
             characteristics: integer;
             data: TMemoryStream;
+            resourcefile: TResourceFile;
             procedure ReadFromStream(stream:TStream);
             function GetFormresAsText : string;
             procedure GetStringListRes( strings : TStrings );
             constructor Create;
             destructor Destroy;override;
-    end;
-
-    //A resource file, just a list of resource entries
-    TResourceFile=class(TComponent)
-    private
-        procedure destroyresources;
-    public
-        resources: TList;
-        procedure getResourceNames(strings: TStrings);
-        procedure loadfromfile(const filename:string);
-        constructor Create(AOwner:TComponent);override;
-        destructor Destroy;override;
-    end;
+    end;    
 
 function ResourceTypeToString(const rt: TResourceType):string;
 
@@ -127,6 +154,7 @@ begin
         while f.Position<f.size do begin
             r:=TResourceEntry.create;
             try
+                r.resourcefile:=self;
                 r.ReadFromStream(f);
                 resources.add(r);
             except
@@ -146,6 +174,7 @@ begin
     inherited;
     data:=TMemoryStream.create;
     resourceType:=rtNone;
+    sresourcetype:='';
 end;
 
 destructor TResourceEntry.Destroy;
@@ -215,9 +244,6 @@ end;
 function TResourceEntry.GetFormResAsText : string;
 var
   streamOut : TStringStream;
-  i : integer;
-  len : word;
-  w : word;
 begin
    //only resourcetype RCData
    //all forms begin with TFilerSignature signature TPF0 (Turbo-Pascal-Filer)

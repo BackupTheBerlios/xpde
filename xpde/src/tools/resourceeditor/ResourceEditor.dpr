@@ -4,7 +4,9 @@ uses
   QForms,
   main in 'main.pas' {MainForm},
   uResources in 'uResources.pas',
-  uResourceFileFrm in 'uResourceFileFrm.pas' {ResourceFileFrm};
+  uResourceFileFrm in 'uResourceFileFrm.pas' {ResourceFileFrm},
+  uResourceAPI in 'uResourceAPI.pas',
+  uStringEditor in 'uStringEditor.pas' {StringEditor};
 
 {$R *.res}
 

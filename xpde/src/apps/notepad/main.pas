@@ -4,11 +4,6 @@
     Distributed under GNU GPL
 
     <http://www.xpde.com/>
-
-    Current limitations:
-        page setup is not implemented (until XPde APIs are developed)
-        preferences are not saved (font & word wrap)
-        go to line is not (yet) available
 }
 
 unit main;
@@ -33,7 +28,9 @@ uses
   QStdActns,
   QActnList,
   StrUtils,
-  uXPAPI;
+  uXPAPI,
+  uRegistry,
+  gt;
 
 type
   TfrmMain = class(TForm)
@@ -84,14 +81,12 @@ type
     EditDelete: TEditDelete;
     procedure FindDialogFind(Sender: TObject);
     procedure ReplaceDialogReplace(Sender: TObject);
-    procedure mnuEditGoToClick(Sender: TObject);
     procedure mnuFileNewClick(Sender: TObject);
     procedure mnuFileOpenClick(Sender: TObject);
     procedure mnuFileSaveClick(Sender: TObject);
     procedure mnuFileSaveAsClick(Sender: TObject);
     procedure mnuFilePageSetupClick(Sender: TObject);
     procedure mnuFilePrintClick(Sender: TObject);
-    procedure mnuFileExitClick(Sender: TObject);
     procedure mnuEditFindClick(Sender: TObject);
     procedure mnuEditFindNextClick(Sender: TObject);
     procedure mnuEditReplaceClick(Sender: TObject);
@@ -100,9 +95,13 @@ type
     procedure mnuFormatSetFontClick(Sender: TObject);
     procedure mnuHelpAboutClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure mnuFileExitClick(Sender: TObject);
+    procedure mnuEditGoToClick(Sender: TObject);
   private
     { Private declarations }
     function IsAllowed(s: string): boolean;
+    procedure SaveSettings();
   public
     { Public declarations }
     CurrentFileName: string;
@@ -154,7 +153,7 @@ begin
                 TextLength - SLen + 1)
         end
         else begin
-            SearchString := ReverseString(Copy(Memo.Lines.Text, 0, SPos{ + SLen}));
+            SearchString := ReverseString(Copy(Memo.Lines.Text, 0, SPos));
             TextToFind := ReverseString(TextToFind);
         end;
 
@@ -219,12 +218,12 @@ procedure TfrmMain.ReplaceDialogReplace(Sender: TObject);
         TextToFind: string;
         ReplaceWith: string;
         lc, rc: string;
-        ItsOverBaby: boolean;
+        ItsOver: boolean;
 begin
         if frReplaceAll in ReplaceDialog.Options then
-            ItsOverBaby := false { it's only starting }
+            ItsOver := false
         else
-            ItsOverBaby := true; { rejoice }
+            ItsOver := true;
 
         repeat
 
@@ -240,7 +239,7 @@ begin
                 TextLength - SLen + 1)
         end
         else begin
-            SearchString := ReverseString(Copy(Memo.Lines.Text, 0, SPos{ + SLen}));
+            SearchString := ReverseString(Copy(Memo.Lines.Text, 0, SPos));
             TextToFind := ReverseString(TextToFind);
         end;
 
@@ -280,7 +279,7 @@ begin
 
         if SelPos = 0 then begin
             if frReplaceAll in ReplaceDialog.Options then begin
-                ItsOverBaby := true;
+                ItsOver := true;
                 Exit;
             end;
             MessageDlg(SearchStringNotFound, mtError, [mbOk], 0);
@@ -298,12 +297,19 @@ begin
             end; {if frDown}
         end; {SelPos = 0}
 
-        until ItsOverBaby;
+        until ItsOver;
 end;
 
 procedure TfrmMain.mnuEditGoToClick(Sender: TObject);
+    var CPos: TCaretPos;
 begin
-    // go go go!!
+    frmGoTo.spnLine.Max := Memo.Lines.Count + 1;
+
+    if frmGoTo.ShowModal() = mrOK then begin
+        CPos.Col := 0;
+        CPos.Line := frmGoTo.spnLine.Value - 1;
+        Memo.CaretPos := CPos;
+    end;
 end;
 
 procedure TfrmMain.mnuFileNewClick(Sender: TObject);
@@ -329,7 +335,7 @@ begin
             end;
         end
         else if mr = mrNo then begin
-            ; // nothing
+            ;
         end
         else if mr = mrCancel then begin
             Exit;
@@ -365,57 +371,20 @@ begin
 end;
 
 procedure TfrmMain.mnuFilePageSetupClick(Sender: TObject);
+    var Printer: TPrinter;
 begin
-    MessageDlg('Sorry, not implemented yet', mtInformation, [mbOK], 0, mbOk);
+    
+    MessageDlg('Sorry, not implemented yet.', mtInformation, [mbOK], 0, mbOk);
+
+    {
+    Printer := QPrinters.Printer();
+    Printer.ExecuteSetup();
+    }
 end;
 
 procedure TfrmMain.mnuFilePrintClick(Sender: TObject);
-    var TextToPrint: TextFile;
-        i: LongInt;
 begin
-    AssignPrn(TextToPrint);
-    Rewrite(TextToPrint);
-
-    try
-        try
-            for i := 0 to Memo.Lines.Count - 1 do
-                WriteLn(TextToPrint, Memo.Lines[i]);
-            except on E:EInOutError do
-                MessageDlg('An error occured while printing. Error: '
-                    + IntToStr(E.ErrorCode), mtError, [mbOK], 0);
-        end;
-    finally
-        CloseFile(TextToPrint);
-    end;
-end;
-
-procedure TfrmMain.mnuFileExitClick(Sender: TObject);
-    var mr: integer;
-begin
-    if Memo.Modified then begin
-        mr := MessageDlg(CurrentFileName + SavePrompt,
-            mtWarning, [mbYes, mbNo, mbCancel], 0, mbYes);
-
-        if mr = mrYes then begin
-            if FileExists(CurrentFileName) then begin
-                mnuFileSave.Click();
-                Close();
-            end
-            else begin
-                mnuFileSaveAs.Click();
-                Close();
-            end;
-        end;
-
-        if mr = mrNo then
-            Close();
-
-        if mr = mrCancel then
-            Exit;
-    end
-    else begin
-        Close();
-    end;
+    { printing goes here }
 end;
 
 procedure TfrmMain.mnuEditFindClick(Sender: TObject);
@@ -435,7 +404,7 @@ end;
 
 procedure TfrmMain.mnuEditTimeDateClick(Sender: TObject);
 begin
-    Memo.Insert(DateTimeToStr(Now),False); 
+    Memo.Insert(DateTimeToStr(Now), false); 
 end;
 
 procedure TfrmMain.mnuFormatWordWrapClick(Sender: TObject);
@@ -446,10 +415,8 @@ end;
 
 procedure TfrmMain.mnuFormatSetFontClick(Sender: TObject);
 begin
-    if FontDialog.Execute() then begin
+    if FontDialog.Execute() then
         Memo.Font := FontDialog.Font;
-        { save settings }
-    end;
 end;
 
 procedure TfrmMain.mnuHelpAboutClick(Sender: TObject);
@@ -458,10 +425,10 @@ begin
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
+    var reg: TRegistry;
 begin
-    //These lines are here to set the font of the menubar
-    font.name:='';
-    parentfont:=true;
+    Font.Name := '';
+    ParentFont:= true;
 
     if ParamCount = 1 then begin
         if FileExists(ParamStr(1)) then begin
@@ -476,7 +443,84 @@ begin
         end;
     end;
 
+    reg := TRegistry.Create();
+
+    try
+        if Reg.OpenKey('Software/XPde/Notepad', true) then begin
+            frmMain.Top := reg.Readinteger('Top');
+            frmMain.Left := reg.Readinteger('Left');
+            frmMain.Height := reg.Readinteger('Height');
+            frmMain.Width := reg.Readinteger('Width');
+            Memo.Font.Name := reg.Readstring('Font');
+            Memo.Font.Size := reg.Readinteger('Size');
+            Memo.WordWrap := reg.Readbool('Wrap');
+            mnuFormatWordWrap.Checked := Memo.WordWrap;
+        end;
+    finally
+        reg.Free();
+    end;
+
     mnuFileNew.Click();
 end;
+
+procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    var mr: integer;
+begin
+    CanClose := false;
+
+    if Memo.Modified then begin
+        mr := MessageDlg(CurrentFileName + SavePrompt,
+            mtWarning, [mbYes, mbNo, mbCancel], 0, mbYes);
+
+        if mr = mrYes then begin
+            if FileExists(CurrentFileName) then begin
+                mnuFileSave.Click();
+                CanClose := true;
+            end
+            else begin
+                mnuFileSaveAs.Click();
+                CanClose := true;
+            end;
+        end;
+
+        if mr = mrNo then
+            SaveSettings();
+            CanClose := true;
+
+        if mr = mrCancel then
+            CanClose := false;
+            Exit;
+    end
+    else begin
+        SaveSettings();
+        CanClose := true;
+    end;
+end;
+
+procedure TfrmMain.mnuFileExitClick(Sender: TObject);
+begin
+    frmMain.Close();
+end;
+
+procedure TfrmMain.SaveSettings();
+    var reg: TRegistry;
+begin
+    reg := TRegistry.Create;
+
+    try
+        if reg.OpenKey('Software/XPde/Notepad', true) then begin
+            reg.Writeinteger('Top', frmMain.Top);
+            reg.Writeinteger('Left', frmMain.Left);
+            reg.Writeinteger('Width', frmMain.Width);
+            reg.Writeinteger('Height', frmMain.Height);
+            reg.Writestring('Font', Memo.Font.Name);
+            reg.Writeinteger('Size', Memo.Font.Size);
+            reg.Writebool('Wrap', mnuFormatWordWrap.Checked);
+        end;                  
+    finally
+        reg.Free();
+    end;
+end;
+
 
 end.

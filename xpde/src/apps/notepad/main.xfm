@@ -1,6 +1,6 @@
 object frmMain: TfrmMain
-  Left = 258
-  Top = 186
+  Left = 248
+  Top = 168
   Width = 696
   Height = 480
   VertScrollBar.Range = 19
@@ -10,13 +10,14 @@ object frmMain: TfrmMain
   Menu = MainMenu
   Position = poDesktopCenter
   Scaled = False
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
-  PixelsPerInch = 90
+  PixelsPerInch = 75
   object Memo: TMemo
     Left = 0
     Top = 0
     Width = 696
-    Height = 434
+    Height = 436
     Align = alClient
     ScrollBars = ssBoth
     TabOrder = 0
@@ -24,7 +25,7 @@ object frmMain: TfrmMain
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 434
+    Top = 436
     Width = 696
     Height = 19
     Panels = <>

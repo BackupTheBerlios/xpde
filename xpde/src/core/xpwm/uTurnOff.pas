@@ -17,6 +17,7 @@ type
     restart_on: TImage;
     Label1: TLabel;
     Label2: TLabel;
+    Label3: TLabel;
     procedure turnoffMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
     procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X,
@@ -30,7 +31,8 @@ type
     { Private declarations }
   public
     { Public declarations }
-    over: boolean;
+    overoff: boolean;
+    overrestart: boolean;    
   end;
 
 var
@@ -43,26 +45,31 @@ implementation
 procedure TTurnoff.turnoffMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
-    if not over then begin
+    if not overoff then begin
         turnoff.Picture.Assign(turnoff_on.picture);
-        over:=true;
+        overoff:=true;
     end;
 end;
 
 procedure TTurnoff.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
-    turnoff.Picture.Assign(turnoff_off.picture);
-    restart.Picture.Assign(restart_off.picture);
-    over:=false;
+    if overoff then begin
+        turnoff.Picture.Assign(turnoff_off.picture);
+        overoff:=false;
+    end;
+    if overrestart then begin
+        restart.Picture.Assign(restart_off.picture);
+        overrestart:=false;
+    end;
 end;
 
 procedure TTurnoff.restartMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
-    if not over then begin
+    if not overrestart then begin
         restart.Picture.Assign(restart_on.picture);
-        over:=true;
+        overrestart:=true;
     end;
 end;
 
@@ -78,7 +85,8 @@ end;
 
 procedure TTurnoff.FormCreate(Sender: TObject);
 begin
-    over:=false;
+    overoff:=false;
+    overrestart:=false;    
 end;
 
 end.

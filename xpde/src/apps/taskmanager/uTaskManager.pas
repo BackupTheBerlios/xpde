@@ -191,6 +191,17 @@ var
   WindowsTaskManagerDlg: TWindowsTaskManagerDlg;
   net_info:Array [0..20] of network_info;
   device_number:integer; // global
+
+resourcestring
+sMsg1='Cannot kill process PID';
+sMsg2='You must specify command !';
+sMsg3='TaskManager Error :';
+sMsg4='Close Task Manager ?';
+sMsg5='You must select process !';
+sMsg6='Kill selected tasks ?';
+sMsg7='Error !';
+
+// {$I resources.inc}  
 implementation
 uses Libc,StrUtils,uAboutTaskManager, uCreateNewTask;
 
@@ -257,7 +268,7 @@ procedure TWindowsTaskManagerDlg.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
         CanClose:=false;
-        if MessageDlg('Close Task Manager ?',mtConfirmation,[mbYes,mbNo],0,mbYes)=mrYes
+        if MessageDlg(sMsg4,mtConfirmation,[mbYes,mbNo],0,mbYes)=mrYes
         then
         CanClose:=true;
 end;
@@ -612,7 +623,7 @@ begin
         if ListView1.Items.Item[i].Checked then begin
         ss:=ListView1.Items.Item[i].Caption;
         if Libc.kill(StrToInt(ss),SIGTERM)<>0 then
-        raise Exception.Create('Cannot kill process PID '+ss+' !');
+        raise Exception.Create(sMsg1+' '+ss+' !');
         End;
         End;
         End;
@@ -631,11 +642,11 @@ var i:integer;
 begin
         Timer1.Enabled:=false;
         // WE STOP TIMER SINCE WE DON'T WANT CLEARED TreeView in a moment ;)
-        if MessageDlg('Kill selected tasks ?',mtConfirmation,[mbYes,mbNo],0,mbNo)=mrYes
+        if MessageDlg(sMsg6,mtConfirmation,[mbYes,mbNo],0,mbNo)=mrYes
         then begin
         i:=treeview2.Selected.AbsoluteIndex;
         if i=-1 then begin
-        raise Exception.Create('You must select process !');
+        raise Exception.Create(sMsg5);
         Timer1.Enabled:=true;
         exit;
         End;
@@ -643,7 +654,7 @@ begin
         ss:=TreeView2.Items.Item[i].SubItems.Strings[3];
         ss:=trim(ss);
         if Libc.kill(StrToInt(ss),SIGTERM)<>0 then
-        raise Exception.Create('Cannot kill process PID '+ss+' !');
+        raise Exception.Create(sMsg1+' '+ss+' !');
         end;
 
         Fill_Processes;

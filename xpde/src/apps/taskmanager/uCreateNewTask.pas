@@ -84,7 +84,7 @@ begin
         ss:=ComboBox1.Text;
         ss:=trimleft(ss);
         if ss='' then begin
-        raise Exception.Create('You must specify command !')
+        raise Exception.Create(sMsg2)
         end else begin
         cmnd:=_get_tmp_fname;
         sleep(50);
@@ -100,7 +100,7 @@ begin
         except
         fcmnd_tstr.Free;
         raise
-        Exception.Create('TaskManager error : TM01001 !'+#13#10+'Please report bug at http://bugs.xpde.com .'+#13#10+'Couldn''t load temp file.');
+        Exception.Create(sMsg3+' TM01001 !'+#13#10+'Please report bug at http://bugs.xpde.com .'+#13#10+'Couldn''t load temp file.');
         exit;
         End;
 
@@ -111,7 +111,7 @@ begin
         except
         err_cmd:='';
         End;
-        if i<>0 then err_cmd:='Error !';
+        if i<>0 then err_cmd:=sMsg7;
         if (err_cmd<>'') or (i<>0) then
         raise
         Exception.Create(err_cmd);

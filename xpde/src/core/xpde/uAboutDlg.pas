@@ -4,14 +4,15 @@ interface
 
 uses
   SysUtils, Types, Classes,
+  uXPAPI,
   Variants, QTypes, QGraphics,
   QControls, QForms, QDialogs,
   QStdCtrls, QExtCtrls, Libc;
 
 type
   TAboutDlg = class(TForm)
-    Label1: TLabel;
-    Label2: TLabel;
+    lbProgram: TLabel;
+    lbVersion: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
@@ -50,6 +51,7 @@ begin
     freem:=sinf.freeram+sinf.bufferram;
 
     lbFree.Caption:= IntTostr(longint(freem) div 1024)+' Kb';
+    lbVersion.Caption:= XPAPI.getversionstring;    
 end;
 
 end.

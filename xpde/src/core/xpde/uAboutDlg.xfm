@@ -1,6 +1,6 @@
 object AboutDlg: TAboutDlg
-  Left = 358
-  Top = 328
+  Left = 364
+  Top = 386
   ActiveControl = Button1
   AutoScroll = False
   BorderStyle = fbsSingle
@@ -19,7 +19,7 @@ object AboutDlg: TAboutDlg
   Scaled = False
   OnKeyPress = FormKeyPress
   OnShow = FormShow
-  PixelsPerInch = 84
+  PixelsPerInch = 90
   object Bevel1: TBevel
     Left = 105
     Top = 263
@@ -3021,21 +3021,21 @@ object AboutDlg: TAboutDlg
       E68562E68562E68562E68562E68562E68562E68562E68562E68562E68562E685
       62E68562E68562E68562E68562E68562E68562E68562E6856200}
   end
-  object Label1: TLabel
+  object lbProgram: TLabel
     Left = 105
     Top = 88
-    Width = 130
+    Width = 16
     Height = 15
-    Caption = 'XPde Desktop Environment'
+    Caption = '%s'
     Masked = True
     Transparent = True
   end
-  object Label2: TLabel
+  object lbVersion: TLabel
     Left = 104
     Top = 105
-    Width = 224
+    Width = 16
     Height = 15
-    Caption = 'Versi'#243'n 5.1 (Build 2600.xpclient.010817-1148)'
+    Caption = '%s'
     Masked = True
     Transparent = True
   end

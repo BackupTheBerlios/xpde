@@ -27,7 +27,8 @@ package XPMenus;
 
 requires
   rtl,
-  visualclx;
+  visualclx,
+  XPCommon;
 
 contains
   uXPPopupMenu in 'uXPPopupMenu.pas';

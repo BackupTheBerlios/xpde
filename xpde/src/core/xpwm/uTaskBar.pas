@@ -32,7 +32,7 @@ uses
   QTypes, Libc, QExtCtrls,
   QComCtrls, QImgList, uXPIPC,
   uXPStyleConsts, Qt, QActnList,
-  uQXPComCtrls, 
+  uQXPComCtrls, uXPCommon, 
   uXPPopupMenu,
   uXPAPI, uLNKFile, uXPStyle;
 
@@ -158,21 +158,28 @@ procedure TTaskBar.FormCreate(Sender: TObject);
         b:TBitmap;
         c:TBitmap;
     begin
+
         b:=TBitmap.create;
         c:=TBitmap.create;
         try
+            target.width:=32;
+            target.height:=32;
             c.width:=32;
             c.height:=32;
-            c.Canvas.Brush.color:=clFuchsia;
-            c.Canvas.FillRect(rect(0,0,32,32));
+//            c.Canvas.Brush.color:=0;
+//            c.Canvas.FillRect(rect(0,0,32,32));
             b.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+img);
-            c.Canvas.Draw(4,4,b);
-            c.transparent:=true;
-            target.assign(c);
-    finally
-        c.free;
-        b.free;
-    end;
+            bitblt2(b,c,4,4,22,22);
+//            c.Canvas.Draw(4,4,b);
+//            c.transparent:=true;
+            bitblt2(c,target,0,0,32,32);
+//            target.assign(c);
+        finally
+            c.free;
+            b.free;
+        end;
+
+        target.loadfromfile(XPAPI.getsysinfo(siMiscDir)+img);
     end;
 begin
     XPIPC.OnNotification:=IPCNotification;
@@ -390,7 +397,8 @@ begin
         for i:=0 to folders.count-1 do begin
             d:=TMenuItem.create(item);
             d.caption:=folders[i];
-            d.Bitmap:=imgProgramFolder.picture.bitmap;
+            d.Bitmap.loadfromfile(XPAPI.getsysinfo(siSmallSystemDir)+'folder.png');
+            //d.Bitmap:=imgProgramFolder.picture.bitmap;
             item.add(d);
             d.Tag:=menupaths.add(dir+'/'+folders[i]);
             populateMenu(d,dir+'/'+folders[i]);
@@ -445,6 +453,7 @@ begin
                         d.bitmap.canvas.draw(0,0,f.graphic);
                     end;
                     d.bitmap.transparent:=true;
+                    d.Bitmap.loadfromfile(iconfile);
 
                 finally
                     f.free;

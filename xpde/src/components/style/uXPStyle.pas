@@ -27,7 +27,7 @@ uses
     Classes, QForms, QGraphics, uMouseAPI,
     Types, QMenus, Qt, uXPStyleConsts, uXPIPC,
     QDialogs, QStyle, QControls, uXPPopupMenu,
-    QStdCtrls, Sysutils;
+    QStdCtrls, Sysutils, uXPPNG;
 
 type
     TXPStyle=class(TComponent)
@@ -149,6 +149,7 @@ var
     mRect:TRect;        //Menu Rect
     cRect: TRect;
     mh:integer;
+    p: TXPPNG;
 begin
     m:=(source as TMenuItem);
 
@@ -202,7 +203,16 @@ begin
             if not (m.bitmap.empty) then begin
                 tx:=m.bitmap.width+9;
                 gy:=crect.top+((crect.bottom-crect.top)-m.bitmap.height) div 2;
-                draw(cRect.left+2,gy,m.bitmap);
+
+                p:=TXPPNG.create;
+                try
+                    p.BackgroundColor:=brush.color;
+                    p.Assign(m.bitmap);
+                    p.paintToCanvas(canvas,cRect.left+2,gy);
+                    //draw(cRect.left+2,gy,m.bitmap);
+                finally
+                    p.Free;
+                end;
             end;
 
             if (m.imageindex<>-1) then begin

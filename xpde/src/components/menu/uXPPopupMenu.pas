@@ -29,6 +29,7 @@ uses
   QGraphics, QControls, QForms,
   QDialogs, QTypes, QMenus, Qt;
 
+
 type
   TXPPopupMenu = class(TPopupMenu)
   private

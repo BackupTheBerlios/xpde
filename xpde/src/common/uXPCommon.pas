@@ -35,6 +35,7 @@ procedure spawn(const cmd:string);
 function CopyFile(const Source, Destination: string): Boolean;
 function pixel(bmp: TBitmap;x,y:integer): integer;
 procedure bitblt(source:TBitmap;target:TBitmap;const x,y,w,h:integer);
+procedure bitblt2(source:TBitmap;target:TBitmap;const x,y,w,h:integer);
 
 implementation
 
@@ -58,6 +59,24 @@ begin
         tpoints:=target.scanline[t-y];
         inc(PChar(spoints),x*4);
         for l:=x to (x+w)-1 do begin
+            integer(tpoints^):=integer(spoints^);
+            inc(PChar(tpoints),4);
+            inc(PChar(spoints),4);
+        end;
+    end;
+end;
+
+procedure bitblt2(source:TBitmap;target:TBitmap;const x,y,w,h:integer);
+var
+   spoints: pointer;
+   tpoints: pointer;
+   t,l: integer;
+begin
+    for t:=0 to h-1 do begin
+        spoints:=source.ScanLine[t];
+        tpoints:=target.scanline[t+y];
+        inc(PChar(tpoints),x*4);
+        for l:=0 to w-1 do begin
             integer(tpoints^):=integer(spoints^);
             inc(PChar(tpoints),4);
             inc(PChar(spoints),4);

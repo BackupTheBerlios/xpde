@@ -161,20 +161,30 @@ end;
 
 procedure TXPPNG.SetHeight(Value: Integer);
 begin
-    showmessage('setheight');
 end;
 
 procedure TXPPNG.SetWidth(Value: Integer);
 begin
-    showmessage('setwidth');
 end;
 
 procedure TXPPNG.Assign(source: TPersistent);
+var
+    m: TMemoryStream;
 begin
     if source is TXPPNG then begin
         falphamask.width:=(source as TXPPNG).falphamask.width;
         falphamask.height:=(source as TXPPNG).falphamask.height;
         bitblt((source as TXPPNG).falphamask,falphamask,0,0,falphamask.width,falphamask.height);
+    end
+    else if source is TBitmap then begin
+        m:=TMemorystream.create;
+        try
+            (source as TBitmap).SaveToStream(m);
+            m.position:=0;
+            LoadFromStream(m);
+        finally
+            m.free;
+        end;
     end
     else inherited;
 end;

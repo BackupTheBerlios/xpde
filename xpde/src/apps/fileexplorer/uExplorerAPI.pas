@@ -3,7 +3,7 @@ unit uExplorerAPI;
 interface
 
 uses
-    Classes, QGraphics;
+    Classes, QGraphics, QImgList;
 
 type
     IXPVirtualFile=interface
@@ -12,9 +12,11 @@ type
         function getChildren: TInterfaceList;
         function getDisplayName: string;
         procedure getColumns(const columns:TStrings);
+        procedure getColumnData(const columns:TStrings);
+        procedure getStatusData(const status:TStrings);
         procedure getVerbItems(const verbs:TStrings);
         procedure executeVerb(const verb:integer);
-        function getIcon: TBitmap;
+        function getIcon: integer;
         function getCategory: string;
     end;
 
@@ -27,7 +29,9 @@ type
 
     IXPExplorer=interface
         procedure registerRootItem(item:IXPVirtualFile);
+        function registerImage(const bmp: TBitmap):integer;
         function getRootItems: TInterfaceList;
+        function getImageList: TImageList;
     end;
 
 var

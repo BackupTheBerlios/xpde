@@ -10,23 +10,29 @@ type
 
     TLocalFile=class(TInterfacedObject, IXPVirtualFile)
     public
-        function hasChild: boolean; virtual; abstract;
-        function getChildren: TInterfaceList; virtual; 
-        function getDisplayName: string; virtual; abstract;
-        procedure getColumns(const columns:TStrings); virtual; abstract;
-        procedure getVerbItems(const verbs:TStrings); virtual; abstract;
-        procedure executeVerb(const verb:integer); virtual; abstract;
-        function getIcon: TBitmap; virtual; abstract;
-        function getCategory: string; virtual; abstract;
+        function hasChild: boolean; virtual;
+        function getChildren: TInterfaceList; virtual;
+        function getDisplayName: string; virtual;
+        procedure getColumns(const columns:TStrings); virtual;
+        procedure getColumnData(const columns:TStrings); virtual;
+        procedure getStatusData(const status:TStrings);virtual;
+        procedure getVerbItems(const verbs:TStrings); virtual;
+        procedure executeVerb(const verb:integer); virtual;
+        function getIcon: integer; virtual;
+        function getCategory: string; virtual;
     end;
 
     TFile=class(TLocalFile)
     private
         FPath: string;
     public
+        filesize: integer;
+        time: integer;
         function hasChild: boolean; override;
         function getDisplayName: string; override;
+        procedure getColumnData(const columns:TStrings); override;
         constructor Create(const APath:string); virtual;
+        function getIcon: integer; override;
     end;
 
     TFolder=class(TLocalFile)
@@ -35,9 +41,15 @@ type
         FPath: string;
         procedure SetPath(const Value: string);
     public
+        size: integer;
+        time: integer;
         function hasChild: boolean; override;
         function getChildren: TInterfaceList; override;
+        procedure getStatusData(const status:TStrings);override;
+        procedure getColumnData(const columns:TStrings); override;
+        procedure getVerbItems(const verbs:TStrings); override;
         function getDisplayName: string; override;
+        function getIcon: integer; override;
 
         property Path: string read FPath write SetPath;
 
@@ -48,7 +60,9 @@ type
     TMyDocuments=class(TFolder)
     public
         function getDisplayName: string; override;
-        constructor Create;
+        constructor Create; reintroduce;
+        function getIcon: integer; override;
+        procedure getVerbItems(const verbs:TStrings); override;
     end;
 
     TUserDocuments=class(TMyDocuments)
@@ -59,9 +73,26 @@ type
     TDevice=class(TFolder)
     private
         name:string;
+        FIcon: integer;
     public
         function getDisplayName: string; override;
-        constructor Create(const APath:string; const AName:string); virtual;
+        constructor Create(const APath:string; const AName:string; icon: integer=-1); reintroduce;
+        function getIcon: integer; override;
+    end;
+
+    TFloppy=class(TDevice)
+    public
+        procedure getVerbItems(const verbs:TStrings); override;
+    end;
+
+    THarddisk=class(TDevice)
+    public
+        procedure getVerbItems(const verbs:TStrings); override;
+    end;
+
+    TCDDrive=class(TDevice)
+    public
+        procedure getVerbItems(const verbs:TStrings); override;
     end;
 
     TMyPC=class(TLocalFile)
@@ -70,9 +101,12 @@ type
     public
         function hasChild: boolean; override;
         function getDisplayName: string; override;
+        procedure getColumns(const columns:TStrings); override;
         function getChildren: TInterfaceList; override;
+        procedure getVerbItems(const verbs:TStrings); override;
         constructor Create;
         destructor Destroy;override;
+        function getIcon: integer; override;        
     end;
 
     TControlPanel=class(TLocalFile)
@@ -81,7 +115,9 @@ type
     public
         function hasChild: boolean; override;
         function getDisplayName: string; override;
+        procedure getVerbItems(const verbs:TStrings); override;
         function getChildren: TInterfaceList; override;
+        function getIcon: integer; override;
         constructor Create;
         destructor Destroy;override;
     end;
@@ -95,6 +131,7 @@ type
         function getChildren: TInterfaceList; override;
         constructor Create;
         destructor Destroy;override;
+        function getIcon: integer; override;
     end;
 
     TRecycleBin=class(TLocalFile)
@@ -105,7 +142,9 @@ type
         function getDisplayName: string; override;
         function getChildren: TInterfaceList; override;
         constructor Create;
+        procedure getVerbItems(const verbs:TStrings); override;
         destructor Destroy;override;
+        function getIcon: integer; override;
     end;
 
     TDesktopItem=class(TLocalFile)
@@ -116,13 +155,30 @@ type
         function hasChild: boolean; override;
         function getDisplayName: string; override;
         function getChildren: TInterfaceList; override;
+        function getIcon: integer; override;
+        procedure getVerbItems(const verbs:TStrings); override;
 
         constructor Create;
         destructor Destroy;override;
     end;
 
+var
+    imDESKTOP: integer=-1;
+    imMYDOCUMENTS: integer=-1;
+    imMYCOMPUTER: integer=-1;
+    imMYNETWORKPLACES: integer=-1;
+    imRECYCLEBIN: integer=-1;
+    imFLOPPY: integer=-1;
+    imCLOSEDFOLDER: integer=-1;
+    imHARDDISK: integer=-1;
+    imCDDRIVE: integer=-1;
+    imCONTROLPANEL: integer=-1;
+    imNOICON: integer=-1;    
 
 implementation
+
+var
+    bmp: TBitmap;
 
 function extractdirname(const str:string):string;
 var
@@ -146,7 +202,7 @@ begin
     children.add(TMyDocuments.create);
     children.add(TMyPC.create);
     children.add(TMyNetworkPlaces.create);
-    children.add(TRecycleBin.create);    
+    children.add(TRecycleBin.create);
 end;
 
 destructor TDesktopItem.Destroy;
@@ -163,6 +219,22 @@ end;
 function TDesktopItem.getDisplayName: string;
 begin
     result:='Desktop';
+end;
+
+function TDesktopItem.getIcon: integer;
+begin
+    result:=imDESKTOP;
+end;
+
+procedure TDesktopItem.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('-');
+        add('Properties');
+    end;
 end;
 
 function TDesktopItem.hasChild: boolean;
@@ -187,19 +259,27 @@ end;
 function TFolder.getChildren: TInterfaceList;
 var
     f: TSearchRec;
-    i: integer;
+    a: TFile;
+    b: TFolder;
 begin
     if children.count=0 then begin
-        if Findfirst(FPath+'/*',faHidden or faAnyFile or faSysFile or faDirectory or faArchive,f)=0 then begin
+        size:=0;
+        if Findfirst(FPath+'/*',faHidden or faAnyFile or faSysFile or faDirectory,f)=0 then begin
 //        if Findfirst(FPath+'/*',faDirectory,f)=0 then begin
             try
                repeat
                     if (f.name='.') or (f.name='..') then continue;
                     if ((faDirectory and f.Attr)=faDirectory) then begin
-                        children.add(TFolder.Create(f.PathOnly+f.Name));
+                        b:=TFolder.Create(f.PathOnly+f.Name);
+                        b.time:=f.Time;
+                        children.add(b);
                     end
                     else begin
-                        children.add(TFile.Create(f.PathOnly+f.Name));
+                        a:=TFile.Create(f.PathOnly+f.Name);
+                        a.filesize:=f.Size;
+                        size:=size+a.filesize;
+                        a.time:=f.Time;
+                        children.add(a);
                     end;
                until (findnext(f)<>0);
             finally
@@ -210,9 +290,74 @@ begin
     result:=children;
 end;
 
+procedure TFolder.getColumnData(const columns: TStrings);
+begin
+    columns.clear;
+    columns.add('');
+    columns.add('File Folder');
+    columns.add(datetimetostr(FileDateToDateTime(time)));
+end;
+
 function TFolder.getDisplayName: string;
 begin
     result:=extractdirname(FPath);
+end;
+
+function TFolder.getIcon: integer;
+begin
+    result:=imCLOSEDFOLDER;
+end;
+
+procedure TFolder.getStatusData(const status: TStrings);
+    function formatfilesize(size:extended):string;
+    begin
+        result:=formatfloat('###,###,###,###,###,##0',trunc(size));
+    end;
+    function formatsize(size:extended):string;
+    var
+        kfs:extended;
+    begin
+        if size>1024 then begin
+            if (size>1024*1024) then begin
+                kfs:=size / (1024*1024);
+                result:=formatfilesize(kfs)+' MB';
+            end
+            else begin
+                kfs:=size / 1024;
+                result:=formatfilesize(kfs)+' KB';
+            end;
+        end
+        else begin
+            result:=formatfilesize(size)+' bytes';
+        end;
+    end;
+begin
+    status.clear;
+    status.add(format('%d objects',[children.count]));
+    status.add(formatsize(size));
+    status.add('My Computer');
+end;
+
+procedure TFolder.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('-');
+        add('Sharing and Security...');
+        add('-');
+        add('Send to');
+        add('-');
+        add('Cut');
+        add('Copy');
+        add('-');
+        add('Delete');
+        add('Rename');
+        add('-');
+        add('Properties');
+    end;
 end;
 
 function TFolder.hasChild: boolean;
@@ -233,9 +378,29 @@ begin
     FPath:=APath;
 end;
 
+procedure TFile.getColumnData(const columns: TStrings);
+var
+    f: extended;
+begin
+    columns.clear;
+
+    f:=round(filesize/1024);
+
+    //Format float it seems not to work here 
+    columns.add(formatfloat('#,##0',f)+' KB');
+    columns.add('File');
+
+    columns.add(datetimetostr(FileDateToDateTime(time)));
+end;
+
 function TFile.getDisplayName: string;
 begin
     result:=extractfilename(FPath);
+end;
+
+function TFile.getIcon: integer;
+begin
+    result:=imNOICON;
 end;
 
 function TFile.hasChild: boolean;
@@ -255,14 +420,36 @@ begin
     result:='My Documents';
 end;
 
+function TMyDocuments.getIcon: integer;
+begin
+    result:=imMYDOCUMENTS;
+end;
+
+procedure TMyDocuments.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('-');
+        add('Copy');
+        add('-');
+        add('Delete');
+        add('Rename');
+        add('-');
+        add('Properties');
+    end;
+end;
+
 { TMyPC }
 
 constructor TMyPC.Create;
 begin
     children:=TInterfaceList.create;
-    children.add(TDevice.create('/mnt/floppy','3" 1/2 Floppy'));
-    children.add(TDevice.create('/','Local Disk'));
-    children.add(TDevice.create('/mnt/cdrom','CD Drive'));
+    children.add(TFloppy.create('/mnt/floppy','3" 1/2 Floppy',imFLOPPY));
+    children.add(THardDisk.create('/','Local Disk',imHARDDISK));
+    children.add(TCDDrive.create('/mnt/cdrom','CD Drive',imCDDRIVE));
     children.add(TControlPanel.create);
     children.add(TFolder.create('/opt/xpde/share/Shared Documents'));
     children.add(TUserDocuments.create);                
@@ -279,9 +466,42 @@ begin
     result:=children;
 end;
 
+procedure TMyPC.getColumns(const columns: TStrings);
+begin
+    columns.clear;
+    columns.add('Name');
+    columns.add('Type');
+    columns.add('Total Size');
+    columns.add('Available');
+end;
+
 function TMyPC.getDisplayName: string;
 begin
     result:='My Computer';
+end;
+
+function TMyPC.getIcon: integer;
+begin
+    result:=imMYCOMPUTER;
+end;
+
+procedure TMyPC.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('Manage');
+        add('-');
+        add('Connect to a network drive...');
+        add('Disconnect from a network drive...');
+        add('-');
+        add('Delete');
+        add('Rename');
+        add('-');
+        add('Properties');
+    end;
 end;
 
 function TMyPC.hasChild: boolean;
@@ -291,22 +511,95 @@ end;
 
 { TLocalFile }
 
+procedure TLocalFile.executeVerb(const verb: integer);
+begin
+
+end;
+
+function TLocalFile.getCategory: string;
+begin
+
+end;
+
 function TLocalFile.getChildren: TInterfaceList;
 begin
     result:=nil;
 end;
 
+procedure TLocalFile.getColumnData(const columns: TStrings);
+begin
+    columns.clear;
+    columns.add('');
+    columns.add('File');
+    columns.add('');
+end;
+
+procedure TLocalFile.getColumns(const columns: TStrings);
+begin
+    columns.clear;
+    columns.add('Name');
+    columns.add('Size');
+    columns.add('Type');
+    columns.add('Modification Date');
+end;
+
+function TLocalFile.getDisplayName: string;
+begin
+    result:='';
+end;
+
+function TLocalFile.getIcon: integer;
+begin
+    result:=imNOICON;
+end;
+
+procedure TLocalFile.getStatusData(const status: TStrings);
+var
+    f: TInterfaceList;
+begin
+
+    status.clear;
+    f:=getchildren;
+    if assigned(f) then begin
+        status.add(format('%d objects',[f.count]));
+    end
+    else begin
+        status.add('0 objects');
+    end;
+    status.add('');
+    status.add('My Computer');
+end;
+
+procedure TLocalFile.getVerbItems(const verbs: TStrings);
+begin
+    verbs.clear;
+    with verbs do begin
+        add('Share and security');
+    end;
+end;
+
+function TLocalFile.hasChild: boolean;
+begin
+    result:=false;
+end;
+
 { TDevice }
 
-constructor TDevice.Create(const APath:string; const AName:string); 
+constructor TDevice.Create(const APath:string; const AName:string; icon: integer=-1);
 begin
     inherited Create(APath);
+    ficon:=icon;
     name:=AName;
 end;
 
 function TDevice.getDisplayName: string;
 begin
     result:=name;
+end;
+
+function TDevice.getIcon: integer;
+begin
+    result:=FIcon;
 end;
 
 { TMyNetworkPlaces }
@@ -330,6 +623,11 @@ end;
 function TMyNetworkPlaces.getDisplayName: string;
 begin
     result:='My Network Places';
+end;
+
+function TMyNetworkPlaces.getIcon: integer;
+begin
+    result:=imMYNETWORKPLACES;
 end;
 
 function TMyNetworkPlaces.hasChild: boolean;
@@ -360,6 +658,23 @@ begin
     result:='Recycle Bin';
 end;
 
+function TRecycleBin.getIcon: integer;
+begin
+    result:=imRECYCLEBIN;
+end;
+
+procedure TRecycleBin.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Empty Recycle Bin');
+        add('-');
+        add('Properties');
+    end;
+end;
+
 function TRecycleBin.hasChild: boolean;
 begin
     result:=false;
@@ -388,9 +703,23 @@ begin
     result:='Control Panel';
 end;
 
+function TControlPanel.getIcon: integer;
+begin
+    result:=imCONTROLPANEL;
+end;
+
+procedure TControlPanel.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+    end;
+end;
+
 function TControlPanel.hasChild: boolean;
 begin
-    result:=false;
+    result:=true;
 end;
 
 { TUserDocuments }
@@ -400,7 +729,112 @@ begin
     result:='ttm''s Documents';
 end;
 
+{ TFloppy }
+
+procedure TFloppy.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('-');
+        add('Sharing and Security...');
+        add('-');
+        add('Copy disk');
+        add('-');
+        add('Format');
+        add('-');
+        add('Cut');
+        add('Copy');
+        add('-');
+        add('Rename');
+        add('-');
+        add('Properties');
+    end;
+end;
+
+{ THarddisk }
+
+procedure THarddisk.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('-');
+        add('Sharing and Security...');
+        add('-');
+        add('Format');
+        add('-');
+        add('Copy');
+        add('-');
+        add('Rename');
+        add('-');
+        add('Properties');
+    end;
+end;
+
+{ TCDDrive }
+
+procedure TCDDrive.getVerbItems(const verbs: TStrings);
+begin
+    with verbs do begin
+        clear;
+        add('Explore');
+        add('Open');
+        add('Find...');
+        add('-');
+        add('Sharing and Security...');
+        add('-');
+        add('Eject');
+        add('-');
+        add('Copy');
+        add('-');
+        add('Properties');
+    end;
+end;
+
 initialization
+    bmp:=TBitmap.create;
+    try
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/desktop.png');
+        imDESKTOP:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/mydocuments.png');
+        imMYDOCUMENTS:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/mycomputer.png');
+        imMYCOMPUTER:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/network.png');
+        imMYNETWORKPLACES:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/recyclebin.png');
+        imRECYCLEBIN:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/floppy.png');
+        imFLOPPY:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/closedfolder.png');
+        imCLOSEDFOLDER:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/harddisk.png');
+        imHARDDISK:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/cddrive.png');
+        imCDDRIVE:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/controlpanel.png');
+        imCONTROLPANEL:=XPExplorer.registerImage(bmp);
+
+        bmp.loadfromfile('/home/ttm/xpde/themes/default/16x16/system/noiconsm.png');
+        imNOICON:=XPExplorer.registerImage(bmp);
+    finally
+        bmp.free;
+    end;
+
     XPExplorer.registerRootItem(TDesktopItem.create);
 
 end.

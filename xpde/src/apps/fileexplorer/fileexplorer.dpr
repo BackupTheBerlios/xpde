@@ -4,7 +4,7 @@ uses
   QForms,
   uXPStyle,
   uXPExplorer in 'uXPExplorer.pas',
-  main in 'main.pas' {Form1},
+  main in 'main.pas' {ExplorerForm},
   uExplorerAPI in 'uExplorerAPI.pas',
   uLocalFileSystem in 'uLocalFileSystem.pas';
 
@@ -13,6 +13,8 @@ uses
 begin
   Application.Initialize;
   SetXPStyle(application);
-  Application.CreateForm(TForm1, Form1);
+  application.font.height:=12;
+  application.font.name:='Helvetica';
+  Application.CreateForm(TExplorerForm, ExplorerForm);
   Application.Run;
 end.

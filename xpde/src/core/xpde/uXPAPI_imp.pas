@@ -319,45 +319,53 @@ var
 begin
     document:=replacesystempaths(adocument);
 
-    libc.stat(PChar(document),sb);
-    if s_isexec(sb.st_mode) then begin
-        ShellExecute(document,false);
+    if directoryexists(document) then begin
+        XPAPI.ShellExecute(XPAPI.getSysInfo(siAppsDir)+'fileexplorer -f "'+adocument+'"',false);
     end
     else begin
-        executable:='';
-        ext:=ansilowercase(extractfileext(document));
-        if ext='.lnk' then begin
-                    lnk:=TLNKFile.create(nil);
-                    try
-                        lnk.loadfromfile(document);
-                        executable:=lnk.command;
-                        if executable<>'' then begin
-                            if lnk.Startin<>'' then begin
-                                lastdir:=GetCurrentDir;
-                                ChDir(lnk.Startin);
-                            end;
-                            ShellExecute(executable,false);
-
-                            if lnk.Startin<>'' then begin
-                                ChDir(lastdir);
-                            end;
-                        end;
-                    finally
-                        lnk.free;
-                    end;
+        libc.stat(PChar(document),sb);
+        if s_isexec(sb.st_mode) then begin
+            ShellExecute(document,false);
         end
         else begin
-            executable:=getExecutable(ext);
-            executable:=stringreplace(executable,'%1',document,[rfReplaceAll, rfIgnoreCase]);
+            executable:='';
+            ext:=ansilowercase(extractfileext(document));
+            if ext='.lnk' then begin
+                        lnk:=TLNKFile.create(nil);
+                        try
+                            lnk.loadfromfile(document);
+                            executable:=lnk.command;
+                            if executable<>'' then begin
+                                if lnk.Startin<>'' then begin
+                                    lastdir:=GetCurrentDir;
+                                    ChDir(lnk.Startin);
+                                end;
+                                ShellExecute(executable,false);
 
-            if executable='' then begin
-                with TOpenWithDlg.create(application) do begin
-                    filename:=document;
-                    lbDocument.caption:=extractfilename(document);
-                    show;
-                end;
+                                if lnk.Startin<>'' then begin
+                                    ChDir(lastdir);
+                                end;
+                            end;
+                        finally
+                            lnk.free;
+                        end;
             end
-            else ShellExecute(executable,false);
+            else if ext='' then begin
+                XPAPI.ShellExecute(XPAPI.getSysInfo(siAppsDir)+'fileexplorer -f '+adocument,false);
+            end
+            else begin
+                executable:=getExecutable(ext);
+                executable:=stringreplace(executable,'%1',document,[rfReplaceAll, rfIgnoreCase]);
+
+                if executable='' then begin
+                    with TOpenWithDlg.create(application) do begin
+                        filename:=document;
+                        lbDocument.caption:=extractfilename(document);
+                        show;
+                    end;
+                end
+                else ShellExecute(executable,false);
+            end;
         end;
     end;
 end;

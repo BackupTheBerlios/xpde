@@ -120,6 +120,7 @@ type
     procedure PropertiesClick(Sender: TObject);
   public
     { Public declarations }
+    procedure hideFolderPanel;
     procedure ChildrenNotified(const sender: IXPVirtualFile; const op: TXPChildrenOperation; const item: IXPVirtualFile);
     procedure updateall;
     procedure setLocation(const location:string);
@@ -317,7 +318,15 @@ end;
 procedure TExplorerForm.FormShow(Sender: TObject);
 begin
     updateall;
-    if paramstr(1)<>'' then setLocation(paramstr(1));
+    if paramstr(1)<>'' then begin
+        if paramstr(1)='-f' then begin
+            hideFolderPanel;
+            if paramstr(2)<>'' then setLocation(paramstr(2));
+        end
+        else begin
+            setLocation(paramstr(1));        
+        end;
+    end;
 end;
 
 procedure TExplorerForm.FormCreate(Sender: TObject);
@@ -685,6 +694,12 @@ begin
             break;
         end;
     end;
+end;
+
+procedure TExplorerForm.hideFolderPanel;
+begin
+    pnFolders.visible:=false;
+    spLeft.visible:=pnFolders.visible;
 end;
 
 end.

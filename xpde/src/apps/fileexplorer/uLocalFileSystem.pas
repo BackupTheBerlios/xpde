@@ -129,6 +129,7 @@ type
     public
         function getDisplayName: string; override;
         constructor Create; reintroduce;
+        function locationExists(const location:string):boolean; override;
         function getIcon: integer; override;
         procedure getVerbItems(const verbs:TStrings); override;
     end;
@@ -137,6 +138,7 @@ type
     public
         function getDisplayName: string; override;
         constructor Create; reintroduce;
+        function getUniqueID:string; override;        
         function getIcon: integer; override;
         procedure getVerbItems(const verbs:TStrings); override;
     end;
@@ -216,6 +218,7 @@ type
     public
         function hasChild: boolean; override;
         function getDisplayName: string; override;
+        function locationExists(const location:string):boolean; override;
         function getChildren: TInterfaceList; override;
         constructor Create;
         destructor Destroy;override;
@@ -228,6 +231,7 @@ type
     public
         function hasChild: boolean; override;
         function getDisplayName: string; override;
+        function locationExists(const location:string):boolean; override;        
         function getChildren: TInterfaceList; override;
         constructor Create;
         procedure getVerbItems(const verbs:TStrings); override;
@@ -761,6 +765,12 @@ begin
     end;
 end;
 
+function TMyDocuments.locationExists(const location: string): boolean;
+begin
+    if (location='%MYDOCUMENTS%') then result:=true
+    else result:=false;
+end;
+
 { TMyPC }
 
 constructor TMyPC.Create;
@@ -833,6 +843,10 @@ function TMyPC.locationExists(const location: string): boolean;
 begin
     result:=DirectoryExists(location);
     if not result then result:=FileExists(location);
+    if not result then begin
+        if (location='%MYHOME%') then result:=true;
+        if (location='%MYCOMPUTER%') then result:=true;        
+    end;
 end;
 
 { TLocalFile }
@@ -975,25 +989,30 @@ var
     li: integer;
     loc: string;
 begin
-    li:=1;
-    loc:=removeTrailingSlash(location);
-    for i:=length(loc) downto 1 do begin
-        if loc[i]='/' then begin
-            if i=1 then begin
-                s:=copy(loc,i+1,li);
-            end
-            else begin
-                s:=copy(loc,i,li);
+    if pos('%',location)<>0 then begin
+        pieces.add(location);
+    end
+    else begin
+        li:=1;
+        loc:=removeTrailingSlash(location);
+        for i:=length(loc) downto 1 do begin
+            if loc[i]='/' then begin
+                if i=1 then begin
+                    s:=copy(loc,i+1,li);
+                end
+                else begin
+                    s:=copy(loc,i,li);
+                end;
+                if trim(s)<>'' then begin
+                    s:=removeTrailingSlash(s);
+                    pieces.insert(0,s);
+                end;
+                li:=0;
             end;
-            if trim(s)<>'' then begin
-                s:=removeTrailingSlash(s);
-                pieces.insert(0,s);
-            end;
-            li:=0;
+            inc(li);
         end;
-        inc(li);
+        pieces.insert(0,'/');
     end;
-    pieces.insert(0,'/');
 end;
 
 { TDevice }
@@ -1048,6 +1067,12 @@ begin
     result:=false;
 end;
 
+function TMyNetworkPlaces.locationExists(const location: string): boolean;
+begin
+    if (location='%MYNETWORKPLACES%') then result:=true
+    else result:=false;
+end;
+
 { TRecycleBin }
 
 constructor TRecycleBin.Create;
@@ -1091,6 +1116,12 @@ end;
 function TRecycleBin.hasChild: boolean;
 begin
     result:=false;
+end;
+
+function TRecycleBin.locationExists(const location: string): boolean;
+begin
+    if (location='%RECYCLEBIN%') then result:=true
+    else result:=false;
 end;
 
 { TControlPanel }
@@ -1405,6 +1436,11 @@ end;
 function THomeFolder.getIcon: integer;
 begin
     result:=imHOME;
+end;
+
+function THomeFolder.getUniqueID: string;
+begin
+    result:='%MYHOME%';
 end;
 
 procedure THomeFolder.getVerbItems(const verbs: TStrings);

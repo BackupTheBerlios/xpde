@@ -1,6 +1,6 @@
 object WindowsClassic: TWindowsClassic
-  Left = 303
-  Top = 502
+  Left = 306
+  Top = 531
   ActiveControl = btnClose
   AutoScroll = False
   BorderStyle = fbsNone
@@ -188,6 +188,7 @@ object WindowsClassic: TWindowsClassic
     Masked = True
     ParentFont = False
     Transparent = True
+    Visible = False
     OnMouseDown = FormMouseDown
     OnMouseMove = FormMouseMove
     OnMouseUp = FormMouseUp

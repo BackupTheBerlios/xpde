@@ -266,6 +266,7 @@ begin
     brBottom.right:=clientwidth-13;
     brBottom.bottom:=clientheight;
 
+    updatewindowtitle;
     FormPaint(self);
 end;
 
@@ -279,7 +280,7 @@ begin
     ore:=boundsrect;
     if assigned(client) then begin
         if (not client.isactive) then client.activate;
-        SetCaptureControl((sender as TControl));
+        SetCaptureControl(self);
         if (ptInRect(Point(x,y),lastRect)) then begin
             if client.windowstate=wsNormal then begin
                 moving:=true;
@@ -599,6 +600,8 @@ procedure TWindowsClassic.paintTitle;
             end;
         end;
         canvas.Draw(arect.Left,arect.top,gradbmp);
+        canvas.Font.assign(lbtitle.font);
+        canvas.TextOut(lbtitle.left,lbtitle.top,lbtitle.caption);
     end;
 var
     fbs: TRect;
@@ -613,7 +616,6 @@ begin
         else begin
             gradient(clGray,clSilver,Rect(fbs.left,fbs.top,clientWidth-(fbs.right),co.y-1))
         end;
-        updatewindowtitle;
     end;
 end;
 
@@ -659,6 +661,7 @@ begin
     end;
 
     lbTitle.Caption:=wc;
+    painttitle;
 
 end;
 

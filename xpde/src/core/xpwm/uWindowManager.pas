@@ -77,6 +77,7 @@ type
         procedure install;
         function getDesktopClientRect:TRect;
         function findClient(w: Window):TWMClient;
+        procedure sendalltoback(exclude:TList);
         function findTransientFor(transient: Window):TWMClient;
         function createNewClient(w:Window):TWMClient;
         procedure closeActiveWindow;
@@ -147,6 +148,7 @@ type
         procedure endresize;
         procedure close;
         procedure bringtofront;
+        procedure sendtoback;
         function getWindow: Window;
         procedure updateactivestate;
         function isactive:boolean;
@@ -949,6 +951,16 @@ begin
         end;
         result:=0;
     end
+    else if (event.xproperty.atom = XA_WM_TRANSIENT_FOR) then begin
+//      meta_verbose ("Property notify on %s for WM_TRANSIENT_FOR\n", window->desc);
+        c:=findclient(xwindow);
+        if assigned(c) then begin
+            c.updatetransientfor;
+        end;
+//        update_transient_for (window);
+
+//      meta_window_queue_move_resize (window);
+    end
     else begin
         result:=1;
     end;
@@ -1503,6 +1515,19 @@ begin
     {$endif}
 end;
 
+procedure TXPWindowManager.sendalltoback(exclude: TList);
+var
+    i:longint;
+    c: TWMClient;
+begin
+    for i:=clients.count-1 downto 0 do begin
+        c:=clients[i];
+        if exclude.IndexOf(c)=-1 then begin
+            c.sendtoback;
+        end;
+    end;
+end;
+
 { TWMClient }
 
 function send_xmessage(w:Window;a:Atom;x:Atom):integer;
@@ -1522,24 +1547,46 @@ end;
 procedure TWMClient.activate(restore:boolean=true);
 var
     tf: TWMClient;
+    exclude: TList;
 begin
     tf:=FWindowManager.findTransientFor(xwindow);
 
     if assigned(tf) then begin
-        bringtofront;
-        tf.activate(restore);
+        exclude:=TList.create;
+        try
+            exclude.add(self);
+            exclude.add(tf);
+            FWindowManager.sendalltoback(exclude);
+            FWindowManager.ActiveClient:=self;
+//          bringtofront;
+            tf.activate(restore);
+        finally
+            exclude.free;
+        end;
     end
     else begin
         if (restore) then begin
             if FWindowState=wsMinimized then self.restore;
         end;
+        if (xtransientfor<>None) then begin
+            tf:=FWindowManager.findClient(xtransientfor);
+            if assigned(tf) then begin
+                exclude:=TList.create;
+                try
+                    exclude.add(self);
+                    exclude.add(tf);
+                    FWindowManager.sendalltoback(exclude);
+                    FWindowManager.ActiveClient:=tf;                    
+                    //if assigned(tf) then tf.bringtofront;
+                finally
+                end;
+            end;
+        end;
+
         FWindowManager.ActiveClient:=self;
         updateactivestate;
         XPTaskbar.activatetask(self);
-        if (xtransientfor<>None) then begin
-            tf:=FWindowManager.findClient(xtransientfor);
-            if assigned(tf) then tf.bringtofront;
-        end;
+        
         bringtofront;
         focus;
         //This causes Delphi to raise a "Call to an OS function failed"
@@ -2460,6 +2507,20 @@ begin
     }
 
     XSendEvent( FWindowManager.FDisplay, c.xwindow, 0, StructureNotifyMask, @c );
+end;
+
+procedure TWMClient.sendtoback;
+begin
+    if not framed then begin
+        //XMapRaised(application.display,xwindow);
+    end
+    else begin
+        if assigned(frame) then frame.SendToBack
+        else begin
+            //XMapRaised(application.display,xwindow);
+        end;
+    end;
+    xptaskbar.bringtofront;
 end;
 
 procedure TWMClient.setMapState(state: integer);

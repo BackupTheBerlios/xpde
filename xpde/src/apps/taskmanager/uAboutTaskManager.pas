@@ -55,23 +55,26 @@ var
   AboutTaskManagerDlg: TAboutTaskManagerDlg;
   tm_version,tm_build:string;
 implementation
-
+uses Libc;
 {$R *.xfm}
 
 procedure TAboutTaskManagerDlg.Button1Click(Sender: TObject);
 begin
-Close;
+        Close;
 end;
 
 procedure TAboutTaskManagerDlg.FormShow(Sender: TObject);
+var sinf:_sysinfo;
 begin
-Label2.Caption:='Version '+tm_version+' (Build '+tm_build+')';
+        Libc.Sysinfo(sinf);
+        Label2.Caption:='Version '+tm_version+' (Build '+tm_build+')';
+        Label9.Caption:= IntTostr(longint(sinf.totalram) div 1024)+' Kb';
 end;
 
 procedure TAboutTaskManagerDlg.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-Action:=caFree;
+        Action:=caFree;
 end;
 
 end.

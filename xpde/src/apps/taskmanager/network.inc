@@ -29,7 +29,7 @@ var netstr_:TStrings;
     i,x,j,jj:integer;
     fi:TextFile;
     sbuf,ss:string;
-    bytes_in,bytes_out:double;
+    bytes_in:double;
 Begin
         netstr_:=TStringList.Create;
         try
@@ -103,7 +103,7 @@ var netstr_:TStrings;
     i,x,j,jj:integer;
     fi:TextFile;
     sbuf,ss:string;
-    bytes_in,bytes_out,packets_in,packets_out:double;
+    bytes_in,packets_in:double;
 Begin
         netstr_:=TStringList.Create;
         try

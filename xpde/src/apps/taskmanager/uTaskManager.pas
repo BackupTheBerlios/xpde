@@ -213,7 +213,6 @@ var tmpstr,tmpstr_stat:TStrings;
     CPUuser_, CPUsyst_:longint;
     diff_user,diff_syst:longint;
     sysinf_:_sysinfo; // Libc sysinfo
-    swp_total,swp_used,swp_free:single;
     um_y:integer; // user_matrix position
     um_x:integer; // syst_matrix position
     du_y:integer; // devs_matrix position
@@ -230,6 +229,7 @@ var tmpstr,tmpstr_stat:TStrings;
 
 function _get_tmp_fname:String;
 begin
+        Randomize;
         Result:='/tmp/'+FormatDateTime('XPdeTaskManager.hh.mm.ss.ms',Now)+
         Format('.%d.%d.%d',[Random($FFFF),Random($FFFF),Random($FFFF)]);
 end;
@@ -661,10 +661,10 @@ End;
 
 procedure TWindowsTaskManagerDlg.Timer2Timer(Sender: TObject);
 begin
-Read_Stats('/proc/stat');
-MemInfo;
-AverageLoad('/proc/loadavg');
-Read_Net('/proc/net/dev');
+        Read_Stats('/proc/stat');
+        MemInfo;
+        AverageLoad('/proc/loadavg');
+        Read_Net('/proc/net/dev');
 end;
 
 Procedure TWindowsTaskManagerDlg.Paint_PB1;
@@ -921,7 +921,6 @@ End;
 procedure TWindowsTaskManagerDlg.Paint_PB3;
 var value_:string;
      x,i,j:integer;
-     diff_swap:integer;
 
 // We will put here usefull information
 // For now , let it be swap using /proc/meminfo
@@ -1297,29 +1296,29 @@ End;
 
 procedure TWindowsTaskManagerDlg.Timer3Timer(Sender: TObject);
 begin
-Paint_PB1;
-Paint_PB2;
-Paint_PB3;
-Paint_PB4;
-Paint_PB5;
-Libc.sysinfo(sysinf_);
+        Paint_PB1;
+        Paint_PB2;
+        Paint_PB3;
+        Paint_PB4;
+        Paint_PB5;
+        Libc.sysinfo(sysinf_);
 end;
 
 Procedure TWindowsTaskManagerDlg.MemInfo;
 Begin
-Lab4.Caption:=IntToStr(longint(sysinf_.totalswap) div 1024);
-Lab5.Caption:=IntToStr(longint(sysinf_.freeswap) div 1024);
-Lab6.Caption:=IntToStr((longint(sysinf_.totalswap) div 1024) - (longint(sysinf_.freeswap) div 1024));
-Lab10.Caption:=IntToStr(longint(sysinf_.totalram) div 1024);
-Lab11.Caption:=IntToStr(longint(sysinf_.freeram) div 1024);
-Lab12.Caption:=IntToStr(longint(sysinf_.bufferram) div 1024);
-StatusBar1.Panels[2].Text:='Free Memory (K): '+IntToStr(longint(sysinf_.freeram) div 1024);
+        Lab4.Caption:=IntToStr(longint(sysinf_.totalswap) div 1024);
+        Lab5.Caption:=IntToStr(longint(sysinf_.freeswap) div 1024);
+        Lab6.Caption:=IntToStr((longint(sysinf_.totalswap) div 1024) - (longint(sysinf_.freeswap) div 1024));
+        Lab10.Caption:=IntToStr(longint(sysinf_.totalram) div 1024);
+        Lab11.Caption:=IntToStr(longint(sysinf_.freeram) div 1024);
+        Lab12.Caption:=IntToStr(longint(sysinf_.bufferram) div 1024);
+        StatusBar1.Panels[2].Text:='Free Memory (K): '+IntToStr(longint(sysinf_.freeram) div 1024);
 End;
 
 procedure TWindowsTaskManagerDlg.FormResize(Sender: TObject);
 begin
-Height:=421;
-Width:=398;
+        Height:=421;
+        Width:=398;
 end;
 
 procedure TWindowsTaskManagerDlg.AverageLoad(avg_file:string);
@@ -1371,7 +1370,6 @@ End;
 
 Procedure TWindowsTaskManagerDlg.Fill_Net_Devices;
 var i:integer;
-    fi:TextFile;
 
 Function Sign_Device(device__:string):string;
 var ss:string;
@@ -1500,8 +1498,8 @@ End;
 procedure TWindowsTaskManagerDlg.LVNetSelectItem(Sender: TObject;
   Item: TListItem; Selected: Boolean);
 begin
-if selected then
-device_number:=Item.Index+2;
+        if selected then
+        device_number:=Item.Index+2;
 end;
 
 end.

@@ -529,6 +529,12 @@ begin
     if assigned(lvItems.selected) then begin
         f:=IXPVirtualFile(lvItems.selected.data);
         f.executeVerb((sender as TMenuItem).tag);
+    end
+    else begin
+        if assigned(tvItems.selected) then begin
+            f:=IXPVirtualFile(tvItems.selected.data);
+            f.executeVerb((sender as TMenuItem).tag);
+        end;
     end;
 end;
 

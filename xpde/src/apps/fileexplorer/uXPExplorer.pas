@@ -137,6 +137,7 @@ procedure TXPExplorer.copycurrentselectiontoclipboard;
 var
     f: IXPVirtualFile;
     li: TListItem;
+    n: TTreeNode;
     i:longint;
     s: TStringList;
 begin
@@ -154,7 +155,11 @@ begin
                 copytoclipboard(s);
             end
             else begin
-                showmessage('not ready yet!');
+                if assigned(tvItems.selected) then begin
+                    n:=tvItems.selected;
+                    f:=IXPVirtualFile(n.data);
+                    copytoclipboard(f.getUniqueID);
+                end;
             end;
         finally
             s.free;

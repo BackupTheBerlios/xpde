@@ -32,7 +32,10 @@ uses
     Classes, Sysutils, QForms, Qt, XLib;
 
 const
-    XPDE_DESKTOPCHANGED=3569;
+    XPDE_BASE=3569;
+    XPDE_DESKTOPCHANGED=XPDE_BASE+1;
+    XPDE_ADDTRAYICON=XPDE_BASE+2;
+    XPDE_REMOVETRAYICON=XPDE_BASE+3;
 
 type
     //To notify about communications

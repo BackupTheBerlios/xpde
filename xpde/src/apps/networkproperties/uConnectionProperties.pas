@@ -63,6 +63,7 @@ type
         TabSheet1:TTabSheet;
     Panel2: TPanel;
     Image1: TImage;
+    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -74,6 +75,14 @@ var
 
 implementation
 
+uses uEthernetAdapterProperties;
+
 {$R *.xfm}
+
+procedure TConnectionPropertiesDlg.Button5Click(Sender: TObject);
+begin
+        EthernetAdapterPropertiesDlg:=TEthernetAdapterPropertiesDlg.Create(Application);
+        EthernetAdapterPropertiesDlg.Show;
+end;
 
 end.

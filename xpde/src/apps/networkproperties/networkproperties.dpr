@@ -43,7 +43,8 @@ uses
   uTCPIPDNSServer in 'uTCPIPDNSServer.pas' {TCPIPDNSServerDlg},
   uTCPIPFiltering in 'uTCPIPFiltering.pas' {TCPIPFilteringDlg},
   uTCPIPGatewayAddress in 'uTCPIPGatewayAddress.pas' {TCPIPGatewayAddressDlg},
-  uTCPIPWINSServer in 'uTCPIPWINSServer.pas' {TCPIPWINSServerDlg};
+  uTCPIPWINSServer in 'uTCPIPWINSServer.pas' {TCPIPWINSServerDlg},
+  hwinfo in '../../common/hwinfo.pas';
 
 {$R *.res}
 

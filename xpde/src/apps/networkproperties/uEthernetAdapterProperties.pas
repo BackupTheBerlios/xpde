@@ -26,16 +26,14 @@ interface
 
 uses
   SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs,
-  QStdCtrls, QComCtrls, QExtCtrls, uQXPComCtrls;
+  QStdCtrls, QComCtrls, QExtCtrls, uQXPComCtrls,SysProvider;
 
 type
   TEthernetAdapterPropertiesDlg = class(TForm)
         Label27:TLabel;
         Button12:TButton;
         CheckBox1:TCheckBox;
-        Label24:TLabel;
         ComboBox3:TComboBox;
-        Label23:TLabel;
         ListView1:TListView;
         Label20:TLabel;
         Label19:TLabel;
@@ -77,7 +75,7 @@ type
         Label3:TLabel;
         Edit1:TEdit;
         Label2:TLabel;
-        Label1:TLabel;
+    labDevice: TLabel;
         Image1:TImage;
         Panel1:TPanel;
         TabSheet4:TTabSheet;
@@ -94,7 +92,13 @@ type
     RadioButton2: TRadioButton;
     Label25: TLabel;
     Memo2: TMemo;
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
   private
+    Procedure GetDeviceInfo(device:string);
     { Private declarations }
   public
     { Public declarations }
@@ -105,6 +109,61 @@ var
 
 implementation
 
+uses uConnectionProperties,hwinfo;
+
 {$R *.xfm}
+
+procedure TEthernetAdapterPropertiesDlg.Button2Click(Sender: TObject);
+begin
+        Close;
+end;
+
+procedure TEthernetAdapterPropertiesDlg.Button1Click(Sender: TObject);
+begin
+        // save setting
+        Close;
+end;
+
+procedure TEthernetAdapterPropertiesDlg.FormActivate(Sender: TObject);
+begin
+      ConnectionPropertiesDlg.Hide;
+end;
+
+procedure TEthernetAdapterPropertiesDlg.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+        Action:=caFree;
+        Application.Terminate;
+end;
+
+Procedure TEthernetAdapterPropertiesDlg.GetDeviceInfo(device:string);
+Begin
+        if not
+        IsValidNetDevice(device) then
+        ShowMessage('Unknown device '+device)
+        else begin
+        if not
+        Is_CableUnplugged(device) then
+        ShowMessage('Cable is unplugged.');
+        // else
+        // put in tray
+        End;
+End;
+
+procedure TEthernetAdapterPropertiesDlg.FormShow(Sender: TObject);
+var pro:TSysProvider;
+begin
+//        ReadHW('/proc/pci');
+//        GetDeviceInfo('eth0');
+        writeln('Creating provider !');
+        try
+        pro:=TSysProvider.Create;
+        pro.WriteHwInfo;
+        pro.Free;
+        except
+        writeln('Cannot create provider!');
+        End;
+        // device is parameter -> progname -i ethXX !
+end;
 
 end.

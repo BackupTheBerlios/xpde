@@ -1319,6 +1319,7 @@ begin
     XPTaskbar.activatetask(self);
     bringtofront;
     focus;
+    sendsyntheticConfigureNotify;
 end;
 
 procedure TWMClient.beginresize;

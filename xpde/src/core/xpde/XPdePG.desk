@@ -6,15 +6,20 @@ File_3=SourceModule,'/home/ttm/xpde/src/apps/taskmanager/uTaskManager.pas',0,1,9
 File_4=SourceModule,'/home/ttm/kylix3/source/clx/QGraphics.pas',0,1,3257,1,3273,0,0
 File_5=SourceModule,'/home/ttm/xpde/src/components/toolsapi/uXPAPI.pas',0,1,1,41,30,0,0
 File_6=SourceModule,'/home/ttm/kylix3/source/clx/QForms.pas',0,1,282,1,303,0,0
-File_7=SourceModule,'/home/ttm/xpde/src/core/xpwm/uWMFrame.pas',0,1,255,49,279,1,0
-File_8=SourceModule,'/home/ttm/kylix3/source/rtl/linux/Xlib.pas',0,1,1327,32,1349,0,0
+File_7=SourceModule,'/home/ttm/kylix3/source/rtl/linux/Xlib.pas',0,1,1327,32,1349,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
-Module1=/home/ttm/xpde/src/core/xpde/XPde.dpr
-Count=2
+Module0=/home/ttm/xpde/src/core/xpwm/uWMFrame.pas
+Module1=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
+Module2=/home/ttm/xpde/src/core/xpde/XPde.dpr
+Count=3
 EditWindowCount=1
 PackageWindowCount=9
+
+[/home/ttm/xpde/src/core/xpwm/uWMFrame.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=0
 
 [/home/ttm/xpde/src/core/xpwm/uWindowManager.pas]
 ModuleType=SourceModule
@@ -123,10 +128,11 @@ FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=2
-CurrentView=1
+ViewCount=3
+CurrentView=2
 View0=0
 View1=1
+View2=2
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -139,16 +145,16 @@ Height=753
 MaxLeft=1
 MaxTop=135
 MaxWidth=1286
-MaxHeight=851
+MaxHeight=828
 ClientWidth=1286
-ClientHeight=851
+ClientHeight=828
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=85
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
@@ -159,9 +165,16 @@ LeftCol=1
 
 [View1]
 Module=/home/ttm/xpde/src/core/xpwm/uWindowManager.pas
-CursorX=42
-CursorY=1250
-TopLine=1243
+CursorX=5
+CursorY=1322
+TopLine=1312
+LeftCol=1
+
+[View2]
+Module=/home/ttm/xpde/src/core/xpwm/uWMFrame.pas
+CursorX=82
+CursorY=776
+TopLine=768
 LeftCol=1
 
 [PackageWindow0]
@@ -377,8 +390,8 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=3
-Top=28
+Left=7
+Top=51
 Width=1273
 Height=87
 MaxLeft=-1
@@ -388,7 +401,7 @@ ClientHeight=87
 
 [ProjectManager]
 Create=1
-Visible=1
+Visible=0
 State=0
 Left=369
 Top=372
@@ -432,7 +445,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=
+SelectedItem=Caption
 ExpandedItems=
 HiddenCategories=
 
@@ -459,26 +472,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=751
+Height=745
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=751
+ClientHeight=745
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=12
-Top=0
-Width=1274
+Left=-2
+Top=-631
+Width=443
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1274
+ClientWidth=443
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443

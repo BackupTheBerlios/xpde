@@ -1,6 +1,6 @@
 object WindowsClassic: TWindowsClassic
-  Left = 306
-  Top = 531
+  Left = 313
+  Top = 583
   ActiveControl = btnClose
   AutoScroll = False
   BorderStyle = fbsNone
@@ -13,7 +13,6 @@ object WindowsClassic: TWindowsClassic
   KeyPreview = True
   PopupMenu = PopupMenu1
   Scaled = False
-  OnActivate = FormActivate
   OnClick = FormClick
   OnCreate = FormCreate
   OnDblClick = FormDblClick
@@ -23,7 +22,6 @@ object WindowsClassic: TWindowsClassic
   OnMouseUp = FormMouseUp
   OnPaint = FormPaint
   OnResize = FormResize
-  OnShow = FormShow
   PixelsPerInch = 90
   object restore: TImage
     Left = 192

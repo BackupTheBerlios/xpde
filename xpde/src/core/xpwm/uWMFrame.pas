@@ -65,8 +65,6 @@ type
     procedure FormClick(Sender: TObject);
     procedure btnCloseMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure FormShow(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
     private
         { Private declarations }
       public
@@ -770,16 +768,6 @@ procedure TWindowsClassic.btnCloseMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
     client.activate;
-end;
-
-procedure TWindowsClassic.FormShow(Sender: TObject);
-begin
-//    client.sendsyntheticConfigureNotify;
-end;
-
-procedure TWindowsClassic.FormActivate(Sender: TObject);
-begin
-    client.sendsyntheticConfigureNotify;
 end;
 
 initialization

@@ -1,0 +1,388 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-stylesheet type="text/css"
+href="http://tux.sdlocal.net/dtd/docbook.css"
+?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://tux.sdlocal.net/dtd/docbookx.dtd">
+<article>
+  <title>Development Guidelines</title>
+
+  <articleinfo>
+    <author>
+      <surname>León Serna</surname>
+
+      <firstname>José</firstname>
+    </author>
+
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+
+        <date>03022003</date>
+      </revision>
+    </revhistory>
+  </articleinfo>
+
+  <sect1>
+    <title>Introduction</title>
+
+    <para>This document is intended to provide the basic rules to Kylix
+    development on the XPde project, both writting code and designing forms.
+    The purpose is to create an standard to allow all involved developers
+    understand and mantain other&#39;s code.</para>
+  </sect1>
+
+  <sect1>
+    <title>Writting code</title>
+
+    <para>This section standarizes the way to write code:</para>
+
+    <sect2>
+      <title>Ibdentation</title>
+
+      <para>All the code must be properly indented, there are code formatters
+      that are useful for this task, can be used as long as you use spaces
+      instead of tabs and the size of the indent is 4 spaces.</para>
+    </sect2>
+
+    <sect2>
+      <title>Comments</title>
+
+      <para>For block comments, you can use { }, and // for the line comments,
+      you will never use these ones (* *), except when developing and must be
+      removed after that. The comments must be in english..</para>
+    </sect2>
+
+    <sect2>
+      <title>Constants</title>
+
+      <para>The constants must be always uppercase.</para>
+    </sect2>
+
+    <sect2>
+      <title>begin...end blocks</title>
+
+      <para>The begin...end blocks must be this way:</para>
+
+      <programlisting>while condition do begin
+    if condition then begin
+
+    end
+    else begin
+
+    end;
+end;</programlisting>
+
+      <para>That is, begin must be in the same line of the condition or block
+      beginning and the end, must be vertically aligned with the beginning of
+      the block..</para>
+
+      <para>Avoid as much as possible these cases:</para>
+
+      <programlisting>if condition then performsomething; //Bad
+
+
+if condition then begin             //Good
+    performsomething;
+end;</programlisting>
+    </sect2>
+
+    <sect2>
+      <title>Parenthesis</title>
+
+      <para>The parenthesis on the parameter lists must be without spaces, for
+      example:</para>
+
+      <programlisting>performfunction( param1, param2 );    //Bad
+
+performfunction(param1, param2);      //Good</programlisting>
+
+      <para>The parameter lists must have an space after each comma.</para>
+    </sect2>
+
+    <sect2>
+      <title>Keywords</title>
+
+      <para>The keywords must be always in lowercase, never uppercase or
+      capitalized.</para>
+    </sect2>
+
+    <sect2>
+      <title>Identifiers</title>
+
+      <para>Identifiers must be named using the &#34;camel&#34; style, that
+      is, capitalizing each words of the identifier except the first word.
+      Also, the identifiers must be in english:</para>
+
+      <programlisting>procedure identifier;
+
+procedure composedIdentifier;</programlisting>
+
+      <para>Methods or functions that return something must begin with get and
+      those which set something must begin with set.:</para>
+
+      <programlisting>function getSomething:string;
+
+procedure setSomething(const value:string);</programlisting>
+    </sect2>
+
+    <sect2>
+      <title>Parameters</title>
+
+      <para>The parameters, wherever is possible, must be preceded by an A,
+      specifying that &#34;something&#34; it&#39;s being passed:</para>
+
+      <programlisting>procedure setUserName(const AUserName:string);</programlisting>
+
+      <para>Whenever is possible, add the const modifier to parameters.</para>
+    </sect2>
+
+    <sect2>
+      <title>Enumerated types</title>
+
+      <para>Our own data types must be preceded by an uppercase T, and in
+      enumerations, each element must be preceded by 2 or 3 lowercase letters
+      specifying the type to which belong:</para>
+
+      <programlisting>type
+    TEnumeratedType=(etItem1, etItem2, etItem3);</programlisting>
+    </sect2>
+
+    <sect2>
+      <title>Name collision</title>
+
+      <para>When two units declare identifiers (types, routines, variables)
+      with the same name, must be qualified with the unit name to avoid
+      collisions.</para>
+    </sect2>
+
+    <sect2>
+      <title>Variable declaration</title>
+
+      <para>When declaring variables, each variable must be in it&#39;s own
+      line:</para>
+
+      <programlisting>//Bad
+var 
+    i, h: integer;             
+
+//Good
+var
+    i: integer;
+    h: integer
+ </programlisting>
+
+      <para>The data types we use must be in lowercase, except when using the
+      data types defined in another units if they are declared in uppercase,
+      like Libc unit.</para>
+
+      <para>To use floating point numbers is better to use double or extended
+      if more precision is required.</para>
+    </sect2>
+
+    <sect2>
+      <title>Case</title>
+
+      <para>The case constructions must have this form:</para>
+
+      <programlisting>case condition of
+    match1: begin
+    end;
+    match2: begin
+    end;
+end;</programlisting>
+    </sect2>
+
+    <sect2>
+      <title>Loops</title>
+
+      <para>When breaking loops, must be using a condition, exit is forbidden
+      and break must be justified.</para>
+    </sect2>
+
+    <sect2>
+      <title>With</title>
+
+      <para>With must be used carefully and only when using it makes the code
+      more readable. Nested withs are allowed, but using several with
+      declarations, not in the same line:</para>
+
+      <programlisting>//Bad
+with qual1, qual2 do begin
+    prop1...
+    prop2...
+end;
+
+//Good
+with qual1 do begin
+    with qual2 do begin
+        prop1...
+        prop2...
+    end;
+end;</programlisting>
+    </sect2>
+
+    <sect2>
+      <title>Exceptions control</title>
+
+      <para>All the code must be protected against exception, specially the
+      code that uses resources previously allocated to ensure they are freed.
+      Always use try..finally..end, and in situations when you need exception
+      control, use try..except..on e:exception, NEVER use try..except..end
+      without raise the catched exception.</para>
+
+      <programlisting>//Allocate resources
+try
+    //Use resources
+finally
+    //Free resources
+end;
+
+//Allocate resources
+try
+  try
+      //Use resources
+  except
+      on e:Exception do begin
+          //Manage resources  
+          raise; //Reraise the exception
+      end;
+  end;
+finally
+  //Free resources
+end;
+
+
+//NEVER
+//Allocate resources
+try
+    //Use resources
+except
+    //Do something
+end;</programlisting>
+    </sect2>
+
+    <sect2>
+      <title>Classes</title>
+
+      <para>Classes must begin with an uppercase T and each member of the
+      class must be in a single line, both fields and methods must be private
+      by default and must be only public when needed:</para>
+
+      <programlisting>TNewClass = class(TObject)
+  private
+    FField1: Integer;
+    FField2: Integer;
+end;</programlisting>
+
+      <para>The fields of a class must be read and written using methods,
+      never directly, and use the property construction whenever is possible:</para>
+
+      <programlisting>TSomeClass = class(TObject)
+  private
+    FSomeField: Integer;
+  protected
+    function getSomeField: Integer;
+    procedure setSomeField(Value: Integer);
+  public
+    property SomeField: Integer read getSomeField write setSomeField;
+end;</programlisting>
+
+      <para>Private fields must begin with an uppercase F.</para>
+    </sect2>
+
+    <sect2>
+      <title>Unit names</title>
+
+      <para>Unit names must begin with a lowercase u, for example,
+      uMyUnit.pas, it&#39;s allowed to name the main unit main.pas.</para>
+
+      <para>Units that hold some kind of dialog, must end with Dlg, for
+      example, uAboutDlg.pas, the rest of units holding forms, there is no
+      need to end with something, but Frm is encouraged..</para>
+
+      <para>ProjectGroups must end with PG, for example, ProjectGroupPG.bpg.</para>
+    </sect2>
+
+    <sect2>
+      <title>Components</title>
+
+      <para>All the code developed must be OO, and must be developed as
+      components whenever is possible.</para>
+    </sect2>
+  </sect1>
+
+  <sect1>
+    <title>Form design</title>
+
+    <para>This section describes the rules to create forms.</para>
+
+    <sect2>
+      <title>Forms</title>
+
+      <para>The name property of forms must be end with Form or Dlg, depending
+      on the type of form.</para>
+
+      <para>Only those forms required to be created when the program starts
+      must be on the auto-create list of the project, the rest must be created
+      and destroyed in runtime.</para>
+    </sect2>
+
+    <sect2>
+      <title>Modal forms</title>
+
+      <para>It&#39;s a good practice to isolate modal forms in a procedure
+      like this:</para>
+
+      <programlisting>procedure ShowAboutDlg;
+begin
+    with TAboutDlg.create(application) do begin
+        try
+            //Gather data
+            if showmodal=mrOK then begin
+            //set data
+            end;
+        finally
+            free;
+        end;
+    end;
+end;</programlisting>
+
+      <para>And this procedure be published by the unit.</para>
+    </sect2>
+
+    <sect2>
+      <title>Form design</title>
+
+      <para>These are the steps to design forms:</para>
+
+      <orderedlist>
+        <listitem>
+          <para>Place the controls on their aproximate positions</para>
+        </listitem>
+
+        <listitem>
+          <para>Setup all the names of the components you are going to use
+          (read below)</para>
+        </listitem>
+
+        <listitem>
+          <para>Setup all the properties in design time</para>
+        </listitem>
+
+        <listitem>
+          <para>Generate all the events</para>
+        </listitem>
+      </orderedlist>
+    </sect2>
+
+    <sect2>
+      <title>Component names</title>
+
+      <para>Components must be named by 2 or 3 letters about the component
+      type and after that the purpose of that component. For example, an
+      SpeedButton would be named sbPurpose, an ImageList imPurpose and so on.
+      There are lists with all this abreviations, but a little of common sense
+      is enough.</para>
+    </sect2>
+  </sect1>
+</article>

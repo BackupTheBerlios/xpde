@@ -15,7 +15,8 @@ object TaskBar: TTaskBar
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnPaint = FormPaint
-  PixelsPerInch = 84
+  OnShow = FormShow
+  PixelsPerInch = 90
   object imgProgramFolder: TImage
     Left = 476
     Top = 15
@@ -71,7 +72,6 @@ object TaskBar: TTaskBar
     BevelInner = bvLowered
     BevelOuter = bvNone
     BorderWidth = 2
-    Caption = 'prueba'
     Color = 13554646
     TabOrder = 0
     OnDblClick = pnTimerDblClick
@@ -83,7 +83,24 @@ object TaskBar: TTaskBar
       Align = alLeft
       BevelOuter = bvNone
       BorderWidth = 2
+      ParentColor = True
       TabOrder = 0
+    end
+    object lbTimer: TLabel
+      Left = 9
+      Top = 5
+      Width = 34
+      Height = 15
+      Alignment = taRightJustify
+      Anchors = [akTop, akRight]
+      Caption = 'lbTimer'
+      Font.Color = clBlack
+      Font.Height = 11
+      Font.Name = 'tahoma'
+      Font.Pitch = fpVariable
+      Font.Style = []
+      ParentFont = False
+      Layout = tlCenter
     end
   end
   object tbTasks: TToolBar

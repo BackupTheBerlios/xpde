@@ -78,6 +78,7 @@ type
     N4: TMenuItem;
     OpenNetworkConnections1: TMenuItem;
     pnTray: TPanel;
+    lbTimer: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
@@ -96,6 +97,7 @@ type
     procedure TurnOffComputer1Click(Sender: TObject);
     procedure pnTimerDblClick(Sender: TObject);
     procedure Settings1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     menupaths: TStringList;
     procedure OnMenuItemClick(Sender: TObject);
@@ -224,7 +226,7 @@ end;
 
 procedure TTaskBar.TimerTimer(Sender: TObject);
 begin
-    pnTimer.Caption:=formatdatetime(sTimeFormat,now)+'     ';
+    lbTimer.Caption:=formatdatetime(sTimeFormat,now);
 end;
 
 procedure TTaskBar.btnStartMouseDown(Sender: TObject;
@@ -654,6 +656,13 @@ begin
     pnTray.width:=wi;
     pnTimer.invalidate;
     pnTimer.update;
+end;
+
+procedure TTaskBar.FormShow(Sender: TObject);
+begin
+    updatetraysize;
+    lbTimer.Font.size:=8;
+    lbTimer.Font.size:=9;
 end;
 
 initialization

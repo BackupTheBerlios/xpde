@@ -27,7 +27,8 @@ interface
 
 uses
   SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs, uXPAPI,
-  QStdCtrls, QMenus, QTypes, QExtCtrls, QComCtrls,uQXPComCtrls;
+  QStdCtrls, QMenus, QTypes, QExtCtrls, QComCtrls,uQXPComCtrls, QImgList,
+  uTrayIcon;
 
 type
   TWindowsTaskManagerDlg = class(TForm)
@@ -108,6 +109,13 @@ type
     Timer3: TTimer;
     GBox9: TGroupBox;
     Pan5: TPanel;
+    XPTrayIcon1: TXPTrayIcon;
+    ImageList1: TImageList;
+    PopupMenu1: TPopupMenu;
+    Open1: TMenuItem;
+    Changeimage1: TMenuItem;
+    About1: TMenuItem;
+    Close1: TMenuItem;
     procedure ExitTaskManager1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

@@ -135,8 +135,14 @@ implementation
 
 procedure TMousePropertiesDlg.CB1Click(Sender: TObject);
 begin
-    if CB1.Checked then imRight.bringtofront
-    else imLeft.BringToFront;
+    if CB1.Checked then begin
+        imRight.visible:=true;
+        imLeft.visible:=false;
+    end
+    else begin
+        imRight.visible:=false;
+        imLeft.visible:=true;
+    end;
 
     setButtonMapping(cb1.checked);
 end;
@@ -163,6 +169,7 @@ end;
 Procedure TMousePropertiesDlg.Fill_Components;
 Begin
         CB1.Checked:=left_handed;
+        CB1Click(cb1);
         TB1.Position:=dblclick_;
         CB2.Checked:=click_Lock;
         TB2.Position:=accel_;

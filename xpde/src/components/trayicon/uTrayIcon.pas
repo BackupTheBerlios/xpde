@@ -63,7 +63,6 @@ end;
 procedure TXPTrayIcon.addtotray;
 begin
     if not (csDesigning in componentstate) then begin
-        showmessage('adding to tray');
         XPIPC.broadcastMessage(XPDE_ADDTRAYICON,QWidget_winID(FPanel.handle));
     end;
 end;
@@ -92,8 +91,9 @@ destructor TXPTrayIcon.Destroy;
 begin
     removefromtray;
     if not (csDestroying in FPanel.ComponentState) then begin
-        FPanel.Parent:=nil;
+        FImage.Parent:=nil;
         FImage.free;
+        FPanel.Parent:=nil;
         FPanel.free;
     end;
     inherited;
@@ -106,12 +106,12 @@ begin
         if AComponent=FImageList then FImageList:=nil;
         if AComponent=FPopupMenu then FPopupMenu:=nil;        
     end;
+    inherited;
 end;
 
 procedure TXPTrayIcon.removefromtray;
 begin
     if not (csDesigning in componentstate) then begin
-        showmessage('removingfromtray');
         XPIPC.broadcastMessage(XPDE_REMOVETRAYICON,QWidget_winID(FPanel.handle));
     end;
 end;

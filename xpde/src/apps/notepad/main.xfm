@@ -12,12 +12,12 @@ object frmMain: TfrmMain
   Scaled = False
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
-  PixelsPerInch = 75
+  PixelsPerInch = 90
   object Memo: TMemo
     Left = 0
     Top = 0
     Width = 696
-    Height = 436
+    Height = 434
     Align = alClient
     ScrollBars = ssBoth
     TabOrder = 0
@@ -25,7 +25,7 @@ object frmMain: TfrmMain
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 436
+    Top = 434
     Width = 696
     Height = 19
     Panels = <>

@@ -446,7 +446,7 @@ begin
     reg := TRegistry.Create();
 
     try
-        if Reg.OpenKey('Software/XPde/Notepad', true) then begin
+        if Reg.OpenKey('Software/XPde/Notepad', false) then begin
             frmMain.Top := reg.Readinteger('Top');
             frmMain.Left := reg.Readinteger('Left');
             frmMain.Height := reg.Readinteger('Height');

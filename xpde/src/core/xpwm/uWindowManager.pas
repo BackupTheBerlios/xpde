@@ -1392,12 +1392,15 @@ begin
     {$endif}
     result:=TWMClient.create(w,self);
     if assigned(result) then begin
-//        writeln('CreateNewClient');
+//        writeln('clients.insert');
         clients.insert(0,result);
-//        writeln(clients.count);        
+//        writeln(clients.count);
         //Ensures the grabs are not overriden
+//        writeln('setupKeyboardGrab');
         setupKeyboardGrab;
+//        writeln('focus');
         result.focus;
+//        writeln('end createnewclient');
     end;
 end;
 
@@ -1926,24 +1929,20 @@ begin
     wRect:=Rect(0,0,0,0);
     FUnmapcounter:=0;
     FWindowManager:=AWindowManager;
-
     //Grab the three mouse buttons
 
       XGrabButton (FWindowManager.FDisplay, 1, 0, awindow, 0,
                      ButtonPressMask or ButtonReleaseMask or
                      PointerMotionMask or PointerMotionHintMask,
                      GrabModeSync, GrabModeAsync, 0, None);
-
       XGrabButton (FWindowManager.FDisplay, 2, 0, awindow, 0,
                      ButtonPressMask or ButtonReleaseMask or
                      PointerMotionMask or PointerMotionHintMask,
                      GrabModeSync, GrabModeAsync, 0, None);
-
       XGrabButton (FWindowManager.FDisplay, 3, 0, awindow, 0,
                      ButtonPressMask or ButtonReleaseMask or
                      PointerMotionMask or PointerMotionHintMask,
                      GrabModeSync, GrabModeAsync, 0, None);
-
     createFrame;
 end;
 
@@ -1963,18 +1962,14 @@ var
     co: TPoint;
 begin
     hasBorder;
-    
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iMETHOD,'TWMClient.createframe');
     {$endif}
     FWindowManager.grabDisplay;
 	hints := XGetWMHints(FWindowManager.FDisplay, xwindow);
-
     sizehints:=XAllocSizeHints();
     XGetWMNormalHints(FWindowManager.FDisplay, xwindow, sizehints, @dummy);
-
 	XGetWindowAttributes(FWindowManager.FDisplay, xwindow, @attr);
-
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iINFO,format('*****attr (%d,%d) %dx%d',[attr.x,attr.y,attr.width,attr.height]));
     {$endif}
@@ -1982,7 +1977,6 @@ begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iINFO,format('attr.override_redirect:%d',[attr.override_redirect]));
     {$endif}
-
 
     if (attr.override_redirect<>0) then begin
         {$ifdef DEBUG}
@@ -1993,13 +1987,11 @@ begin
     end;
 
     XSelectInput (FWindowManager.FDisplay, xwindow, PropertyChangeMask or EnterWindowMask or LeaveWindowMask or FocusChangeMask);
-
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iINFO,format('attr.border_width:%d',[attr.border_width]));
     {$endif}
     // Get rid of any borders
     if (attr.border_width <> 0) then XSetWindowBorderWidth (FWindowManager.FDisplay, xwindow, 0);
-
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iINFO,format('attr.win_gravity:%d',[attr.win_gravity]));
     {$endif}
@@ -2011,21 +2003,19 @@ begin
     end;
 
     updatetransientfor;
-
     getMapState;
 
 
 
     if isKDETray then begin
     	if (attr.map_state = IsViewable) then inc(FUnmapcounter,1);
-        XPTaskBar.addwindowtotray(xwindow)
+        XPTaskBar.addwindowtotray(xwindow);
     end
     else begin
-
         frame:=TWindowsClassic.create(application);
         (frame as TWindowsClassic).setclient(self);
 
-        if ((hints^.flags and IconPixmapHint)=IconPixmapHint) then begin
+        if (assigned(hints)) and ((hints^.flags and IconPixmapHint)=IconPixmapHint) then begin
             XpmCreateBufferFromPixmap(FWindowManager.Display,data, hints^.icon_pixmap,hints^.icon_mask,nil);
             str:=TMemoryStream.create;
             try
@@ -2037,7 +2027,6 @@ begin
             end;
         end;
         (frame as TWindowsClassic).setupIcons;
-
         {$ifdef DEBUG}
         xlibinterface.outputDebugString(iINFO,format('Frame(%d,%d)-(%d,%d)',[attr.x,attr.y, attr.width,attr.height]));
         {$endif}
@@ -2051,7 +2040,7 @@ begin
         writeln('width:'+inttostr(attr.width));
         writeln('height:'+inttostr(attr.height));
         writeln('----------');
-        }                
+        }
 
         frame.left:=attr.x-co.x;
         if frame.left<0 then frame.left:=0;
@@ -2077,7 +2066,6 @@ begin
             wRect:=frame.boundsrect;
         end;
 
-
         XGetWMName(FWindowManager.FDisplay, xwindow, @name);
 
         (frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
@@ -2085,12 +2073,10 @@ begin
         if framed then begin
             frame.show;
         end;
-        bringtofront;        
+        bringtofront;
 
         XPTaskbar.addtask(self);
-
         XPTaskbar.activatetask(self);
-
 
     	if (attr.map_state = IsViewable) then inc(FUnmapcounter,1)
         else begin
@@ -2103,10 +2089,8 @@ begin
     	end;
 
         if framed then reparent;
-
         //A bit of hack, shit!
         if (attr.width>=qforms.Screen.Width) then maximize;
-
 
         {$ifdef DEBUG}
         xlibinterface.outputDebugString(iINFO,format('Resizing window to (%d,%d)',[attr.width,attr.height]));
@@ -2119,7 +2103,6 @@ begin
 
 	if assigned(hints) then XFree(hints);
 	if assigned(sizehints) then XFree(sizehints);
-
 	XSync(FWindowManager.FDisplay, 0);
     FWindowManager.ungrabDisplay;
 

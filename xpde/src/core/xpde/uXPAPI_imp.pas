@@ -444,13 +444,28 @@ end;
 function TXPAPI.GetBaseDir: string;
 var
     reg: TRegistry;
+    apdir: string;
+    i: integer;
+    f: integer;
 begin
     reg:=TRegistry.create;
     try
         if reg.OpenKey('Software/XPde/System',false) then begin
             result:=reg.ReadString('basedir');
         end
-        else result:=copy(Appdir,1,length(appdir)-4);
+        else begin
+            f:=0;
+            apdir:=extractfilepath(application.exename);
+            for i:=length(apdir) downto 1 do begin
+                if apdir[i]='/' then begin
+                    inc(f);
+                    if (f=3) then begin
+                        result:=copy(apdir,1,i);
+                        break;
+                    end;
+                end;
+            end;
+        end;
     finally
         reg.free;
     end;

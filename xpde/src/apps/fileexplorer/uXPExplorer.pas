@@ -27,20 +27,21 @@ interface
 uses
     uExplorerAPI, QGraphics, QImgList ,
     Classes, uProgressDlg, QForms,
-    QDialogs, uQXPComCtrls;
+    QDialogs, uQXPComCtrls, QClipbrd;
 
 type
     TXPExplorer=class(TInterfacedObject, IXPExplorer)
     private
         roots: TInterfaceList;
         images: TImageList;
-        clipboard: TStringList;
+        sclipboard: TStringList;
     public
         function ClipboardEmpty:boolean;
         function getClipboard:TStringList;
         procedure clearclipboard;
         procedure copycurrentselectiontoclipboard;
         procedure copytoclipboard(const item:string); overload;
+        procedure setclipboard;
         procedure copytoclipboard(const items:TStrings); overload;
         function createNewProgressDlg(const title:string):TForm;
         procedure updateProgressDlg(const dialog:TForm; const progress: integer; const max: integer; const str: string; const status: string; const eta:string);
@@ -61,44 +62,58 @@ uses
 
 procedure TXPExplorer.clearclipboard;
 begin
-    clipboard.clear;
+    sclipboard.clear;
 end;
 
 procedure TXPExplorer.copytoclipboard(const item: string);
+var
+    m: TMemoryStream;
 begin
     clearclipboard;
-    clipboard.add(item);
+    sclipboard.add(item);
+    setclipboard;
 end;
 
 function TXPExplorer.ClipboardEmpty: boolean;
 begin
-    result:=(clipboard.count=0);
+    result:=not clipboard.Provides('text/strings');
 end;
 
 procedure TXPExplorer.copytoclipboard(const items: TStrings);
 begin
     clearclipboard;
-    clipboard.addstrings(items);
+    sclipboard.addstrings(items);
+    setclipboard;
 end;
 
 constructor TXPExplorer.Create;
 begin
     roots:=TInterfaceList.create;
     images:=TImageList.create(nil);
-    clipboard:=TStringList.create;
+    sclipboard:=TStringList.create;
 end;
 
 destructor TXPExplorer.Destroy;
 begin
-    clipboard.free;
+    sclipboard.free;
     images.free;
     roots.free;
     inherited;
 end;
 
 function TXPExplorer.getClipboard: TStringList;
+var
+    m: TMemoryStream;
 begin
-    result:=clipboard;
+    m:=TMemoryStream.create;
+    try
+        clipboard.GetFormat('text/strings',m);
+        m.position:=0;
+        sclipboard.LoadFromStream(m);
+        result:=sclipboard;
+    finally
+        m.free;
+    end;
 end;
 
 function TXPExplorer.getImageList: TImageList;
@@ -164,6 +179,20 @@ begin
         finally
             s.free;
         end;
+    end;
+end;
+
+procedure TXPExplorer.setclipboard;
+var
+    m: TMemoryStream;
+begin
+    m:=TMemoryStream.create;
+    try
+        sclipboard.SaveToStream(m);
+        m.position:=0;
+        clipboard.SetFormat('text/strings',m);
+    finally
+        m.free;
     end;
 end;
 

@@ -31,7 +31,7 @@ uses
   QStdCtrls, QComCtrls, uXPAPI,
   uExplorerAPI, QExtCtrls, Qt,
   QMenus, QImgList, QButtons,
-  uQXPComCtrls;
+  uQXPComCtrls, QClipbrd;
 
 type
   TExplorerForm = class(TForm)
@@ -112,6 +112,7 @@ type
     procedure pmItemPropertiesPopup(Sender: TObject);
     procedure About1Click(Sender: TObject);
     procedure Copy1Click(Sender: TObject);
+    procedure sbNextClick(Sender: TObject);
   private
     { Private declarations }
     FVerbs: TList;
@@ -700,6 +701,22 @@ procedure TExplorerForm.hideFolderPanel;
 begin
     pnFolders.visible:=false;
     spLeft.visible:=pnFolders.visible;
+end;
+
+procedure TExplorerForm.sbNextClick(Sender: TObject);
+var
+    s: TStringList;
+    i: longint;
+begin
+    s:=TStringList.create;
+    try
+        clipboard.SupportedFormats(s);
+        for i:=0 to s.count-1 do begin
+            showmessage(s[i]);
+        end;
+    finally
+        s.free;
+    end;
 end;
 
 end.

@@ -11,7 +11,7 @@
   <property name="base" location="${src}/xpde" />  
   <property name="sources" location="${base}/src" />
   <property name="libpath" value="${kylix}/bin:${build}" />
-  <property name="dcupath" value="${sources}/components/style:${sources}/components/menu:${sources}/components/commctrls:${sources}/components/toolsapi:${sources}/components/localization:${sources}/components/registry:${sources}/components/shellcontrols" />  
+  <property name="dcupath" value="${sources}/common:${sources}/components/style:${sources}/components/menu:${sources}/components/commctrls:${sources}/components/toolsapi:${sources}/components/localization:${sources}/components/registry:${sources}/components/shellcontrols" />  
   <property name="params" value="-B -E${build} -LE${build} -LN${units} -U${units}:${dcupath} -N${units}" />
 
   <target name="init">
@@ -28,16 +28,16 @@
   <mkdir dir="${build}"/>
   <mkdir dir="${units}"/>
 
-  <exec dir="${sources}/common" executable="${dcc}">
-	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
-	  <arg line="${params}" />
-	  <arg line="XPCommon.dpk" />
-  </exec>
-  
   <exec dir="${sources}/components/registry" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
 	  <arg line="${params}" />
 	  <arg line="XPRegistry.dpk" />
+  </exec>
+
+  <exec dir="${sources}/common" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
+	  <arg line="${params}" />
+	  <arg line="XPCommon.dpk" />
   </exec>  
   
   <exec dir="${sources}/components/toolsapi" executable="${dcc}">
@@ -99,6 +99,18 @@
 	  <arg line="${params}" />
 	  <arg line="networkstatus.dpr" />
   </exec>  
+
+  <exec dir="${sources}/apps/controlpanel" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="controlpanel.dpr" />
+  </exec>  
+
+  <exec dir="${sources}/apps/notepad" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="notepad.dpr" />
+  </exec>  
   
   <exec dir="${sources}/apps/networkproperties" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
@@ -117,7 +129,7 @@
 	  <arg line="${params}" />
 	  <arg line="desk.dpk" />
   </exec>  
-  
+
   <exec dir="${sources}/core/xpwm" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
 	  <arg line="${params}" />
@@ -134,6 +146,24 @@
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
 	  <arg line="${params}" />
 	  <arg line="DateTimeProps.dpr" />
+  </exec>  
+
+  <exec dir="${sources}/applets/mouse" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="mouse.dpr" />
+  </exec>  
+
+  <exec dir="${sources}/applets/keyboard" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="keyboard.dpr" />
+  </exec>  
+
+  <exec dir="${sources}/applets/regional" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${params}" />
+	  <arg line="regional.dpr" />
   </exec>  
   
   <exec dir="${sources}/applets/xpsu" executable="${dcc}">

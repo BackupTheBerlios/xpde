@@ -31,7 +31,7 @@ uses
   QComCtrls,Qt, QImgList,
   uXPAPI, uQXPComCtrls, QButtons,
   uXPColorSelector, uXPStyleConsts,
-  IdGlobal, uRegistry, uXPDictionary,
+  uRegistry, uXPDictionary,
   uXPLocalizator, uXPCommon, uXPStyle;
 
 type
@@ -121,6 +121,7 @@ type
     procedure cbPositionChange(Sender: TObject);
     procedure btnBrowseClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
+    procedure btnApplyClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -130,6 +131,7 @@ type
     function addimagetolist(const filename:string):TListItem;
     procedure loadPictureDir;
     procedure loadImage(const filename:string);
+    procedure storeproperties;
   end;
 
 type
@@ -364,31 +366,10 @@ begin
 end;
 
 procedure TDisplayPropertiesDlg.btnOkClick(Sender: TObject);
-var
-    reg: TRegistry;
 begin
-    //Aqui tengo que guardar toda la información en el registro
-        reg:=TRegistry.create;
-        try
-            if reg.OpenKey('Software/XPde/Desktop/Wallpaper',true) then begin
-                reg.WriteString('Background',lastimage);
-                reg.WriteInteger('Method',cbPosition.itemindex);
-            end;
-        finally
-            reg.Free;
-        end;
-
-        reg:=TRegistry.create;
-        try
-            if reg.OpenKey('Software/XPde/Desktop',true) then begin
-                    reg.WriteString('BackgroundColor',colortostring(csBackground.color));
-            end;
-        finally
-            reg.free;
-        end;
-
+    storeproperties;
+    XPDesktop.applychanges;
     close;
-    exitcode:=1;
 end;
 
 procedure TDisplayPropertiesDlg.lvPicturesCustomDrawItem(
@@ -473,7 +454,7 @@ begin
         destination:=odPictures.filename;
         if extractfilepath(odPictures.FileName)<>dir then begin
             destination:=dir+extractfilename(odPictures.filename);
-            copyfileto(odPictures.filename,destination);
+            copyfile(odPictures.filename,destination);
         end;
         ls:=addimagetolist(destination);
         if assigned(ls) then begin
@@ -505,6 +486,40 @@ procedure TDisplayPropertiesDlg.btnCancelClick(Sender: TObject);
 begin
     close;
 end;
+
+procedure TDisplayPropertiesDlg.storeproperties;
+var
+    reg: TRegistry;
+begin
+    //Aqui tengo que guardar toda la información en el registro
+        reg:=TRegistry.create;
+        try
+            if reg.OpenKey('Software/XPde/Desktop/Wallpaper',true) then begin
+                reg.WriteString('Background',lastimage);
+                reg.WriteInteger('Method',cbPosition.itemindex);
+            end;
+        finally
+            reg.Free;
+        end;
+
+        reg:=TRegistry.create;
+        try
+            if reg.OpenKey('Software/XPde/Desktop',true) then begin
+                    reg.WriteString('BackgroundColor',colortostring(csBackground.color));
+            end;
+        finally
+            reg.free;
+        end;
+end;
+
+procedure TDisplayPropertiesDlg.btnApplyClick(Sender: TObject);
+begin
+    storeproperties;
+    XPDesktop.applychanges;
+end;
+
+initialization
+    Application.CreateForm(TDisplayPropertiesDlg,DisplayPropertiesDlg);
 
 
 end.

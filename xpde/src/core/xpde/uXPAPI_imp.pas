@@ -160,7 +160,7 @@ end;
 
 function TXPAPI.GetAppDir: string;
 begin
-    result:=extractfilepath(application.exename);
+    result:=BaseDir+'bin/';
 end;
 
 function TXPAPI.GetBitmapsDir: string;

@@ -1,0 +1,57 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.02.5
+#------------------------------------------------------------------------------
+ifndef ROOT
+ROOT = /home/ttm/kylix3
+endif
+#------------------------------------------------------------------------------
+MAKE = make -$(MAKEFLAGS) -f$**
+DCC =dcc $<
+#------------------------------------------------------------------------------
+PROJECTS = bplXPCommon.so bplXPAPI.so bplXPMenus.so bplXPStyle.so \
+  bplXPRegistry.so bplXPLocalizator.so bplXPLocalizatorIDE.so bplXPColorSelect.so \
+  bplXPShellControls.so bplXPCommctrls.so desk.cpl XPwm XPde
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+XPde: XPde.dpr
+	$(DCC)
+
+bplXPColorSelect.so: ../../components/colorselect/XPColorSelect.dpk
+	$(DCC)
+
+bplXPLocalizator.so: ../../components/localization/XPLocalizator.dpk
+	$(DCC)
+
+bplXPLocalizatorIDE.so: ../../components/localization/XPLocalizatorIDE.dpk
+	$(DCC)
+
+bplXPMenus.so: ../../components/menu/XPMenus.dpk
+	$(DCC)
+
+bplXPRegistry.so: ../../components/registry/XPRegistry.dpk
+	$(DCC)
+
+bplXPShellControls.so: ../../components/shellcontrols/XPShellControls.dpk
+	$(DCC)
+
+bplXPStyle.so: ../../components/style/XPStyle.dpk
+	$(DCC)
+
+bplXPAPI.so: ../../components/toolsapi/XPAPI.dpk
+	$(DCC)
+
+bplXPCommctrls.so: ../../components/commctrls/XPCommctrls.dpk
+	$(DCC)
+
+XPwm: ../xpwm/XPwm.dpr
+	$(DCC)
+
+desk.cpl: ../../applets/desk/desk.dpr
+	$(DCC)
+
+bplXPCommon.so: ../../common/XPCommon.dpk
+	$(DCC)
+
+

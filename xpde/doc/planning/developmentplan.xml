@@ -1,0 +1,656 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd">
+<article>
+  <title>Development plan 3.0</title>
+
+  <articleinfo>
+    <date>2002/10/15</date>
+
+    <author>
+      <surname>León</surname>
+
+      <firstname>José</firstname>
+    </author>
+  </articleinfo>
+
+  <sect1>
+    <title>Purpose</title>
+
+    <para>The purpose of this project is to create a Windows XP desktop for
+    the Linux/x86 operating system. This means that any feature not
+    implemented on Windows XP is NOT going to be implemented on XPde, if you
+    want, you can create a fork, there is no problem about that. The reason is
+    I think there is no need for another desktop environment to compete with
+    KDE and Gnome, this project is developed only to help Windows users to
+    migrate Linux, nothing more.</para>
+  </sect1>
+
+  <sect1>
+    <title>miniFAQ</title>
+
+    <itemizedlist>
+      <listitem>
+        <para><emphasis>Q. Why are you using Kylix? It&#39;s not free!!!</emphasis></para>
+      </listitem>
+
+      <listitem>
+        <para>A. IMO, Kylix is the best Linux development tool created ever, I
+        started my career using C++, and right now, in my job I use mainly
+        PHP, but believe me, Kylix is not only a pascal based language,
+        it&#39;s a full development platform which a powerful class library
+        and a lightnning fast compiler. That&#39;s why I started this project
+        with Kylix, because is the best tool (IMO) for this job. I know
+        it&#39;s not free, but you can download Kylix Open Edition for free to
+        develop GPL projects like this, I invite you to give it a try, we will
+        take care this project is fully compilable with Kylix Open Edition.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>Q. Is going to be ported to another systems?</emphasis></para>
+      </listitem>
+
+      <listitem>
+        <para>A. No</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>Q. Why??!!!</emphasis></para>
+      </listitem>
+
+      <listitem>
+        <para>A. Because Kylix runs only on Linux/X86, it&#39;s not possible
+        to port this program to another systems if Borland doesn&#39;t port
+        Kylix first. And also, this project is focused on one thing, provide
+        Linux &#34;Desktop&#34; users with Windows XP interface.</para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis>Q. Why don&#39;t you join fwm, qvwm, @#!wm??!! They
+        are doing a great job! Look at this screenshots!</emphasis></para>
+      </listitem>
+
+      <listitem>
+        <para>A. Well, I have seen many window managers/desktops since I
+        started with Linux, none of them can be compared with this project.
+        I&#39;m not saying this project is best, I&#39;m saying it has a
+        different purpose and the most important, a complete different
+        technology.</para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
+
+  <sect1>
+    <title>Project</title>
+
+    <para><remark>Note:All the code you can read below, must be read as
+    pseudocode, is not intended to work and it&#39;s not tested at all,
+    it&#39;s just a guideline to future development.</remark></para>
+
+    <para>This project is divided in several subprojects, and each one is a
+    project by itself:</para>
+
+    <sect2>
+      <title>Controls and Components</title>
+
+      <para>A project like this requires total control over the way widgets
+      draw and behave, some things can be done by tweaking Kylix Qt interface
+      at low level, but there are another ones that require a new
+      control/component, this is the initial list of components we must
+      create:</para>
+
+      <sect3>
+        <title>XPToolsAPI</title>
+
+        <para>This is the main part of the desktop, is not exactly a
+        component, but it will be growing as the project grows, it&#39;s an
+        interface which provide methods to interact with the desktop. The
+        desktop and taskbar will be implemented also based on interfaces so it
+        will be easy create plug-ins and to scale the project.</para>
+      </sect3>
+
+      <sect3>
+        <title>XPStyle</title>
+
+        <para>Qt style to draw widgets in the same way XP does, this style
+        must extract all the paint information (colors, fonts, etc) from the
+        registry to be shared among all the programs and to allow external
+        configuration through themes/configuration dialogs. It must support
+        third-party styles working this way:</para>
+
+        <para>A style would be a compiled package, this package contain an
+        object which implements IXPStyle interface, in the initialization of
+        the package, it must register the style through the XPToolsAPI to
+        indicate is available to the system. At first, the styles will be
+        binary based, but as goodie, we can provide a style that reads an XML
+        file with drawing operations to perform. Metacity themes can be the
+        base to work on.</para>
+
+        <para>Example:</para>
+
+        <programlisting>IXPStyle=interface
+   [&#39;{88F313AD-73E0-D611-98A9-000244219999}&#39;]
+   procedure Configure;
+   procedure Draw3dRect(const ARect:TRect);
+   procedure Draw3dLine(const p1,p2:TPoint);
+   procedure DrawButton(ACanvas:TCanvas;AButton:TObject);
+   procedure DrawMenuItem(ACanvas:TCanvas;AItem:TMenuItem);
+   .......
+   .......
+   .......
+end;
+
+TMyStyle=class(TInterfacedObject, IXPStyle)
+   //Here goes all the methods!!
+end;
+
+initialization
+   XPToolsAPI.registerStyle(&#39;MyStyle&#39;, TMyStyle.create);</programlisting>
+
+        <para>The first style to be created must be the XP classic style and
+        the second the Luna XP style. Probably styles could be created with
+        Kylix C++, it would be nice to provide samples of both to encourage
+        theme designers create more.</para>
+
+        <para>As a goodie, we can create a style which reads from an XML file,
+        operations to perform on each drawing method.</para>
+
+        <para>As a super-super-goodie, we can incorporate interfaces to create
+        those themes using perl, php, python, etc, etc, etc.... ;-)</para>
+      </sect3>
+
+      <sect3>
+        <title>ShellTreeView &#38; ShellListView &#38; ShellCombobox</title>
+
+        <para>These controls are needed for the FileManager, for the Dialogs,
+        and for the Desktop itself, the goal is to provide the same
+        functionality that the Windows ones, shellicons, drag&#38;drop
+        capabilities, edit/cut/copy/paste/delete operations, multiselection,
+        etc. All the information about icons must be extracted from the
+        registry to be shared among all the programs. Each item could be right
+        clicked and must show a popup with the right operations to perform.
+        That operations will be stored on the registry and the XPde compatible
+        software could get profit from that (Zip extractors, Text editors,
+        etc). The ShellListView must be able to have a clientrect property to
+        simulate the space are going to use the tasksbars. The shellcombobox
+        is just a combo with the ability to show the system items (My
+        Documents, My Computer, and so on).</para>
+
+        <para>Before starting create this project we must define what is the
+        hierarchy of items (real and virtual) a user can explore. For example,
+        My Computer is not a real item, but My Documents it is, but a special
+        one, Network is an item which extracts all it&#39;s information from a
+        virtual file system. This must be designed carefully before start this
+        development. So all shell controls must be designed thinking on a
+        virtual file system, not in a file based file system, these components
+        will be the core part of the File Explorer. The XPToolsAPI could be
+        used to register new file systems to extend the explorer and dialogs
+        at the same time.</para>
+      </sect3>
+
+      <sect3>
+        <title>OutlookBar</title>
+
+        <para>A bar to show elements/tabs like Outlook, very useful for
+        Dialogs or for an Outlook clone, it would be good to look for any
+        freeware Delphi component to see if we can get some starting code.</para>
+      </sect3>
+
+      <sect3>
+        <title>Open/Save/Picture Dialog</title>
+
+        <para>Dialogs based on ShellListView and OutlookBar.</para>
+      </sect3>
+
+      <sect3>
+        <title>BrowseDialog</title>
+
+        <para>Dialog to browse for a directory</para>
+      </sect3>
+
+      <sect3>
+        <title>XPMainMenu &#38; XPPopupMenu</title>
+
+        <para>Menu components to draw/behave as XP and the most important, to
+        integrate XP dissolving and fading effects. The PopupMenu must be able
+        to create a menu like the XP start menu (multicolumn, custom items,
+        etc) and each menu item must have the ability to be right clicked to
+        show its properties menu.</para>
+      </sect3>
+
+      <sect3>
+        <title>XPTaskbar</title>
+
+        <para>This component must be able to behave as a taskbar and must be
+        able to work on any position (bottom, left, top, right). This
+        component must be able to hold several &#34;zones&#34;, each zone can
+        be another control, for example an starbutton, a toolbar to hold
+        active tasks, tray icon zone, etc. This component doesn&#39;t defines
+        zones by itself, it&#39;s just a container with some common taskbar
+        properties (align, always on top, auto-hide, etc).</para>
+      </sect3>
+    </sect2>
+
+    <sect2>
+      <title>Desktop</title>
+
+      <para>This project will use a ShellListView to show the user desktop
+      directory contents and allow them to interact with the desktop items
+      (files, folders, shortcuts, system items). It will also use the
+      XPPopupMenu component to show a list of common operations.</para>
+    </sect2>
+
+    <sect2>
+      <title>Window Manager &#38; Taskbar</title>
+
+      <para>Seems two very different tasks, but in fact, are very similar, the
+      Window Manager is responsible to &#34;map&#34; each client window inside
+      a frame to be moved/resized and the taskbar is responsible to
+      &#34;map&#34; each client window inside it to allow the user change the
+      active tasks, that&#39;s why are same program. </para>
+
+      <sect3>
+        <title>Window Manager</title>
+
+        <para>The Window Manager will be based on Metacity code (until further
+        change) because Metacity code it&#39;s based on Gtk and performs
+        little low level operations, so the code is very similar to the one we
+        must write, little Xlib stuff and a lot of high level code. We must
+        first create a version which reproduces the classic XP windows
+        interface in a native way, after that, we must incorporate themes.
+        This is done this way to let the classic theme be the fastest because
+        it will be native code and after that add theme support through XML or
+        any other way.</para>
+      </sect3>
+
+      <sect3>
+        <title>Taskbar</title>
+
+        <para>This part will use the XPTaskbar component. It will create a
+        Start button Zone, a Quick Launch zone, a Tasks zone, and a Trayicon
+        zone, it must be also able to add more zones like XP does (folders,
+        etc). It will also create the Start menu based on the XPPopupMenu
+        component, it will be responsible to read user&#39;s Start Menu
+        directory recursively searching for elements (folders, links, files),
+        etc. Also it will be responsible to hold the tray icon zone with the
+        system clock and allow to configure it. The taskbar can be configured
+        through a dialog and those settings will be stored on the registry.</para>
+      </sect3>
+    </sect2>
+
+    <sect2>
+      <title>File Manager &#38; Internet Browser</title>
+
+      <para>This two tasks are the same program, an Internet Browser is just a
+      File Manager module to browse Internet, so the File Manager must be
+      designed as a framework to hold modules to show a file system (nfs, smb,
+      ftp, webdav, zip, etc) or custom content (internet, special dirs, etc).
+      Basically it will use the Shell components to build a standard file
+      manager and after that it will start to load special modules to handle
+      smb, nfs, zip, ftp, webdav, internet, special dirs, and so on.</para>
+
+      <para>(here we must define the format of the virtual filesystem
+      interface, it must be very similar to ftp (getdircontents,
+      getcurrentdir, delete, etc))</para>
+
+      <para>Modules to create:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>nfs, a module to explore and interact with the Linux network</para>
+        </listitem>
+
+        <listitem>
+          <para>smb, a module to explore and interact with the SMB newtwork</para>
+        </listitem>
+
+        <listitem>
+          <para>ftp, a module to explore and interact with the ftp network</para>
+        </listitem>
+
+        <listitem>
+          <para>zip, a module to explore and interact with zip files</para>
+        </listitem>
+
+        <listitem>
+          <para>dav, a module to explore and interact with webdav servers</para>
+        </listitem>
+
+        <listitem>
+          <para>internet, a module to explore internet, must be based on an
+          existent browser (ie Mozilla or another) and must encapsulate the
+          browser allowing future changes in the interface</para>
+        </listitem>
+
+        <listitem>
+          <para>specialdirs, this module must be able to read a hidden file on
+          each dir to get user preferences about a directory, even load
+          another modules, for example, to prevent a user to enter a system
+          dir, or to show the fonts dir, or even to show control panel items.</para>
+        </listitem>
+
+        <listitem>
+          <para>All modules will have interfaces available to interact with
+          the File Manager (create buttons, create toolbars, menu items,
+          status bars)</para>
+        </listitem>
+      </itemizedlist>
+    </sect2>
+
+    <sect2>
+      <title>Control Panel</title>
+
+      <para>Control Panel is not a task by itself, it&#39;s just a special dir
+      which will hold several .cpl files, those files are executables to
+      control several aspects of the environment, each applet can have
+      different parts on it, for example, change screen resolution or select
+      the current theme.</para>
+
+      <para>Applets to create:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Accesibility</para>
+        </listitem>
+
+        <listitem>
+          <para>Add Hardware</para>
+        </listitem>
+
+        <listitem>
+          <para>Add or Remove Programs</para>
+        </listitem>
+
+        <listitem>
+          <para>Administrative Tools</para>
+        </listitem>
+
+        <listitem>
+          <para>Date and Time</para>
+        </listitem>
+
+        <listitem>
+          <para>Display</para>
+        </listitem>
+
+        <listitem>
+          <para>Folder Options</para>
+        </listitem>
+
+        <listitem>
+          <para>Fonts</para>
+        </listitem>
+
+        <listitem>
+          <para>Game Controllers</para>
+        </listitem>
+
+        <listitem>
+          <para>Internet Options</para>
+        </listitem>
+
+        <listitem>
+          <para>Keyboard</para>
+        </listitem>
+
+        <listitem>
+          <para>Mouse</para>
+        </listitem>
+
+        <listitem>
+          <para>Network Connections</para>
+        </listitem>
+
+        <listitem>
+          <para>Phone and Modem Options</para>
+        </listitem>
+
+        <listitem>
+          <para>Power Options</para>
+        </listitem>
+
+        <listitem>
+          <para>Printers and Faxes</para>
+        </listitem>
+
+        <listitem>
+          <para>Regional and Language Options</para>
+        </listitem>
+
+        <listitem>
+          <para>Scanners and Cameras</para>
+        </listitem>
+
+        <listitem>
+          <para>Scheduled Tasks</para>
+        </listitem>
+
+        <listitem>
+          <para>Sounds and Audio Devices</para>
+        </listitem>
+
+        <listitem>
+          <para>Speech</para>
+        </listitem>
+
+        <listitem>
+          <para>System</para>
+        </listitem>
+
+        <listitem>
+          <para>Taskbar and Start Menu</para>
+        </listitem>
+
+        <listitem>
+          <para>User Accounts</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Many of these applets will depend of the Linux distribution, so I
+      think we will need to create several versions for each Linux
+      distribution, we will see.</para>
+
+      <para>The icon from the applet will be extracted from a file with the
+      same name but with extension .png (another dimensions will be supported
+      also), for example:</para>
+
+      <programlisting>desk.cpl
+desk_48x48.png
+desk_32x32.png
+desk_16x16.png</programlisting>
+    </sect2>
+
+    <sect2>
+      <title>Themes</title>
+
+      <para>A theme will be composed of:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Visual Style</para>
+        </listitem>
+
+        <listitem>
+          <para>Window Manager Decorations</para>
+        </listitem>
+
+        <listitem>
+          <para>System Icons</para>
+        </listitem>
+
+        <listitem>
+          <para>System Sounds</para>
+        </listitem>
+
+        <listitem>
+          <para>System Cursors</para>
+        </listitem>
+
+        <listitem>
+          <para>Desktop Background</para>
+        </listitem>
+      </itemizedlist>
+    </sect2>
+
+    <sect2>
+      <title>Tools</title>
+
+      <para>This project is responsible to provide the applications installed
+      by default by Windows XP, here it&#39;s the list:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Accessories</para>
+
+          <itemizedlist>
+            <listitem>
+              <para>Accessibility</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para>Accessibility Wizard</para>
+                </listitem>
+
+                <listitem>
+                  <para>Magnifier</para>
+                </listitem>
+
+                <listitem>
+                  <para>Narrator</para>
+                </listitem>
+
+                <listitem>
+                  <para>On-Screen Keyboard</para>
+                </listitem>
+
+                <listitem>
+                  <para>Utility Manager</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+
+            <listitem>
+              <para>Communications</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para>HyperTerminal</para>
+                </listitem>
+
+                <listitem>
+                  <para>Network Connections</para>
+                </listitem>
+
+                <listitem>
+                  <para>Network Setup Wizard</para>
+                </listitem>
+
+                <listitem>
+                  <para>New Connection Wizard</para>
+                </listitem>
+
+                <listitem>
+                  <para>Remote Desktop Connection</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+
+            <listitem>
+              <para>Entertainment</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para>Sound Recorder</para>
+                </listitem>
+
+                <listitem>
+                  <para>Volume Control</para>
+                </listitem>
+
+                <listitem>
+                  <para>Media Player</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+
+            <listitem>
+              <para>System Tools</para>
+
+              <itemizedlist>
+                <listitem>
+                  <para>Backup</para>
+                </listitem>
+
+                <listitem>
+                  <para>Character Map</para>
+                </listitem>
+
+                <listitem>
+                  <para>Disk Cleanup</para>
+                </listitem>
+
+                <listitem>
+                  <para>Disk Defragmenter</para>
+                </listitem>
+
+                <listitem>
+                  <para>Files and Settings Transfer Wizard</para>
+                </listitem>
+
+                <listitem>
+                  <para>Scheduled Tasks</para>
+                </listitem>
+
+                <listitem>
+                  <para>System Information</para>
+                </listitem>
+
+                <listitem>
+                  <para>System restore</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+
+            <listitem>
+              <para>Address Book</para>
+            </listitem>
+
+            <listitem>
+              <para>Calculator</para>
+            </listitem>
+
+            <listitem>
+              <para>Command Prompt</para>
+            </listitem>
+
+            <listitem>
+              <para>Notepad</para>
+            </listitem>
+
+            <listitem>
+              <para>Paint</para>
+            </listitem>
+
+            <listitem>
+              <para>Tour XPde</para>
+            </listitem>
+
+            <listitem>
+              <para>WordPad</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+
+      <para>Of course, not all can be created or can work the same, but we
+      must try to create new applications or reuse existing ones. A priority
+      must be set here to develop first the most needed ones, like Notepad.</para>
+    </sect2>
+  </sect1>
+
+  <sect1>
+    <title>Project Timeline</title>
+
+    <para></para>
+  </sect1>
+</article>

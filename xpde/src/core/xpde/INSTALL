@@ -1,0 +1,62 @@
+INSTALL
+-------
+To install XPde, just follow these steps:
+
+1º DECOMPRESSING THE APPLICATION
+
+-Go to your home directory 
+
+-Type: tar xvzf xpdeXXXXXXXX.tar.gz (XXXXXXXX=release date)
+
+-This will create two directories
+ .xpde
+ xpde
+
+-A file called
+ .xinitrcXPDE
+
+-And two files called
+ metacity-theme-1.xml
+ metacity-theme-1-lastversion.xml
+
+Edit the file called .xinitrcXPDE and change this line:
+
+export LD_LIBRARY_PATH=/home/ttm/xpde
+
+to
+
+export LD_LIBRARY_PATH=/home/yourhomedir/xpde
+
+and copy the .xinitrcXPDE file to .xinitrc
+
+cp .xinitrcXPDE .xinitrc
+
+2º INSTALLING TRUE TYPE FONTS
+
+XPde uses the default Windows XP true type fonts, tahoma and MS Sans Serif, you can get those files from your current Windows installation or over the net, those files are not included with this package.
+
+When you get the fonts, copy them on the /xpde/fonts directory, in the same directory, there's a script called makefonts, execute it. This will create the files needed by XWindow to use them. On any modern Linux distribution, you just have to edit your /etc/X11/XF86Config file and add a FontPath line to it:
+
+ FontPath     "/home/yourhomedir/xpde/fonts"
+
+And restart your XWindow server.
+
+These fonts are copyrighted by Microsoft, so you must be licensed to use them.
+
+3º INSTALLING METACITY
+Right now I'm using metacity as window manager, but it will be removed on the next release.
+
+You can download the latest version from here:
+http://people.redhat.com/~hp/metacity/
+
+I included two metacity themes, because I don't know if you could install the last version of metacity. Check out the metacity documentation to know how to install it. Basically is to create a new dir under the metacity/themes directory called XP, copy the .xml theme file there and use the gconftool to change the default theme to XP.
+
+When the desktop is loaded for the first time, it will create a hidden dir called .registry which contains all the settings in a Windows Registry flavour.
+
+4º RUNNING XWINDOW
+
+You just have to start XWindow by using startx, this will start the metacity window manager, the XPde desktop environment and the XPwm window manager, which right now is only a task bar.
+
+This is the first release, I have tested it on SuSE 8.0 and Debian 3.0, I don't know if it will work on every Linux distribution, so please, don't hesitate to contact with me if you have any problems.
+
+Finally, check out the README file to know what works on this release.

@@ -1,0 +1,42 @@
+README
+------
+If you installed correctly XPde, you will feel it's a Windows XP with a KDE 3 theme, this is because I can't use any kind of Windows XP graphic, but it's really easy create your own Windows XP theme, check out the xpde/themes/default/32x32 directory to know what images you must create. I'm sure someone will release a Windows XP theme, but in any case, it won't be include on the website because I think it's not legal to use Windows XP icons and graphics.
+
+Now let's see what you can do with this release and what is reproduced:
+
+-The widgets used have been modified to look and behave "exactly" as windows ones
+-The system font is Tahoma
+-The system colors are the same as Windows XP
+-The mouse and hourglass cursor are the Windows XP default
+-Use the keyboard on the desktop, cursors to move and enter to open an item
+-Right click on the desktop to access some options
+-Select the properties option of the desktop menu to show a Desktop Properties dialog
+-Set the desktop background image selecting one of a list
+-Set the desktop background image browsing your hard disk
+-Set the desktop background color
+-Set how the background image is drawn on the desktop
+-The desktop can hold system icons (My Computer, My Documents, etc), ShortCuts, Folders and Files
+-Drag desktop icons to a new location
+-Desktop items are aligned to grid
+-As you drag desktop icons, they are transparent as in Windows XP
+-As you drag a desktop icon, icons under it are selected for operation
+-Create shortcuts on the desktop
+-Create folders on the desktop
+-Open a desktop item using double-click (the explorer is not ready yet, so this is useful to execute shortcuts)
+-Associate file extensions with programs using the Open With dialog, this dialog will show when you try to open a file, and the extension is not associated with a program
+-All the settings are stored in a .registry dir under your home dir (a registry editor is on the way)
+-Desktop locations are also stored on the registry
+-The hourglass cursor is set every time you open a program to show a busy state
+-Right click on a ShortCut to access some options
+-Select the properties option of the Shortcut menu to show a Shortcut properties dialog
+-Use the ShortCut properties dialog to change a shortcut icon
+-Use the ShortCut properties dialog to see some file properties
+-The taskbar holds the current tasks and highlights the selected one (this is not finished, it's really slow now)
+-You can click on any task to set the focus to it
+-The taskbar has a clock and a start button
+-The Start button popups the Start menu
+-The Start menu holds all the items and folders of a default Windows XP installation
+-Some of them are associated with common Linux executables
+-Use the Start | Run command to show the Run dialog and execute any application
+
+Bear in mind this is a beta project, it contain bugs and missing features, but I think is a good start.

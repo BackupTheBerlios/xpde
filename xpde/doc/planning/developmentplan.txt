@@ -1,0 +1,391 @@
+DEVELOPMENT PLAN 3.0 FINAL
+--------------------------
+
+PURPOSE
+-------
+The purpose of this project is to create a Windows XP desktop for the Linux/x86 operating system. This means that any feature not implemented on Windows XP is NOT going to be implemented on XPde, if you want, you can create a fork, there is no problem about that. The reason is I think there is no need for another desktop environment to compete with KDE and Gnome, this project is developed only to help Windows users to migrate Linux, nothing more.
+
+miniFAQ
+-------
+Q. Why are you using Kylix? It's not free!!!
+A. IMO, Kylix is the best Linux development tool created ever, I started my career using C++, and right now, in my job I use mainly PHP, but believe me, Kylix is not only a pascal based language, it's a full development platform which a powerful class library and a lightnning fast compiler. That's why I started this project with Kylix, because is the best tool (IMO) for this job. I know it's not free, but you can download Kylix Open Edition for free to develop GPL projects like this, I invite you to give it a try, we will take care this project is fully compilable with Kylix Open Edition.
+
+Q. Is going to be ported to another systems?
+A. No
+
+Q. Why??!!!
+A. Because Kylix runs on Linux/X86, it's not possible to port this program to another systems if Borland doesn't port Kylix first. And also, this project is focused on one thing, provide Linux "Desktop" users with Windows XP interface.
+
+Q. Why don't you join fwm, qvwm, @#!wm??!! They are doing a great job! Look at this screenshots!
+A. Well, I have seen many window managers/desktops since I started with Linux, none of them can be compared with this project. I'm not saying this project is best, I'm saying it has a different purpose and the most important, a complete different technology. 
+
+
+PROJECT
+-------
+This project is divided in several subprojects, and each one is a project by itself:
+
+Note:All the code you can read below, must be read as pseudocode, is not intended to work and it's not tested at all, it's just a guideline to future development.
+
+Controls and Components
+-----------------------
+A project like this requires total control over the way widgets draw and behave, some things can be done by tweaking Kylix Qt interface at low level, but there are another ones that require a new control/component, this is the initial list of components we must create:
+
+   XPToolsAPI
+     This is the main part of the desktop, is not exactly a component, but it will be growing as the project grows, it's an interface which provide methods to interact with the desktop. The desktop and taskbar will be implemented also based on interfaces so it will be easy create plug-ins and to scale the project.
+
+   XPStyle
+      Qt style to draw widgets in the same way XP does, this style must extract all the paint information (colors, fonts, etc) from the registry to be shared among all the programs and to allow external configuration through themes/configuration dialogs. It must support third-party styles working this way:
+   
+   A style would be a compiled package, this package contain an object which implements IXPStyle interface, in the initialization of the package, it must register the style through the XPToolsAPI to indicate is available to the system. At first, the styles will be binary based, but as goodie, we can provide a style that reads an XML file with drawing operations to perform. Metacity themes can be the base to work on.
+   Example:
+		IXPStyle=interface
+			['{88F313AD-73E0-D611-98A9-000244219999}']
+			procedure Configure;				//Shows a dialog box to configure the style
+			procedure Draw3dRect(const ARect:TRect);
+			procedure Draw3dLine(const p1,p2:TPoint);
+			procedure DrawButton(ACanvas:TCanvas;AButton:TObject);
+			procedure DrawMenuItem(ACanvas:TCanvas;AItem:TMenuItem);
+			.......
+			.......
+			.......
+		end;
+
+		TMyStyle=class(TInterfacedObject, IXPStyle)
+			//Here goes all the methods!!
+		end;
+
+		initialization
+			XPToolsAPI.registerStyle('MyStyle', TMyStyle.create);
+
+   The first style to be created must be the XP classic style and the second the Luna XP style. Probably styles could be created with Kylix C++, it would be nice to provide samples of both to encourage theme designers create more.
+	
+   As a goodie, we can create a style which reads from an XML file, operations to perform on each drawing method.
+
+   As a super-super-goodie, we can incorporate interfaces to create those themes using perl, php, python, etc, etc, etc.... ;-)
+
+
+   ShellTreeView & ShellListView & ShellCombobox
+      These controls are needed for the FileManager, for the Dialogs, and for the Desktop itself, the goal is to provide the same functionality that the Windows ones, shellicons, drag&drop capabilities, edit/cut/copy/paste/delete operations, multiselection, etc. All the information about icons must be extracted from the registry to be shared among all the programs. Each item could be right clicked and must show a popup with the right operations to perform. That operations will be stored on the registry and the XPde compatible software could get profit from that (Zip extractors, Text editors, etc). The ShellListView must be able to have a clientrect property to simulate the space are going to use the tasksbars. The shellcombobox is just a combo with the ability to show the system items (My Documents, My Computer, and so on). 
+      Before starting create this project we must define what is the hierarchy of items (real and virtual) a user can explore. For example, My Computer is not a real item, but My Documents it is, but a special one, Network is an item which extracts all it's information from a virtual file system. This must be designed carefully before start this development. So all shell controls must be designed thinking on a virtual file system, not in a file based file system, these components will be the core part of the File Explorer. The XPToolsAPI could be used to register new file systems to extend the explorer and dialogs at the same time.
+
+  OutlookBar
+      A bar to show elements/tabs like Outlook, very useful for Dialogs or for an Outlook clone, it would be good to look for any freeware Delphi component to see if we can get some starting code.
+
+  Open/Save/Picture Dialog
+      Dialogs based on ShellListView and OutlookBar
+
+  BrowseDialog
+      Dialog to browse for a directory
+
+  XPMainMenu & XPPopupMenu
+      Menu components to draw/behave as XP and the most important, to integrate XP dissolving and fading effects. The PopupMenu must be able to create a menu like the XP start menu (multicolumn, custom items, etc) and each menu item must have the ability to be right clicked to show its properties menu.
+
+  XPTaskbar
+      This component must be able to behave as a taskbar and must be able to work on any position (bottom, left, top, right). This component must be able to hold several "zones", each zone can be another control, for example an starbutton, a toolbar to hold active tasks, tray icon zone, etc. This component doesn't defines zones by itself, it's just a container with some common taskbar properties (align, always on top, auto-hide, etc).
+
+Desktop
+-------
+  This project will use a ShellListView to show the user desktop directory contents and allow them to interact with the desktop items (files, folders, shortcuts, system items). It will also use the XPPopupMenu component to show a list of common operations.
+
+Window Manager & Taskbar
+------------------------
+  Seems two very different tasks, but in fact, are very similar, the Window Manager is responsible to "map" each client window inside a frame to be moved/resized and the taskbar is responsible to "map" each client window inside it to allow the user change the active tasks, that's why are same program. 
+
+  Window Manager
+    The Window Manager will be based on Metacity code (until further change) because Metacity code it's based on Gtk and performs little low level operations, so the code is very similar to the one we must write, little Xlib stuff and a lot of high level code. We must first create a version which reproduces the classic XP windows interface in a native way, after that, we must incorporate themes. This is done this way to let the classic theme be the fastest because it will be native code and after that add theme support through XML or any other way.
+
+  Taskbar
+    This part will use the XPTaskbar component. It will create a Start button Zone, a Quick Launch zone, a Tasks zone, and a Trayicon zone, it must be also able to add more zones like XP does (folders, etc). It will also create the Start menu based on the XPPopupMenu component, it will be responsible to read user's Start Menu directory recursively searching for elements (folders, links, files), etc. Also it will be responsible to hold the tray icon zone with the system clock and allow to configure it. The taskbar can be configured through a dialog and those settings will be stored on the registry.
+
+File Manager & Internet Browser
+-------------------------------
+  This two tasks are the same program, an Internet Browser is just a File Manager module to browse Internet, so the File Manager must be designed as a framework to hold modules to show a file system (nfs, smb, ftp, webdav, zip, etc) or custom content (internet, special dirs, etc). Basically it will use the Shell components to build a standard file manager and after that it will start to load special modules to handle smb, nfs, zip, ftp, webdav, internet, special dirs, and so on.
+  (here we must define the format of the virtual filesystem interface, it must be very similar to ftp (getdircontents, getcurrentdir, delete, etc))
+  Modules to create:
+    nfs, a module to explore and interact with the Linux network
+    smb, a module to explore and interact with the SMB newtwork
+    ftp, a module to explore and interact with the ftp network
+    zip, a module to explore and interact with zip files
+    dav, a module to explore and interact with webdav servers
+    internet, a module to explore internet, must be based on an existent browser (ie Mozilla or another) and must encapsulate the browser allowing future changes in the interface
+    specialdirs, this module must be able to read a hidden file on each dir to get user preferences about a directory, even load another modules, for example, to prevent a user to enter a system dir, or to show the fonts dir, or even to show control panel items.
+
+All modules will have interfaces available to interact with the File Manager (create buttons, create toolbars, menu items, status bars)
+
+Control Panel
+-------------
+   Control Panel is not a task by itself, it's just a special dir which will hold several .cpl files, those files are executables to control several aspects of the environment, each applet can have different parts on it, for example, change screen resolution or select the current theme.
+
+   Applets to create:
+   Accesibility
+   Add Hardware
+   Add or Remove Programs
+   Administrative Tools
+   Date and Time
+   Display
+   Folder Options
+   Fonts
+   Game Controllers
+   Internet Options
+   Keyboard
+   Mouse
+   Network Connections
+   Phone and Modem Options
+   Power Options
+   Printers and Faxes
+   Regional and Language Options
+   Scanners and CamerProject Time Lineas
+   Scheduled Tasks
+   Sounds and Audio Devices
+   Speech
+   System
+   Taskbar and Start Menu
+   User Accounts
+
+Many of these applets will depend of the Linux distribution, so I think we will need to create several versions for each Linux distribution, we will see.
+
+The icon from the applet will be extracted from a file with the same name but with extension .png (another dimensions will be supported also), for example:
+
+desk.cpl
+desk_48x48.png
+desk_32x32.png
+desk_16x16.png
+
+Themes
+------
+A theme will be composed of
+  Visual Style
+  Window Manager Decorations
+  System Icons
+  System Sounds
+  System Cursors
+  Desktop Background
+
+Tools
+-----
+  This project is responsible to provide the applications installed by default by Windows XP, here it's the list:
+  Accessories
+      Accessibility
+         Accessibility Wizard
+         Magnifier
+         Narrator
+         On-Screen Keyboard
+         Utility Manager
+      Communications
+         HyperTerminal
+         Network Connections
+         Network Setup Wizard
+         New Connection Wizard
+         Remote Desktop Connection
+      Entertainment
+         Sound Recorder
+         Volume Control
+         Media Player
+      System Tools
+         Backup
+         Character Map
+         Disk Cleanup
+         Disk Defragmenter
+         Files and Settings Transfer Wizard
+         Scheduled Tasks
+         System Information
+         System restore
+      Address Book
+      Calculator
+      Command Prompt
+      Notepad
+      Paint
+      Tour XPde
+      WordPad
+
+Of course, not all can be created or can work the same, but we must try to create new applications or reuse existing ones. A priority must be set here to develop first the most needed ones, like Notepad.
+
+Project Timeline
+----------------
+When a project like this starts, it's very strange to get a lot of developers involved with it, and also Kylix is not the most used Linux development tool, so we must prioritize the most attractive features over the most functional ones, this will make more developers join, because they will see the development progress. So here is my proposed time lime, feel free to send me any comment and suggestion:
+
+--------------------------------------------------------
+The graphic design is a task is going to last all the project, that's why it's not included on any release, basically is composed by two main areas:
+-Icon Design
+ Create all kind of icons needed for the desktop and programs
+ 
+-Graphic Design
+ Create all images needed for the desktop and programs
+--------------------------------------------------------
+I think we must give first the ability to manage the files, and a File Manager is a key piece of an environment, when this part is finished, we could post a lot of new screenshots
+*ShellTreeView & ShellListView & ShellCombobox
+*File Manager
+--------------------------------------------------------
+To test the ShellListView component and to announce the desktop is full working, let's finish the desktop
+*Desktop
+--------------------------------------------------------
+To make all widgets look as Windows XP and to allow create applications with XP look, let's finish the XPStyle
+*XPStyle
+--------------------------------------------------------
+To remove dependencies of Metacity, to allow window manager integration with the desktop and full productivity with the environment:
+*Window Manager
+*XPTaskbar
+*Taskbar
+--------------------------------------------------------
+To allow configure the most common settings, finish this desktop applets:
+*Taskbar and Start Menu
+*User Accounts
+*Date and Time
+*Display
+*Regional and Language Options (this will be also used to change the language of the environment)
+--------------------------------------------------------
+RELEASE XPDE 0.2
+--------------------------------------------------------
+To start finishing most common user operations:
+*Internet Browser
+*nfs module
+*smb module
+*specialdirs module
+*Internet Options applet
+--------------------------------------------------------
+To give all applications complete Windows XP interface:
+*OutlookBar
+*Open/Save/Picture Dialog
+*BrowseDialog
+--------------------------------------------------------
+To include the most used tools:
+*Address Book
+*Calculator
+*Command Prompt
+*Notepad
+*Paint
+*WordPad
+--------------------------------------------------------
+RELEASE XPDE 0.3
+--------------------------------------------------------
+To include all Windows XP effects:
+*XPMainMenu & XPPopupMenu
+--------------------------------------------------------
+To release the screenshots everybody will be waiting:
+*Theme engine
+*Design LunaXP theme
+--------------------------------------------------------
+To give more exploring capabilities:
+*ftp module
+*zip module
+*dav module
+--------------------------------------------------------
+To add more applets to the control panel:
+*Folder Options
+*Fonts
+*Keyboard
+*Mouse
+*Volume Control
+--------------------------------------------------------
+RELEASE XPDE 0.4
+--------------------------------------------------------
+To add something that could be useful to novice user, but is dependant from the Linux distribution:
+*Network Connections
+*Network Setup Wizard
+*New Connection Wizard
+--------------------------------------------------------
+To add another really used tool
+*Media Player (based on mplayer??)
+--------------------------------------------------------
+*A two months or so beta phase, to test, bug fixing, releasing
+--------------------------------------------------------
+RELEASE XPDE 1.0
+--------------------------------------------------------
+The rest of tasks in no special order, I think is too early to plan this:
+*Add or Remove Programs
+*Accesibility
+*Add Hardware
+*Administrative Tools
+*Game Controllers
+*Network Connections
+*Phone and Modem Options
+*Power Options
+*Printers and Faxes
+*Scanners and Cameras
+*Scheduled Tasks
+*Sounds and Audio Devices
+*Speech
+*System
+*Accessibility Wizard
+*Magnifier
+*Narrator
+*On-Screen Keyboard
+*Utility Manager
+*HyperTerminal
+*Remote Desktop Connection
+*Sound Recorder
+*Backup
+*Character Map
+*Disk Cleanup
+*Disk Defragmenter
+*Files and Settings Transfer Wizard
+*Scheduled Tasks
+*System Information
+*System restore
+*Tour XPde
+
+Team 
+----
+Each member of the development team will have one function (or more), these are the positions to fill:
+
+Core developer
+  Someone fully committed to the project, with at least 10 hours free per week ;-)
+
+Project Manager
+  Someone willing to coordinate a team of developers and to be responsible of some task
+
+Developers
+  Someone willing to collaborate writting code
+  
+Doc Writer
+  Someone willing to write documentation (good english knowledge required)
+
+Translator
+  Someone willing to translate software/documentation to another language
+
+Tester
+  Someone willing to become part of the QA team
+
+Support Manager
+  Someone willing to support users on forums, mail lists, newsgroups and so on
+
+Graphic Designer
+  Someone willing to give a corporate image to the project by designing icons, graphics, etc
+
+Content Writer
+  Someone willing to evangelize the use of the environment by writting technical reviews, articles, or to be an editor on the website
+
+Release Manager
+  Someone reponsible to stick together all the project pieces to create a release, coordinate distribution, mirroring, etc
+
+Each member will get an *****@xpde.com pop address to be recognized as a member of the team and to be used exclusively for the development, unauthorized use could lead to get out of the team.
+
+The following tools will be used:
+-Kylix 3 (Delphi)
+-Kylix 3 (Builder), probably for the window manager
+-CVS to store sources and allow concurrent development, probably hosted on Sunsite.dk
+-DocBook for create documentation
+-XXE (http://www.xmlmind.com/xmleditor/), the best and easiest XML editor I know (developed in Java)
+-DCL (http://dcl.sourceforge.net), a ticketing software to manage group work
+-Mantis (http://mantisbt.sourceforce.net), a really good bugtracking software
+-Kylix documentor (still to find a good one, it must be ala doc-o-matic style (http://www.doc-o-matic.com/))
+-Kylix code formatter (still to find a good one) to make all sources look the same style
+-Kylix localizator (still to find a good one, and I'm afraid we must create our own)
+
+The following services has been setup and must be mantained:
+-Bugtracking (http://bugs.xpde.com)
+-Ticketing   (http://dcl.xpde.com)
+-IRC Channel (irc://irc.freenode.net/xpde)
+-Mail list   (mailto:development-subscribe@xpde.com)
+-Forums      (http://www.xpde.com/modules.php?name=Forums)
+-FAQ         (http://www.xpde.com/modules.php?name=FAQ)
+-CVS server  (cvs.xpde.berlios.de)
+
+The following services will be available in the future:
+-Newsgroup(s)
+
+After the next (and final) release of this development plan, I will release the coding guidelines and the development will start.
+
+To join the group, please, e-mail to info@xpde.com telling why do you want to become part of this project and what you want to do. If you think you don't know enough Kylix or your contribution is very small, don't hesitate to send me a mail, maybe your help is more valuable than you think.
+
+Regards.

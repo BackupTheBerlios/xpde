@@ -209,7 +209,7 @@ Const PRIO_NORMAL=10000;
 
 var tmpstr,tmpstr_stat:TStrings;
     is_all:boolean; // Show all procs ? This is for checkbox37
-    num_forks:string; // num of forks since boot
+    num_forks:string='0'; // num of forks since boot
     CPUuser_, CPUsyst_:longint;
     diff_user,diff_syst:longint;
     sysinf_:_sysinfo; // Libc sysinfo
@@ -580,7 +580,7 @@ end;
 
 Procedure TWindowsTaskManagerDlg.Read_stats(statsfile_:string);
 var i,j:integer;
-    sbuf,ss:string;
+    sbuf,ss,numfks:string;
     fi:Textfile;
     CPUuser, CPUnice, CPUsyst, CPUidle:longint;
 Begin
@@ -608,9 +608,16 @@ Begin
         CloseFile(fi);
 
         sbuf:=tmpstr_stat.Strings[0];
-        num_forks:=tmpstr_stat.Strings[tmpstr_stat.Count-1];
-        j:=pos(' ',num_forks);
-        num_forks:=copy(num_forks,j+1,length(num_forks));
+
+
+        for i:=0 to tmpstr_stat.Count-1 do begin
+        numfks:=tmpstr_stat.Strings[tmpstr_stat.Count-1];
+        j:=AnsiPos('processes',tmpstr_stat.Strings[i]);
+        if j<>0 then begin
+        j:=pos(' ',numfks);
+        num_forks:=copy(numfks,j+1,length(numfks));
+        End;
+        End;
 
         for i:=0 to 4 do begin
         j:=pos(' ',sbuf);

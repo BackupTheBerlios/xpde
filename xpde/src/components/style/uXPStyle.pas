@@ -169,7 +169,7 @@ begin
             if not (ob.empty) then begin
                 mh:=mRect.bottom-mRect.Top;
                 canvas.SetClipRect(types.rect(3,3,ob.width+3,mh-3));
-                canvas.draw(3,3-(ob.height-(mRect.Bottom-mRect.top)),ob);
+                canvas.draw(3,0-(ob.height-(mRect.Bottom-mRect.top)),ob);
                 canvas.SetClipRect(types.rect(0,0,16386,16386));
                 cRect.left:=cRect.left+ob.width;
             end;

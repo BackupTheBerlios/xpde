@@ -55,7 +55,7 @@ const
     gPROGRAMS='programs.png';
     gDOCUMENTS='documents.png';
     gSETTINGS='settings.png';
-    gSEARCH='search.png';
+    gSEARCH='findinfiles.png';
     gHELPANDSUPPORT='helpandsupport.png';
     gRUN='run.png';
     gLOGOFF='logoff.png';

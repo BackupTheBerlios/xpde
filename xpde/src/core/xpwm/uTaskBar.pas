@@ -155,14 +155,14 @@ begin
     imgProgramFolder.picture.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gPROGRAMFOLDER);
     startmenu.backbitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSTARTMENU);
     //*****************************************************
-    Programs1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gPROGRAMS);
-    Documents1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gDOCUMENTS);
-    Settings1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSETTINGS);
-    Search1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gSEARCH);
-    HelpandSupport1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gHELPANDSUPPORT);
-    Run1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gRUN);
-    LogOffAdministrator1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gLOGOFF);
-    TurnOffComputer1.bitmap.loadfromfile(XPAPI.getsysinfo(siSystemDir)+gTURNOFF);
+    Programs1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gPROGRAMS);
+    Documents1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gDOCUMENTS);
+    Settings1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gSETTINGS);
+    Search1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gSEARCH);
+    HelpandSupport1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gHELPANDSUPPORT);
+    Run1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gRUN);
+    LogOffAdministrator1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gLOGOFF);
+    TurnOffComputer1.bitmap.loadfromfile(XPAPI.getsysinfo(siMediumSystemDir)+gTURNOFF);
     //*****************************************************
 
 

@@ -45,6 +45,7 @@ type
         iRename: integer;
         iProperties: integer;
         FChildrenModified: TXPChildrenModified;
+        parent: TLocalFile;
     public
         procedure doChildrenModified(const op: TXPChildrenOperation; const item: IXPVirtualFile);
         function hasChild: boolean; virtual;
@@ -170,9 +171,19 @@ type
         procedure getVerbItems(const verbs:TStrings); override;
         constructor Create;
         destructor Destroy;override;
-        function getIcon: integer; override;        
+        function getIcon: integer; override;
     end;
 
+    TControlPanel=class(TFolder)
+    public
+        procedure getColumns(const columns:TStrings); override;
+        function getDisplayName: string; override;
+        constructor Create; reintroduce;
+        function getIcon: integer; override;
+        procedure getVerbItems(const verbs:TStrings); override;
+    end;
+
+    {
     TControlPanel=class(TLocalFile)
     private
         children: TInterfaceList;
@@ -185,6 +196,7 @@ type
         constructor Create;
         destructor Destroy;override;
     end;
+    }
 
     TMyNetworkPlaces=class(TLocalFile)
     private
@@ -475,12 +487,14 @@ begin
                     if (f.name='.') or (f.name='..') then continue;
                     if ((faDirectory and f.Attr)=faDirectory) then begin
                         b:=TFolder.Create(f.PathOnly+f.Name);
+                        b.parent:=Self;
                         b.time:=f.Time;
                         ss.AddObject(f.name,b)
                         //children.add(b);
                     end
                     else begin
                         a:=TFile.Create(f.PathOnly+f.Name);
+                        a.parent:=Self;
                         a.parentfolder:=self;
                         a.filesize:=f.Size;
                         size:=size+a.filesize;
@@ -635,19 +649,33 @@ var
     f: extended;
 begin
     columns.clear;
-
-    f:=round(filesize/1024);
-
-    //Format float it seems not to work here 
-    columns.add(formatfloat('#,##0',f)+' KB');
-    columns.add('File');
-
-    columns.add(datetimetostr(FileDateToDateTime(time)));
+    if assigned(parent) then begin
+        if (parent is TControlPanel) then begin
+            columns.add('descrip');
+        end;
+    end
+    else begin
+        f:=round(filesize/1024);
+        //Format float it seems not to work here
+        columns.add(formatfloat('#,##0',f)+' KB');
+        columns.add('File');
+        columns.add(datetimetostr(FileDateToDateTime(time)));
+    end;
 end;
 
 function TFile.getDisplayName: string;
 begin
-    result:=extractfilename(FPath);
+    if assigned(parent) then begin
+        if parent is TControlPanel then begin
+            result:=changefileext(extractfilename(FPath),'');
+        end
+        else begin
+            result:=extractfilename(FPath);
+        end;
+    end
+    else begin
+        result:=extractfilename(FPath);
+    end;
 end;
 
 function TFile.getIcon: integer;
@@ -770,6 +798,7 @@ end;
 
 constructor TLocalFile.Create;
 begin
+    parent:=nil;
     node:=nil;
     FChildrenModified:=nil;
 end;
@@ -994,18 +1023,14 @@ end;
 
 constructor TControlPanel.Create;
 begin
-
+    inherited Create(XPAPI.getsysinfo(siControlPanel));
 end;
 
-destructor TControlPanel.Destroy;
+procedure TControlPanel.getColumns(const columns: TStrings);
 begin
-
-  inherited;
-end;
-
-function TControlPanel.getChildren: TInterfaceList;
-begin
-    result:=nil;
+    columns.clear;
+    columns.add('Name');
+    columns.add('Description');
 end;
 
 function TControlPanel.getDisplayName: string;
@@ -1025,11 +1050,6 @@ begin
         add('Explore');
         add('Open');
     end;
-end;
-
-function TControlPanel.hasChild: boolean;
-begin
-    result:=true;
 end;
 
 { TUserDocuments }

@@ -37,6 +37,7 @@ type
     siUserDir,                                                                  //User directory
     siUsername,                                                                 //User name
     siMyDocuments,                                                              //User Documents
+    siControlPanel,                                                              //Control Panel    
     siMiscDir,                                                              //User Documents        
     siAppDir,                                                                   //Where the executable resides
     siAppsDir,                                                                  //Where the apps reside    

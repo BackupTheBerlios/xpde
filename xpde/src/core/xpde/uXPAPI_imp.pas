@@ -41,6 +41,7 @@ type
     function GetAppDir: string;
     function GetDesktopDir: string;
     function GetMyDocumentsDir: string;
+    function GetControlPanelDir: string;    
     function GetThemesDir: string;
     function GetCurrentThemeDir: string;
 
@@ -371,6 +372,7 @@ begin
     if not waitfor then aprog:=aprog+' &';
 
     setwaitcursor;
+    showmessage(aprog);    
     result:=Libc.system(PChar(aprog));
     if result = -1 then begin
         showmessage(format('Unable to execute %s',[prog]));
@@ -446,6 +448,7 @@ begin
         siFileTypesDir: result:=CurrentThemeDir+'/filetypes/';
         siSystemDir: result:=GetSystemDir;
         siMyDocuments: result:=GetMyDocumentsDir;
+        siControlPanel: result:=GetControlPanelDir;        
         siSmallSystemDir: result:=GetSmallSystemDir;
         siMediumSystemDir: result:=GetMediumSystemDir;
         siMiscDir: result:=GetMiscDir;
@@ -501,7 +504,9 @@ end;
 
 function TXPAPI.ReplaceSystemPaths(const path: string): string;
 begin
-    result:=StringReplace(path,'%APPS%',getAppsDir,[rfReplaceAll, rfIgnoreCase]);
+    result:=path;
+    result:=StringReplace(result,'%APPS%',getAppsDir,[rfReplaceAll, rfIgnoreCase]);
+    result:=StringReplace(result,'%APPLETS%',getAppletsDir,[rfReplaceAll, rfIgnoreCase]);
 end;
 
 procedure TXPAPI.showAboutDlg(const programname:string);
@@ -519,7 +524,7 @@ end;
 
 function TXPAPI.getVersionString: string;
 begin
-    result:='Version 0.2.1 (Build 20030226.xpdeclient)';
+    result:='Version 0.2.2 (Build 20030302.xpdeclient)';
 end;
 
 function TXPAPI.GetCurrentThemeSmallDir: string;
@@ -535,6 +540,12 @@ end;
 function TXPAPI.GetMyDocumentsDir: string;
 begin
     result:=userdir+'/.xpde/My Documents/';
+    if not fileexists(result) then forcedirectories(result);
+end;
+
+function TXPAPI.GetControlPanelDir: string;
+begin
+    result:=userdir+'/.xpde/Control Panel/';
     if not fileexists(result) then forcedirectories(result);
 end;
 

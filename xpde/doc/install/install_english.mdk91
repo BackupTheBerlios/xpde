@@ -1,0 +1,117 @@
+Introduction
+------------
+This document describes the process to install XPde in Mandrake 9.1, it has been written using a default setup. It applies to XPde 0.4.0.
+
+Getting XPde
+------------
+To get XPde, go to:
+
+http://www.xpde.com/releases.php
+
+and pick up the latest release. You can download two different XPde archives. The first one includes all needed Kylix libraries (xpde-x.x.x-xxxxxxxx.tar.gz) and the second one does not (xpde-x.x.x-nolibs-xxxxxxxx.tar.gz). If you have already installed a previous version of XPde or Kylix 3 there is no need to download the full version.
+
+To download it, you can use your browser, or you can use wget, which is included in most distros:
+
+$ wget http://www.xpde.com/releases/xpde-X.X.X-XXXXXXXX.tar.gz
+
+Installing XPde
+---------------
+Open a console and change the current directory to the location you downloaded the tar.gz distribution:
+
+$ cd /path/to/xpde.archive.tar.gz
+
+Now, decompress and extract the contents of the archive using this command:
+
+$ tar xvzf xpde-X.X.X-XXXXXXXX.tar.gz
+
+This will create a subdirectory called xpde-X.X.X, change to it:
+
+$ cd xpde-X.X.X
+
+And now, you need to become root to perform the first installation part:
+
+$ su
+Password: ENTER_HERE_YOUR_ROOT_PASSWORD
+
+And then, you need to execute the install script:
+
+# ./install.sh
+
+This script creates a directory called /opt/xpde, if you want to erase XPde from your system, you simply need to delete this directory.
+
+Setting up the default environment
+----------------------------------
+[This step will be removed in a near future]
+
+To setup the default environment for each user, you need to execute another script, but this time, as the user is going to use XPde. So you can use Ctrl+D or the exit command to return to the previous user, or issue a su command, for example:
+
+# su korben
+
+Where korben is the user you want to allow use XPde.
+
+Now, change the directory again to xpde-X.X.X and perform this command:
+
+$ ./setup.sh
+
+This script creates an .xpde subdirectory on your home directory which holds your account information.
+
+Setting up the display manager
+------------------------------
+[This part will be automated soon]
+To allow you to choose XPde from your display manager, you need to perform some additional steps, which depend on your distro and the display manager you are using, in RedHat 9.0, by default, you use GDM.
+
+Become root using the su command
+
+$ su
+Password: ENTER_HERE_YOUR_ROOT_PASSWORD
+
+And change the current dir to the XPde bin directory:
+
+# cd /opt/xpde/bin
+
+Now copy the file xinitrcDEFAULT from the source directory:
+
+# cp /home/korben/xpde-X.X.X/xinitrcDEFAULT .
+
+And now, rename it and make it executable:
+
+# mv xinitrcDEFAULT xpde
+# chmod +x xpde
+
+And make a soft link to this file on your /usr/local/bin
+
+# ln -s /opt/xpde/bin/xpde /usr/local/bin/XPde
+
+And to setup the entry on yor display manager, you need to create a file which specifies all the data needs the display manager to load XPde. You can use your favourite editor, or use vi, which is included on every Linux distro:
+
+# vi /etc/X11/wmsession.d/08XPde
+
+Press i to start typing and type this:
+
+NAME=XPde
+EXEC=/usr/local/bin/XPde
+DESC=XPde Desktop Environment
+SCRIPT:
+exec /usr/local/bin/XPde
+
+And press :wq and Enter to write the file and exit the editor. 
+
+Reboot your system for changes to take effect.
+
+Running XPde
+------------
+When the display manager is loaded, select XPde from the session list, select it and log in as the user you configured in the previous step.
+
+You should see XPde running, if not, check all the previous steps.
+
+
+
+
+
+
+
+
+
+
+
+

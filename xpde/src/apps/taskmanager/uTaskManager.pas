@@ -79,6 +79,8 @@ type
     Timer1: TTimer;
     TreeView2: TTreeView;
     RefreshNow1: TMenuItem;
+    Help1: TMenuItem;
+    AboutTaskManager1: TMenuItem;
     procedure ExitTaskManager1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -89,12 +91,15 @@ type
     procedure Button1Click(Sender: TObject);
     procedure RefreshNow1Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
+    procedure AboutTaskManager1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure NewTaskRun1Click(Sender: TObject);
   private
-    Procedure Fill_Applications;
-    Procedure Fill_Processes;    
     Procedure Get_PIDS_Apps(cmdline:string);
     { Private declarations }
   public
+    Procedure Fill_Applications;
+    Procedure Fill_Processes;
     { Public declarations }
   end;
 
@@ -102,7 +107,7 @@ var
   WindowsTaskManagerDlg: TWindowsTaskManagerDlg;
 
 implementation
-uses Libc;
+uses Libc, uAboutTaskManager, uCreateNewTask;
 
 Const PRIO_NORMAL=10000;
       PRIO_HIGH=5000;
@@ -117,7 +122,7 @@ var tmpstr:TStrings;
 
 function _get_tmp_fname:String;
 begin
-  Result:=FormatDateTime('XPdeTaskManager.hh.mm.ss.ms',Now)+
+  Result:='/tmp/'+FormatDateTime('XPdeTaskManager.hh.mm.ss.ms',Now)+
     Format('.%d.%d.%d',[Random($FFFF),Random($FFFF),Random($FFFF)]);
 end;
 
@@ -371,14 +376,35 @@ Timer1.Enabled:=false;
 if MessageDlg('Kill selected tasks ?',mtConfirmation,[mbYes,mbNo],0,mbNo)=mrYes
 then begin
 i:=treeview2.Selected.AbsoluteIndex;
+try
 ss:=TreeView2.Items.Item[i].SubItems.Strings[3];
 cmd:='kill -SIGTERM '+ss; // ANY BETTER IDEA ?
 if Libc.system(PChar(cmd))<>0 then
 raise Exception.Create('Cannot kill process PID '+ss+' !');
+except
+raise Exception.Create('You must select process !');
+End;
 end;
 Fill_Processes;
 // Back timer
 Timer1.Enabled:=true;
 End;
+
+procedure TWindowsTaskManagerDlg.AboutTaskManager1Click(Sender: TObject);
+begin
+AboutTaskManagerDlg:=TAboutTaskManagerDlg.Create(self);
+AboutTaskManagerDlg.ShowModal;
+end;
+
+procedure TWindowsTaskManagerDlg.Button3Click(Sender: TObject);
+begin
+CreateNewTaskDlg:=TCreateNewTaskDlg.Create(Application);
+CreateNewTaskDlg.Show;
+end;
+
+procedure TWindowsTaskManagerDlg.NewTaskRun1Click(Sender: TObject);
+begin
+Button3Click(Sender);
+end;
 
 end.

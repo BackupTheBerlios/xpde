@@ -211,6 +211,23 @@ uses uWMFrame;
 
 
 //******************************************************************************
+
+function listtostrr(const str:string):string;
+// there is bug with uXPapi listtostr
+var
+    kk,ii:integer;
+    s:String;
+begin
+    s:=str;
+    for ii:=1 to length(str) do begin
+            kk:=pos(#27,s);
+            if kk<>0 then begin
+                Delete(s,kk,3);
+            End;
+    End;
+    Result:=s;
+end;
+
 procedure handleSignal(signo:integer);
 begin
 
@@ -951,7 +968,7 @@ begin
         if assigned(c) then begin
             XGetWMName(FDisplay, xwindow, @name);
             if assigned(c.frame) then begin
-                (c.frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
+                (c.frame as TWindowsClassic).setTitle(listtostrr(PChar(name.value)));
             end;
             XPTaskBar.updatetask(c);
         end
@@ -2071,7 +2088,7 @@ begin
 
         XGetWMName(FWindowManager.FDisplay, xwindow, @name);
 
-        (frame as TWindowsClassic).setTitle(listtostr(PChar(name.value)));
+        (frame as TWindowsClassic).setTitle(listtostrr(PChar(name.value)));
 
         if framed then begin
             frame.show;

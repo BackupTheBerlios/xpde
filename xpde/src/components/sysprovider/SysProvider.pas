@@ -74,6 +74,8 @@ type PUsbInfo=PUsbInfo_;
      PNoDupsPciInfo=PNoDups_Pci_Info;
      TCpuInfo=TCpuInfo_;
      TDevicesList=devices_list;
+     TUname=T_Uname;
+     TDistClass=(diiUnknown,diiRedhat,diiMandrake,diiSuse,diiDebian,diiCaldera,diiiTurboLinux,diiConectiva,diiLindows,diiSlackware,dFreeBSD);
 
 type struct_iomem=record
         lo_:string;

@@ -77,6 +77,7 @@ type
         procedure install;
         function getDesktopClientRect:TRect;
         function findClient(w: Window):TWMClient;
+        function findTransientFor(transient: Window):TWMClient;
         function createNewClient(w:Window):TWMClient;
         procedure closeActiveWindow;
         //**********************************
@@ -113,6 +114,7 @@ type
     TWMClient=class(TInterfacedObject, IWMClient)
     private
         xwindow: Window;
+        xtransientfor: window;
         frame: TForm;
         wRect: TRect;
         inresize: boolean;
@@ -130,6 +132,7 @@ type
         procedure resize;
         procedure map;
         procedure focus;
+        procedure updatetransientfor;
         procedure createFrame;
         function hasBorder:boolean;
         procedure getIcons;
@@ -1476,6 +1479,30 @@ begin
     result:=clist;
 end;
 
+function TXPWindowManager.findTransientFor(transient: Window): TWMClient;
+var
+    i:longint;
+    c: TWMClient;
+begin
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iINFO,'Finding transient for window '+xlibinterface.formatwindow(transient));
+    {$endif}
+    result:=nil;
+    for i:=0 to clients.count-1 do begin
+        c:=clients[i];
+        if (c.xtransientfor=transient) then begin
+            result:=c;
+            break;
+        end;
+    end;
+    {$ifdef DEBUG}
+    if assigned(result) then xlibinterface.outputDebugString(iINFO,'Transient found for window '+xlibinterface.formatWindow(transient))
+    else begin
+        xlibinterface.outputDebugString(iWARNING,'Transient NOT found for window '+xlibinterface.formatWindow(transient))
+    end;
+    {$endif}
+end;
+
 { TWMClient }
 
 function send_xmessage(w:Window;a:Atom;x:Atom):integer;
@@ -1493,22 +1520,36 @@ begin
 end;
 
 procedure TWMClient.activate(restore:boolean=true);
+var
+    tf: TWMClient;
 begin
-    if (restore) then begin
-        if FWindowState=wsMinimized then self.restore;
+    tf:=FWindowManager.findTransientFor(xwindow);
+
+    if assigned(tf) then begin
+        bringtofront;
+        tf.activate(restore);
+    end
+    else begin
+        if (restore) then begin
+            if FWindowState=wsMinimized then self.restore;
+        end;
+        FWindowManager.ActiveClient:=self;
+        updateactivestate;
+        XPTaskbar.activatetask(self);
+        if (xtransientfor<>None) then begin
+            tf:=FWindowManager.findClient(xtransientfor);
+            if assigned(tf) then tf.bringtofront;
+        end;
+        bringtofront;
+        focus;
+        //This causes Delphi to raise a "Call to an OS function failed"
+        //It's due because the IDE tries to maximize the editor window
+        //FIXIT!!!
+        //Way to reproduce:
+        //Save the default desktop with the editor window maximized (F5)
+        //The editor window must be in MAXIMIZED STATE!!!
+        sendsyntheticConfigureNotify;
     end;
-    FWindowManager.ActiveClient:=self;
-    updateactivestate;
-    XPTaskbar.activatetask(self);
-    bringtofront;
-    focus;
-    //This causes Delphi to raise a "Call to an OS function failed"
-    //It's due because the IDE tries to maximize the editor window
-    //FIXIT!!!
-    //Way to reproduce:
-    //Save the default desktop with the editor window maximized (F5)
-    //The editor window must be in MAXIMIZED STATE!!!
-    sendsyntheticConfigureNotify;
 end;
 
 procedure TWMClient.beginresize;
@@ -1897,6 +1938,8 @@ begin
 
       XChangeWindowAttributes (FWindowManager.FDisplay, xwindow, CWWinGravity, @attrs);
     end;
+
+    updatetransientfor;
 
 
 
@@ -2461,6 +2504,29 @@ begin
     if assigned(frame) then begin
         (frame as TWindowsClassic).updateactivestate;
     end;
+end;
+
+procedure TWMClient.updatetransientfor;
+var
+    w: window;
+begin
+  w := None;
+  XGetTransientForHint (FWindowManager.Display, xwindow, @w);
+  xtransientfor := w;
+
+  {
+  window->transient_parent_is_root_window =
+    window->xtransient_for == window->screen->xroot;
+    }
+
+    {$ifdef DEBUG}
+    if (xtransientfor<>None) then begin
+        xlibinterface.outputDebugString(iINFO,format('Window [%s] is transient for [%s]',[xlibinterface.formatwindow(xwindow),xlibinterface.formatwindow(w)]));
+    end
+    else begin
+        xlibinterface.outputDebugString(iINFO,format('Window is not transient [%s]',[xlibinterface.formatwindow(xwindow)]));
+    end;
+    {$endif}
 end;
 
 { TXLibInterface }

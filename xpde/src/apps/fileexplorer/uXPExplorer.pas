@@ -25,7 +25,8 @@ unit uXPExplorer;
 interface
 
 uses
-    uExplorerAPI, QGraphics, QImgList,Classes;
+    uExplorerAPI, QGraphics, QImgList ,
+    Classes, uProgressDlg, QForms;
 
 type
     TXPExplorer=class(TInterfacedObject, IXPExplorer)
@@ -38,7 +39,8 @@ type
         function getClipboard:TStringList;
         procedure clearclipboard;
         procedure copytoclipboard(const item:string); overload;
-        procedure copytoclipboard(const items:TStrings); overload;        
+        procedure copytoclipboard(const items:TStrings); overload;
+        function createNewProgressDlg(const title:string):TForm;
         function registerImage(const bmp: TBitmap):integer;
         procedure registerRootItem(item:IXPVirtualFile);
         function getImageList: TImageList;
@@ -114,6 +116,12 @@ end;
 procedure TXPExplorer.registerRootItem(item: IXPVirtualFile);
 begin
     roots.add(item);    
+end;
+
+function TXPExplorer.createNewProgressDlg(const title: string): TForm;
+begin
+    result:=TProgressDlg.create(application);
+    result.caption:=title;
 end;
 
 initialization

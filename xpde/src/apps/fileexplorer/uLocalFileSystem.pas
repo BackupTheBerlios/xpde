@@ -26,7 +26,8 @@ interface
 
 uses
     Classes, SysUtils, QGraphics,
-    uExplorerAPI, QDialogs, uXPAPI;
+    uExplorerAPI, QDialogs, uXPAPI,
+    QForms;
 
 type
 
@@ -43,6 +44,7 @@ type
         iDelete: integer;
         iRename: integer;
         iProperties: integer;
+        copydlg: TForm;
     public
         function hasChild: boolean; virtual;
         function getChildren: TInterfaceList; virtual;
@@ -612,7 +614,8 @@ begin
     end;
 
     if verb=iPaste then begin
-        showmessage('ok');
+        copydlg:=XPExplorer.createNewProgressDlg('Copying....');
+        copydlg.show;
     end;
 end;
 

@@ -25,7 +25,8 @@ unit uExplorerAPI;
 interface
 
 uses
-    Classes, QGraphics, QImgList;
+    Classes, QGraphics, QImgList,
+    QForms;
 
 type
     IXPVirtualFile=interface
@@ -63,6 +64,7 @@ type
         procedure clearclipboard;
         procedure copytoclipboard(const item:string); overload;
         procedure copytoclipboard(const items:TStrings); overload;
+        function createNewProgressDlg(const title:string):TForm;
     end;
 
 var

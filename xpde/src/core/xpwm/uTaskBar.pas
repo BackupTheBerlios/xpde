@@ -34,8 +34,7 @@ uses
   uXPStyleConsts, Qt, QActnList,
   uQXPComCtrls, 
   uXPPopupMenu,
-  uXPAPI, uLNKFile, uXPStyle, 
-  uXPDictionary;
+  uXPAPI, uLNKFile, uXPStyle;
 
 type
   TTaskBar = class(TForm)

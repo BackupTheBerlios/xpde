@@ -31,7 +31,7 @@ uses
   QComCtrls,Qt, QImgList,
   uXPAPI, uQXPComCtrls, QButtons,
   uXPColorSelector, uXPStyleConsts,
-  uRegistry, uXPDictionary, uXPIPC,
+  uRegistry, uXPIPC,
   uXPCommon, uXPStyle;
 
 type

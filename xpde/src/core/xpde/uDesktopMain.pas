@@ -33,8 +33,7 @@ uses
   uXPAPI, uXPStyleConsts, uRegistry,
   uXPAPI_imp, uLNKFile, uCreateShortcut,
   uMouseAPI, uLNKProperties, Qt,
-  uXPDictionary, uXPStyle,
-  uXPdeconsts, uXPIPC;
+  uXPStyle, uXPdeconsts, uXPIPC;
 
 type
   TMainForm = class(TForm)

@@ -20,7 +20,7 @@
 { Boston, MA 02111-1307, USA.                                                 }
 {                                                                             }
 { *************************************************************************** }
-// This unit specified the interface to the API it's available to every part of the desktop
+// This unit specifies the interface to the API it's available to every part of the desktop
 unit uXPAPI;
 
 
@@ -46,39 +46,41 @@ type
 
     IWMClient=interface
     ['{8225D62E-CEE8-D611-927C-000244219999}']
-        function getWindow: TWindow;
-        function getTitle: string;
-        function getIcon: TBitmap;
-        procedure setWindow(value:TWindow);
-        procedure setTitle(value:string);
-        procedure setIcon(value:TBitmap);
-        procedure close;
+        procedure focus;
+        procedure minimize;
         procedure maximize;
-        procedure show;
+        procedure restore;
+        procedure close;
         procedure bringtofront;
+        procedure updateactivestate;
+        function isactive:boolean;
+        procedure activate;
+        function getTitle: string;
+        function getWindow: Window;
     end;
 
     IWMFrame=interface
     ['{ACBEF30D-B7EA-D611-9252-000244219999}']
     end;
 
+    TXPDesktopCustomize=procedure;
+
     IXPDesktop=interface
     ['{BCE03A86-A6E6-D611-9051-000244219999}']
+        procedure registerCustomizeProcedure(const proc: TXPDesktopCustomize);
         procedure customize;
         procedure applychanges;
         procedure addDebugMessage(const msg:string);
         function GetClientArea:TRect;
     end;
 
-    IXPWindowManager=interface
-    ['{12C4C48B-A6E6-D611-9051-000244219999}']
-        procedure setup;
-    end;
-
     IXPTaskBar=interface
     ['{7E36AA90-A6E6-D611-9051-000244219999}']
-        procedure addtask(task:IWMClient);
-        procedure removetask(task:IWMClient);
+        procedure addtask(const task:IWMClient);
+        procedure activatetask(const task:IWMClient);
+        procedure removetask(const task:IWMClient);
+        function getRect:TRect;
+        procedure bringtofront;
     end;
 
     //XP API interface
@@ -99,7 +101,6 @@ type
 var
     XPAPI:IXPAPI=nil;                                                           //Global API variable
     XPDesktop:IXPDesktop=nil;                                                   //Global Desktop variable
-    XPWindowManager:IXPWindowManager=nil;                                       //Global WindowManager variable
     XPTaskBar:IXPTaskBar=nil;                                                   //Global TaskBar variable
 
 implementation

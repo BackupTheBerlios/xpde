@@ -27,7 +27,9 @@ unit uXPAPI;
 
 interface
 
-uses Classes, QExtCtrls, QForms, SysUtils, QGraphics, Qt;
+uses Classes, QExtCtrls, QForms,
+     SysUtils, QGraphics, Types, Qt,
+     XLib;
 
 type
     //System Info
@@ -42,18 +44,41 @@ type
     siSystemDir,                                                                //System icons directory
     siApplicationsDir);                                                         //Application icons directory
 
+    IWMClient=interface
+    ['{8225D62E-CEE8-D611-927C-000244219999}']
+        function getWindow: TWindow;
+        function getTitle: string;
+        function getIcon: TBitmap;
+        procedure setWindow(value:TWindow);
+        procedure setTitle(value:string);
+        procedure setIcon(value:TBitmap);
+        procedure close;
+        procedure maximize;
+        procedure show;
+        procedure bringtofront;
+    end;
+
+    IWMFrame=interface
+    ['{ACBEF30D-B7EA-D611-9252-000244219999}']
+    end;
+
     IXPDesktop=interface
     ['{BCE03A86-A6E6-D611-9051-000244219999}']
         procedure customize;
         procedure applychanges;
+        procedure addDebugMessage(const msg:string);
+        function GetClientArea:TRect;
     end;
 
     IXPWindowManager=interface
     ['{12C4C48B-A6E6-D611-9051-000244219999}']
+        procedure setup;
     end;
 
     IXPTaskBar=interface
     ['{7E36AA90-A6E6-D611-9051-000244219999}']
+        procedure addtask(task:IWMClient);
+        procedure removetask(task:IWMClient);
     end;
 
     //XP API interface
@@ -68,6 +93,7 @@ type
         function getExecutable(ext:string):string;                              //Returns the executable (if any) associated with a document
         function ShellExecute(const prog:string;waitfor:boolean):integer;       //Executes a program
         function getSysInfo(const info: TSysInfo):string;                       //Return system information
+        procedure OutputDebugString(const str:string);
     end;
 
 var

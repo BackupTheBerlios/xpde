@@ -30,6 +30,7 @@ requires
   visualclx;
 
 contains
-  uXPCommon in 'uXPCommon.pas';
+  uXPCommon in 'uXPCommon.pas',
+  distro in 'distro.pas';
 
 end.

@@ -20,7 +20,6 @@ mkdir "/opt/xpde/themes"
 cp -r themes/default /opt/xpde/themes
 cp -r doc/* /opt/xpde/share/doc
 cp *.so* /opt/xpde/bin
-cp startXPde /opt/xpde/bin
 cp XPde /opt/xpde/bin
 cp XPwm /opt/xpde/bin
 cp stub.sh /opt/xpde/bin

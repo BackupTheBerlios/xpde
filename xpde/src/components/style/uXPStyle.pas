@@ -489,7 +489,7 @@ begin
             if sbcSlider in controls then begin
 
                 slideRect:=rect;
-                slideRect.left:=slideRect.left+16;
+                slideRect.left:=slideRect.left+buttonsize;
                 slideRect.right:=rect.left+sliderstart;
                 brush.color:=clWhite;
                 brush.style:=bsSolid;
@@ -500,7 +500,7 @@ begin
 
                 slideRect:=rect;
                 slideRect.left:=rect.left+sliderstart+sliderlength;
-                slideRect.right:=rect.right-16;
+                slideRect.right:=rect.right-buttonsize;
 
                 brush.color:=clWhite;
                 brush.style:=bsSolid;
@@ -519,32 +519,32 @@ begin
             if sbcSubButton in controls then begin
                 x:=rect.left;
                 y:=rect.top;
-                w:=x+16;
-                h:=y+16;
+                w:=x+buttonsize;
+                h:=y+buttonsize;
                 brush.color:=dclBtnFace;
                 fillrect(types.rect(x,y,w,h));
                 down:=(downcontrol=sbcSubButton);
                 r3d(canvas,types.rect(x,y,w,h),down);
-                if not down then canvas.Draw(x+5,y+4,toLeft)
-                else canvas.Draw(x+6,y+5,toLeft);
+                if not down then canvas.Draw(x+6,y+5,toLeft)
+                else canvas.Draw(x+7,y+6,toLeft);
             end;
             if sbcAddButton in controls then begin
-                x:=rect.right-16;
+                x:=rect.right-buttonsize;
                 y:=rect.top;
-                w:=x+16;
-                h:=y+16;
+                w:=x+buttonsize;
+                h:=y+buttonsize;
                 brush.color:=dclBtnFace;
                 fillrect(types.rect(x,y,w,h));
                 down:=(downcontrol=sbcAddButton);
                 r3d(canvas,types.rect(x,y,w,h),down);
-                if not down then canvas.Draw(x+6,y+4,toRight)
-                else canvas.Draw(x+7,y+5,toRight);
+                if not down then canvas.Draw(x+7,y+5,toRight)
+                else canvas.Draw(x+8,y+6,toRight);
             end;
         end;
         Orientation_Vertical: begin
             if sbcSlider in controls then begin
                 slideRect:=rect;
-                slideRect.top:=slideRect.top+16;
+                slideRect.top:=slideRect.top+buttonsize;
                 slideRect.bottom:=rect.top+sliderstart;
                 brush.color:=clWhite;
                 brush.style:=bsSolid;
@@ -555,7 +555,7 @@ begin
 
                 slideRect:=rect;
                 slideRect.top:=rect.top+sliderstart+sliderlength;
-                slideRect.bottom:=rect.bottom-16;
+                slideRect.bottom:=rect.bottom-buttonsize;
                 brush.color:=clWhite;
                 brush.style:=bsSolid;
                 fillrect(slideRect);
@@ -573,26 +573,26 @@ begin
             if sbcSubButton in controls then begin
                 x:=rect.left;
                 y:=rect.top;
-                w:=x+16;
-                h:=y+16;
+                w:=x+buttonsize;
+                h:=y+buttonsize;
                 brush.color:=dclBtnFace;
                 fillrect(types.rect(x,y,w,h));
                 down:=(downcontrol=sbcSubButton);
                 r3d(canvas,types.rect(x,y,w,h),down);
-                if not down then canvas.Draw(x+5,y+6,toTop)
-                else canvas.Draw(x+6,y+7,toTop);
+                if not down then canvas.Draw(x+6,y+7,toTop)
+                else canvas.Draw(x+7,y+8,toTop);
             end;
             if sbcAddButton in controls then begin
                 x:=rect.left;
-                y:=rect.bottom-16;
-                w:=x+16;
-                h:=y+16;
+                y:=rect.bottom-buttonsize;
+                w:=x+buttonsize;
+                h:=y+buttonsize;
                 brush.color:=dclBtnFace;
                 fillrect(types.rect(x,y,w,h));
                 down:=(downcontrol=sbcAddButton);
                 r3d(canvas,types.rect(x,y,w,h),down);
-                if not down then canvas.Draw(x+5,y+6,toBottom)
-                else canvas.Draw(x+6,y+7,toBottom);
+                if not down then canvas.Draw(x+6,y+7,toBottom)
+                else canvas.Draw(x+7,y+8,toBottom);
                 end;
             end;
         end;

@@ -132,7 +132,14 @@ begin
  dataStr.LoadFromFile(tmpfile);
  DeleteFile(tmpfile);
  result := copy(dataStr.Strings[1], 1,Pos(' ',dataStr.Strings[1]));
- dataStr.Destroy;
+ dataStr.Free;
+  { Please use right grammar for TStrings !
+Do not call Destroy directly in an application.
+Instead, call Free.
+Free verifies that the TStrings reference is not nil,
+and only then calls Destroy.
+        zeljko@xpde.com
+}
 end;
 
 function smbmount(const SmbRes : string): integer;
@@ -202,7 +209,14 @@ begin
     i := i+1;
   end;
  end;
- smbString.Destroy;
+ smbString.Free;
+  { Please use right grammar for TStrings !
+Do not call Destroy directly in an application.
+Instead, call Free.
+Free verifies that the TStrings reference is not nil,
+and only then calls Destroy.
+        zeljko@xpde.com
+}
 end;
 
 // Samba workgroup runtime
@@ -231,7 +245,14 @@ begin
     i := i+1;
    end;
  end;
- smbString.Destroy;
+ smbString.Free;
+  { Please use right grammar for TStrings !
+Do not call Destroy directly in an application.
+Instead, call Free.
+Free verifies that the TStrings reference is not nil,
+and only then calls Destroy.
+        zeljko@xpde.com
+}
 end;
 
 // Samba NETWORK workgroup runtime
@@ -263,7 +284,14 @@ begin
   end;
  end;
 //  else ShowMessage('Workgroup or domain not setting');
- smbString.Destroy;
+ smbString.Free;
+  { Please use right grammar for TStrings !
+Do not call Destroy directly in an application.
+Instead, call Free.
+Free verifies that the TStrings reference is not nil,
+and only then calls Destroy.
+        zeljko@xpde.com
+}
 end;
 
 end.

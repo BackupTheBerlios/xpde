@@ -1668,8 +1668,15 @@ begin
       Scan := true;
     end;
   result := true;
-  ResName.Destroy;
- end
+  ResName.Free;
+  { Please use right grammar for TStrings !
+Do not call Destroy directly in an application.
+Instead, call Free.
+Free verifies that the TStrings reference is not nil,
+and only then calls Destroy.
+        zeljko@xpde.com
+}
+ end;
 end;
 
 function TSmbServer.getChildren: TInterfaceList;
@@ -1747,7 +1754,14 @@ begin
      Scan := true;
     end;
   result := true;
-  SrvName.Destroy;
+  SrvName.Free;
+  { Please use right grammar for TStrings !
+Do not call Destroy directly in an application.
+Instead, call Free.
+Free verifies that the TStrings reference is not nil,
+and only then calls Destroy.
+        zeljko@xpde.com
+}
  end
 end;
 
@@ -1826,7 +1840,14 @@ begin
    Scan := true;
   end;
   result := true;
-  wgName.Destroy;
+  wgName.Free;
+  { Please use right grammar for TStrings !
+Do not call Destroy directly in an application.
+Instead, call Free.
+Free verifies that the TStrings reference is not nil,
+and only then calls Destroy.
+        zeljko@xpde.com
+}
  end;
 end;
 

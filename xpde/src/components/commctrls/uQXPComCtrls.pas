@@ -9972,12 +9972,11 @@ procedure TCustomListView.DoContextPopup(const MousePos: TPoint;
 var
   Item: TListItem;
 begin
-  if MultiSelect then
-  begin
+  if MultiSelect then begin
     Item := GetItemAt(MousePos.X, MousePos.Y);
-    if Item <> nil then
-    begin
-      QListView_clearSelection(Handle);
+    if Item <> nil then begin
+//Why the hell I want to clear the selection when I'm in multiselect mode and I do a right click?        
+//      QListView_clearSelection(Handle);
       Selected := Item;
     end;
   end;

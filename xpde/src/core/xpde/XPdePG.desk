@@ -10,19 +10,25 @@ File_7=SourceModule,'/home/ttm/xpde/src/core/xpwm/uActiveTasks.pas',0,1,75,25,93
 File_8=SourceModule,'/home/ttm/xpde/src/common/uXPPNG.pas',0,1,264,32,273,0,0
 
 [Modules]
-Module0=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
+Module0=/home/ttm/xpde/src/core/xpwm/uTurnOff.pas
 Module1=/home/ttm/xpde/src/apps/notepad/main.pas
-Module2=/home/ttm/xpde/src/core/xpde/XPde.dpr
-Count=3
+Module2=/home/ttm/xpde/src/core/xpwm/uTaskBar.pas
+Module3=/home/ttm/xpde/src/core/xpde/XPde.dpr
+Count=4
 EditWindowCount=1
 PackageWindowCount=9
 
-[/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
+[/home/ttm/xpde/src/core/xpwm/uTurnOff.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=0
+
+[/home/ttm/xpde/src/apps/notepad/main.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=1
 
-[/home/ttm/xpde/src/apps/notepad/main.pas]
+[/home/ttm/xpde/src/core/xpwm/uTaskBar.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=1
@@ -129,11 +135,12 @@ FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=3
-CurrentView=2
+ViewCount=4
+CurrentView=3
 View0=0
 View1=1
 View2=2
+View3=3
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -146,16 +153,16 @@ Height=753
 MaxLeft=1
 MaxTop=135
 MaxWidth=1286
-MaxHeight=828
+MaxHeight=833
 ClientWidth=1286
-ClientHeight=828
+ClientHeight=833
 LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=85
+BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
+BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
 
 [View0]
 Module=/home/ttm/xpde/src/core/xpde/XPde.dpr
@@ -175,6 +182,13 @@ LeftCol=1
 Module=/home/ttm/xpde/src/apps/notepad/main.pas
 CursorX=1
 CursorY=1
+TopLine=1
+LeftCol=1
+
+[View3]
+Module=/home/ttm/xpde/src/core/xpwm/uTurnOff.pas
+CursorX=31
+CursorY=8
 TopLine=1
 LeftCol=1
 
@@ -391,8 +405,8 @@ Count=0
 Create=1
 Visible=1
 State=0
-Left=7
-Top=51
+Left=4
+Top=46
 Width=1273
 Height=87
 MaxLeft=-1
@@ -402,10 +416,10 @@ ClientHeight=87
 
 [ProjectManager]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=373
-Top=395
+Left=369
+Top=372
 Width=535
 Height=368
 MaxLeft=-1
@@ -446,7 +460,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=Icon
+SelectedItem=Name
 ExpandedItems=
 HiddenCategories=
 
@@ -473,26 +487,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=728
+Height=745
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=728
+ClientHeight=745
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=1
+Visible=0
 State=0
-Left=12
-Top=0
-Width=1274
+Left=-2
+Top=-631
+Width=443
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=1274
+ClientWidth=443
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443
@@ -502,5 +516,5 @@ Dockable=1
 DockHostCount=0
 
 [ActiveProject]
-ActiveProject=12
+ActiveProject=23
 

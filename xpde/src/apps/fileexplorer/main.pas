@@ -1,3 +1,25 @@
+{ *************************************************************************** }
+{                                                                             }
+{ This file is part of the XPde project                                       }
+{                                                                             }
+{ Copyright (c) 2002 José León Serna <ttm@xpde.com>                           }
+{                                                                             }
+{ This program is free software; you can redistribute it and/or               }
+{ modify it under the terms of the GNU General Public                         }
+{ License as published by the Free Software Foundation; either                }
+{ version 2 of the License, or (at your option) any later version.            }
+{                                                                             }
+{ This program is distributed in the hope that it will be useful,             }
+{ but WITHOUT ANY WARRANTY; without even the implied warranty of              }
+{ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU           }
+{ General Public License for more details.                                    }
+{                                                                             }
+{ You should have received a copy of the GNU General Public License           }
+{ along with this program; see the file COPYING.  If not, write to            }
+{ the Free Software Foundation, Inc., 59 Temple Place - Suite 330,            }
+{ Boston, MA 02111-1307, USA.                                                 }
+{                                                                             }
+{ *************************************************************************** }
 unit main;
 
 interface
@@ -14,7 +36,7 @@ type
   TExplorerForm = class(TForm)
     StatusBar1: TStatusBar;
     lvItems: TListView;
-    Splitter1: TSplitter;
+    spLeft: TSplitter;
     MainMenu1: TMainMenu;
     File1: TMenuItem;
     Edit1: TMenuItem;
@@ -31,7 +53,7 @@ type
     SpeedButton2: TSpeedButton;
     SpeedButton3: TSpeedButton;
     SpeedButton4: TSpeedButton;
-    SpeedButton5: TSpeedButton;
+    sbFolders: TSpeedButton;
     SpeedButton6: TSpeedButton;
     SpeedButton7: TSpeedButton;
     SpeedButton8: TSpeedButton;
@@ -58,7 +80,7 @@ type
     Selectall1: TMenuItem;
     Invertselection1: TMenuItem;
     Folderoptions1: TMenuItem;
-    Panel1: TPanel;
+    pnFolders: TPanel;
     tvItems: TTreeView;
     Panel2: TPanel;
     pmProperties: TPopupMenu;
@@ -66,6 +88,7 @@ type
     miVerbs: TMenuItem;
     cbAddress: TComboBox;
     Panel3: TPanel;
+    pmItemProperties: TPopupMenu;
     procedure tvItemsExpanding(Sender: TObject; Node: TTreeNode;
       var AllowExpansion: Boolean);
     procedure tvItemsEditing(Sender: TObject; Node: TTreeNode;
@@ -75,9 +98,21 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure Close1Click(Sender: TObject);
+    procedure Expand1Click(Sender: TObject);
+    procedure pmPropertiesPopup(Sender: TObject);
+    procedure lvItemsEditing(Sender: TObject; Item: TListItem;
+      var AllowEdit: Boolean);
+    procedure lvItemsSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
+    procedure sbFoldersClick(Sender: TObject);
+    procedure lvItemsItemDoubleClick(Sender: TObject; Item: TListItem);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure pmItemPropertiesPopup(Sender: TObject);
   private
     { Private declarations }
     FVerbs: TList;
+    FItemVerbs: TList;
+    procedure ItemPropertiesClick(Sender: TObject);
   public
     { Public declarations }
     procedure updateall;
@@ -86,6 +121,7 @@ type
     procedure updatelistview(const item: IXPVirtualFile);
     procedure updatestatusbar(const item: IXPVirtualFile);
     procedure updatemenus(const item: IXPVirtualFile);
+    procedure updateitemsmenu(const item: IXPVirtualFile);
     constructor Create(AOwner:TComponent);override;
     destructor Destroy;override;
   end;
@@ -106,6 +142,7 @@ var
     p: TTreeNode;
 begin
     n:=tvItems.Items.AddChildObject(parent, item.getDisplayName, pointer(item));
+    item.setNode(n);
     n.ImageIndex:=item.getIcon;
     if item.hasChild then begin
         items:= item.getChildren;
@@ -113,6 +150,7 @@ begin
             for i:=0 to items.count-1 do begin
                 f:=(items[i] as IXPVirtualFile);
                 p:=tvItems.Items.AddChildObject(n, f.getDisplayName, pointer(f));
+                f.setNode(p);
                 p.ImageIndex:=f.getIcon;
                 tvItems.Items.AddChild(p,'dummy');
                 //if f.hasChild then populatenodes(n,f);
@@ -136,6 +174,7 @@ begin
             populatenodes(nil,f);
         end;
         tvItems.Items[0].Expand(false);
+        tvItems.Selected:=tvItems.Items[0];
     finally
         tvItems.Items.EndUpdate;
     end;
@@ -149,8 +188,23 @@ var
     l: TListItem;
     cols: TStringList;
     c: TListColumn;
-    k: integer;
     w: integer;
+    procedure addItem;
+    var
+        k: integer;
+    begin
+        l:=lvItems.Items.Add;
+        l.Data:=TObject(f);
+        f.getcolumndata(cols);
+        l.Caption:=f.getDisplayName;
+        l.SubItems.assign(cols);
+        for k:=0 to l.subitems.count-1 do begin
+            l.SubItemImages[k]:=-1;
+            w:=canvas.textwidth(l.subitems[k])+20;
+            if lvItems.Columns[k+1].Width<w then lvItems.Columns[k+1].Width:=w;
+        end;
+        l.ImageIndex:=f.getIcon;
+    end;
 begin
     lvItems.Items.BeginUpdate;
     cols:=TStringList.create;
@@ -167,20 +221,13 @@ begin
             items:= item.getChildren;
             if assigned(items) then begin
                 for i:=0 to items.count-1 do begin
-
                     f:=(items[i] as IXPVirtualFile);
+                    if f.hasChild then addItem;
+                end;
 
-                    l:=lvItems.Items.Add;
-                    f.getcolumndata(cols);
-                    l.Caption:=f.getDisplayName;
-                    l.SubItems.assign(cols);
-
-                    for k:=0 to l.subitems.count-1 do begin
-                        l.SubItemImages[k]:=-1;
-                        w:=canvas.textwidth(l.subitems[k])+20;
-                        if lvItems.Columns[k+1].Width<w then lvItems.Columns[k+1].Width:=w;
-                    end;
-                    l.ImageIndex:=f.getIcon;
+                for i:=0 to items.count-1 do begin
+                    f:=(items[i] as IXPVirtualFile);
+                    if not f.hasChild then addItem;
                 end;
             end;
         end;
@@ -227,6 +274,7 @@ begin
                 f:=(items[i] as IXPVirtualFile);
                 if (f.hasChild) then begin
                     p:=tvItems.Items.AddChildObject(parent, f.getDisplayName, pointer(f));
+                    f.setNode(p);
                     p.ImageIndex:=f.getIcon;
                     tvItems.Items.AddChildObject(p,'dummy',nil);
                 end;
@@ -341,9 +389,7 @@ begin
         end;
         item.getVerbItems(verbs);
 
-        if tvItems.Selected.Expanded then expand1.caption:='Collapse'
-        else expand1.caption:='Expand';
-        
+    
         for i:=0 to verbs.count-1 do begin
             m:=TMenuItem.create(self);
             m.Caption:=verbs[i];
@@ -366,12 +412,128 @@ constructor TExplorerForm.Create(AOwner: TComponent);
 begin
   inherited;
   FVerbs:=TList.create;
+  FItemVerbs:=TList.create;
 end;
 
 destructor TExplorerForm.Destroy;
 begin
+  FItemVerbs.free;
   FVerbs.free;
   inherited;
+end;
+
+procedure TExplorerForm.Expand1Click(Sender: TObject);
+begin
+    if tvitems.Selected.Expanded then tvItems.selected.Collapse(false)
+    else tvItems.selected.expand(false);
+end;
+
+procedure TExplorerForm.pmPropertiesPopup(Sender: TObject);
+begin
+    if assigned(tvItems.selected) then begin
+        if tvItems.Selected.Expanded then expand1.caption:='Collapse'
+        else expand1.caption:='Expand';
+    end
+    else begin
+        expand1.caption:='Expand';
+    end;
+end;
+
+procedure TExplorerForm.lvItemsEditing(Sender: TObject; Item: TListItem;
+  var AllowEdit: Boolean);
+begin
+    allowedit:=false;
+end;
+
+procedure TExplorerForm.lvItemsSelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
+var
+    f: IXPVirtualFile;
+begin
+    f:=IXPVirtualFile(item.data);
+    updateitemsmenu(f);
+end;
+
+procedure TExplorerForm.sbFoldersClick(Sender: TObject);
+begin
+    pnFolders.visible:=not sbFolders.down;
+    spLeft.visible:=pnFolders.visible;
+    spLeft.left:=pnFolders.BoundsRect.right;
+end;
+
+procedure TExplorerForm.lvItemsItemDoubleClick(Sender: TObject;
+  Item: TListItem);
+var
+    f: IXPVirtualFile;
+    n: TTreeNode;
+begin
+    tvItems.Selected.expand(false);
+    f:=IXPVirtualFile(item.data);
+    n:=f.getNode as TTreeNode;
+    if assigned(n) then begin
+        tvItems.selected:=n;
+        tvItems.Selected.MakeVisible;
+    end
+    else begin
+        f.doubleclick;
+    end;
+end;
+
+procedure TExplorerForm.SpeedButton3Click(Sender: TObject);
+begin
+    if (assigned(tvitems.selected)) then begin
+        if (assigned(tvitems.selected.parent)) then begin
+            tvItems.Selected:=tvItems.selected.Parent;
+        end;
+    end;
+end;
+
+procedure TExplorerForm.ItemPropertiesClick(Sender: TObject);
+var
+    f: IXPVirtualFile;
+begin
+    if assigned(lvItems.selected) then begin
+        f:=IXPVirtualFile(lvItems.selected.data);
+        f.executeVerb((sender as TMenuItem).tag);
+    end;
+end;
+
+procedure TExplorerForm.updateitemsmenu(const item: IXPVirtualFile);
+var
+    itemverbs: TStringList;
+    i: longint;
+    m: TMenuItem;
+begin
+    itemverbs:=TStringList.create;
+    try
+        for i:=Fitemverbs.count-1 downto 0 do begin
+            m:=Fitemverbs[i];
+            Fitemverbs.delete(i);
+            m.free;
+        end;
+        item.getVerbItems(itemverbs);
+
+        for i:=itemverbs.count-1 downto 0 do begin
+            m:=TMenuItem.create(self);
+            m.Caption:=itemverbs[i];
+            Fitemverbs.add(m);
+            m.tag:=i;
+            m.OnClick:=ItemPropertiesClick;
+            pmItemProperties.Items.Insert(0,m);
+        end;
+    finally
+        itemverbs.free;
+    end;
+end;
+
+procedure TExplorerForm.pmItemPropertiesPopup(Sender: TObject);
+var
+    f: IXPVirtualFile;
+begin
+    if not assigned(lvItems.Selected) then begin
+        f:=IXPVirtualFile(tvItems.selected.data);
+        updateitemsmenu(f);
+    end;
 end;
 
 end.

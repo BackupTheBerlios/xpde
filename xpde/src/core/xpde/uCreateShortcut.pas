@@ -30,7 +30,7 @@ uses
   QForms, uXPStyleConsts, QDialogs,
   IniFiles, QStdCtrls, uXPAPI_imp,
   QComCtrls, QExtCtrls, uXPAPI,
-  uXPLocalizator, uXPdeconsts;
+  uXPdeconsts;
 
 type
   TCreateShortcutDlg = class(TForm)
@@ -56,7 +56,6 @@ type
         TabSheet3:TTabSheet;
         TabSheet1:TTabSheet;
     odItem: TOpenDialog;
-    XPLocalizator1: TXPLocalizator;
     procedure btnNextClick(Sender: TObject);
     procedure btnBackClick(Sender: TObject);
     procedure pcControlPageChanging(Sender: TObject; NewPage: TTabSheet;

@@ -29,7 +29,7 @@ uses
   QGraphics, QControls, QForms,
   uXPStyleConsts, QDialogs, QStdCtrls,
   uXPAPI, uXPAPI_imp, QComCtrls,
-  QImgList, uXPLocalizator, uXPdeconsts;
+  QImgList, uXPdeconsts;
 
 type
   TChangeIconDlg = class(TForm)
@@ -42,7 +42,6 @@ type
         Label1:TLabel;
     ivIcons: TIconView;
     images: TImageList;
-    XPLocalizator1: TXPLocalizator;
     procedure FormShow(Sender: TObject);
     procedure edDirectoryChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

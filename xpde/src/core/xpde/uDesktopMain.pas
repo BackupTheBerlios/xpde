@@ -33,7 +33,7 @@ uses
   uXPAPI, uXPStyleConsts, uRegistry,
   uXPAPI_imp, uLNKFile, uCreateShortcut,
   uMouseAPI, uLNKProperties, Qt,
-  uXPDictionary, uXPLocalizator, uXPStyle,
+  uXPDictionary, uXPStyle,
   uXPdeconsts, uXPIPC;
 
 type
@@ -75,8 +75,6 @@ type
     Delete1: TMenuItem;
     Rename1: TMenuItem;
     Properties2: TMenuItem;
-    XPDictionary: TXPDictionary;
-    XPLocalizator: TXPLocalizator;
     ListBox: TListBox;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);

@@ -31,7 +31,7 @@ uses
   uLNKFile, uQXPComCtrls, uXPStyleConsts,
   Classes, QForms, QDialogs,
   uChangeIcon, uSysListItem, Libc,
-  uXPLocalizator, uXPdeconsts;
+  uXPdeconsts;
 
 type
   TLNKPropertiesDlg = class(TForm)
@@ -98,7 +98,6 @@ type
     Bevel4: TBevel;
     Bevel5: TBevel;
     Bevel6: TBevel;
-    XPLocalizator1: TXPLocalizator;
     procedure btnOkClick(Sender: TObject);
     procedure btnChangeIconClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

@@ -32,7 +32,7 @@ uses
   uXPAPI, uQXPComCtrls, QButtons,
   uXPColorSelector, uXPStyleConsts,
   uRegistry, uXPDictionary, uXPIPC,
-  uXPLocalizator, uXPCommon, uXPStyle;
+  uXPCommon, uXPStyle;
 
 type
   TDisplayPropertiesDlg = class(TForm)
@@ -106,8 +106,6 @@ type
     pnColor: TPanel;
     imgBack: TImage;
     odPictures: TOpenDialog;
-    XPDictionary1: TXPDictionary;
-    XPLocalizator1: TXPLocalizator;
     procedure FormCreate(Sender: TObject);
     procedure lvPicturesSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);

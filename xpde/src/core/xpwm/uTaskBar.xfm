@@ -1,5 +1,5 @@
 object TaskBar: TTaskBar
-  Left = 263
+  Left = 266
   Top = 855
   ActiveControl = btnStart
   AutoScroll = False
@@ -1039,17 +1039,6 @@ object TaskBar: TTaskBar
     Height = 17
     Left = 376
     Top = 8
-  end
-  object XPDictionary1: TXPDictionary
-    Active = False
-    Left = 464
-    Top = 8
-  end
-  object XPLocalizator1: TXPLocalizator
-    Dictionary = XPDictionary1
-    Active = True
-    Left = 532
-    Top = 4
   end
   object propertiesmenu: TXPPopupMenu
     Left = 324

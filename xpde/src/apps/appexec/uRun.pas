@@ -28,7 +28,7 @@ uses
   SysUtils, Types, Classes,
   QGraphics, QControls, QForms,
   QDialogs, uXPStyleConsts, 
-  QStdCtrls, QExtCtrls, uXPAPI, uXPLocalizator, QMenus, QTypes,
+  QStdCtrls, QExtCtrls, uXPAPI, QMenus, QTypes,
   uXPPopupMenu;
 
 type
@@ -41,7 +41,6 @@ type
         Label2:TLabel;
         Label1:TLabel;
     Image1: TImage;
-    XPLocalizator1: TXPLocalizator;
     procedure btnOkClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

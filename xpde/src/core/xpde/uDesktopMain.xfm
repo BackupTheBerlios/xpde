@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 580
-  Top = 418
+  Left = 583
+  Top = 447
   Width = 587
   Height = 340
   BorderStyle = fbsNone
@@ -27,17 +27,6 @@ object MainForm: TMainForm
     ParentFont = False
     TabOrder = 0
     Visible = False
-  end
-  object XPDictionary: TXPDictionary
-    Active = False
-    Left = 456
-    Top = 32
-  end
-  object XPLocalizator: TXPLocalizator
-    Dictionary = XPDictionary
-    Active = True
-    Left = 552
-    Top = 128
   end
   object deskpopup: TXPPopupMenu
     AutoHotkeys = maManual

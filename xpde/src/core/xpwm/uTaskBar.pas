@@ -35,7 +35,7 @@ uses
   uQXPComCtrls, 
   uXPPopupMenu,
   uXPAPI, uLNKFile, uXPStyle, 
-  uXPLocalizator, uXPDictionary;
+  uXPDictionary;
 
 type
   TTaskBar = class(TForm)
@@ -59,8 +59,6 @@ type
     TurnOffComputer1: TMenuItem;
     imgProgramFolder: TImage;
     ImageList1: TImageList;
-    XPDictionary1: TXPDictionary;
-    XPLocalizator1: TXPLocalizator;
     propertiesmenu: TXPPopupMenu;
     Toolbars1: TMenuItem;
     N1: TMenuItem;

@@ -29,6 +29,7 @@ uses QForms,QGraphics,Types,
      Classes, SysUtils, QDialogs;
 
 
+function GetTrimmedText(const ACanvas:TCanvas; const text:string;const maxwidth:integer):string;
 procedure MergeBitmaps(source1,source2,target:TBitmap;dens:longint);
 procedure AlphaBitmap(source1,source2,target:TBitmap;dens:longint);
 procedure SelectedBitmap(source1,source2,target:TBitmap;dens:longint);
@@ -87,6 +88,24 @@ begin
     end;
 end;
 
+function GetTrimmedText(const ACanvas:TCanvas; const text:string;const maxwidth:integer):string;
+var
+    w: integer;
+    wc: widestring;
+    k: integer;
+begin
+    wc:=text;
+    k:=1;
+    w:=acanvas.TextWidth(wc);
+    while w>maxwidth do begin
+        wc:=copy(text,1,length(text)-k)+'...';
+        if wc='...' then break;
+        w:=acanvas.TextWidth(wc);
+        inc(k);
+    end;
+    result:=wc;
+end;
+
 procedure AlphaBitmap(source1,source2,target:TBitmap;dens:longint);
 var
     aEBX, aESI, aEDI, aESP, aEDX, Dens1, Dens2: Longint;
@@ -105,6 +124,7 @@ const
     Mask0101 = $00FF00FF;
     Mask1010 = $FF00FF00;
 begin
+{
     bmz:=TBitmap.create;
     bmf:=TBitmap.create;
     bmt:=TBitmap.create;
@@ -121,11 +141,11 @@ begin
 
     bmt.width:=source1.width;
     bmt.height:=source1.height;
+}
 
-
-    bmF.Assign(source1);
-    bmt.assign(source2);
-    bmZ.assign(bmf);
+    bmF:=source1;
+    bmt:=source2;
+    bmZ:=bmf;
 
     w:=bmz.width;
 
@@ -227,9 +247,11 @@ begin
         end;
         
         target.assign(bmf);
+        {
         bmz.free;
         bmf.free;
         bmt.free;
+        }
 end;
 
 

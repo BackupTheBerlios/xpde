@@ -3,7 +3,9 @@ unit main;
 interface
 
 uses
-  Sysutils, Types, Classes, Variants, QTypes, QGraphics, QControls, QForms,
+  Sysutils, Types, Classes,
+  Variants, QTypes, QGraphics,
+  QControls, QForms, uXPAPI,
   QDialogs, QStdCtrls, QMenus;
 
 type
@@ -161,7 +163,7 @@ end;
 
 procedure TMainForm.About1Click(Sender: TObject);
 begin
-ShowMessage('Notepad developed using Borland Kylix 3');
+    XPAPI.showaboutdlg('XPde Notepad');
 end;
 
 procedure TMainForm.CutMNUClick(Sender: TObject);

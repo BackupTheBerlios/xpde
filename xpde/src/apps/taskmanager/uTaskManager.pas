@@ -26,7 +26,7 @@ unit uTaskManager;
 interface
 
 uses
-  SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs,
+  SysUtils, Types, Classes, QGraphics, QControls, QForms, QDialogs, uXPAPI,
   QStdCtrls, QMenus, QTypes, QExtCtrls, QComCtrls,uQXPComCtrls;
 
 type
@@ -665,8 +665,9 @@ End;
 
 procedure TWindowsTaskManagerDlg.AboutTaskManager1Click(Sender: TObject);
 begin
-        AboutTaskManagerDlg:=TAboutTaskManagerDlg.Create(self);
-        AboutTaskManagerDlg.ShowModal;
+        XPAPI.showaboutdlg('XPde Task Manager');
+//        AboutTaskManagerDlg:=TAboutTaskManagerDlg.Create(self);
+//        AboutTaskManagerDlg.ShowModal;
 end;
 
 procedure TWindowsTaskManagerDlg.Button3Click(Sender: TObject);

@@ -28,7 +28,6 @@ uses
   QDialogs,
   uXPStyle,
   Main in 'Main.pas' {Form1},
-  uXPAPI_imp in 'uXPAPI_imp.pas',
   uFileFinder in 'uFileFinder.pas',
   SearchForm in 'SearchForm.pas' {FSearchForm},
   EdDword in 'EdDword.pas',
@@ -49,9 +48,9 @@ begin
   SetXPStyle(Application);
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TFSearchForm, FSearchForm);
-   Application.CreateForm(TEdDword1, EdDword1);
-   Application.CreateForm(TFrmEditString, FrmEditString);
-   Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TEdDword1, EdDword1);
+  Application.CreateForm(TFrmEditString, FrmEditString);
+  Application.CreateForm(TForm2, Form2);
   Application.Run;
   end else
   begin

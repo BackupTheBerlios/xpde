@@ -30,7 +30,7 @@ uses
   QControls, QForms, QDialogs,
   QStdCtrls, QButtons, QMenus,
   QTypes, Libc, QExtCtrls,
-  QComCtrls, QImgList,
+  QComCtrls, QImgList, uXPIPC,
   uXPStyleConsts, Qt, QActnList,
   uQXPComCtrls, 
   uXPPopupMenu,
@@ -71,13 +71,13 @@ type
     LocktheTaskbar1: TMenuItem;
     Properties1: TMenuItem;
     emptytask: TImage;
-    imNet: TImage;
     netpopup: TXPPopupMenu;
     Disable1: TMenuItem;
     Status1: TMenuItem;
     Repair1: TMenuItem;
     N4: TMenuItem;
     OpenNetworkConnections1: TMenuItem;
+    pnTray: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
@@ -105,11 +105,15 @@ type
     { Public declarations }
     activetasks:TList;                                                          //TToolButton list for active tasks
     //Menu related functions
+    procedure IPCNotification(Sender:TObject; msg:integer; data: integer);
     procedure ShowMenu;
     procedure updatetaskswidth;
     procedure createTask(const client:IWMClient);
     procedure activatetask(const task:IWMClient);
     procedure removeTask(const client:IWMClient);
+    procedure updatetraysize;
+    procedure addwindowtotray(const w: window);
+    procedure removewindowfromtray(const w: window);
   end;
 
   TXPTaskBar=class(TInterfacedObject, IXPTaskBar)
@@ -148,6 +152,8 @@ procedure TTaskBar.FormCreate(Sender: TObject);
 var
     b:TBitmap;
 begin
+    XPIPC.OnNotification:=IPCNotification;
+    
     XPAPI.setdefaultcursor;
 
     //*****************************************************
@@ -574,6 +580,61 @@ end;
 procedure TTaskBar.Settings1Click(Sender: TObject);
 begin
     XPAPI.ShellExecute(XPAPI.getsysinfo(siAppsdir)+'controlpanel',false);
+end;
+
+procedure TTaskBar.IPCNotification(Sender: TObject; msg, data: integer);
+begin
+    case msg of
+        XPDE_ADDTRAYICON: begin
+            addwindowtotray(data);
+        end;
+        XPDE_REMOVETRAYICON: begin
+            removewindowfromtray(data);
+        end;
+    end;
+end;
+
+procedure TTaskBar.addwindowtotray(const w: window);
+var
+    p: TPanel;
+begin
+    p:=TPanel.create(self);
+    p.Width:=18;
+    p.height:=16;
+    p.BevelOuter:=bvNone;
+    p.Parent:=pnTray;
+    p.align:=alRight;
+    p.tag:=w;
+    XReparentWindow(application.display,w,QWidget_winID(p.handle),1,0);
+    XMapWindow(application.display,w);
+
+    updatetraysize;
+end;
+
+procedure TTaskBar.removewindowfromtray(const w: window);
+var
+    i:longint;
+    p: TPanel;
+begin
+    for i:=pnTray.ControlCount-1 downto 0 do begin
+        p:=pnTray.controls[i] as TPanel;
+        if p.tag=w then begin
+            p.free;
+            break;
+        end;
+    end;
+    updatetraysize;
+end;
+
+procedure TTaskBar.updatetraysize;
+var
+    wi: integer;
+begin
+    wi:=(pnTray.ControlCount*20);
+    pnTimer.width:=wi+50;
+    pnTray.width:=wi;
+    pnTimer.invalidate;
+    pnTimer.update;
 end;
 
 initialization

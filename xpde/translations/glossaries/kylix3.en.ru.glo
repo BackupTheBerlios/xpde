@@ -1,0 +1,1719 @@
+en	ru
+ (%dx%d)	 (%dx%d)
+ + 	 + 
+ - 	 - 
+ not specified	 не определен
+"%s"\nFile not found.	"%s"\nФайл не найден.
+"%s"\nFile not found.\nPlease verify the correct filename was given.	"%s"\nФайл не найден.\nПожалуйста, проверьте правильность данного имени файла.
+"%s"\nPath not found.\nPlease verify the correct path was given.	"%s"\nПуть не найден.\nПожалуйста, проверьте правильность данного пути.
+"%s" Command not implemented.	"%s" Команда не реализована.
+"%s" DOMImplementation already registered	"%s" DOMImplementation уже зарегистрирован
+"%s" already exists.\nDo you want to replace it?	"%s" уже создан.\nХотите заменить его?
+"%s" created.	"%s" создан.
+"%s" is  is working directory.	"%s" -  - рабочая папка.
+"%s" is not a subdirectory of "%s"	"%s" - не подкаталог "%s"
+%0:s: Action %1:s not found in associated Adapter	%0:s: действие %1:s не найдено в связанном Adapter
+%0:s: Dataset %1:s not active	%0:s: Dataset %1:s не активен
+%0:s: Dataset %1:s unknown keyfields	%0:s: Dataset %1:s неизв. ключевые поля
+%0:s: Field "%1:s" not found	%0:s: Поле "%1:s" не найдено
+%0:s: Field %1:s not found in associated Adapter	%0:s: поле %1:s не найдено в связанном Adapter
+%0:s: ValueField property value is blank	%0:s: значение свойства ValueField - пустое
+%d is an invalid PageIndex value.  PageIndex must be between 0 and %d	Неверное значение PageIndex (%d).  PageIndex должен быть между 0 и %d
+%d: Circular links are not allowed	%d: циклические ссылки не допустимы
+%f Julian cannot be represented as a DateTime	%f Julian не может быть представлена как DateTime
+%g is not a valid value for field '%s'. The allowed range is %g to %g	%g - неверное значение для поля '%s'. Разрешенный диапазон - от %g до %g
+%s	%s
+%s %s Error: (%d)%s	%s %s Ошибка: (%d)%s
+%s (%s, line %d)	%s (%s, строка %d)
+%s Address Error	%s ошибка адреса
+%s Address Okay	%s адрес OK
+%s Command successful.	%s Команда успешно выполнена.
+%s Non-visual component for 32-bit Delphi.	%s Не визульный компонент для 32-бит Delphi.
+%s [%s<?>%s]	%s [%s<?>%s]
+%s cannot be set on a ref item	%s не может быть установлено на ref item
+%s could not be loaded.	%s не может быть загружен.
+%s directory structure.	%s структура каталогов.
+%s does not allow multiple files	%s не допускает множественные файлы
+%s does not allow multiple values	%s не допускает множественные значения
+%s does not support file upload	%s не поддерживает закачку файлов
+%s error %d, %s	%s ошибка %d, %s
+%s expected	Ожидается %s
+%s has a factor of zero	%s имеет нулевой множитель
+%s has not been registered as a COM class	%s не зарегистрирован как COM класс
+%s is already in the StatusBar	%s уже в StatusBar
+%s is corrupt.	%s поврежден.
+%s is not a Gopher+ server	%s - не сервер Gopher+
+%s is not a valid BCD value	%s - неверное BCD значение
+%s is not a valid hex string	%s - неверная шестнадцатиричная строка
+%s is not a valid service.	%s - неверная служба.
+%s is not a valid value for field '%s'. The allowed range is %s to %s	%s - неверное значение для поля '%s'. Разрешенный диапазон - от %s до %s
+%s not in a class registration group	%s нет в группе регистрации класса
+%s on %s	%s on %s
+%s on line %d	%s в строке %d
+%s property out of range	Свойство %s вышло за границы
+%s requires a file	%s требует файл
+%s.FieldName = ''	%s.FieldName = ''
+%s.Seek not implemented	%s.Seek не выполнено
+%s.XMLBroker = nil	%s.XMLBroker = nil
+%s.XMLComponent = nil	%s.XMLComponent = nil
+%s: Action name is blank	%s: пустое имя действия
+%s: Adapter property is nil	%s: свойство Adapter равно nil
+%s: DataSet property is nil	%s: свойство DataSet равно nil
+%s: DisplayComponent property is nil	%s: свойство DisplayComponent равно nil
+%s: Fieldname is blank	%s: пустое имя поля
+%s: missing XMLBroker	%s: не указан XMLBroker
+%s_Disp	%s_Disp
+%s_Doc	%s_Doc
+%s_IDs	%s_IDs
+%s_Names	%s_Names
+%s_RS	%s_RS
+%s_Table	%s_Table
+%s_XML	%s_XML
+&Abort	П&рервать
+&Add	&Добавить
+&All	&Все
+&Bindings	&Связи
+&Close	&Закрыть
+&Directories:	&Папки:
+&Down	Вн&из
+&Edit CommandText	&Изменить CommandText
+&Edit Connection Properties	&Изменить свойства соединения
+&Files: (*.*)	&Файлы: (*.*)
+&Find Next	Найти &далее
+&Help	&Справка
+&IP Address	&IP адрес
+&Ignore	Про&должить
+&New Message Part...	&New Message Part...
+&No	&Нет
+&Port	&Порт
+&Remove	&Удалить
+&Replace	&Заменить
+&Retry	&Повторить
+&Up	&Вверх
+&Yes	&Да
+'%d.%d' is not a valid timestamp	'%d.%d' - неверная дата и время (timestamp)
+'%g' is not a valid date and time	'%g' - неверная дата и время
+'%s' is an invalid mask at (%d)	'%s' - неверная маска в позиции %d
+'%s' is not a valid GUID value	'%s' - неверное значение GUID
+'%s' is not a valid boolean value	'%s' - неверное логическое значение
+'%s' is not a valid boolean value for field '%s'	'%s' - неверное логическое значение для поля '%s'
+'%s' is not a valid currency value	'%s' - неверное денежное значение
+'%s' is not a valid date	''%s'' - неверная дата
+'%s' is not a valid date and time	''%s'' - неверные дата и время
+'%s' is not a valid floating point value	'%s' - неверное дробное значение
+'%s' is not a valid floating point value for field '%s'	'%s' - неверное дробное значение для поля '%s'
+'%s' is not a valid integer value	''%s'' - неверное целое число
+'%s' is not a valid integer value for field '%s'	'%s' - неверное целое значение для поля '%s'
+'%s' is not a valid time	''%s'' - неверное время
+''%s'' expected	Ожидается ''%s''
+''%s'' is not a valid component name	''%s'' недопустимо в качестве имени компонента
+''%s'' is not a valid date	''%s'' - неверная дата
+''%s'' is not a valid date and time	''%s'' - неверные дата и время
+''%s'' is not a valid integer value	''%s'' - неверное целое число
+''%s'' is not a valid time	''%s'' - неверное время
+'(' expected but %s found	'(' ожидается, но обнаружено %s
+')' expected but %s found	')' ожидается, но обнаружено %s
+')' or ',' expected but %s found	')' или ',' ожидается, но обнаружено %s
+(%d, %d) is not a valid DateDay pair	(%d, %d) - неверная пара DateDay
+(%d, %d, %d) is not a valid DateWeek triplet	(%d, %d, %d) - неверное сочетание DateWeek
+(%d, %d, %d, %d) is not a valid DateMonthWeek quad	(%d, %d, %d, %d) - неверное сочетание DateMonthWeek
+(%d, %d, %d, %d) is not a valid DayOfWeekInMonth quad	(%d, %d, %d, %d) - неверное сочетание DayOfWeekInMonth
+(None)	(Нет)
+(Not available)	Недопустимо
+(Null)	(Null)
+(Unassigned)	(Unassigned)
+(Unknown)	(Неизвестен)
+(Untitled)	(Без имени)
+(none)	(нет)
+-	-
+-Err 501 MailB is not implemented	-Err 501 MailB не выполнена
+1999 XML Schema Translator (.xsd <-> .xsd)	Транслятор 1999 XML Schema (.xsd <-> .xsd)
+;Input;Output;Input/Output;Result	;Input;Output;Input/Output;Result
+;String;SmallInt;Integer;Word;Boolean;Float;Currency;BCD;Date;Time;DateTime;;;;Blob;Memo;Graphic;;;;;Cursor;	;String;SmallInt;Integer;Word;Boolean;Float;Currency;BCD;Date;Time;DateTime;;;;Blob;Memo;Graphic;;;;;Cursor;
+<	<
+</UL></BODY></HTML>\n	</UL></BODY></HTML>\n
+<<	<<
+<CR>	<CR>
+<EOL>	<EOL>
+<HTML><HEAD><TITLE>Directory of %s</TITLE></HEAD><BODY><H1>Directory of %0:s</H1>\n	<HTML><HEAD><TITLE>Каталог %s</TITLE></HEAD><BODY><H1>Каталог %0:s</H1>\n
+<HTML><HEAD><TITLE>Unauthorized</TITLE></HEAD><BODY><H1>Unauthorized</H1>Proper authorization is required for this area. Either your browser does not perform authorization, or your authorization has failed.</BODY></HTML>\n	<HTML><HEAD><TITLE>Несанкционировано</TITLE></HEAD><BODY><H1>Несанкционировано</H1>Правильная авторизация требуется для этой области. Либо Ваш браузер не поддерживает авторизацию, либо Ваша авторизация - неверная.</BODY></HTML>\n
+<HTML><TITLE>Directory browsing is forbidden</TITLE><BODY><H1>The requested URL is forbidden</H1><P>HTTP status code: 403</BODY></HTML>\n	<HTML><TITLE>Просмотр каталогов запрещен</TITLE><BODY><H1>Требуемый URL запрещен</H1><P>Код статуса HTTP: 403</BODY></HTML>\n
+<HTML><TITLE>Invalid HTTP request: Method not allowed for HTTP/1.0</TITLE><BODY><H1>Invalid HTTP request: Method not allowed for HTTP/1.0</H1><P>HTTP status code: 400</BODY></HTML>\n	<HTML><TITLE>Неверный HTTP запрос: Метод не допускается для HTTP/1.0</TITLE><BODY><H1>Неверный HTTP запрос: Метод не допускается для HTTP/1.0</H1><P>Код статуса HTTP: 400</BODY></HTML>\n
+<HTML><TITLE>The requested URL is forbidden</TITLE><BODY><H1>The requested URL is forbidden</H1><P>HTTP status code: 403</BODY></HTML>\n	<HTML><TITLE>Требуемый URL запрещен</TITLE><BODY><H1>Требуемый URL запрещен</H1><P>Код статуса HTTP: 403</BODY></HTML>\n
+<LF>	<LF>
+<LI><A HREF="%s">%s</A> (%d bytes)\n	<LI><A HREF="%s">%s</A> (%d байт)\n
+<LI>[ <A HREF="%s">%s</A> ]\n	<LI>[ <A HREF="%s">%s</A> ]\n
+<TABLE BORDER=1 CELLPADDING=4>\n<TR><TD><P ALIGN=CENTER>Design-time Warnings<P>\n%s\n</TD></TD>\n</TABLE>\n	<TABLE BORDER=1 CELLPADDING=4>\n<TR><TD><P ALIGN=CENTER>Design-time Warnings<P>\n%s\n</TD></TD>\n</TABLE>\n
+<TITLE>Internal Server Error</TITLE><BODY><H1>Internal Server Error</H1><P>HTTP status code: 500<P>HTTP error message: %s</BODY>	<TITLE>Internal Server Error</TITLE><BODY><H1>Internal Server Error</H1><P>HTTP status code: 500<P>HTTP error message: %s</BODY>
+<TITLE>The requested URL was not found</TITLE><BODY><H1>The requested URL was not found</H1><P>HTTP status code: 404</BODY>	<TITLE>The requested URL was not found</TITLE><BODY><H1>The requested URL was not found</H1><P>HTTP status code: 404</BODY>
+<UL>\n	<UL>\n
+<html><title>Document Moved 302</title>\n<body><h1>Object Moved</h1><hr>\nThis Object may be found <a HREF="%s">here.</a><br>\n<br></body></html>\n	<html><title>Документ перемещен 302</title>\n<body><h1>Объект перемещен</h1><hr>\nЭтот объект может быть найден <a HREF="%s">здесь.</a><br>\n<br></body></html>\n
+<html><title>Internal Server Error 500</title>\n<h1>Internal Server Error 500</h1><hr>\nException: %s<br>\nMessage: %s<br></html>\n	<html><title>Внутренняя Ошибка Сервера 500</title>\n<h1>Внутренняя Ошибка Сервера 500</h1><hr>\nИсключительная ситуация: %s<br>\nСообщение: %s<br></html>\n
+<table width="95%%" border="1" cellspacing="0" bordercolor="#C0C0C0">\n<tr>\n<td colspan=2>\n<font color="#727272"><b>Error[%0:d]:</b> \n%1:s\n</font>\n</td>\n</tr>\n<tr>\n<td>\n<font color="#727272"><b>Line:</b> \n%2:d\n</font>\n</td>\n<td>\n<font color="#727272"><b>Position:</b> \n%3:d\n</font>\n</td>\n</tr>\n</table>\n	<table width="95%%" border="1" cellspacing="0" bordercolor="#C0C0C0">\n<tr>\n<td colspan=2>\n<font color="#727272"><b>Ошибка[%0:d]:</b> \n%1:s\n</font>\n</td>\n</tr>\n<tr>\n<td>\n<font color="#727272"><b>Строка:</b> \n%2:d\n</font>\n</td>\n<td>\n<font color="#727272"><b>Позиция:</b> \n%3:d\n</font>\n</td>\n</tr>\n</table>\n
+<unknown>	(Неизвестен)
+>	>
+>>	>>
+>|	>|
+?	?
+@ Outside address	@ внешний адрес
+A Win32 API function failed	Ошибка функции Win32 API
+A call to an OS function failed	Ошибка при вызове функции ОС
+A class named %s already exists	Класс с именем %s уже существует
+A component named %s already exists	Компонент с именем %s уже существует
+A control cannot have itself as its parent	Элемент управления не может быть родителем самого себя
+A file with that name already exists. Please specify a different filename.	Файл с таким именем уже существует. Пожалуйста, укажите другое имя файла.
+A message has been received but the commication mode is unknown	Сообщение было принято, но режим передачи неизвестен
+A property category called %s already exists	Категория свойства, названная %s, уже создана
+A transaction is already active	Транзакция уже активна
+Abort	Прервать
+About	О Indy
+About Internet &Direct (Indy) %s...	О Internet &Direct (Indy) %s...
+About...	О...
+Abstract Error	Абстрактная ошибка
+Accepted	Принят
+Access denied to "%s"	Доступ к "%s" запрещен
+Access denied.	В доступе отказано.
+Access to %s denied	Доступ к %s запрещен
+Access violation	Нарушение доступа
+Access violation at address %p in module '%s'. %s of address %p	Нарушение доступа по адресу %p в модуле '%s'. %s по адресу %p
+Access violation at address %p, accessing address %p	Нарушение доступа по адресу %p, обращение к адресу %p
+Access violation at address %p. %s of address %p	Нарушение доступа по адресу %p. %s по адресу %p
+AccessRights	AccessRights
+AcreFeet	Акрофуты
+AcreInches	Акродюймы
+Acres	Акры
+Action	Action
+Action can't redirect to blank URL	Action не может нереадресовать на пустой URL
+Action can't respone to unknown HTTP method	Action не может ответить неизвестному HTTP методу
+Action does not provide response	Action не обеспечивает ответ
+Adapter Request not handled: %0:s, %1:s	Запрос адаптера не управляем: %0:s, %1:s
+Add Actions	Добавить Actions
+Add Actions...	Добавить Actions...
+Add All Actions	Добавить все действия
+Add All Columns	Добавить все колонки
+Add All Commands	Добавить все команды
+Add All Fields	Добавить все поля
+Add Columns	Добавление колонок
+Add Columns...	Добавить колонки...
+Add Commands	Добавление команд
+Add Commands...	Добавить команды...
+Add Fields	Добавление полей
+Add Fields...	Добавить поля...
+Additional	Дополнительно
+Address already in use.	Адрес уже используется.
+Address family not supported by protocol family.	Семейство адресов не поддерживается семейством протоколов.
+Address type not supported.	Тип адреса не поддерживается.
+Aggregate expressions not allowed in filters	Агрегатные выражения не поддерживаются в фильтрах
+Alert: action must be taken immediately	Тревога: действие должно быть taken немедленно
+All	Все
+All Commands	All Commands
+All Files (*)|*	Все файлы (*)
+All Files (*)|*|	Все файлы (*.*)|*.*
+All Files (*.*)|*.*	Все файлы (*)
+All Files (*.*)|*.*|	Все файлы (*.*)|*.*
+Allowed login attempts exceeded, good bye.	Превышено число разрешенных попыток входа, до свидания.
+Already connected.	Уже соединено.
+Alt+	Alt+
+An About Box is not available for this control	About Box не доступен для этого элемента управления
+An unknown error occurred while processing the certificate.	Неизвестная ошибка возникла во время обработки сертификата.
+Ancestor for '%s' not found	Предок для '%s' не найден
+Angstroms	Ангстремы
+Anonymous login OK, send e-mail as password.	Анонимный вход OK, посылается e-mail как пароль.
+Anonymous user logged in, proceed.	Анонимный пользователь вошел, продолжаем.
+Any	Любой
+Application Error	Ошибка приложения
+Application is not licensed to use this feature	Приложение не имеет лицензии на использование этой возможности
+Apply Updates	Apply Updates
+ApplyUpdates error.  Error count: %d.	Ошибка ApplyUpdates.  Номер ошибки: %d.
+Apr	Апр
+April	Апрель
+Are you sure you want to delete "%s"?	Вы уверены, что хотите удалить "%s"?
+Are you sure you want to delete these %d items?	Вы уверены, что хотите удалить эти %d пункта(ов)?
+Area	Площадь
+Ares	Ары
+Arithmetic in filter expressions not supported	Арифметика в выражении фильтра не поддерживается
+Array Node: %s has too many elements	Узел массива: %s имеет слишком много элементов
+Array elements of type %s are not supported	Массив элементов типа %s не поддерживается
+Array type expected. Node %s	Тип Массив ожидается. Узел %s
+Assertion failed	Assertion failed
+Assigned Port value %d is invalid	Определенный значение Port %d - неверное
+AstronomicalUnits	Астрономические единицы
+Asynchronous socket error %d	Ошибка asynchronous socket %d
+Attempt to %s while the HL7 Component is not working	Попытка %s, пока компонент HL7 работает
+Attributes	Атрибуты
+Attributes are not supported on this node type	Атрибуты не поддерживаются на этом типе узла
+Aug	Авг
+August	Август
+Authenticated	Опознанный
+Authentication Failed	В авторизации отказано
+Authentication error to socks server.	Ошибка аутентификации на socks сервере.
+BCD overflow	(Переполнение)
+BG	BG
+BackTab	BackTab
+Backspace	Backspace
+Bad Gateway	Неверный шлюз
+Bad Request	Неверный запрос
+Bad address.	Неверный адрес.
+Bad file number.	Неверный номер файла.
+Bad protocol option.	Неверная опция протокола.
+Bad variant type %x	Неподдерживаемый вариантный тип: %s
+Binding Editor	Редактор связей
+Bitmap image is not valid	Изображение Bitmap имеет неверный формат
+Bitmap is empty	Изображение Bitmap пустое
+Bitmaps	Bitmaps
+Bits index out of range	Индекс Bits вышел за границы
+Body Text Editor	Body Text Editor
+Bold	Bold
+Bold Italic	Bold Italic
+Boolean parameter expected	Параметр логического типа ожидается
+Build	Build
+Built-in Type	Встроенный тип
+Byte index out of range.	Индекс Byte вышел за границы.
+ByteBool, WordBool and LongBool cannot be exposed by WebServices. Please use 'Boolean'	ByteBool, WordBool и LongBool не могут быть exposed by WebServices. Пожалуйста, используйте 'Boolean'
+CRC Failed	Ошибка CRC
+Call to %s.GetByte [property Bytes] with index <> [0..%d]	Вызов к %s.GetByte [property байт] с индексом <> [0..%d]
+Can not bind in port range (%d - %d)	Не могу связать в диапазоне портов (%d - %d)
+Can not change credentials after handle aquired. Use Release first	Не могу изменить полномочия после handle aquired. Используйте сначала Release
+Can only modify an image if it contains a bitmap	Можно редактировать только изображения, которые содержат bitmap
+Can't change value while socket is active	Не могу изменить значение пока socket активен
+Can't create new socket	Не могу создать новый socket
+Can't find included page: %s	Не могу найти включенную страницу: %s
+Can't listen on an open socket	Не могу прослушивать открытый socket
+Can't load package %s.\n%s	Не могу загрузить пакет %s.\n%s
+Can't open data connection.	Не могу открыть соединение для данных.
+Can't write to a read-only resource stream	Не могу записывать в поток ресурсов "только для чтения"
+Cancel	Отмена
+Cancel edit	Отменить изменения
+Cannot access field '%s' as type %s	Не могу получить доступ к полю '%s' как типа %s
+Cannot access index field '%s'	Не могу получить доступ к индексному полю '%s'
+Cannot access package information for package '%s'	Не могу получить информацию пакета для пакета '%s'
+Cannot allocate socket.	Не могу зарезервировать socket.
+Cannot apply updates to a ReadOnly provider	Не могу применить изменения для ReadOnly провайдера
+Cannot assign a %s to a %s	Не могу значение %s присвоить %s
+Cannot assign requested address.	Не могу присвоить требуемый адрес.
+Cannot call TerminateAndWaitFor on FreeAndTerminate threads	Не могу вызвать TerminateAndWaitFor на FreeAndTerminate потоках
+Cannot change Visible in OnShow or OnHide	Не могу изменить Visible в OnShow или OnHide
+Cannot change connection on Active Monitor	Не могу изменить соединение в Active Monitor
+Cannot change session state when the server is active.	Не могу изменить состояние сессии, когда сервер активен.
+Cannot change target while active.	Не могу изменить приемник, когда он активен.
+Cannot change the size of an icon	Не могу изменить размер иконки
+Cannot connect to database '%s'	Не могу подключиться к базе данных '%s'
+Cannot connect, %s must contain a valid ServerName or ServerGUID	Не могу подключиться, %s должен содержать правильное ServerName или ServerGUID
+Cannot connect, %s must contain a valid repository id	Не могу соединиться, %s должен содержать правильное repository id
+Cannot convert NAN to TBcd value	Не могу преобразовать NAN в TBcd значение
+Cannot convert empty string to TBcd value	Не могу преобразовать пустую строку в TBcd значение
+Cannot convert from the specified type	Не могу преобразовать из указанного типа
+Cannot convert scientific notation to TBcd value	Не могу преобразовать научную запись числа  в TBcd значение
+Cannot convert to TBcd: string has more than 64 digits: %s	Не могу преобразовать в TBcd: строка имеет больше чем 64 цифр: %s
+Cannot convert to the specified type	Не могу преобразовать в указанный тип
+Cannot create a default method name for an unnamed component	Не могу создать имя метода по умолчанию для безымянного компонента
+Cannot create a method for an unnamed component	Не могу создать имя метода по умолчанию для безымянного компонента
+Cannot create file "%s". %s	Не могу создать файл "%s". %s
+Cannot create file %s	Не могу создать файл %s
+Cannot create form. No MDI forms are currently active	Не могу создать форму. Нет активных MDI форм
+Cannot create script engine: %s.  Error: %x	Не могу создать script engine: %s.  Ошибка: %x
+Cannot drag a form	Не могу перемещать форму
+Cannot find TableName in CommandText	Не могу найти TableName в CommandText
+Cannot find node referenced by ID %s	Не могу найти узел по ссылке ID %s
+Cannot focus a disabled or invisible window (%s)	Не могу передать фокус ввода отключенному или невидимому окну
+Cannot hide an MDI Child Form	Не могу скрыть дочернюю MDI форму
+Cannot initialize script engine	Не могу инициализировать script engine
+Cannot insert or delete rows from grid	Не могу вставить или удалить строки из таблицы (grid)
+Cannot load package '%s.'  It contains unit '%s,'which is also contained in package '%s'	Не могу загрузить пакет '%s'.  Он включает модуль '%s', который также содержится в пакете '%s'
+Cannot make a visible window modal	Не могу сделать видимым модальное окно
+Cannot modify a read-only dataset	Не могу изменять набор данных "только для чтения" (read-only dataset)
+Cannot open clipboard	Не могу открыть буфер обмена
+Cannot open detail table with master closed	Не могу открыть detail таблицу, если master закрыта
+Cannot open file "%s". %s	Не могу открыть файл "%s". %s
+Cannot open file %s	Не могу открыть файл %s
+Cannot perform task while server is active.	Не могу выполнить задачу, пока сервер активен.
+Cannot perform this operation on a closed connection	Не могу выполнить операцию -- БД не открыта
+Cannot perform this operation on a closed dataset	Набор данных (Dataset) закрыт
+Cannot perform this operation on an empty dataset	Не могу выполнить эту операцию для пустого набора данных (dataset)
+Cannot perform this operation on an open connection	Не могу выполнить операцию -- БД открыта
+Cannot perform this operation on an open dataset	Набор данных (Dataset) открыт
+Cannot read directory:\n"%s"	Не могу прочитать папку:\n"%s"
+Cannot resolve to dataset when using nested datasets or references	Не могу определить набор данных, когда используются вложенные наборы данных или ссылки
+Cannot send or receive after socket is closed.	Не могу посылать и принимать после закрытия socket.
+Cannot set Clipped property while painting	Не могу установить свойство Clipped во время рисования
+Cannt connect to the Master server	Не могу подключиться к Master серверу
+Canvas does not allow drawing	Canvas не позволяет рисовать
+Categories must define their own name and description	Категории должны определять свои имя и описание
+Celsius	Цельсий
+Centares	Сантиары
+CentiLiters	Сантилитры
+Centigrams	Сантиграммы
+Centimeters	Сантиметры
+Centuries	Века
+Chains	Мерные цепи
+CheckSynchronize called from thread $%x, which is NOT the main thread	CheckSynchronize вызван из потока (thread) $%x, который НЕ является основным потоком
+ChildName cannot be blank	ChildName не может быть пустым
+Chunk Started	Кусок стартовал
+Circular datalinks are not allowed	Циклические связи данных не разрешены
+Circular provider references not allowed	Циклические ссылки провайдеров не разрешаются
+Circular reference to Connection not allowed	Циклические ссылки на Connection не допустимы
+Class %s could not create QT widget	Класс %s не может создать QT widget
+Class %s does not implement interface GUID %s	Класс %s не обеспечивает интерфейс GUID %s
+Class %s not found	Класс %s не найден
+Class not registered	Класс не зарегистрирован
+Clear	Очистить
+Clipboard does not support Icons	Буфер обмена не поддерживает иконки
+CloneConnection invalid: distinct ClientDataSet descendents	Неверное CloneConnection: различные потомки ClientDataSet
+Closing data connection.	Закрытие соединения для данных.
+Code	Code
+Codeset conversion failure	Ошибка преобразования codeset
+Color depth must be 1, 8 or 32 bpp	Глубина цвета должна быть 1, 8 или 32 bpp
+Command Not Handled: %s	Команда не обработана: %s
+Command Not Recognised	Команда не распознана
+Command not recognized	Команда не распознана
+Command not supported.	Команда не поддерживается.
+CommandText changes are not allowed	Изменения CommandText не допустимы
+CompleteAuthToken is not supported	CompleteAuthToken не поддерживается
+Component does not support scripting. Class: %0:s, Name: %1:s	Компонент не поддерживает scripting. Класс: %0:s, Имя: %1:s
+Component is in Asynchronous mode but OnMessageArrive has not been hooked	Компонент в асинхронном режиме, но OnMessageArrive не привязан
+Component is in Synchronous mode but  OnMessageReceive has not been hooked	Компонент в синхронном режиме, но OnMessageReceive не привязан
+Component name '%s' exceeds 64 character limit	Имя компонента '%s' превысило предел в 64 символов
+Compression error	Ошибка сжатия
+Configuration file %s not found	Файл конфигурации %s не найден
+Confirm	Подтвердить
+Confirm file deletion	Подтвеждение удаления файла
+Conflict	Конфликт
+Connect timed out.	Превышено время ожидания соединения.
+Connected	Соединен
+Connected.	Соединено.
+Connecting	Соединение
+Connecting to %s.	Подключение к %s.
+Connection Closed Gracefully.	Соединение элегантно закрыто.
+Connection established	Соединение установлено
+Connection explicitly refused by NNTP server.	В соединении явно отказано NNTP сервером.
+Connection name missing	Отсутствует имя соединения
+Connection not allowed by ruleset.	Соединение не разрешено набором правил (ruleset).
+Connection not allowed to TConnectionBroker	Соединение с TConnectionBroker не допустимо
+Connection refused.	Соединение прервано.
+Connection reset by peer.	Сброс соединения by peer.
+Connection timed out.	Соединение превысило время.
+Constant is not correct type %s	Константа неверного типа %s
+Constant out of range	Константа вышла за границы
+Content Length	Content Length
+Content Type	Content Type
+Content-Length header not found	Заголовок Content-Length не найден
+ContentModel not set	ContentModel не установлена
+Continue	Продолжение
+Continue delete operation?	Продолжить операцию удаления?
+Control '%s' has no parent widget	Элемент управления '%s' не имеет родительского окна
+Control cannot be used in a DBCtrlGrid	Этот элемент не может использоваться в DBCtrlGrid
+Control file save to %s	Контрольный файл сохранен в %s
+Control-C hit	Нажатие Control-C
+Conversion family (%s) already registered	Семейство преобразования (%s) уже зарегистрировано
+Conversion type (%s) already registered in %s	Тип преобразования (%s) уже зарегистрирован
+Copy	Копировать
+Copyright (c) 1993 - 2002\nKudzu (Chad Z. Hower)\nand the\nIndy Pit Crew	Copyright (c) 1993 - 2002\nKudzu (Chad Z. Hower)\nи\nIndy Pit Crew
+CordFeet	Кордфуты
+Cords	Корды
+Could not bind socket. Address and port are already in use.	Не могу привязать socket. Адрес и порт уже используются.
+Could not convert variant of type (%s) into type (%s)	Не могу преобразовать вариант типа (%s) в тип (%s)
+Could not create XMLDocument	Не могу создать XMLDocument
+Could not load SSL library.	Не могу загрузить библиотеку SSL.
+Could not load certificate.	Не могу загрузить сертификат.
+Could not load key, check password.	Не могу загрузить ключ, проверьте пароль.
+Could not load root certificate.	Не могу загрузить root сертификат.
+Could not parse %s	Не могу разобрать %s
+Could not parse SQL TimeStamp string	Не могу разобрать SQL TimeStamp строку
+Could not parse imaginary portion	Не могу распознать мнимую часть
+Could not parse real portion	Не могу распознать действительную часть
+Could not parse required '%s' symbol	Не могу распознать требуемый '%s' символ
+Could not parse required '+' (or '-') symbol	Не могу распознать требуемый '+' (или '-') символ
+Created	Создан
+Critical: critical conditions	Опасность: состояние опасности
+Ctrl+	Ctrl+
+CubicCentimeters	Куб. сантиметры
+CubicDecameters	Куб. декаметры
+CubicDecimeters	Куб. дециметры
+CubicFeet	Куб. футы
+CubicHectometers	Куб. гектометры
+CubicInches	Куб. дюймы
+CubicKilometers	Куб. километры
+CubicMeters	Куб. метры
+CubicMiles	Куб. мили
+CubicMillimeters	Куб. миллиметры
+CubicYards	Куб. ярды
+Cubits	Локти
+Cursor not returned from Query	Курсор не возвращен из Запроса
+Custom Colors	Custom Colors
+Custom message interpretation failed	Ошибка интерпретации произвольного сообщения
+Custom variant type ($%.4x) already used by %s	Произвольный вариантный тип ($%.4x) уже используется %s
+Custom variant type ($%.4x) is not usable	Произвольный вариантный тип ($%.4x) является непригодным
+Custom variant type ($%.4x) is out of range	Произвольный вариантный тип ($%.4x) вышел за границы
+Custom variant type (%s%.4x) already used by %s	Произвольный вариантный тип (%s%.4x) уже используется %s
+Custom variant type (%s%.4x) is not usable	Произвольный вариантный тип (%s%.4x) является непригодным
+Custom variant type (%s%.4x) is out of range	Произвольный вариантный тип (%s%.4x) вышел за границы
+Cut	Вырезать
+D&rives:	&Устройства:
+DBX Error: Command not found, error message cannot be retrieved	Ошибка DBX: Соединение не найдено, сообщение об ошибке не может быть получено
+DBX Error: Connection not found, error message cannot be retrieved	Ошибка DBX: Соединение не найдено, сообщение об ошибке не может быть получено
+DBX Error: Cursor not found, error message cannot be retrieved	Ошибка DBX: Соединение не найдено, сообщение об ошибке не может быть получено
+DBX Error: MetadataObject not found, error message cannot be retrieved	Ошибка DBX: MetadataObject не найден, сообщение об ошибке не может быть получено
+DBX Error: No Mapping for Error Code Found	Ошибка DBX: No Mapping for Error Code Found
+DLL/Shared Library Name not Set	Имя DLL/Shared Library не установлено
+DNS Server Reports Query Format Error	DNS Server Reports Query Format Error
+DNS Server Reports Query Name Error	DNS Server Reports Query Name Error
+DNS Server Reports Query Not Implemented Error	DNS Server Reports Query Not Implemented Error
+DNS Server Reports Query Refused Error	DNS Server Reports Query Refused Error
+DNS Server Reports Query Server Error	DNS Server Reports Query Server Error
+DOM Implementation does not support IDOMParseOptions	Реализация DOM не поддерживает IDOMParseOptions
+DTD to XML Schema Translator (.dtd <-> .xsd)	Транслятор DTD в XML Schema (.dtd <-> .xsd)
+Data	Data
+Data Modification is not permitted	Изменение данных не допустимо
+Data connection already open; transfer starting.	Соединение для данных уже открыто; передача начинается.
+Data connection closed abnormally.	Соединение для данных закрыто аварийно.
+Data connection open; no transfer in progress.	Открыто соединение для данных; нет передачи.
+Data file saved to %s	Файл данных сохранен в %s
+Data set field is blank	Поле набора данных (Data set) - пустое
+Data set field not found: %s	Поле набора данных (Data set) не найдено: %s
+DataSet is nil	DataSet равен nil
+DataSource cannot be changed	DataSource не может быть изменен
+Database	Database
+Dataset not in edit or insert mode	Набор данных (Dataset) не в режиме редактирования или вставки
+Datatype of TypeKind: %s not supported as argument for remote invocation	Тип данных TypeKind: %s не поддерживается как аргумент для удаленного вызова
+Date	Дата изменения
+Date Modified	Дата изменения
+DateTime	ДатаВремя
+Days	Дни
+Debug: debug-level messages	Отладка: сообщения уровня отладки
+Dec	Дек
+DecaLiters	Декалитры
+Decades	Декады
+Decagrams	Декаграммы
+Decameters	Декаметры
+Decasteres	Decasteres
+December	Декабрь
+DeciLiters	Децилитры
+Decigrams	Дециграммы
+Decimeters	Дециметры
+Decisteres	Decisteres
+Decompression error	Ошибка распаковки
+Default	Default
+Del	Del
+Delete all selected records?	Удалить все выбранные записи?
+Delete record	Удалить запись
+Delete record?	Удалить запись?
+Deletes are not allowed	Удаления не допустимы
+Delimiter and QuoteChar properties cannot have the same value	Свойства Delimiter и QuoteChar не могут иметь одно и то же значение
+Demos Coordinator	Координатор демо
+Destination address required.	Требуется адрес приемника.
+Destination file already exists.	Файл-приемник уже создан.
+Direction	Направление
+Directory	Папка
+Directory "%s" is not empty.	Папка "%s" - не пустая.
+Directory %s does not exist	Каталог %s не создан
+Directory &Name:	&Имя папки:
+Directory not empty	Каталог не пуст
+Disconnect	Отключение
+Disconnected.	Отсоединено.
+Disconnecting.	Отсоединение от %s.
+Disk Quota Exceeded.	Превышен лимит места на диске.
+Disk full	Диск полный
+Dispatching blank page name	Dispatching blank page name
+Distance	Расстояние
+Distribution Coordinator	Координатор дистрибуции
+Division by zero	Деление на ноль
+Do AcquireCredentialsHandle first	Сделайте сначала AcquireCredentialsHandle
+Do not allow connctions now	Сейчас не разрешены соединения
+DocumentElement %s:%s expected, %s:%s found	DocumentElement %s:%s ожидается, %s:%s найден
+Documentation	Документация
+Documentation Coordinator	Координатор документации
+Double parameter expected	Параметр типа Double ожидается
+Down	Down
+Drag and Drop	Drag, Drop and Docking
+Drag, Drop and Docking	Drag, Drop and Docking
+Drams	Драхмы
+Drawings	Рисунки
+Drive %s does not exist.\nPlease verify the correct drive was given.	Диск %s не существует.\nПожалуйста, проверьте правильность данного диска.
+Driver (%s) not found in Cfg file (%s)	Драйвер (%s) не найден в конфиг. файле (%s)
+Driver/Connection Registry File '%s' not found	Файл регитсрации драйвера/соединения '%s' не найден
+DryBuckets	Ведра
+DryBushels	Бушели
+DryGallons	Галлоны сыпучие
+DryPecks	DryPecks
+DryPints	Пинты сыпучие
+DryQuarts	Кварты сыпучие
+Duplicate action name	Дубликат имени action
+Duplicate field name '%s'	Дубликат имени поля '%s'
+Duplicate index name '%s'	Дубликат имени индекса '%s'
+Duplicate name '%s' in %s	Компонент с именем %s уже существует
+Duplication prototype name	Неуникальное имя прототипа
+ERROR	ERROR
+Edit record	Изменить запись
+Editing %s%s%s	Изменение %s%s%s
+Elapsed	Elapsed
+Element does not contain a single text node	Элемент не содержит единственный текстовый узел
+Element of Array type %s has no RTTI	Элемент массива типа %s не имеет RTTI
+Emergency: system is unusable	Авария: система непригодна для использования
+Empty document	Пустой документ
+Enabled	Enabled
+Encoding attachment	Кодирование вложения
+Encoding text	Кодирование текста
+End	End
+End of Status	Конец статуса
+Enter	Enter
+Entering Passive Mode (%s).	Вход в пассивный режим (%s).
+Error	Ошибка
+Error accepting connection with SSL.	Ошибка допуска соединения с SSL.
+Error binding data to SSL socket.	Ошибка привязки данных к SSL socket.
+Error connecting with SSL.	Ошибка соединения с SSL.
+Error creating SSL context.	Ошибка создания SSL контекста.
+Error creating variant or safe array	Ошибка создания вариантного массива
+Error creating widget	Ошибка создания widget
+Error decoding URL style (%%XX) encoded string at position %d	Ошибка расшифровки стиля URL (%%XX), закодированного строкой, в позиции %d
+Error downloading URL: %s	Ошибка загрузки URL: %s
+Error geting SSL method.	Ошибка получения SSL метода.
+Error in parsing command.	Ошибка при разборе команды.
+Error in transformation before send	Ошибка в преобразовании перед посылкой
+Error loading MIDAS.DLL	Ошибка загрузки MIDAS.DLL
+Error loading library "%s": "%s"	Ошибка загрузки библиотеки "%s": "%s"
+Error on call Winsock2 library function %s	Ошибка вызова фнкции %s библиотеки Winsock2
+Error on loading Winsock2 library (%s)	Ошибка загрузки библиотеки Winsock2 (%s)
+Error reading %s%s%s: %s	Ошибка чтения %s%s%s: %s
+Error reading from socket	Ошибка чтения из socket
+Error resizing ImageList	Ошибка изменения размеров ImageList
+Error saving attachment.	Ошибка сохранения вложения.
+Error setting stream size	Ошибка установки размера потока (stream size)
+Error: 	Ошибка: 
+Error: No program code to return request!	Ошибка: Нет кода программы, чтобы возвратить запрос!
+Error: error conditions	Ошибка: состояние ошибки
+Error: no queues defined	Ошибка: очереди не определены
+Esc	Esc
+Event	Event
+Exception %s in module %s at %p.\n%s%s\n	Исключительная ситуация %s в модуле %s по адресу %p.\n%s%s\n
+Exception in safecall method	Исключительная ситуация в safecall методе
+Execute not supported: %s	Выполнение не поддерживается: %s
+Execution of action %s is not permitted	Выполнение действия %s не допустимо
+Expected return value not received	Ожидаемое возвращаемое значение не получено
+Expression expected but %s found	Ожидается выражение, но обнаружено %s
+Expression is not an aggregate expression	Выражение не является агрегатным
+Extension already exits	Расширение уже существует
+Extension is empty	Расширение - пустое
+Extensions supported:\nSIZE\nPASV\nREST\nEnd of extentions.	Поддерживаются расширения:\nSIZE\nPASV\nREST\nКонец расширений.
+External exception %x	Внешняя исключительная ситуация %x
+Extra Headers Text Editor	Extra Headers Text Editor
+FB	FB
+FG	FG
+FTP daemon	демон FTP
+Facets and Enumeration not allowed on this kind of datatype "%s"	Facets и Enumeration не допустимы на этом типе данных "%s"
+Fahrenheit	Фаренгейт
+Failed attempting to retrieve time zone information.	Ошибка при попытке получить информацию о часовом поясе.
+Failed to Start: %s	Ошибка старта: %s
+Failed to Stop: %s	Ошибка остановки: %s
+Failed to create key %s	Ошибка создания ключа %s
+Failed to delete tab at index %d	Не удалось удалить страницу (tab) с индексом %d
+Failed to get data for '%s'	Ошибка чтения значения для '%s'
+Failed to set data for '%s'	Ошибка записи значения для '%s'
+False	False
+Fatal error: Cannot create application object in a shared object or library.	Фатальная ошибка: Не могу создать объект приложения в разделенном (shared) объекте или библиотеке.
+Fatal error: Cannot create more than one TApplication instance	Фатальная ошибка: Не могу создать более одного экземпляра TApplication
+Fathoms	Морские сажени
+Feb	Фев
+February	Февраль
+Feet	Футы
+Fi&nd what:	&Найти:
+Field	Field
+Field %s changed by another user	Поле %s изменено другим пользователем
+Field %s did not provide an image	Поле %s не предоставляло изображения
+Field %s ignored, only one status field allowed	Поле %s проигнорировано, допускается только одно статус поле
+Field %s requires a value	Поле %s требует значение
+Field '%s' cannot be a calculated or lookup field	Поле '%s' не может быть вычисляемым или поисковым полем
+Field '%s' cannot be modified	Поле "%s" только для чтения
+Field '%s' cannot be used in a filter expression	Поле '%s' не может использоваться в выражении фильтра
+Field '%s' has no dataset	Поле '%s' не имеет набора данных (dataset)
+Field '%s' is not indexed and cannot be modified	Поле '%s' не индексировано и не может быть изменено
+Field '%s' is not of type Boolean	Поле '%s' - не логического типа
+Field '%s' is not the correct type of calculated field to be used in an aggregate, use an internalcalc	Используется поле '%s' неверного типа вычисляемого поля в aggregate, используйте internalcalc
+Field '%s' is of an unknown type	Тип поля '%s' неизвестен
+Field '%s' is of an unsupported type	Тип поля '%s' не поддерживается
+Field '%s' must have a value	Поле '%s' должно иметь значение
+Field '%s' not found	%0:s: Поле "%1:s" не найдено
+Field Name	Имя поля
+Field Type	Field Type
+Field index out of range	Индекс поля вышел за границы
+Field is not a dataset field: %s	Поле %s - не поле набора данных (dataset)
+Field name cannot be longer then %d characters.  Try setting ObjectView to True on the dataset	Имя поля не может быть длиннее чем %d символов.  Попытайтесь установить ObjectView в True в dataset
+Field name missing	Отсутствует имя поля
+Field not found: %s	Поле не найдено: %s
+Field view not permitted	Просмотр поля не допустим
+Fieldname %s exceeds %d chars	Имя поля %s превысило %d символов
+File	Файл
+File "%s" not found	Файл "%s" не найден
+File Status:	Статус файл:
+File access denied	В доступе к файлу отказано
+File include error on line %d: expecting "	Ошибка включения файла (include) в строке %d: ожидается "
+File include error on line %d: expecting =	Ошибка включения файла (include) в строке %d: ожидается =
+File include error on line %d: expecting virtual, file, or page, but found %s.	Ошибка включения файла (include) в строке %d: ожидается virtual, файл, или страница, но найдено %s.
+File name too long.	Имя файла слишком длинное.
+File not found	Файл не найден
+File status okay; about to open data connection.	Статус файла OK; about to open data connection.
+FileName cannot be blank	FileName не может быть пустым
+FileName property cannot be blank	Свойство FileName не может быть пустым
+Filter expression incorrectly terminated	Выражение фильтра некорректно завершено
+Find	Поиск
+First record	Первая запись
+Fixed column count must be less than column count	Число фиксированных столбцов должно быть меньше общего числа столбцов
+Fixed row count must be less than row count	Число фиксированных строк должно быть меньше общего числа строк
+Floating point division by zero	Нецелочисленное деление на ноль
+Floating point overflow	Нецелочисленное переполнение
+Floating point underflow	Нецелочисленная потеря (underflow)
+FluidCups	Кубки жидкие
+FluidGallons	Галлоны жидкие
+FluidGills	1/4 пинты жидкие
+FluidOunces	Унции жидкие
+FluidPints	Пинты жидкие
+FluidQuarts	Кварты жидкие
+FluidTablespoons	Столовые ложки
+FluidTeaspoons	Чайные ложки
+For the latest updates and information please visit:	Для получения обновлений и информации посетите, пожалуйста:
+Forbidden	Запрещено
+Format '%s' invalid or incompatible with argument	Формат '%s' - неверный или несовместимый с аргументом
+Format result longer than 4096 characters	Результат форматирования длиннее, чем 4096 символов
+Format string too long	Строка формата слишком длинная
+Fortnights	Две недели
+Found	Найден
+Fri	Пят
+Friday	Пятница
+Furlongs	1/8 мили
+Gateway timeout	Таймаут шлюза
+General SOCKS server failure.	Общая ошибка SOCKS сервера.
+Gigameters	Гигаметры
+Global scheam items may not contain a ref	Пункты глобальной схемы не могут содержать ref
+Go	Пуск
+Gone	Готово
+Goodbye	До свидания
+Grains	Граны
+Grams	Граммы
+Grid index out of range	Индекс Grid вышел за границы
+Grid requested to display more than 256 columns	Таблица (Grid) не может содержать более 256 колонок
+Grid too large for operation	Таблица (Grid) слишком большая для работы
+Group	Группа
+GroupIndex cannot be less than a previous menu item's GroupIndex	GroupIndex не может быть меньше, чем GroupIndex предыдущего пункта меню
+Grouping level exceeds current index field count	Уровень группировки превысил текущее количество полей индекса
+Grouping level not defined	Уровень группировки не определен
+HTTP version not supported	Версия HTTP не поддерживается
+Hands	Руки
+Header Section owner must be a TCustomHeaderControl	Владелец Header Section должен быть TCustomHeaderControl
+Header has already been written.	Заголовок уже написан.
+Hectares	Гектары
+HectoLiters	Гектолитры
+Hectograms	Гектограммы
+Hectometers	Гектометры
+Hello %s	Здравствуйте, %s
+Help	Справка
+Help and Hints	Help and Hints
+Hidden User:  Information was not returned at a user's request	Невидимый пользователь:  Информация не была возвращена по запросу пользователя
+Home	Home
+Host field is empty	Поле Host - пустое
+Host is down.	Хост не работает.
+Host not found.	Хост не найден.
+Host unreachable.	Хост недоступен.
+Hour Offset portion of time invalid	Сдвиг часа времени - неверный
+Hours	Часы
+I/O error %d	Ошибка ввода/вывода %d
+ICMP Receive Error = 0.	Ошибка приема ICMP = 0.
+IDOMNode required	IDOMNode требуется
+IN predicate list may not be empty	Список IN команды не может быть пустым
+IOHandler value is not valid	Значение IOHandler - неверное
+IRC Connect Failed	Соединение к IRC не установлено
+Icon image is not valid	Иконка (Icon) имеет неверный формат
+Icons	Иконки
+Identifier expected	Ожидается идентификатор
+Illegal family	Недопустимое семейство
+Illegal type	Недопустимый тип
+Image format not recognized	Формат изображения не распознан
+Image width and heigth must match	Ширина и высота изображения должны совпадать
+Inches	Дюймы
+Include file %s includes itself	Включенный файл %s содержит сам себя
+Incompatible conversion types [%s - %s, %s - %s]	Несовместимые типы преобразования [%s - %s, %s - %s]
+Incompatible conversion types [%s, %s, %s]	Несовместимые типы преобразования [%s, %s, %s]
+Incompatible conversion types [%s, %s]	Несовместимые типы преобразования [%s, %s]
+Incorrect image format (%0:s) for field %1:s	Неправильный формат изображения (%0:s) для поля %1:s
+Incorrect length in received block	Неправильный размер в принятом блоке
+Incorrectly formed filter expression	Некорректно сформированное выражение фильтра
+Index '%s' not found	Индекс '%s' не найден
+Indy Clients	Indy Clients
+Indy FTP Server ready.	Indy FTP Сервер готов.
+Indy I/O Handlers	Indy I/O Handlers
+Indy Intercepts	Indy Intercepts
+Indy Misc	Indy Misc
+Indy SMTP Server	Indy SMTP Сервер
+Indy Servers	Indy Servers
+Indy Telnet Server	Indy Telnet Server
+Information	Информация
+Informational: informational messages	Информационно: информационные сообщения
+Input	Input
+Ins	Ins
+Insert record	Вставить запись
+Inserts are not allowed	Добавления (inserts) не допустимы
+Insufficient data for Content-Length	Неполные данные для Content-Length
+Integer overflow	Переполнение целого
+Integer parameter expected	Целочисленный параметр ожидается
+InterceptEnabled cannot be set to true when Intercept is nil.	InterceptEnabled не может быть установлен в true когда Intercept равен nil.
+Interface %s has no RTTI	Интерфейс %s не имеет RTTI
+Interface %s not registered	Интерфейс %s не зарегистрирован
+Interface has no RTTI, UUID = %s	Интерфейс не имеет RTTI, UUID = %s
+Interface is unusable due to failure to stop	Интерфейс неиспользуемый из-за ошибки при остановке
+Interface not registered, UUID = %s	Интерфейс не зарегистрирован, UUID = %s
+Interface not supported	Интерфейс не поддерживается
+Interface was already started	Интерфейс уже запущен
+Interface was already stopped	Интерфейс уже остановлен
+Internal Server Error	Внутренняя ошибка сервера
+Internal error: data type kind %s not expected in this context	Внутренняя ошибка: тип данных вида %s не ожидается в этом контексте
+Internet Direct (Indy)	Internet Direct (Indy)
+Interpretation of message failed	Ошибка интерпретации сообщения
+Interrupted system call.	Прерванный системный вызов.
+Invalid %s value: "%s"	Неверное %s значение: "%s"
+Invalid Action %d	Запрошено неверное действие
+Invalid Action registration	Неверная регистрация действия (action)
+Invalid Bcd Precision (%d) or Scale (%d)	Неверная Bcd точность (%d) или Scale (%d)
+Invalid Encoding. UU only allows Body and Attachments	Неверное кодирование. UU позволено только с телом и вложениями
+Invalid FieldKind	Неверный FieldKind
+Invalid HTML encoded character (%s) at position %d	Неверный закодированный символ HTML (%s) в позиции %d
+Invalid HTTP Request: Length is 0	Неверный HTTP запрос: длина равна 0
+Invalid HTTP Response: Length is 0	Неверный HTTP ответ: длина равна 0
+Invalid Header Id %d	Неверный Id заголовка %d
+Invalid ImageList Index	Неверный индекс ImageList
+Invalid LCDNumber value	Неверное значение LCDNumber
+Invalid Login.	Неверный вход в систему.
+Invalid MDIParent for class %s	Неверный MDIParent для класса %s
+Invalid NULL variant operation	Неверная операция с NULL
+Invalid Packet Size %d	Неверный размер пакета %d
+Invalid Pointer	Неверная операция с указателем
+Invalid Port Range (%d - %d)	Неверный диапазон портов (%d - %d)
+Invalid Port:  The foreign or local port is not specified correctly or invalid	Неверный порт:  Внешний или локальный порт неправильно определен или неверный
+Invalid Query Count %d	Неверное число запросов %d
+Invalid SOAP Response	Неверный ответ
+Invalid SOAP array specification	Неверный спецификация массива SOAP
+Invalid SOAP request	Неверный SOAP запрос
+Invalid SQL date/time values	Неверные значения SQL даты/времени
+Invalid Syslog message: packet too large (%d bytes)	Неверное сообщение syslog: пакет слишком большой (%d байта(ов))
+Invalid Text count. TIdText must be greater than 1	Неверное количество Text. TIdText должен быть больше 1
+Invalid URL encoded character (%s) at position %d	Неверный закодированный символ URL (%s) в позиции %d
+Invalid WSDL document '%s' - Please verify the location and content!\nError: %s	Неверный WSDL документ '%s' - Пожалуйста, проверьте размещение и содержание!\nОшибка: %s
+Invalid Web component creation	Неверное создание Web компонента
+Invalid Web component enumeration	Неверная нумерация Web компонента
+Invalid Web component registration	Неверная регистрация Web компонента
+Invalid XImage	Неверный XImage
+Invalid action creation	Неверное создание действия (action)
+Invalid action enumeration	Неверный перечень действий (action)
+Invalid action received: %d	Запрошено неверное действие
+Invalid action registration	Неверная регистрация действия (action)
+Invalid action unregistration	Неверная отмена регистрации действия (action)
+Invalid argument	Неверный аргумент
+Invalid argument to date encode	Неверный аргумент для формирования даты
+Invalid argument to time encode	Неверный аргумент для формирования времени
+Invalid argument.	Неверный аргумент.
+Invalid binary value	Неверное двоичное значение
+Invalid built-in type name "%s"	Неверное имя встроенного типа "%s"
+Invalid canvas state request	Неверный запрос состояния canvas
+Invalid class typecast	Неверное приведение класса
+Invalid clipboard format	Неверный формат буфера обмена
+Invalid complex type derivation: %s	Неверное решение комплексного типа: %s
+Invalid component registration	Неверная регистрация компонента
+Invalid data packet	Неверный пакет данных
+Invalid data type for '%s'	Неверный тип данных для '%s'
+Invalid date string: %s	Неверная строка даты: %s
+Invalid day: %d	Неверный день: %d
+Invalid decimal string: ''%s''	Неверная decimal строка: ''%s''
+Invalid duration string: %s	Неверная строка длительности: %s
+Invalid field registration	Неверная регистрация поля
+Invalid field size	Неверный размер поля
+Invalid file name - %s	Неверное имя файла - %s
+Invalid filename	Неверное имя файла - %s
+Invalid filter expression character: '%s'	Неверный символ в выражении фильтра: '%s'
+Invalid floating point operation	Неверная операция с дробными числами
+Invalid format type for BCD	Неверный тип формата для BCD
+Invalid fractional second: %f	Неверная дробная секунда: %f
+Invalid graphic format	Формат '%s' - неверный или несовместимый с аргументом
+Invalid group declaration in "%s"	Неверное group объявление в "%s"
+Invalid handle value for %s	Неверное значение дескриптора (handle) для %s
+Invalid host name. A SYSLOG host name cannot contain any space ("%s")+	Неверное имя хоста. Имя хоста SYSLOG не может содержать пробелов ("%s")+
+Invalid hour offset: %d	Неверный сдвиг часа: %d
+Invalid hour: %d	Неверный час: %d
+Invalid image (the size is less than 4 bytes long).	Неверный размер изображения
+Invalid image dimension	Неверное измерение изображения
+Invalid image size	Неверный размер изображения
+Invalid image type	Неверный тип изображения
+Invalid input value	Введено неверное значение
+Invalid input value.  Use escape key to abandon changes	Введено неверное значение.  Нажмите Esc для отмены изменений
+Invalid item level assignment	Присваивание неверного уровня элемента
+Invalid level (%d) for item "%s"	Неверный уровень (%d) для элемента "%s"
+Invalid millisecond: %d	Неверная миллисекунда: %d
+Invalid minute: %d	Неверная минута: %d
+Invalid month: %d	Неверный месяц: %d
+Invalid network mask.	Неверная маска сети.
+Invalid node type	Неверный тип узла
+Invalid numeric input	Неверный ввод числа
+Invalid numeric value	Неверное числовое значение
+Invalid operation on a hosted node	Неверная операция на hosted узле
+Invalid or Unknown Time Zone	Неверный или неизвестный часовой пояс
+Invalid or unsupported XML Schema document	Неверный или неподдерживаемый документ XML Schema
+Invalid package file '%s'	Неверный файл пакета '%s'
+Invalid package handle	Неверный дескриптор пакета
+Invalid parent	Неверный родитель
+Invalid parent class: %s	Неверный родительский класс: %s
+Invalid password	Неверный пароль
+Invalid pixel format	Неверный точечный (pixel) формат
+Invalid pointer operation	Неверная операция с указателем
+Invalid property element: %s	Неверный элемент свойства: %s
+Invalid property path	Неверный путь к свойству
+Invalid property type: %s	Неверный тип свойства: %s
+Invalid property value	Неверное значение свойства
+Invalid provider. Provider was freed by the application server	Неверный провайдер. Провайдер был освобожден сервером приложений
+Invalid response	Неверный ответ
+Invalid second: %d	Неверная секунда: %d
+Invalid second: %f	Неверная секунда: %f
+Invalid socks authentication method.	Неверный метод socks аутентификации.
+Invalid stream format	Неверный формат потока
+Invalid stream operation	Неверная операция с потоком
+Invalid string constant	Неверная строковая константа
+Invalid syslog message: incorrect PRI number "%s"	Неверное сообщение syslog: неверный номер PRI "%s"
+Invalid syslog message: incorrect PRI section	Неверное сообщение syslog: неверная секция PRI
+Invalid syslog message: incorrect timestamp "%s"	Неверное сообщение syslog: неверный timestamp "%s"
+Invalid time string: %s	Неверная строка времени: %s
+Invalid url '%s' - only supports 'http' and 'https' schemes	Неверный url '%s' - поддерживает только 'http' и 'https' схемы
+Invalid use of keyword	Неверное использование ключевого слова
+Invalid value for current item	Неверное значение для текущего элемента
+Invalid value for field '%s'	Неверное значение для поля '%s'
+Invalid value length: Should be 32.	Неверная длина значения: Должно быть 32.
+Invalid variant operation	Неверная операция с вариантом
+Invalid variant operation ($%.8x)	Неверная операция с вариантом ($%.8x)
+Invalid variant operation (%s%.8x)\n%s	Неверная операция с вариантом (%s%.8x)\n%s
+Invalid variant type	Неверный тип варианта
+Invalid variant type conversion	Неверное преобразование вариантного типа
+Invalid variant type or size for field '%s'	Неверный вариантный тип или размер
+Invalid widget handle	Неверный дескриптор widget
+Invokable Class %s implements no interfaces	Invokable класс %s не обеспечивает интерфейсов
+Italic	Italic
+Item not found ($0%x)	Пункт не найден ($0%x)
+ItemTag property is not initialized	Свойство ItemTag не инициализировано
+Jan	Янв
+January	Январь
+Jpegs	Jpegs
+Jul	Июл
+JulianDate	Юлианская дата
+July	Июль
+Jun	Июн
+June	Июнь
+Kelvin	Кельвин
+KiloLiters	Килолитры
+Kilograms	Килограммы
+Kilometers	Километры
+Last record	Последняя запись
+Layout	Layout
+Left	Left
+Legacy	Legacy
+Length Required	Length требуется
+LightYears	Световые годы
+Line	-
+Line too long	Строка слишком длинная
+Link to 	Ссылка на 
+Linkage	Linkage
+Links	Звенья землемерной цепи
+List capacity out of bounds (%d)	Размер списка вышел за границы (%d)
+List count out of bounds (%d)	Счетчик списка вышел за границы (%d)
+List does not allow duplicates ($0%x)	Список не допускает дубликатов ($0%x)
+List index out of bounds (%d)	Индекс списка вышел за границы (%d)
+List is locked during an active ForEach	Список заблокирован при активном ForEach
+Lists all the PortTypes published by this Service	Lists all the PortTypes published by this Service
+Liters	Литры
+Load Picture	Загрузить картинку
+Loading...	Загрузка...
+Local time is %s	Локальное время - %s
+Local type declarations cannot have a name.  Element: %s	Объявления локального типа не могут иметь имя.  Элемент: %s
+Locale	Locale
+Localizable	Localizable
+Log files (*.log)	Файлы протокола (*.log)
+Log(%d)	Log(%d)
+Login page is not defined	Страница входа не определена
+Login with USER first.	Войдите с USER сначала.
+LongTons	Длинные тонны
+Lookup information for field '%s' is incomplete	Информация поиска (lookup) для поля '%s' - неполная
+MD is an Obsolete Command. Use MX.	MD - устаревшая команда. Используйте MX.
+MF is an Obsolete Command. USE MX.	MF - устаревшая команда. Используйте MX.
+MailA is an Obsolete Command. USE MX.	MailA - устаревшая команда. Используйте MX.
+Mar	Мар
+March	Март
+Mass	Масса
+Match &case	С у&четом регистра
+Match &whole word only	&Только целые слова
+Max line length exceeded.	Превышена макс. длина строки.
+Maximum connections limit exceeded. Try again later.	Превышен лимит количества соединений. Попробуйте снова позже.
+Maximum number of concurrent connections exceeded.  Please try again later	Достигнут максимум конкурирующих соединений.  Повторите попытку позже
+Maximum sessions exceeded	Превышено максимальное количество сессий
+May	Май
+Megameters	Мегаметры
+Menu '%s' is already being used by another form	Меню '%s' уже используется другой формой
+Menu index out of range	Индекс меню вышел за границы
+Menu inserted twice	Меню вставлено дважды
+Menu insertion recursion not allowed	Рекурсия при вставке меню не поддерживается
+Message decoder not found	Декодер сообщения не найден
+Message encoder not found	Кодировщик сообщения не найден
+Message handling failed	Ошибка обработки сообщения
+Message too long.	Сообщение слишком длинное.
+Message type recognition error	Ошибка распознания типа сообщения
+Meters	Метры
+Method has no RTTI	Метод не имеет RTTI
+Method not allowed	Метод не допустим
+Method not permitted in TSoapDataList	Метод неразрешен в TSoapDataList
+MetricTons	Метр. тонны
+Micrograms	Микрограммы
+Micromicrons	Микромикроны
+Microns	Микроны
+Microsoft MSXML is not installed	Microsoft MSXML не установлен
+Miles	Мили
+Millennia	Тысячелетия
+MilliLiters	Миллилитры
+MilliSeconds	Миллисекунды
+Milligrams	Миллиграммы
+Millimeters	Миллиметры
+Millimicrons	Миллимикроны
+Millisecond Values must be between 000 - 999	Значения миллисекунд должны быть между 000 - 999
+Mime format not supported for TIcon	Формат Mime не поддерживается для TIcon
+MimeSource format must have an associated data stream	Формат MimeSource должен иметь связанный с данными поток (stream)
+Mimetype is empty	Mimetype - пустое
+Minutes	Минуты
+Miscellaneous	Miscellaneous
+Mismatched paramaters to RegisterChildNodes	Несовпадающие параметры к RegisterChildNodes
+Missing DataSet property	Отсутствует свойство DataSet
+Missing DataSetField property	Отсутствует свойство DataSetField
+Missing Database property	Отсутствует свойство Database
+Missing Delta Packet	Не указан Delta Packet
+Missing DriverName property	Отсутствует свойство DriverName
+Missing FaultString or FaultCode element	Отсутствует элемент FaultString или FaultCode
+Missing ProgID	Отсутствует ProgID
+Missing SQLConnection property	Не указано Connection или ConnectionString
+Missing TableName property	Отсутствует свойство TableName
+Missing Type name	Потеряно имя типа
+Missing XML Data Component	Отсутствует компонент данных XML
+Missing data provider or data packet	Потерян провайдер данных или пакет данных
+Missing password	Отсутствует пароль
+Missing query, table name or procedure name	Отсутствует запрос, имя таблицы или имя процедуры
+Missing user name	Отсутствует имя пользователя
+Mode has not been set.	Режим не установлен.
+Mode is not initialised	Режим не инициализирован
+Mode set to %s.	Режим установлен в %s.
+Modification of %s is not permitted	Изменение %s не допустимо
+Modifications are not allowed	Изменения не допустимы
+ModifiedJulianDate	Измененая Юлианская дата
+Mon	Пон
+Monday	Понедельник
+Months	Месяца
+Moved Permanently	Перемещен постоянно
+Moved Temporarily	Перемещен временно
+Movie not loaded	Видео не загружено
+MultiLine must be True when TabPosition is tpLeft or tpRight	MultiLine должно быть True, когда TabPosition равно tpLeft или tpRight
+Multiple Connections not supported by %s driver	Многочисленные соединения не поддерживаются драйвером %s
+Multiple body elements not supported	Не поддерживаются многочисленные элементы тела
+Must apply updates before refreshing data	Необходимо применить изменения перед обновлением данных
+N&o to All	Н&ет для всех
+NTP subsystem	подсистема NTP
+NULL only allowed with '=' and '<>'	NULL разрешено только с '=' и '<>'
+Name	Name
+Name not allowed on a ref item	Имя не допускается на ref item
+Namespace URI	Namespace URI
+Nanograms	Нанограммы
+NauticalMiles	Морские мили
+Ne&twork...	&Сеть...
+Need account for login.	Требуется учетная запись для входа.
+Need account for storing files.	Требуется учетная запись для сохранения файлов.
+Nested dataset must inherit from %s	Вложенный набор данных должен наследоваться от %s
+Nested datasets cannot have a MasterSource	Вложенные таблицы не могут иметь MasterSource
+Net dropped connection or reset.	Сеть сбросила соединение.
+Network is down.	Сеть не работает.
+Network is unreachable.	Сеть недоступна.
+Network subsystem is unavailable.	Сетевая подсистема недоступна.
+Network unreachable.	Сеть недоступна.
+New Folder	Новая папка
+New Lookup Field	Новое поисковое (lookup) поле
+New components cannot be added to frame instances.	Новые компоненты не могут добавляться в образцы фреймов.
+Next record	Следующая запись
+Nick	Nick
+No Class is regisgtered to implement interface %s	Нет зарегистрированного класса для обеспечения интерфейса %s
+No Content	Нет содержимого
+No Dispatcher set	Нет установленного диспетчера
+No Help Manager installed.	Менеджер Справки не установлен.
+No Message processing node set	Не установлен Message processing node
+No Native to Message converter set	Не установлен конвертер из Native в Message
+No OnListDirectory event found!	Не найдено события OnListDirectory!
+No OnNewGroupsList event has been defined.	Не определено событие OnNewGroupsList.
+No OnNewNewsList event has been defined.	Не определено событие OnNewNewsList.
+No OnNewsgroupList event has been defined.	Не определено событие OnNewsgroupList.
+No PSecPkgInfo specified	PSecPkgInfo не указан
+No Preview Available	Нет доступного Просмотра
+No SQL statement available	Нет доступных SQL команд
+No Table of Contents found.	Содержание не найдено.
+No URL was specified for 'GET'	Нет URL, определенного для 'GET'
+No User:  Port pair is not used or not used by an identifiable user	Нет пользователя:  Пара портов не используется или не используется опознанным пользователем
+No WSDL document associated with WSDLView	Нет WSDL документа, связанного с WSDLView
+No WSDL or URL property was set in the THTTPRIO component. You must set the WSDL or URL property before invoking the Web Service	Не установлены свойства WSDL или URL в компоненте THTTPRIO. Вы должны установить свойство WSDL или URL перед вызовом Web Service
+No access to temporary file	Нет доступа к временному файлу
+No access to temporary file: check TMPDIR setting	Нет доступа к временному файлу
+No active document	Нет активного документа
+No address specified	Не определен адрес
+No argument for format '%s'	Нет аргумента для формата '%s'
+No authentication handler has been specified.	Не определен обработчик идентификации.
+No authority could be contacted for authentication.	No authority could be contacted for authentication.
+No automatically activated data modules	Нет автоматически активированных модулей данных
+No bindings specified.	Привязки не определены.
+No buffer space available.	Нет доступного места для буфера.
+No class registered for invokable interface %s	Нет зарегистрированного класса для вызываемого интерфейса %s
+No command handler found.	Дескрипторов команды не найдено.
+No context-sensitive Help installed.	Контекстно-зависимая Справка не установлена.
+No credential handle acquired	No credential handle acquired
+No credentials are available in the security package	No credentials are available in the security package
+No data modules registered	Не зарегистрировано ни одного модуля данных
+No data to read.	Нет данных для чтения.
+No dispatcher component found on data module	Не найдено ни одного компонента-диспетчера в модуле данных
+No execute handler found.	Не найдено execute обработчиков.
+No fields defined.  Cannot create dataset	Поля не определены.  Не могу создать набор данных (dataset)
+No help available	Справка недоступна
+No help found for "%s"	Не найдено справки для "%s"
+No index currently active	Нет активного индекса
+No index for fields '%s'	Таблица '%s' не имеет индекса для полей '%s'
+No interface  registered for URL '%s'	Нет зарегистрированного интерфейса для URL '%s'
+No interface  registered for soap action '%s'	Нет зарегистрированного интерфейса для soap action '%s'
+No interface is registered to handle URL %s	Нет зарегистрированного интерфейса для управления URL %s
+No invokable class registered that implements interface %s of (soap action/path) %s	Нет зарегистрированного вызываемого класса для обеспечения интерфейса %s (soap action/path) %s
+No matching DOM Vendor: "%s"	Нет подходящего DOM Vendor: "%s"
+No matching Kylix type was found for type: URI = %s, Name = %s on Node %s	Cоответствующий Kylix тип не найден для типа: URI = %s, Name = %s on Node %s
+No method named '%s' is supported by interface '%s'	Нет метода c именем '%s', поддерживаемого интерфейсом '%s'
+No parameter type for parameter '%s'	Не задан тип параметра '%s'
+No printer adapter available for printing	Нет доступного адаптера принтера для печати
+No property pages are available for this control	Нет доступных страниц свойств для этого элемента управления
+No request handlers handled this request. The WebAppComponents PageDispatcher, AdapterDispatcher or DispatchActions property may not be set.	Нет обработчиков запросов обрабатывающих этот запрос. Свойства WebAppComponents PageDispatcher, AdapterDispatcher или DispatchActions должны быть установлены.
+No route to host.	Нет маршрута к хосту.
+No server available	Нет доступного сервера
+No service available for URL %s	Нет доступного сервиса для URL %s
+No topic-based Help installed.	Справка на основе тем (topic) не установлена.
+No value for parameter '%s'	Нет значения для параметра '%s'
+Node "%s" not found	Узел "%s" не найден
+Node cannot be null	Узел не может быть пустым (null)
+Node is readonly	Узел только для чтения
+Non Authenticated	Неопознанный
+Non-authoritative Information	Ненадежная информация
+Non-authoritative response (try again or check DNS setup).	Ненадежный ответ (попытайтесь снова или проверьте настройки DNS).
+Non-echo type response received	Non-echo type response received
+Non-recoverable errors: FORMERR, REFUSED, NOTIMP.	Неисправляемые ошибки: FORMERR, REFUSED, NOTIMP.
+Not Acceptable	Недопустимый
+Not Connected	Не соединен
+Not Found	Не найдено
+Not Implemented	Невыполненный
+Not Modified	Не изменен
+Not all bytes sent.	Посланы не все байты.
+Not connected to server.	Не подключено к серверу.
+Not enough bytes received	Получены не все байты
+Not enough data in buffer.	Нет данных в буфере.
+Not enough memory is available to complete this request	Нет свободной памяти для завершения этого запроса
+Not enough timers available	Нет доступных таймеров
+Not found	Не найден
+Not in cached update mode	Не в режиме cached update
+Not logged in.	Не вошел.
+Notice: normal but significant condition	Замечание: нормальное, но важное состояние
+Nov	Ноя
+November	Ноябрь
+Number expected	Ожидается число
+OK	OK
+Object does not support scripting. Class: %0:s	Объект не поддерживает scripting. Класс: %0:s
+Object not available: %s	Объект не доступен: %s
+Object type name required as parameter value	Имя типа Object требуется как значение параметра
+Object type not supported.	Тип объекта не поддерживается.
+ObjectView must be True for Table with Object fields	ObjectView должен быть True для таблиц с Object полями
+Oct	Окт
+October	Октябрь
+Ok	OK
+OnDataAvailable event is nil.	Событие OnDataAvailable равно nil.
+OnExecute not assigned.	OnExecute не определен.
+Only one FaultCode element allowed	Допускается только один элемент FaultCode
+Only one FaultString element allowed	Допускается только один элемент FaultString
+Only one TIdAntiFreeze can exist per application.	Может быть создан только один TIdAntiFreeze в приложении.
+Only one WebDispatcher per form/data module	Только один WebDispatcher на формы/модуля данных
+Only one data module per application	Допустим только один модуль данных на приложение
+Open	Открыть
+Open MyBase table	Открыть таблицу MyBase
+Open trace log file	Открыть файл протокола трассировки
+Operation aborted	Операция прервана
+Operation already in progress.	Операция уже выполняется.
+Operation cannot mix aggregate value with record-varying value	В операция нельзя смешивать агрегатные значения со значениями полей
+Operation not allowed in a DBCtrlGrid	Операция не разрешена в DBCtrlGrid
+Operation not allowed on a unidirectional dataset	Однонаправленный набор данных (Data set)
+Operation not allowed on sorted list	Операция недопустима для отсортированного списка строк
+Operation not allowed while dispatching application events	Операция не допустима во время отправки событий приложения
+Operation not allowed with aggregates active	Операция не допустима с активными aggregates
+Operation not supported	Операция не поддерживается
+Operation not supported on selected printer	Операция не поддерживается на выбранном принтере
+Operation not supported on socket.	Операция не поддерживается на socket.
+Operation not supported.  %s component does not support IGetWebComponentList	Операция не поддерживается.  Компонент %s не поддерживает IGetWebComponentList
+Operation now in progress.	Операция сейчас выполняется.
+Operation would block. 	Operation would block. 
+Option not set to allow Native type to be set to NULL	Опция не установлена для разрешения типу Native быть установленным в NULL
+OtherNick	OtherNick
+Ounces	Унции
+Out of memory	Не хватает памяти
+Out of memory while expanding memory stream	Не хватает памяти при расширении memory stream
+Out of system resources	Не хватает системных ресурсов
+Overflow while converting variant of type (%s) into type (%s)	Переполнение при преобразовании варианта типа (%s) в тип (%s)
+Owner	Хозяин
+Owner is not a TCustomHeaderSection	Владелец - не TCustomHeaderSection
+PNGs	PNGs
+Paces	Шаги
+Package Size Too Big.	Размер пакета слишком большой.
+Packages are not supported by '%s' Server	Пакеты не поддерживаются '%s' сервером
+Page %s does not support inclusion	Страница %s не поддерживает вложение
+Page access denied	Доступ к странице закрыт
+Parameter %s on Method %s of Interface %s has no RTTI	Параметр %s метода %s интерфейса %s не имеет RTTI
+Parameter '%s' not found	Параметр '%s' не найден
+Parameter '%s', cannot save data larger than %d bytes	Параметр '%s', не могу сохранить данные длиннее %d байт
+Parameter expected	Параметр ожидается
+Parent given is not a parent of '%s'	Данный родитель не является родителем '%s'
+ParentConnection is not assigned	ParentConnection не присвоено
+Parsecs	Парсеки
+Partial Content	Частичное содержимое
+Password	Password
+Password must not be blank	Пароль не должен быть пустым
+Password: 	Пароль: 
+Paste	Вставить
+Path	Path
+PathInfo	PathInfo
+PgDn	PgDn
+PgUp	PgUp
+Picas	Пики (picas)
+Picture:	Картинка:
+Pixmaps	Pixmaps
+Points	Точки
+Polite people say HELO	Вежливые люди говорят HELO
+Port Type	Тип порта
+PortName	</head><body><h1>Запрещено (403)</h1><P>Доступ запрещен</P>
+Post	Post
+Post edit	Сохранить изменения
+Pounds	Фунты
+Precondition Failed	Ошибка Precondition
+Preparation of default expression failed with error "%s"	Подготовка default expression не выполнилась с ошибкой "%s"
+Preparation of field constraint failed with error "%s"	Подготовка field constraint не выполнилась с ошибкой "%s"
+Preparation of record constraint failed with error "%s"	Подготовка record constraint не выполнилась с ошибкой "%s"
+Preview	Просмотр
+Printer index out of range	Индекс принтера вышел за границы
+Printer is not currently printing	Принтер не находится сейчас в состоянии печати
+Printer selected is not valid	Выбран неверный принтер
+Printing in progress	Идет печать...
+Prior record	Предыдущая запись
+Privileged instruction	Привилегированная инструкция
+Producer	Producer
+Project Co-Coordinator	СоКоординатор проекта
+Project Coordinator	Координатор проекта
+Properties	Свойства
+Property %s does not exist	Свойство не существует
+Property '%s' has not been initialized on component '%s'	Свойство '%s' не проинициализировано у компонента '%s'
+Property already defined by lookup field	Свойство уже определено поисковым (lookup) полем
+Property category does not exist (%s)	Категория свойства не создана (%s)
+Property filters may only be name, class or type based (%d:%d)	Фильтром свойств может быть только имя, класс или тип по базе (%d:%d)
+Property is read-only	Свойство только для чтения
+Property may not be modified while aggregate is active	Свойство не может быть изменено, пока aggregate активно
+Property or Method "%s" is not supported by DOM Vendor "%s"	Свойство или метод "%s" не поддерживается DOM Vendor "%s"
+Protocol family not supported.	Семейство протоколов не поддерживается.
+Protocol field is empty	Поле Protocol - пустое
+Protocol not supported.	Протокол не поддерживается.
+Protocol wrong type for socket.	Неверный тип протокола для socket.
+Provider name "%s" was not recognized by the server	Имя провайдера "%s" не распознано сервером
+Provider not exported: %s	Провайдер не экспортирован: %s
+Proxy Authentication Required	Авторизация на прокси требуется
+PutObject to undefined item	PutObject для неопределенного типа
+Queue %s status: %s	Статус очереди %s: %s
+Quit key hit	Нажатие кнопки Выход
+RCode NO Error	RCode НЕТ ошибки
+RESPONSE	RESPONSE
+Radio items must have a Controller as a parent	Пункты Radio должны иметь Controller как родителя
+Range check error	Ошибка выхода за границы (Range check error)
+Range check error for variant of type (%s)	Ошибка выхода за границы (range check) для варианта типа (%s)
+Range check error while converting variant of type (%s) into type (%s)	Ошибка выхода за границы (range check) при конвертировании варианта типа (%s) в тип (%s)
+Range of %d to %d is invalid	Диапазон от %d до %d - неверный
+Rankine	Rankine
+Raw Receive Error = 0.	Ошибка приема Raw = 0.
+Read	Read
+Read Timeout	Тайм-аут чтения
+Read beyond end of file	Чтение за окончанием файла
+Real name	Реальное имя
+Reaumur	Реомюр
+Receive	Receive
+Receive control file	Прием контрольного файла
+Receive data file	Прием файла данных
+Received Packet is too small. %d	Принятый пакет слишком мал. %d
+Received Packet is too small. Less than 12 bytes %d	Принятый пакет слишком мал. Менее 12 байт %d
+Received Packet is too small. Less than 4 bytes %d	Принятый пакет слишком мал. Менее 4 байт %d
+Received someone else's packet	Received someone else's packet
+Reconnect at %s: %s	Reconnect at %s: %s
+Record not found	Запись не найдена
+Record not found or changed by another user	Запись изменена другим пользователем
+Record or field constraint failed.	Условие на запись или поле (constraint) не выполнилось.
+Recursion while doing a VarDataCastTo	Рекурсия во время выполнения VarDataCastTo
+Recursion while doing a VarDataClear	Рекурсия во время выполнения VarDataClear
+Recursion while doing a VarDataCopy	Рекурсия во время выполнения VarDataCopy
+Recursion while doing a VarDataCopyNoInd	Рекурсия во время выполнения VarDataCopyNoInd
+Recursion while doing a VarDataInit	Рекурсия во время выполнения VarDataInit
+Recv 	Полч: 
+Redo	Повторить
+Refresh data	Обновить данные
+Refresh is only supported if the FileName or XML properties are set	Refresh поддерживается только, если установлены свойства FileName или XML
+Registered Types	Зарегистрированные типы
+Regular	Regular
+Remotable Type %s not registered	Remotable Type %s не зарегистрирован
+Remote Login	Remote Login
+Remote Method Call: unsupported calling convention %s for method %s on interface %s	Удаленный вызов метода: неподдерживаемое соглашение о вызовах %s для метода %s через интерфейс %s
+Rep&lace with:	За&менить на:
+Replace	Замена
+Replace &All	Заменить в&се
+Reply %s on Job ID %s	Ответить %s на Job ID %s
+Reply Timed Out:  The server did not return a response and the query has been abandoned	Истекло время ожидания ответа:  Сервер не возвратил ответ и запрос был отвергнут
+Request Entity To Long	Request Entity To Long
+Request Timeout	Request Timeout
+Request rejected or failed.	Запрос отвергнут или не выполнен.
+Request-URI Too Long. 256 Chars max	Request-URI слишком длинный. Максимум 256 символов
+Requested action aborted: local error in processing.	Требуемое действие прервано: локальная ошибка в процессе.
+Requested action aborted: page type unknown.	Требуемое действие прервано: тип страницы неизвестен.
+Requested action not taken.	Требуемое действие не taken.
+Requested file action aborted.	Требуемое действие с файлом прервано.
+Requested file action not taken.	Требуемое действие с файлом не taken.
+Requested file action okay, completed.	Требуемое действие с файлом OK, завершено.
+Requested file action pending further information.	Требуемое действие с файлом в ожидании дополнительной информации.
+Requires Connection before opening	Требуется Connection перед открытием
+Reset	Reset
+Reset Content	Сброс содержимого
+Resolving hostname %s.	Поиск хоста %s.
+Resource %s is of incorrect class	Неверный класс ресурса %s
+Resource %s not found	Ресурс %s не найден
+Result	Result
+Retired/Past Contributors	Ушедшие/Прошлые помощники
+Return	Return
+Right	Right
+Rods	Пруты (rods)
+Row not found in %s	Строка не найдена в %s
+SOAP Response Packet: result element expected, received "%s"	Ответный пакет SOAP: ожидается результирующий элемент, получено "%s"
+SQL Error: Error mapping failed	Ошибка SQL: Error mapping failed
+SQL not supported: %s	SQL не поддерживается: %s
+SQLConnection property required for this operation	Свойство SQLConnection требуется для этой операции
+SSL certificate request error.	Ошибка запроса сертификата SSL.
+SSL connection has dropped.	SSL соединение прервано.
+SSL library internal error.	Внутренняя ошибка библиотеки SSL.
+SSL status: "%s"	Статус SSL: "%s"
+SSPI %s returns error #%d(0x%x): %s	SSPI %s вернула ошибку #%d(0x%x): %s
+SSPI interface has failed to initialise properly	Интерфейс SSPI не смог инициализироваться правильно
+Sat	Суб
+Saturday	Суббота
+Save	Сохранить
+Save %s as	Сохранить %s как
+Save As	Сохранить как
+Save Picture As	Сохранить картинку как
+Scan line index out of range	Scan line индекс вышел за границы
+Script Object expected	Script Object ожидается
+Script engine not found: %s.	Script engine не найден: %s.
+Scrollbar property out of range	Свойство Scrollbar вышло за границы
+Seconds	Секунды
+See Other	Смотри другое
+Select All	Выбрать все
+Select Directory	Выбор папки
+Selected	Выбранный
+Selected DOM Vendor does not support this property or method	Выбранный DOM Vendor не поддерживает это свойство или метод
+Selection contains a component introduced in an ancestor form which cannot be deleted	Выбор содержит компонент, который применяется в форме-предке, которая не удалена
+Send	Send
+Send a message	Отправить сообщение
+Sent 	Посл: 
+Sep	Сен
+September	Сентябрь
+Server Connection not locatable when sending message	Server Connection not locatable, когда отправляется сообщение
+Server Returned Unknown Error	Сервер возвратил неизвестную ошибку
+Server did not respond.	Сервер не ответил.
+Server do not support APOP (no timestamp)	Server do not support APOP (no timestamp)
+Server is busy	Сервер занят
+Server status: active	Сервер статус: активен
+Service Info Page	Service Info Page
+Service Unavailable	Сервис (служба) не доступен
+Service closing control connection.	Сервис закрывает управляющее соединение.
+Service not available, closing control connection.	Сервис не доступен, закрытие управляющего соединения.
+Service ready for new user.	Сервис готов для пового пользователя.
+Set Size Exceeded.	Установленный размер превышен.
+Set the GroupRef property for the cmGroupRef content model	Установить свойство GroupRef для cmGroupRef content model
+SetCipher failed.	Ошибка SetCipher.
+Shift+	Shift+
+Signing Off	Выход
+Size	Размер
+Size mismatch for field '%s', expecting: %d actual: %d	Неверный размер для поля '%s', ожидается: %d, установлено: %d
+Soap header %s with attribute 'mustUnderstand' set to true was not handled	Заголовок Soap %s с атрибутом 'mustUnderstand' set to true was not handled
+Socket Error # %d\n%s	Ошибка socket # %d\n%s
+Socket already open	Socket уже открыт
+Socket is already connected.	Socket уже соединен.
+Socket is not connected.	Socket не соединен.
+Socket must be in blocking mode	Socket должен быть в режиме блокировки
+Socket operation on non-socket.	Socket операция на non-socket.
+Socket read error	Ошибка чтения из socket
+Socket type not supported.	Тип socket'а не поддерживается.
+Socks server did not respond.	Socks сервер не отвечает.
+Software caused connection abort.	Программное обеспечение вызвало аварийное прекращение работы соединения.
+Space	Space
+SquareCentimeters	Кв. сантиметры
+SquareDecameters	Кв. декаметры
+SquareDecimeters	Кв. дециметры
+SquareFeet	Кв. футы
+SquareHectometers	Кв. гектометры
+SquareInches	Кв. дюймы
+SquareKilometers	Кв. километры
+SquareMeters	Кв. метры
+SquareMiles	Кв. мили
+SquareMillimeters	Кв. миллиметры
+SquareRods	Кв. пруты (rods)
+SquareYards	Кв. ярды
+Stack overflow	Переполнение стека
+Stale NFS file handle.	Устаревший дескриптор (handle) NFS файла.
+Start	Старт
+Start mail input; end with <CRLF>.<CRLF>	Начало ввода письма; конец с <CRLF>.<CRLF>
+Starting FTP transfer	Начало передачи по FTP
+Stat 	Stat 
+Steres	Steres
+Stones	Стоуны
+Stop	Стоп
+Stopped	Остановлен
+Stored Procedures not supported by '%s' Server	Хранимые процедуры не поддерживаются '%s' Server
+Stream read error	Ошибка чтения потока
+Stream write error	Ошибка записи потока
+String	String
+String expected	Ожидается строка
+String list does not allow duplicates	Список строк не допускает дубликатов
+String parameter expected	Строковый параметр ожидается
+Stringlist not initialized!	Stringlist не проинициализирован!
+Structure set to %s.	Structure set to %s.
+Sub-menu is not in menu	Подменю - не в меню
+Submit	Submit
+Successfull API call	Успешный вызов API
+Sun	Вск
+Sunday	Воскресенье
+Switching protocols	Переключение протоколов
+Syntax Error - Command not understood: %s	Синтаксическая ошибка - Команда не понята: %s
+Syntax error, command unrecognized.	Синтаксическая ошибка, команда не распознана.
+System Error.  Code: %d.\n%s	Системная ошибка.  Код: %d.\n%s
+TAggregateStream Error: no internal streams	Ошибка TAggregateStream: нет внутренних потоков
+TIdIRC 1.061 by Steve Williams	TIdIRC 1.061 by Steve Williams
+TIdMessagePart can not be created.  Use descendant classes. 	TIdMessagePart не может быть создан.  Используйте классы-потомки. 
+TIdSNPP Mess command only supports single line Messages.	TIdSNPP Mess команда поддерживает только однострочные сообщения.
+TMenu.SetForm: argument must be TCustomForm	TMenu.SetForm: аргумент должен быть TCustomForm
+TStrings descendant %s failed to call inherited constructor	Потомок TStrings %s вызвал ошибку при вызове inherited constructor
+TTL expired.	TTL истекло.
+Tab	Tab
+Tab index out of bounds	Tab индекс вышел за границы
+Tab position incompatible with current tab style	Позиция tab несовместима с текущим стилем tab
+Tab style incompatible with current tab position	Cтиль tab несовместим с текущей позицией tab
+Table/Procedure not found	Таблица/процедура не найдена
+Temperature	Температура
+Terminate Thread Timeout	Завершить тайм-аут потока
+Text exceeds memo capacity	Текст превысил емкость memo
+Text files (*.txt)|*.txt|All files (*.*)|*.*	Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*
+Text not found: "%s"	Текст не найден: "%s"
+The Local Security Authority cannot be contacted	The Local Security Authority cannot be contacted
+The buffers supplied to a function was too small.	Буффера, предоставленные функции, были слишком малы.
+The caller is not the owner of the desired credentials	The caller is not the owner of the desired credentials
+The certificate chain was issued by an untrusted authority.	The certificate chain was issued by an untrusted authority.
+The client and server cannot communicate, because they do not possess a common algorithm.	Клиент и сервер не могут общаться, потому что они не обладают общим алгоритмом.
+The clocks on the client and server machines are skewed.	Время на часах клиентской и серверной машин отличается.
+The context data must be renegotiated with the peer.	The context data must be renegotiated with the peer.
+The context has expired and can no longer be used.	Контекст потерял силу и не может далее использоваться.
+The credentials supplied to the package were not recognized	Полномочия, данные пакету, не опознаны
+The credentials supplied were not complete, and could not be verified. Additional information can be returned from the context.	Данные полномочия - неполные, и не были проверены. Дополнительная информация может быть получена из контекста.
+The credentials supplied were not complete, and could not be verified. The context could not be initialized.	Данные полномочия - неполные, и не были проверены. Контекст не был инициализирован.
+The following SITE commands are supported: HELP  DIRSTYLE	Следующие SITE команды не поддерживаются: HELP  DIRSTYLE
+The function completed successfully, but CompleteToken must be called	Функция завершилась успешно, но должен быть вызван CompleteToken
+The function completed successfully, but both CompleteToken and this function must be called to complete the context	Функция завершилась успешно, но CompleteToken и эта функция должны быть вызваны для завершения контекста
+The function completed successfully, but must be called again to complete the context	Функция завершилась успешно, но должна быть вызвана снова для завершения контекста
+The function requested is not supported	Требуемая функция не поддерживается
+The handle specified is invalid	Указанный дескриптор - неверный
+The logon attempt failed	Неудачная попытка входа
+The logon was completed, but no network authority was available. The logon was made using locally known information	Вход завершен, но нет доступных сетевых полномочий. Вход был сделан с использованием локально известной информации
+The message or signature supplied for verification has been altered	The message or signature supplied for verification has been altered
+The message received was unexpected or badly formatted.	Полученное сообщение было неожиданным или неверно отформатированным.
+The message supplied for verification is out of sequence	The message supplied for verification is out of sequence
+The per-message Quality of Protection is not supported by the security package	The per-message Quality of Protection не поддерживается пакетом защиты
+The received certificate has expired.	Полученный сертификат потерял силу.
+The requested security package does not exist	Требуемый пакет защиты не существует
+The security context could not be established due to a failure in the requested quality of service (e.g. mutual authentication or delegation).	Контекст защиты не может быть созданe из-за сбоя в требуемом свойстве сервиса (например, взаимное опознавание или делегирование).
+The security context does not allow impersonation of the client	The security context does not allow impersonation of the client
+The security package failed to initialize, and cannot be installed	Пакет защиты вызвал сбой при инициализации, и не может быть установлен
+The security package is not able to marshall the logon buffer, so the logon attempt has failed	Пакет защиты не способен разместить буффер входа, таким образом, попытка входа была неудачной
+The specified data could not be decrypted.	Указанные данные не должны быть расшифрованы.
+The specified data could not be encrypted.	Указанные данные не должны быть зашифрованы.
+The specified directory does not exist. Create it?	Указанная папка не существует. Создать ее?
+The specified target is unknown or unreachable	Указанный приемник (target) неизвестен или недостижим
+The string %s does not translate into a valid IP.	Строка %s не переводится в правильный IP.
+The supplied IP address is not a valid multicast address [224.0.0.0 to 239.255.255.255].	Данный IP адрес - неверный групповой адрес [224.0.0.0 - 239.255.255.255].
+The supplied message is incomplete.  The signature was not verified.	Данное сообщение - незавершенное.  Сигнатура не была проверена.
+The target principal name is incorrect.	The target principal name is incorrect.
+The token supplied to the function is invalid	The token supplied to the function is invalid
+There is no LSA mode context associated with this context.	There is no LSA mode context associated with this context.
+There is no active transaction	Нет активной транзакции
+There is no default printer currently selected	Нет выбранного по умолчанию принтера
+There is too many IP addresses in the specified range (%d) to be displayed at design time.	Слишком много IP адресов в указанном диапазоне (%d) отобразится в design time.
+This authentication method is already registered with class name %s.	Этот метод авторизации уже зарегистрирован с классом %s.
+This function is not supported on Win32.	Эта функция не поддерживается на Win32.
+This property or method is not implemented in the Open XML Parser	Это свойство или метод не реализован в Open XML Parser
+Thread	Thread
+Thread Class Not Specified.	Не определен класс потока (thread).
+Thread Error: %s (%d)	Ошибка потока (thread): %s (%d)
+Thread creation error: %s	Ошибка создания потока (thread): %s
+Thu	Чет
+Thursday	Четверг
+Time	Время
+TimedOut	TimedOut
+Timeout	Таймаут
+Tons	Тонны
+Too many buttons specified for message box	Определено слишком много кнопок для окна сообщения
+Too many custom variant types have been registered	Зарегистрировано cлишком много произвольных вариантных типов
+Too many images	Слишком много изображений
+Too many levels of remote in path.	Слишком много уровней удаленных (remote) в пути.
+Too many levels of symbolic links.	Слишком много уровней символических ссылок.
+Too many open files	Слишком много открытых файлов
+Too many open files.	Слишком много открытых файлов.
+Too many parameters in method %s	Слишком много параметров в методе %s
+Too many processes.	Слишком много процессов.
+Too many references, cannot splice.	Слишком много отношений, не могу соединить.
+Too many rows or columns deleted	Удаляется слишком много строк или столбцов
+Too many table columns	Таблица (Grid) не может содержать более 256 колонок
+Too many users.	Слишком много пользователей.
+Transfer aborted	Передача прервана
+Transfer complete	Передача закончена
+Transform failed	Ошибка преобразования
+TransformNode most be called using a document node (not a document element) for the source and the stylesheet.	TransformNode должен быть вызван, используя узел документа (не элемент документа) для источника и stylesheet.
+True	True
+Tue	Втр
+Tuesday	Вторник
+Type	Тип
+Type cannot be cast as Variant	Тип не может быть приведен как Variant
+Type mismatch for field '%s', expecting: %s actual: %s	Тип поля '%s' не соответствует ожидаемому
+Type mismatch in expression	Несовпадение типов в выражении
+Type mismatch in parameter %s	Несовпадение типов в параметре %s
+Type set to %s.	Тип установлен в %s.
+UDP Receive Error = 0.	Ошибка приема UDP = 0.
+UKBuckets	Англ. ведра
+UKBushels	Англ. бушели
+UKGallons	Англ. галлоны
+UKGill	Англ. 1/4 пинты
+UKOunces	Англ. унции
+UKPecks	UKPecks
+UKPints	Англ. пинты
+UKPottle	UKPottle
+UKQuarts	Англ. кварты
+URL must be in the form "http://server.company.com/scripts/httpsrvr.dll"	Неверный url '%s' - поддерживает только 'http' и 'https' схемы
+URL required	Требуется URL
+UUCP subsystem	подсистема UUCP
+Unable to Find Procedure %s	Не могу найти процедуру %s
+Unable to Load %s	Не могу загрузить %s
+Unable to Open Metadata	Не могу открыть Metadata
+Unable to Replace Image	Невозможно заменить изображение
+Unable to complete write request, progress halted at %d bytes	Не могу завершить запись запроса, процесс прерван на %d байтах
+Unable to create directory	Не могу создать папку
+Unable to create directory "%s".	Не могу создать папку "%s".
+Unable to determine field names for %s	Не могу определить имена полей для %s
+Unable to execute Query	Не могу выполнить Запрос
+Unable to execute command, wrong connection state;Current connection state: %s.	Не могу выполнить команду, неверное состояние соединения;Текущее состояние соединения: %s.
+Unable to find record.  No key specified	Не могу найти запись.  Не определен ключ
+Unable to initialize compressor	Не могу инициализировать компрессор
+Unable to initialize decompressor	Не могу инициализировать декомпрессор
+Unable to insert a line	Невозможно вставить строку
+Unable to load %s	Не могу загрузить %s
+Unable to load WSDL File/Location: %s.  Error [%s]	Не могу загрузить WSDL Файл/Размещение: %s.  Ошибка [%s]
+Unable to load bind parameters	Невозможно загрузить параметры привязки
+Unable to locate form/component, '%s'	Не могу найти форму/компонент, '%s'
+Unable to locate property '%s' on component '%s'	Не могу найти свойство '%s' у компонента '%s'
+Unable to move %s to %s	Не могу переместить %s в %s
+Unable to not open registry key: %s	Не могу открыть ключ реестра: %s
+Unable to open %s	Не могу открыть %s
+Unable to read directory "%s".	Не могу прочитать папку "%s".
+Unable to resolve records.  Table name not found.	Отсутствует свойство TableName
+Unable to retrieve the URL endpoint for Service/Port '%s'/'%s' from WSDL '%s'	Не могу возвратить URL endpoint для Service/Port '%s'/'%s' из WSDL '%s'
+Unable to stop client thread	Не могу остановить клиентский поток
+Unable to write bitmap	Не могу записать bitmap
+Unable to write to %s	Не могу записать в %s
+Unassigned variant value	Unassigned значение варианта
+Unauthorized	Не авторизовано
+Undo	Отменить
+Uneven size in DecodeToStream.	Нечетный размер в DecodeToStream.
+Uneven size in Encode.	Нечетный размер в Encode.
+Unexpected characters	Неожиданные символы
+Unexpected end of string [%s]	Неожиданный конец строки [%s]
+Unexpected message arrived to an interface that is not listening	Неожиданное сообщение прибыло на интерфейс, который не опрашивается
+Unexpected operation from %s:%d	Неожиданная операция из %s:%d
+Unexpected parameter type	Неожиданный тип параметра
+Unexpected return type	Неожиданный возвращаемый тип
+Unexpected script error	Unexpected script error
+Unexpected variant error	Неожиданная ошибка варианта
+Unexpected variant or safe array error: %s%.8x	Неожиданная ошибка вариантного или safe массива: %s%.8x
+Unknown	Неизвестен
+Unknown Adapter mode: %s	Неизвестный режим адаптера: %s
+Unknown Error	Неизвестная ошибка
+Unknown FTP listing format	Неизвестный формат листинга FTP
+Unknown Message Part Type.	Неизвестный Message Part Type.
+Unknown Response Code	Неизвестный код ответа
+Unknown SOAPAction %s	Неизвестное SOAPAction %s
+Unknown Type	Неизвестный тип
+Unknown conversion family %s	Неизвестное семейство преобразования %s
+Unknown conversion type %s	Неизвестный тип преобразования %s
+Unknown credentials use	Unknown credentials use
+Unknown custom variant type ($%.4x)	Неизвестный произвольный вариантный тип ($%.4x)
+Unknown datatype "%s"	Неизвестный тип данных "%s"
+Unknown error	Неизвестная ошибка
+Unknown mode	Неизвестный режим
+Unknown or illegale facility code	Неизвестный или недопустимый код устройства
+Unknown or illegale security code	Неизвестный или недопустимый код защиты
+Unknown or other error: Can not determine owner, other error, or the error can not be revealed.	Неизвестная или другая ошибка: Не могу определить владельца, либо ошибка, или необнаруженная ошибка.
+Unknown picture file extension (.%s)	Неизвестное расширение файла изображения (.%s)
+Unknown queue %s	Неизвестная очередь %s
+Unknown socks error.	Неизвестная ошибка socks.
+Unknown user name	Неизвестное имя пользователя
+Unnamed	Безымянный
+Unrecognized IMAP4 Response Header.	Неопознанный заголовок ответа IMAP4.
+Unrecognized POP3 Response Header:\n"%s"	Unrecognized POP3 Response Header:\n"%s"
+Unrecognized UUE encoding scheme.	Неопознанное схема UUE кодирования.
+Unrecognized content trasnfer encoding.	Неопознанное кодирование содержание передачи.
+Unrecognized movie format	Неизвестный видеоформат
+Unsupported Media Type	Неподдерживаемый тип мультимедиа
+Unsupported SOAP encodingStyle %s	Неподдерживаемый SOAP encodingStyle %s
+Unsupported authorization scheme.	Неподдерживаемая схема авторизации.
+Unsupported calling convention: %s	Неподдерживаемое соглашение о вызовах: %s
+Unsupported character encoding "%s", try using LoadFromFile	Кодирование неподдерживаемого символа "%s", повторите с использованием LoadFromFile
+Unsupported clipboard format	Неподдерживаемый формат буфера обмена
+Unsupported hash algorithm. This implementation supports only MD5 encoding.	Неподдерживаемый hash алгоритм. Эта реализация поддерживает только кодирование MD5.
+Unsupported object type. You can assign only one of the following types or thir descendants: TStrings, TStream.	Неподдерживаемый тип объекта. Вы можете определить только один из следующих типов или их потомков: TStrings, TStream.
+Unsupported transfer mode: "%s"	Неподдерживаемый режим передачи: "%s"
+Unsupported variant type: %s	Неподдерживаемый вариантный тип: %s
+Unterminated field name	Незавершенное имя поля
+Unterminated string constant	Незавершенная строковая константа
+Up	Up
+Up to <A HREF="%s">%0:s</A>\n<UL>	Up to <A HREF="%s">%0:s</A>\n<UL>
+Up to <A HREF="%s">root directory</A>\n<UL>	Вверх в <A HREF="%s">корневой каталог</A>\n<UL>
+Update affected more than 1 record.	Изменение (Update) затрагивает более 1 записи.
+Uploaded file expected for field %s	Закаченный файл ожидается для поля %s
+Use Proxy	Исп. прокси
+User logged in, proceed.	Пользователь вошел, продолжаем.
+User name okay, need password.	Имя пользователя OK, требуется пароль.
+User not local, Will forward	Пользователь не локальный, будет передано далее
+UserID not found	UserID не найден
+UserName	UserName
+Username must not be blank	Имя пользователя не должно быть пустым
+Username: 	Имя: 
+Valid name, no data record (check DNS setup).	Верное имя, нет записи данных (проверьте настройки DNS).
+Value cannot be stored in an optional parameter	Значение не может быть сохранено в необязательный параметр
+Value must be between %d and %d	Значение должно быть между %d и %d
+Value of field '%s' is out of range	Значение поля '%s' вышло за границы
+Variable %s is not a container	Переменная %s - не контейнер
+Variable not found: %s	Переменная не найдена: %s
+Variant is empty	Вариант - пустой
+Variant is not an array	Вариант не является массивом
+Variant method calls not supported	Вызовы вариантных методов не поддерживаются
+Variant operation ran out memory	Операции с вариантом не хватило памяти
+Variant or safe array index out of bounds	Индекс вариантного массива вышел за границы
+Variant or safe array is locked	Вариантный или safe массив заблокирован
+Variant overflow	Переполнение варианта
+Version %s	Версия %s
+Visual	Visual
+Volume	Том
+WINSOCK DLL Version out of range.	Версия WINSOCK DLL вышла за границы.
+WSDL	WSDL
+WSDL Ports for PortType	WSDL порты для PortType
+Warning	Предупреждение
+Warning: warning conditions	Предупреждение: состояние предупреждения
+Web App Debugger	Отладчик Web-приложений
+Web App Module Factory already registered.	Web App Module Factory уже зарегистрирована.
+Web Module Factory already registered	Web Module Factory уже зарегистрирована
+Web Page does not provide content	Web-страница не предоставляло содержимого
+Web Page does not support redirect	Web-страница не поддерживает перенаправление
+Web Page not found: %s	Web-страница не найдена: %s
+WebService Listing	WebService Listing
+WebService Listing Administrator	WebService Listing Administrator
+Wed	Срд
+Wednesday	Среда
+Weeks	Недели
+Welcome to the INDY SMTP Server	Добро пожаловать в INDY SMTP Сервер
+WideString index out of bounds	Индекс WideString вышел за границы
+Win32 Error.  Code: %d.\n%s	Ошибка Win32.  Код: %d.\n%s
+WinSock 2 must be installed to use the socket connection	Должен быть установлен WinSock 2 для использования socket соединения
+Windows socket error: %s (%d), on API '%s'	Ошибка Windows socket: %s (%d), при вызове '%s'
+Winshoes LPD Server %s 	Winshoes LPD Server %s 
+Winsock Initialization Error.	Ошибка инициализации Winsock.
+Winsock not loaded yet.	Winsock еще не загружен.
+Winsock stack	Winsock stack
+Write	Write
+WriteObject called twice for the same instance	WriteObject вызван дважды для одного и того же экземпляра
+XDR to XML Schema Translator (.xdr <-> .xsd)	Транслятор XDR в XML Schema (.xdr <-> .xsd)
+XML Parse Error:\n	XML Parse Error:\n
+XMLBroker: %s is not connected	XMLBroker: %s не подключен
+XMLData to XML Schema Translator (.xml -> .xsd)	Транслятор XMLData в XML Schema (.xml -> .xsd)
+Yards	Ярды
+Year portion of date too large for conversion	Год даты слишком большой для преобразования
+Years	Годы
+Yes to &All	Д&а для всех
+You cannot send a message while you are still waiting for an answer	Вы не можете отправить сообщение, когда Вы ожидаете ответ
+You cannot set %s while the HL7 Component is working	Вы не можете установить %s, пока компонент HL7 работает
+You must chain this component to another I/O Handler before using it	Вы должны связать этот компонент с другим I/O Handler перед его использованием
+ZLib error: target buffer may be too small	Ошибка ZLib: буфер приемника может быть слишком малым
+[$%.8x]	[%.8x]
+[%s%.8x]	[%s%.8x]
+abort job	сброс работы
+by DNSName [127.0.0.1] running Indy SMTP	by DNSName [127.0.0.1] running Indy SMTP
+clock daemon (1)	демон часов (1)
+clock daemon (2)	демон часов (2)
+closing connection	закрытие соединения
+command not recognized	команда не распознана
+connected with %s	соединен с %s
+dbExpress Error: Application is not licensed to use this feature	dbExpress: Приложение не лицензировано для использование этой возможности
+dbExpress Error: Duplicate Transaction ID	Ошибка dbExpress: Дубликат ID транзакции
+dbExpress Error: Insufficient Memory for Operation	Ошибка dbExpress: Не хватает памяти для операции
+dbExpress Error: Invalid Data Translation	Ошибка dbExpress: Неверное преобразование данных
+dbExpress Error: Invalid Field Type	Ошибка dbExpress: Неверное тип поля
+dbExpress Error: Invalid Handle	Ошибка dbExpress: Неверный дескриптор
+dbExpress Error: Invalid Length	Ошибка dbExpress Error: Неверная длина
+dbExpress Error: Invalid Parameter	Ошибка dbExpress: Неверный параметр
+dbExpress Error: Invalid Precision	Ошибка dbExpress: Неверная точность
+dbExpress Error: Invalid Time	''%s'' - неверное время
+dbExpress Error: Invalid Transaction ID	Ошибка dbExpress: Неверный ID транзакции
+dbExpress Error: Invalid Transaction Isolation Level	Ошибка dbExpress: Неверный Уровень Изоляции Транзакций
+dbExpress Error: Invalid Username/Password	Ошибка dbExpress: Неверное имя/пароль
+dbExpress Error: Local Transaction already active	Ошибка dbExpress: Локальная транзакция уже активна
+dbExpress Error: Multiple Transactions not Enabled	Ошибка dbExpress: Несколько транзакций не доступно
+dbExpress Error: Operation Not Supported	Неподдерживаемая возможность
+dbExpress Error: Parameter Not Set	Ошибка dbExpress: Параметр не установлен
+dbExpress Error: Parameter/Column out of Range	Значение должно быть между %d и %d
+dbExpress Error: Result set at EOF	Конец файла
+ddd, dd mmm yyyy hh:mm:ss	ddd, dd mmm yyyy hh:mm:ss
+http://server.company.com/scripts/httpsrvr.dll	http://server.company.com/scripts/httpsrvr.dll
+http://www.nevrona.com/indy/	http://www.nevrona.com/indy/
+kernel messages	сообщения ядра
+line	строка
+line printer subsystem	подсистема строкового принтера
+lines	строк
+local use 0  (local0)	local use 0  (local0)
+local use 1  (local1)	local use 1  (local1)
+local use 2  (local2)	local use 2  (local2)
+local use 3  (local3)	local use 3  (local3)
+local use 4  (local4)	local use 4  (local4)
+local use 5  (local5)	local use 5  (local5)
+local use 6  (local6)	local use 6  (local6)
+local use 7  (local7)	local use 7  (local7)
+log alert	log alert
+log audit	лог аудит
+mail system	почтовая система
+messages generated internally by syslogd	сообщения, созданные внутри syslogd
+method not supported	метод не поддерживается
+network news subsystem	подсистема сетевых новостей
+nothing	пусто
+security/authorization messages (1)	сообщения защиты/авторизации (1)
+security/authorization messages (2)	сообщения защиты/авторизации (2)
+server not responding	сервер не отвечает
+sigaction call failed	sigaction call failed
+system daemons	системные демоны
+user-level messages	сообщения уровня пользователя
+username	username
+varDate type not supported	Тип varDate не поддерживается
+varDispatch type not supported	Тип varDispatch не поддерживается
+varError type not supported	Тип varError не поддерживается
+varVariant type not supported	Тип varVariant не поддерживается
+|<	|<

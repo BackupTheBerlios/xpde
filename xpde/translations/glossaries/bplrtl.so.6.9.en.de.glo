@@ -1,0 +1,388 @@
+en	de
+Codeset conversion failure	Codeset-Konvertierung fehlgeschlagen
+Unable to create directory	Das Verzeichnis kann nicht erstellt werden
+Sun	So
+December	Dezember
+November	November
+October	Oktober
+September	September
+August	August
+July	Juli
+June	Juni
+May	Mai
+April	April
+March	März
+February	Februar
+January	Januar
+Dec	Dez
+Nov	Nov
+Oct	Okt
+Sep	Sep
+Aug	Aug
+Jul	Jul
+Jun	Jun
+May	Mai
+Apr	Apr
+Mar	Mär
+Feb	Feb
+Jan	Jan
+Application is not licensed to use this feature	Die Anwendung ist für diese Funktion nicht lizenziert.
+A call to an OS function failed	Ein Aufruf einer Betriebssystemfunktion ist fehlgeschlagen
+System Error.  Code: %d.\n%s	Systemfehler.  Code: %d.\n%s
+Cannot load package '%s.'  It contains unit '%s,'which is also contained in package '%s'	Package '%s kann nicht geladen werden.'  Es enthält die Unit '%s,'die auch im Package '%s' enthalten ist
+Invalid package handle	Ungültiges Package-Handle
+Invalid package file '%s'	Ungültige Package-Datei '%s'
+Can't load package %s.\n%s	Package %s kann nicht geladen werden.\n%s
+Cannot access package information for package '%s'	Zugriff auf Package-Informationen von '%s' nicht möglich
+Access violation at address %p in module '%s'. %s of address %p	Zugriffsverletzung bei Adresse %p in Modul '%s'. %s von Adresse %p
+Abstract Error	Abstrakter Fehler
+%s (%s, line %d)	%s (%s, Zeile %d)
+Exception in safecall method	Exception in safecall-Methode
+Interface not supported	Schnittstelle nicht unterstützt
+Assertion failed	Auswertung von assert fehlgeschlagen
+External exception %x	Externe Exception %x
+Cannot convert to the specified type	Konvertierung in den angegebenen Typ kann nicht durchgeführt werden
+Cannot convert from the specified type	Konvertierung des angegebenen Typs kann nicht durchgeführt werden
+Variant is empty	Die Variante ist leer
+Recursion while doing a VarDataCastTo	Rekursion beim Durchführen eines VarDataCastTo
+Recursion while doing a VarDataInit	Rekursion beim Durchführen eines VarDataInit
+Recursion while doing a VarDataCopyNoInd	Rekursion beim Durchführen eines VarDataCopyNoInd
+Recursion while doing a VarDataCopy	Rekursion beim Durchführen eines VarDataCopy
+Recursion while doing a VarDataClear	Rekursion beim Durchführen eines VarDataClear
+Unexpected variant error	Unerwarteter Variant-Fehler
+Variant operation ran out memory	Speichermangel bei Varinat-Operation
+Operation not supported	Operation wird nicht unterstützt
+Invalid variant type	Ungültiger Variant-Typ
+Invalid argument	Ungültiges Argument
+Variant overflow	Variant-Überlauf
+Overflow while converting variant of type (%s) into type (%s)	Überlauf bei der Konvertierung einer Variante vom Typ (%s) in Typ (%s)
+Could not convert variant of type (%s) into type (%s)	Variante des Typs (%s) konnte nicht in Typ (%s) konvertiert werden
+Invalid variant operation ($%.8x)	Ungültige Variant-Operation ($%.8x)
+Custom variant type ($%.4x) is not usable	Selbstdefinierter Variant-Typ (%.4x) ist nicht verwendbar
+Custom variant type ($%.4x) already used by %s	Selbstdefinierter Variant-Typ (%.4x) wird bereits von %s verwendet
+Custom variant type ($%.4x) is out of range	Selbstdefinierter Variant-Typ (%.4x) ist nicht im gültigen Bereich
+Unknown custom variant type ($%.4x)	Unbekannter selbstdefinierter Variant-Typ (%.4x)
+Variant is not an array	Variant ist kein Array
+Too many custom variant types have been registered	Es wurden zu viele benutzerdefinierte Variant-Typen registriert
+Custom variant type (%s%.4x) is not usable	Selbstdefinierter Varianttyp (%s%.4x) ist nicht verwendbar
+Custom variant type (%s%.4x) already used by %s	Selbstdefinierter Varianttyp (%s%.4x) wird bereits von %s verwendet
+Custom variant type (%s%.4x) is out of range	Selbstdefinierter Varianttyp (%s%.4x) liegt außerhalb des Bereichs
+Range check error while converting variant of type (%s) into type (%s)	Fehler bei Bereichsüberprüfung während der Konvertierung von Varianttyp (%s) in Typ (%s)
+Range check error for variant of type (%s)	Fehler bei Bereichsüberprüfung für Varianttyp (%s)
+Invalid variant operation (%s%.8x)\n%s	Ungültige Variant-Operation (%s%.8x)\n%s
+Invalid NULL variant operation	Ungültige NULL-Variant-Operation
+Invalid variant operation	Ungültige Variant-Operation
+Invalid variant type conversion	Ungültige Variant-Typumwandlung
+Unexpected variant or safe array error: %s%.8x	Unerwarteter Fehler: %s%.8x im Variant oder sicheren Array
+Variant or safe array is locked	Variant-Array oder sicheres Array ist gesperrt
+Variant or safe array index out of bounds	Variant- oder sicherer Array-Index außerhalb des Bereichs
+Error creating variant or safe array	Fehler wurde durch Variant oder sicheres Array erzeugt
+Format string too long	Format-String zu lang
+Format result longer than 4096 characters	Formatergebnis länger als 4096 Zeichen
+Write	Schreiben
+Read	Lesen
+Variant method calls not supported	Variant-Methodenaufruf nicht unterstützt
+No argument for format '%s'	Kein Argument für Format '%s'
+Format '%s' invalid or incompatible with argument	Format '%s' ungültig oder nicht kompatibel mit Argument
+sigaction call failed	sigaction-Aufruf fehlgeschlagen
+Application Error	Anwendungsfehler
+Exception %s in module %s at %p.\n%s%s\n	Exception %s in Modul %s bei %p.\n%s%s\n
+Operation aborted	Operation abgebrochen
+Privileged instruction	Privilegierte Anweisung
+Quit key hit	Taste zum Verlassen gedrückt
+Control-C hit	Strg+C gedrückt
+Stack overflow	Stack-Überlauf
+Access violation	Schutzverletzung
+Access violation at address %p, accessing address %p	Zugriffsverletzung bei Adresse %p beim Zugriff auf Adresse %p
+Invalid class typecast	Ungültige Typumwandlung
+Invalid pointer operation	Ungültige Zeigeroperation
+Floating point underflow	Gleitkommaunterlauf
+Floating point overflow	Gleitkommaüberlauf
+Floating point division by zero	Gleitkommadivision durch Null
+Invalid floating point operation	Ungültige Gleitkommaoperation
+Integer overflow	Integerüberlauf
+Range check error	Fehler bei Bereichsprüfung
+Division by zero	Division durch Null
+Invalid numeric input	Ungültige numerische Eingabe
+Disk full	Zu wenig Speicherplatz
+Read beyond end of file	Versuch hinter dem Dateiende zu lesen
+File access denied	Dateizugriff verweigert
+Too many open files	Zu viele geöffnete Dateien
+Invalid filename	Ungültiger Dateiname
+File not found	Datei nicht gefunden
+I/O error %d	E/A-Fehler %d
+Out of memory	Zu wenig Arbeitsspeicher
+Invalid argument to date encode	Ungültiges Argument zum Codieren des Datums
+Invalid argument to time encode	Ungültiges Argument für Codierung der Uhrzeit
+'%s' is not a valid boolean value	'%s' ist kein gültiger boolescher Wert
+'%s' is not a valid GUID value	'%s' kein gültiger Wert für GUID
+'%d.%d' is not a valid timestamp	'%d.%d' ist kein gültiger Zeitstempel
+'%g' is not a valid date and time	'%g' kein gültiger Datums- und Zeitwet
+'%s' is not a valid date and time	'%s' ist keine gültige Datums- und Uhrzeitangabe
+'%s' is not a valid time	'%s' ist keine gültige Uhrzeit
+'%s' is not a valid date	'%s' ist kein gültiges Datum
+'%s' is not a valid currency value	'%s' ist kein gültiger Währungwert
+'%s' is not a valid floating point value	'%s' ist kein gültiger Gleitkommawert
+'%s' is not a valid integer value	'%s' ist kein gültiger Integerwert
+<unknown>	<unbekannt>
+Invalid argument to time encode	Ungültiges Argument für Codierung der Uhrzeit
+''%s'' is not a valid time	''%s'' ist keine gültige Zeit
+''%s'' is not a valid integer value	''%s'' ist kein gültiger Integerwert
+''%s'' is not a valid date and time	''%s'' ist kein gültiger Datums- und Zeitwert
+''%s'' is not a valid date	''%s'' ist kein gültiges Datum
+ModifiedJulianDate	Modifiziertes julianisches Datum
+JulianDate	Julianisches Datum
+DateTime	Datum/Uhrzeit
+Millennia	Jahrtausend
+Centuries	Jahrhundert
+Decades	Dekade
+Years	Jahr
+Months	Monat
+Fortnights	Vierzehn Tage
+Weeks	Woche
+Days	Tag
+Hours	Stunde
+Minutes	Minute
+Seconds	Sekunde
+MilliSeconds	Millisekunde
+Time	Uhrzeit
+Reaumur	Reaumur
+Rankine	Rangordnung
+Fahrenheit	Fahrenheit
+Kelvin	Kelvin
+Celsius	Celsius
+Temperature	Temperatur
+Stones	Stones
+Pounds	Pfund
+Ounces	Unze
+LongTons	Tonne (UK)
+Tons	Tonne
+Grains	Gran
+Drams	Drachme
+MetricTons	Metrische Tonne
+Kilograms	Kilogramm
+Hectograms	Hektogramm
+Decagrams	Dekagramm
+Grams	Gramm
+Decigrams	Dezigramm
+Centigrams	Zentigramm
+Milligrams	Milligramm
+Micrograms	Mikrogramm
+Nanograms	Nanogramm
+Mass	Masse
+UKBushels	Scheffel (UK)
+UKBuckets	UKBuckets
+UKPecks	Viertelscheffel (UK)
+UKOunces	Unze (UK)
+UKGill	Viertelpinte (UK)
+UKPints	Pinte (UK)
+UKQuarts	Quart (UK)
+UKPottle	Pottle (UK)
+UKGallons	Gallone (UK)
+DryBushels	Scheffel (Trockenmaß)
+DryBuckets	DryBuckets
+DryPecks	Viertelscheffel (Trockenmaß)
+DryPints	Pinte (Trockenmaß)
+DryQuarts	Quart (Trockenmaß)
+DryGallons	Gallone (Trockenmaß)
+FluidTeaspoons	Teelöffel (Flüssigkeit)
+FluidTablespoons	Esslöffel (Flüssigkeit)
+FluidOunces	Unze (Flüssigkeit)
+FluidGills	Gill (Flüssigkeit)
+FluidCups	Tasse (Flüssigkeit)
+FluidPints	Pinte (Flüssigkeit)
+FluidQuarts	Quart (Flüssigkeit)
+FluidGallons	Gallone (Flüssigkeit)
+Decasteres	Dekaster
+Steres	Ster
+Decisteres	Dezister
+CordFeet	Klasterfuß
+Cords	Klaster
+AcreInches	Morgen/Zoll
+AcreFeet	Morgen/Fuß
+KiloLiters	Kiloliter
+HectoLiters	Hektoliter
+DecaLiters	Dekaliter
+Liters	Liter
+DeciLiters	Deziliter
+CentiLiters	Zentiliter
+MilliLiters	Milliliter
+CubicMiles	Kubikmeilen
+CubicYards	Kubik-Yard
+CubicFeet	Kubikfuß
+CubicInches	Kubikzoll
+CubicKilometers	Kubikkilometer
+CubicHectometers	Kubikhektometer
+CubicDecameters	Kubikdekameter
+CubicMeters	Kubikmeter
+CubicDecimeters	Kubikdezimeter
+CubicCentimeters	Kubikzentimeter
+CubicMillimeters	Kubikmillimeter
+Volume	Volumen
+SquareRods	Quadratrute
+Hectares	Hektoar
+Ares	Ar
+Centares	Zentarien
+Acres	Morgen
+SquareMiles	Quadratmeilen
+SquareYards	Quadrat-Yard
+SquareFeet	Quadratfuß
+SquareInches	Quadratzoll
+SquareKilometers	Quadratkilometer
+SquareHectometers	Quadrathektometer
+SquareDecameters	Quadratdekameter
+SquareMeters	Quadratmeter
+SquareDecimeters	Quadratdezimeter
+SquareCentimeters	Quadratzentimeter
+SquareMillimeters	Quadratmillimeter
+Area	Fläche
+Points	Punkt
+Picas	Pica
+Links	Link
+Chains	Messkette
+Rods	Messrute
+Paces	Schritt
+Hands	Handbreite
+Furlongs	Achtelmeile
+Fathoms	Faden
+Cubits	Elle
+Parsecs	Parsecs
+LightYears	Lichtjahr
+AstronomicalUnits	Astronomische Einheiten
+NauticalMiles	Seemeile
+Miles	Meile
+Yards	Yard
+Feet	Fuß
+Inches	Zoll
+Gigameters	Gigameter
+Megameters	Megameter
+Kilometers	Kilometer
+Hectometers	Hektometer
+Decameters	Dekameter
+Meters	Meter
+Decimeters	Dezimeter
+Centimeters	Zentimeter
+Millimeters	Millimeter
+Microns	Mikron
+Millimicrons	Millimikron
+Angstroms	Angström
+Micromicrons	Mikromikron
+Distance	Entfernung
+No Table of Contents found.	Kein Inhaltsverzeichnis gefunden
+No help found for "%s"	Keine Hilfe gefunden für "%s"
+No context-sensitive Help installed.	Keine kontextsensitive Hilfe installiert.
+No topic-based Help installed.	Keine themenbasierte Hilfe installiert.
+No Help Manager installed.	Kein Hilfemanager installiert.
+%s [%s<?>%s]	%s [%s<?>%s]
+Unexpected characters	Unerwartete Zeichen
+Unexpected end of string [%s]	Unerwartetes Ende des Strings [%s]
+Could not parse real portion	Realer Anteil konnte nicht analysiert werden
+Could not parse required '+' (or '-') symbol	Erforderliches '+' (oder '-') Symbol konnte nicht analysiert werden
+Could not parse required '%s' symbol	Erforderliches '%s'-Symbol kann nicht analysiert werden
+Could not parse imaginary portion	Imaginärer Anteil konnte nicht analysiert werden
+Write	Schreiben
+Read	Lesen
+%s error %d, %s	%s-Fehler %d, %s
+Socket must be in blocking mode	Socket muß sich im Blocking-Modus befinden
+Can't change value while socket is active	Wert kann nicht geändert werden, während der Socket aktiv ist
+Socket already open	Socket ist bereits geöffnet
+Can't create new socket	Es kann kein neuer Socket erzeugt werden
+Can't listen on an open socket	Offener Socket kann nicht überwacht werden
+No address specified	Keine Adresse angegeben
+Asynchronous socket error %d	Asynchroner Socket-Fehler %d
+Windows socket error: %s (%d), on API '%s'	Windows-Socket-Fehler: %s (%d), auf API '%s'
+TStrings descendant %s failed to call inherited constructor	Der Nachkomme von TStrings %s konnte den geerbten Konstruktor nicht aufrufen
+Could not parse %s	%s konnte nicht analysiert werden
+%s has a factor of zero	%s hat den Faktor Null
+Illegal family	Ungültige Familie
+Illegal type	Ungültiger Typ
+[%s%.8x]	[%s%.8x]
+[$%.8x]	[%.8x]
+Conversion family (%s) already registered	Konvertierungsfamilie (%s) bereits registriert
+Unknown conversion family %s	Unbekannte Konvertierungsfamilie %s
+Conversion type (%s) already registered in %s	Konvertierungstyp (%s) bereits registriert in %s
+Unknown conversion type %s	Unkannter Konvertierungstyp %s
+Incompatible conversion types [%s - %s, %s - %s]	Inkompatible Konvertierungstypen [%s - %s, %s - %s]
+Incompatible conversion types [%s, %s, %s]	Inkompatible Konvertierungstypen [%s, %s, %s]
+Incompatible conversion types [%s, %s]	Inkompatible Konvertierungstypen [%s, %s]
+?	?
+%f Julian cannot be represented as a DateTime	%f Julianischer Wert kann nicht als Datum/Uhrzeitwert dargestellt werden
+(%d, %d, %d, %d) is not a valid DayOfWeekInMonth quad	(%d, %d, %d, %d) ist kein gültiger Wert für dieTages- und Monatsangabe  im Datum
+(%d, %d, %d, %d) is not a valid DateMonthWeek quad	(%d, %d, %d, %d) ist kein gültiger Wert für die Monats- und Wochenangabe im Datum
+(%d, %d, %d) is not a valid DateWeek triplet	(%d, %d, %d) ist kein gültiger Wert für die Wochenangabe im Datum
+(%d, %d) is not a valid DateDay pair	(%d, %d) ist kein gültiger Wert für die Tagesangabe im Datum
+Thread Error: %s (%d)	Thread-Fehler: %s (%d)
+Thread creation error: %s	Fehler beim Erzeugen des Thread: %s
+Error setting stream size	Fehler beim Setzen der Größe des Stream
+Stream write error	Stream-Schreibfehler
+Property %s does not exist	Eigenschaft %s existiert nicht.
+%s not in a class registration group	%s befindet sich nicht in einer Gruppe für Klassenregistrierungen
+Too many rows or columns deleted	Zu viele Zeilen oder Spalten gelöscht
+%s expected	%s erwartet
+String expected	String erwartet
+Operation not allowed on sorted list	Operation für sortierte Listen nicht zulässig
+%s.Seek not implemented	%s.Seek nicht implementiert
+Resource %s not found	Ressource %s wurde nicht gefunden
+Failed to set data for '%s'	Fehler beim Setzen der Daten für '%s'
+Invalid component registration	Ungültige Komponentenregistrierung
+Failed to get data for '%s'	Fehler beim Holen der Daten für '%s'
+Failed to create key %s	Erzeugung von Schlüssel %s mißlungen
+Property is read-only	Eigenschaft kann nur gelesen werden
+Stream read error	Stream-Lesefehler
+Printing in progress	Druckvorgang läuft
+Error reading %s%s%s: %s	Fehler beim Lesen von %s%s%s: %s
+Component name '%s' exceeds 64 character limit	Komponentenname '%s' überschreitet 64 Zeichen
+%s on line %d	%s in Zeile %d
+Number expected	Zahl erwartet
+Printer is not currently printing	Der Drucker druckt aktuell nicht
+%s has not been registered as a COM class	%s wurde nicht als COM-Klasse registriert
+Out of memory while expanding memory stream	Expandieren des Speicher-Stream wegen Speichermangel nicht möglich
+Invalid input value.  Use escape key to abandon changes	Ungültiger Eingabewert. Mit der Taste ESC machen Sie die Änderungen rückgängig.
+Invalid input value	Ungültiger Eingabewert
+List index out of bounds (%d)	Listenindex überschreitet das Maximum (%d)
+List count out of bounds (%d)	Zu viele Einträge in der Liste (%d)
+List capacity out of bounds (%d)	Kapazität der Liste ist erschöpft (%d)
+Line too long	Zeile zu lang
+Item not found ($0%x)	Eintrag nicht gefunden ($0%x)
+Cannot insert or delete rows from grid	Es können keine Zeilen des Tabellengitters gelöscht oder eingefügt werden
+Invalid string constant	Ungültige Stringkonstante
+Invalid data type for '%s'	Ungültiger Datentyp für '%s'
+Invalid property value	Ungültiger Eigenschaftswert
+Invalid property type: %s	Ungültiger Eigenschaftstyp: %s
+Invalid property path	Ungültiger Pfad für Eigenschaft
+Invalid property element: %s	Ungültiges Eigenschaftselement: %s
+Invalid property value	Ungültiger Eigenschaftswert
+''%s'' is not a valid component name	''%s'' ist kein gültiger Komponentenname
+'%s' is an invalid mask at (%d)	'%s' ist eine ungültige Maske für (%d)
+Invalid stream format	Ungültiges Stream-Format
+Invalid file name - %s	Ungültiger Dateiname - %s
+Invalid binary value	Ungültiger Binärwert
+Invalid action unregistration	Ungültige Aufhebung der Aktionsregistrierung
+Invalid action registration	Ungültige Aktionsregistrierung
+Invalid action enumeration	Ungültige Aktionsaufzählung
+Invalid action creation	Ungültige Aktionserstellung
+Unable to write to %s	In %s kann nicht geschrieben werden
+Grid index out of range	Gitterindex außerhalb des zulässigen Bereichs
+Identifier expected	Bezeichner erwartet
+Grid too large for operation	Gitter zu groß für Operation
+Cannot open file "%s". %s	Datei %s kann nicht geöffnet werden. %s
+Cannot open file %s	Datei %s kann nicht geöffnet werden
+Fixed row count must be less than row count	Die Anzahl fester Zeilen muß kleiner als die Zeilenanzahl sein
+Fixed column count must be less than column count	Die Anzahl fester Spalten muß kleiner als die Spaltenanzahl sein
+Cannot create file "%s". %s	Datei "%s" kann nicht erstellt werden. %s
+Cannot create file %s	Datei %s kann nicht erstellt werden
+String list does not allow duplicates	In der Stringliste sind Duplikate nicht erlaubt
+A component named %s already exists	Komponente mit der Bezeichnung %s existiert bereits
+List does not allow duplicates ($0%x)	Liste gestattet keine doppelten Einträge ($0%x)
+A class named %s already exists	Klasse mit der Bezeichnung %s existiert bereits
+Delimiter and QuoteChar properties cannot have the same value	Die Eigenschaften Delimiter und QuoteChar dürfen nicht denselben Wert besitzen
+Class %s not found	Klasse %s nicht gefunden
+CheckSynchronize called from thread $%x, which is NOT the main thread	CheckSynchronize wurde vom Thread $%x aufgerufen, der NICHT der Haupt-Thread ist.
+''%s'' expected	''%s'' erwartet
+Can't write to a read-only resource stream	In einen schreibgeschützten Ressourcen-Stream kann nicht geschrieben werden
+List is locked during an active ForEach	Liste ist während eines aktiven ForEach gesperrt
+Bits index out of range	Bits-Index außerhalb des zulässigen Bereichs
+Cannot assign a %s to a %s	%s kann nicht zu  %s zugewiesen werden
+Ancestor for '%s' not found	Vorfahr für '%s' nicht gefunden
+Error	Fehler
+Invalid stream operation	Ungültige Stream-Operation

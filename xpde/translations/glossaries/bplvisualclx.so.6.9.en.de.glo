@@ -1,0 +1,288 @@
+en	de
+Fatal error: Cannot create more than one TApplication instance	Fataler Fehler: Es kann nur eine Instanz von TApplication erstellt werden
+Fatal error: Cannot create application object in a shared object or library.	Fataler Fehler: Anwendungsobjekt kann nicht in gemeinsamem Objekt oder gemeinsamer Bibliothek erstellt werden.
+Loading...	Laden...
+Movie not loaded	Film nicht geladen
+Unrecognized movie format	Unbekanntes Filmformat
+Select All	Alles markieren
+Clear	Entfernen
+Paste	Einfügen
+Copy	Kopieren
+Cut	Ausschneiden
+-	-
+Redo	Widerrufen
+Undo	Rückgängig
+Header Section owner must be a TCustomHeaderControl	Der Besitzer des Header-Abschnitts muss ein TCustomHeaderControl sein
+Owner is not a TCustomHeaderSection	Besitzer ist kein TCustomHeaderSection
+Radio items must have a Controller as a parent	Optionsfelder müssen einen Controller als übergeordnetes Element besitzen
+%s is already in the StatusBar	%s befindet sich bereits in der Statuszeile
+MultiLine must be True when TabPosition is tpLeft or tpRight	Bei TabPosition tpLeft und tpRight muß MultiLine True sein
+Invalid level (%d) for item "%s"	Ungültige Ebene (%d) für Eintrag "%s"
+Invalid item level assignment	Ungültige Zuweisung von Eintragsebenen
+%d is an invalid PageIndex value.  PageIndex must be between 0 and %d	%d ist ein ungültiger Wert für PageIndex. PageIndex muß zwischen 0 und %d liegen
+Failed to delete tab at index %d	Registerseite mit Index %d konnte nicht gelöscht werden
+Invalid LCDNumber value	Ungültiger Wert für LCDNumber
+Cannot set Clipped property while painting	Die Eigenschaft Clipped kann während des Zeichnens nicht geändert werden
+All	Alle
+Unable to write bitmap	Bitmap kann nicht geschrieben werden
+Invalid handle value for %s	Ungültiger Handle-Wert für %s
+Image format not recognized	Das Grafikformat wurde nicht erkannt
+Drive %s does not exist.\nPlease verify the correct drive was given.	Laufwerk %s ist nicht vorhanden.\nBitte stellen Sie sicher, dass das richtige Laufwerk eingestellt wurde.
+"%s"\nPath not found.\nPlease verify the correct path was given.	%s\nPfad nicht gefunden.\nÜberprüfen Sie, ob der korrektePfad angegeben wurde.
+"%s"\nFile not found.\nPlease verify the correct filename was given.	"%s"\nDatei nicht gefunden.\nBitte prüfen Sie, ob der vergebene Dateiname richtig ist.
+"%s" already exists.\nDo you want to replace it?	%s existiert bereits.\nSoll es überschrieben werden?
+Save %s as	%s speichern unter
+Replace &All	Alle erset&zen
+Replace	Ersetzen
+&Replace	&Ersetzen
+Rep&lace with:	Ersetzen &durch:
+&Down	Ab&wärts
+&Up	&Aufwärts
+Direction	Richtung
+Find	Suchen
+Help	Hilfe
+Cancel	Abbrechen
+&Find Next	S&uchen
+Match &case	Gr./&Kleinschreibung
+Match &whole word only	&Nur ganze Wörter
+Fi&nd what:	&Suchen nach:
+Save As	Speichern unter
+Save	Speichern
+Open	Öffnen
+Mime format not supported for TIcon	Mime-Format wird für TIcon nicht unterstützt
+MimeSource format must have an associated data stream	Dem MimeSource-Format muß ein Daten-Stream zugeordnet sein
+Range of %d to %d is invalid	Der Bereich von %d bis %d ist ungültig
+Error resizing ImageList	Fehler bei der Größenänderung der ImageList
+Invalid image dimension	Ungültige Grafikdimension
+Image width and heigth must match	Die Höhe muss mit der Breite der Grafik übereinstimmen
+Invalid image type	Ungültiger Grafiktyp
+Unable to Replace Image	Bild kann nicht ersetzt werden
+Invalid ImageList Index	Ungültiger Bilderlistenindex
+Text not found: "%s"	Text nicht gefunden: "%s"
+Operation not allowed while dispatching application events	Operation bei der Weiterleitung von Anwendungsereignissen nicht zulässig
+Categories must define their own name and description	Kategorien müssen eigene Namen und Beschreibungen definieren
+Property filters may only be name, class or type based (%d:%d)	Eigenschaftsfilter dürfen nur auf Name, Klasse oder Typ basieren (%d:%d)
+Property category does not exist (%s)	Eigenschaftskategorie existiert nicht (%s)
+A property category called %s already exists	Eigenschaftskategorie mit dem Namen %s existiert bereits
+All Commands	Alle Befehle
+Properties	Eigenschaften
+Regular	Normal
+Italic	Kursiv
+Bold	Fett
+Bold Italic	Fett kursiv
+No Preview Available	Keine Vorschau verfügbar
+Preview	Vorschau
+ (%dx%d)	 (%dx%d)
+Picture:	Grafik:
+Menu '%s' is already being used by another form	Menü '%s' wird bereits von einem anderen Formular benutzt
+(Untitled)	(Unbenannt)
+There is no default printer currently selected	Zur Zeit ist kein Standarddrucker gewählt
+Operation not supported on selected printer	Operation auf ausgewähltem Drucker nicht verfügbar
+Custom Colors	Selbstdefinierte Farben
+Text exceeds memo capacity	Text überschreitet Memo-Kapazität
+Default	Standard
+Cannot open clipboard	Zwischenablage kann nicht geöffnet werden
+Clipboard does not support Icons	Zwischenablage unterstützt keine Symbole
+Invalid clipboard format	Ungültiges Format der Zwischenablage
+Link to 	Verknüpfung auf 
+File	Datei
+Directory	Verzeichnis
+All Files (*)|*|	Alle Dateien (*)|*|
+Group	Gruppe
+Owner	Besitzer
+Attributes	Attribute
+Date Modified	Datum geändert
+Type	Typ
+Size	Größe
+Name	Name
+Additional	Zusätzlich
+Continue delete operation?	Soll der Löschvorgang fortgesetzt werden?
+Are you sure you want to delete "%s"?	Wollen Sie "%s" wirklich löschen?
+Are you sure you want to delete these %d items?	Wollen Sie diese %d Einträge wirklich löschen?
+Confirm file deletion	Bestätigung
+A file with that name already exists. Please specify a different filename.	Eine Datei mit diesem Namen gibt es bereits. Geben Sie einen anderen Dateinamen an.
+"%s"\nFile not found.	"%s"\nDatei nicht gefunden.
+New Folder	Neuer Ordner
+Unable to read directory "%s".	Verzeichnis "%s" kann nicht gelesen werden.
+Ne&twork...	Ne&tzwerk...
+&Files: (*.*)	&Dateien: (*.*)
+&Directories:	&Verzeichnisse:
+D&rives:	&Laufwerke:
+Directory &Name:	Verzeichnis&name:
+"%s" is not a subdirectory of "%s"	"%s" ist kein Unterverzeichnis von "%s"
+Directory "%s" is not empty.	Verzeichnis "%s" ist nicht leer.
+Cannot read directory:\n"%s"	Verzeichnis:\n"%s"
+Access denied to "%s"	Zugriff auf "%s" verweigert
+Unable to create directory "%s".	Verzeichnis "%s" kann nicht angelegt werden.
+Select Directory	Verzeichnis auswählen
+The specified directory does not exist. Create it?	Das angegebene Verzeichnis existiert nicht. Soll es angelegt werden?
+Unable to insert a line	Zeile kann nicht eingefügt werden
+Unnamed	Unbenannt
+Cannot create a default method name for an unnamed component	Für eine unbenannte Komponente kann kein Standard-Methodennamen erstellt werden
+Value must be between %d and %d	Wert muß zwischen %d und %d liegen
+(None)	(Leer)
+(Unknown)	(Unbekannt)
+Yes to &All	A&lle Ja
+N&o to All	&Alle Nein
+&All	&Alle
+&Ignore	&Ignorieren
+&Retry	&Wiederholen
+&Abort	&Abbrechen
+Help	Hilfe
+No help available	Keine Hilfe verfügbar
+&Help	&Hilfe
+Cancel	Abbrechen
+OK	OK
+&No	&Nein
+&Yes	&Ja
+Confirm	Bestätigung
+Information	Information
+Error	Fehler
+Warning	Warnung
+Invalid value for current item	Ungültiger Wert
+Invalid numeric value	Ungültiger numerischer Wert
+Jpegs	Jpegs
+Drawings	Zeichnungen
+PNGs	PNGs
+Pixmaps	Pixmaps
+Bitmaps	Bitmaps
+Icons	Symbole
+BG	HG
+FG	VG
+FB	VH
+PutObject to undefined item	PutObject auf undefiniertes Element
+Cannot drag a form	Formulare können nicht gezogen werden
+&All	&Alle
+Abort	Abbrechen
+&Retry	&Wiederholen
+&Ignore	&Ignorieren
+&Close	S&chließen
+&Help	&Hilfe
+&No	&Nein
+&Yes	&Ja
+Cancel	Abbrechen
+OK	OK
+A control cannot have itself as its parent	Steuerelement kann nicht sich selbst als Vorfahr haben
+Can only modify an image if it contains a bitmap	Bild kann nur geändert werden, wenn es ein Bitmap enthält
+Cannot hide an MDI Child Form	Untergeordnetes MDI-Formular kann nicht verborgen werden
+Invalid MDIParent for class %s	Ungültiger MDIParent für Klasse %s
+Cannot create form. No MDI forms are currently active	Formular kann nicht erstellt werden. Zur Zeit sind keine MDI-Formulare aktiv
+GroupIndex cannot be less than a previous menu item's GroupIndex	GroupIndex kann nicht kleiner sein als der GroupIndex eines vorhergehenden Menüelementes
+%s on %s	%s an %s
+Printer selected is not valid	Ausgewählter Drucker ist ungültig
+Printer index out of range	Druckerindex außerhalb des zulässigen Bereichs
+No printer adapter available for printing	Für das Drucken ist kein Druckeradapter verfügbar
+Not enough timers available	Nicht genügend Timer verfügbar
+TMenu.SetForm: argument must be TCustomForm	Das Argument von TMenu.SetForm: muss ein TCustomForm sein
+Sub-menu is not in menu	Untermenü ist nicht im Menü
+Menu insertion recursion not allowed	Rekursion beim Einfügen von Menüs ist nicht zulässig
+Menu inserted twice	Menü zweimal eingefügt
+Menu index out of range	Menüindex außerhalb des zulässigen Bereichs
+%s property out of range	Eigenschaft %s außerhalb des gültigen Bereichs
+Scrollbar property out of range	Eigenschaft Scrollbar außerhalb des zulässigen Bereichs
+Cannot make a visible window modal	Aus einem sichtbaren Fenster kann kein modales gemacht werden
+Cannot change Visible in OnShow or OnHide	Eigenschaft Visible kann in OnShow oder OnHide nicht verändert werden
+Parent given is not a parent of '%s'	Das angegebene übergeordnete Element ist kein übergeordnetes Element von '%s'
+Control '%s' has no parent widget	Element '%s' besitzt kein übergeordnetes Widget
+Cannot focus a disabled or invisible window (%s)	Ein deaktiviertes oder unsichtbares Fenster (%s) kann den Fokus nicht erhalten
+Error creating widget	Fehler beim Erzeugen von Widget
+Too many images	Zu viele Bilder
+Invalid XImage	Ungültiges XImage
+Color depth must be 1, 8 or 32 bpp	Die Farbtiefe muß 1, 8 oder 32 bpp betragen
+Invalid widget handle	Ungültiges Widget-Handle
+Invalid image size	Ungültige Bildgröße
+Invalid canvas state request	Ungültige Status-Anforderung für Canvas
+Canvas does not allow drawing	Leinwand/Bild erlaubt kein Zeichnen
+Out of system resources	Systemressourcen erschöpft.
+Unsupported clipboard format	Format der Zwischenablage wird nicht unterstützt
+Unknown picture file extension (.%s)	Unbekannte Bilddateierweiterung (.%s)
+Cannot change the size of an icon	Die Größe eines Symbols kann nicht geändert werden
+Scan line index out of range	Bereichsüberschreitung bei Zeilenindex
+Bitmap is empty	Bitmap ist leer
+Invalid pixel format	Ungültiges Pixel-Format
+Icon image is not valid	Ungültiges Symbol
+Bitmap image is not valid	Bitmap ist ungültig
+Tab style incompatible with current tab position	Register-Stil ist mit der aktuellen Position nicht kompatibel.
+Tab position incompatible with current tab style	Position des Register ist nicht mit dem aktuellen Register-Stil kompatibel.
+Tab index out of bounds	Registerindex außerhalb des zulässigen Bereichs
+Resource %s is of incorrect class	Ressource %s hat die falsche Klasse
+WriteObject called twice for the same instance	Zweimaliger Aufruf von WriteObject für die gleiche Instanz
+Open	Öffnen
+Alt+	Alt+
+Ctrl+	Strg+
+Shift+	Umsch+
+Del	Entf
+Ins	Einfg
+Down	Nach unten
+Right	Rechts
+Up	Nach oben
+Left	Links
+Home	Pos1
+End	Ende
+PgDn	BildAb
+PgUp	BildAuf
+Space	Leertaste
+Enter	Eingabe
+Return	Eingabe
+Esc	Esc
+BackTab	RückTab
+Tab	Tab
+Backspace	Rück
+Too many buttons specified for message box	Für dieses Meldungsfenster wurden zu viele Schaltflächen angegeben
+Class %s could not create QT widget	Klasse %s konnte kein QT-Widget erzeugen
+Auto Preview	Schnellvorschau
+&Back	&Zurück
+Back	Zurück
+Cancel	Abbrechen
+Delete	Löschen
+Open	Öffnen
+*	*
+*	*
+Open	Öffnen
+&Forward	&Weiter
+Forward	Weiter
+&Help	&Hilfe
+&Help	&Hilfe
+Show &Hidden Files	Verborgene Dateien an&zeigen
+Ho&me	&Start
+Home directory	Startverzeichnis
+&Look in:	&Suchen:
+File Name:	Dateiname:
+File Type:	Dateityp:
+ListButton	ListButton
+Change view	Ansicht ändern
+-	-
+-	-
+-	-
+New &Directory	Neues &Verzeichnis
+Create new directory	Neues Verzeichnis erstellen
+New &Directory	Neues &Verzeichnis
+&Open	Ö&ffnen
+&Open	Ö&ffnen
+Preview	Vorschau
+PreviewLabel	Labelvorschau
+Open as &read-only	Nur zum &Lesen öffnen 
+&Reload	Neu &laden
+Reload	Neu laden
+&Rename	U&mbenennen
+ToolBar1	ToolBar1
+&Back	&Zurück
+&Forward	&Weiter
+ToolButton3	ToolButton3
+Ho&me	&Start
+&Reload	Neu &laden
+&Up one directory	Ein Verzeichnis nach &oben
+Up one directory	Ein Verzeichnis nach oben
+&Up one directory	Ein Verzeichnis nach &oben
+&Detail	&Details
+Detaul view	Detailansicht
+Large &Icons	&Große Symbole
+Large icon view	Große Symbole anzeigen
+&List	&Liste
+List view	Listenansicht
+&Small Icons	&Kleine Symbole
+Small Icon view	Kleine Symoble anzeigen
+OK	OK
+Cancel	Abbrechen
+Select Directory	Verzeichnis auswählen
+&Directory:	&Verzeichnis:

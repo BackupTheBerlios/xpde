@@ -1,0 +1,70 @@
+en	de
+Search string not found!	Gesuchten Text nicht gefunden!
+Untitled	Unbenannt
+ - XPde Notepad	 - XPde Editor
+ has been modified. Do you want to save it?	 wurde geändert. Sollen die Änderungen gespeichert werden?
+Cancel	Abbrechen
+OK	OK
+Go To	Gehe zu
+&Line:	&Zeile:
+&Copy	&Kopieren
+Edit	Bearbeiten
+Copy	Kopieren
+Cu&t	Ausschneiden
+Edit	Bearbeiten
+Cut	Ausschneiden
+&Delete	&Löschen
+Edit	Bearbeiten
+Delete	Löschen
+&Paste	&Einfügen
+Edit	Bearbeiten
+Paste	Einfügen
+Select &All	&Alles markieren
+Edit	Bearbeiten
+Select All	Alles markieren
+&Undo	&Rückgängig
+Edit	Bearbeiten
+Undo	Rückgängig
+Find	Suchen
+XPde Notepad	XPde Editor
+&Edit	&Bearbeiten
+&Find...	&Suchen...
+Find &Next	&Weitersuchen
+&Go To...	&Gehe zu...
+&Replace...	&Ersetzen...
+&Time/Date	&Uhrzeit/Datum
+&File	&Datei
+E&xit	B&eenden
+&New	&Neu
+&Open...	Ö&ffnen...
+&Page Se&tup...	&Seite einrichten...
+&Print	&Drucken
+&Save	&Speichen
+Save &As...	Speichern &unter...
+F&ormat	F&ormat
+&Font...	&Schriftart...
+&Word Wrap	&Zeilenumbruch
+&Help	&Hilfe
+&About Notepad	&Über Editor
+-	-
+-	-
+-	-
+-	-
+-	-
+Replace	Ersetzen
+Save	Speichern
+About XPde	Über XPde
+OK	OK
+Copyright (c) 2002-2003 XPde Team	Copyright (c) 2002-2003 XPde Team
+This product is licensed under the GPL license, you can read it at http://www.gnu.org/licenses/gpl.txt	Dieses Produkt ist lizensiert unter der GPL-Lizens, zu lesen unter http://www.gnu.org/licenses/gpl.txt\n
+Available memory to XPde :	Verfügbarer Hauptspeicher für XPde :
+&Browse...	&Durchsuchen...
+Cancel	Abbrechen
+OK	OK
+&Always use the selected program to open this kind of file	&Dateityp immer mit dem ausgewählten Programm öffnen
+&Programs	&Programme
+Choose the program you want to use to open this file:	Wählen Sie das programm, das zum Öffnen dieser Datei verwendet werden soll:
+File:	Datei:
+Executables Files (*)|*	Programme (*)|*
+Select a program	Programm auswählen
+Open With	Öffnen mit

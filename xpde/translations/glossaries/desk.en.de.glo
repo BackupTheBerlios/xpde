@@ -1,0 +1,65 @@
+en	de
+(None)	(Leer)
+&Apply	&Anwenden
+&Browse...	&Durchsuchen...
+Cancel	Abbrechen
+OK	OK
+A&dvanced	&Erweitert
+Se&ttings	E&instellungen
+Pre&view	&Vorschau
+P&ower...	&Energieverwaltung...
+Customize &Desktop...	&Desktop anpassen...
+Help	Hilfe
+&Save As...	&Speichern unter...
+&Delete	&Löschen
+&Troubleshoot...	&Problembehandlung...
+Ad&vanced	E&rweitert
+&Effects...	&Effekte...
+Center\nTile\nStretch	Zentriert\nNebeneinander\nGestreckt
+Stretch	Gestreckt
+On resume, &password protect	&Kennworteingabe bei Reaktivierung
+Display Properties	Eigenschaften von Anzeige
+&Screen resolution	Bild&schirmauflösung
+&Color quality	&Farbqualität
+&Screen saver	&Bildschirmschoner
+Monitor power	Energieeinstellungen von Monitor
+800 by 600 pixels	800 x 600 Pixel
+&Windows and buttons:	&Fenster und Schaltflächen:
+&Color scheme:	&Farbschema:
+&Font size:	&Schriftgrad:
+&Wait:	&Wartezeit:
+minutes	Min.
+To adjust monitor power settings and save energy, click Power.	Klicken Sie auf "Energieverwaltung", um die Energieeinstellungen für den Monitor anzupassen und damit Energie zu sparen.
+Bac&kground:	&Hintergrund:
+&Color:	&Farbe:
+A theme is a background plus a set of sounds, icons, and other elements to help you personalize your computer with one click.	Ein Design ist ein Hintergrund, sowie ein Satz von Sounds, Symbolen und anderen Elementen, mit dem Sie den Computer mit einem Mausklick individuell gestallten können.
+&Theme:	&Design:
+Sample:	Besipiel:
+Drag the monitor icons to match the physical arrangement of your monitors.	Ordnen Sie die Monitorsymbole so an, dass sie der physikalischen Anordnung Ihrer Monitore entsprechen.
+Display:	Anzeige:
+(Default Monitor) on %s	(Standardmonitor) mit %s
+Less	Niedrig
+More	Hoch
+&Position:	&Ausrichtung:
+Pictures (*.jpg;*.bmp)	Bilddateien (*.jpg;*.bmp)
+Select a picture	Hintergrundbild auswählen
+Themes	Designs
+Settings 	Einstellungen
+Appearance	Darstellungen
+Screen Saver	Bildschirmschoner
+Desktop	Desktop
+About XPde	Über XPde
+OK	OK
+Copyright (c) 2002-2003 XPde Team	Copyright (c) 2002-2003 XPde Team
+This product is licensed under the GPL license, you can read it at http://www.gnu.org/licenses/gpl.txt	Dieses Produkt ist lizensiert unter der GPL-Lizens, zu lesen unter http://www.gnu.org/licenses/gpl.txt\n
+Available memory to XPde :	Verfügbarer Hauptspeicher für XPde :
+&Browse...	&Durchsuchen...
+Cancel	Abbrechen
+OK	OK
+&Always use the selected program to open this kind of file	&Dateityp immer mit dem ausgewählten Programm öffnen
+&Programs	&Programme
+Choose the program you want to use to open this file:	Wählen Sie das programm, das zum Öffnen dieser Datei verwendet werden soll:
+File:	Datei:
+Executables Files (*)|*	Programme (*)|*
+Select a program	Programm auswählen
+Open With	Öffnen mit

@@ -1,0 +1,1982 @@
+en	da
+ 	 
+ \n	 \n
+ &Images 	 &Billeder 
+ &Selected Image 	 &Valgte billede 
+ (%dx%d)	 (%dx%d)
+ + 	 + 
+ - 	 - 
+ Log Size 	 Log Størrelse 
+ Options 	 Valgmuligheder 
+ not specified	 ikke angivet
+"%s"\nFile not found.	"%s"\nFil ikke fundet.
+"%s"\nFile not found.\nPlease verify the correct filename was given.	"%s"\nFil ikke fundet.\nKontroller venligt at filnavnet er korrekt.
+"%s"\nPath not found.\nPlease verify the correct path was given.	"%s"\nStien ikke fundet.\nKontroller venligst, at stien er korrekt.
+"%s" Command not implemented.	"%s" kommando ikke implementeret.
+"%s" DOMImplementation already registered	"%s" DOMImplementation er allerede registreret
+"%s" already exists.\nDo you want to replace it?	"%s" findes allerede.\nØnsker du at erstatte den?
+"%s" created.	"%s" er nu oprettet.
+"%s" is  is working directory.	"%s" is  is working directory.
+"%s" is not a subdirectory of "%s"	"%s" er ikke en undermappe af "%s"
+%0:s: Action %1:s not found in associated Adapter	%0:s: Aktion %1:s ikke fundet i tilknyttet adapter
+%0:s: Dataset %1:s not active	%0:s: Datasæt %1:s ikke aktiv
+%0:s: Dataset %1:s unknown keyfields	%0:s: Dataset %1:s ukendte nøglefelter
+%0:s: Field "%1:s" not found	%0:s: Felt "%1:s" ikke fundet
+%0:s: Field %1:s not found in associated Adapter	%0:s: Felt %1:s ikke fundet i det tilknyttede adapter
+%0:s: ValueField property value is blank	%0:s: ValueField egenskaben er tom
+%d is an invalid PageIndex value.  PageIndex must be between 0 and %d	%s er en ugyldig PageIndex værdi. PageIndex skal være mellem 0 og %d
+%d: Circular links are not allowed	%d: Cirkulære referencer er ikke tilladt
+%f Julian cannot be represented as a DateTime	%f Julian kan ikke repræsenteres som en DateTime
+%g is not a valid value for field '%s'. The allowed range is %g to %g	%g er ikke en gyldig værdi for felt '%s'. Det tilladte område er %g til %g
+%s	%s
+%s %s Error: (%d)%s	%s %s Fejl: (%d)%s
+%s (%s, line %d)	%s (%s, linje %d)
+%s Address Error	%s adressefejl
+%s Address Okay	%s adresse O.k.
+%s Command successful.	%s kommandoen lykkedes.
+%s Non-visual component for 32-bit Delphi.	%s Ikke-visuel komponent for 32-bit Delphi.
+%s [%s<?>%s]	%s [%s<?>%s]
+%s cannot be set on a ref item	%s kan ikke være sat på et referenceelement
+%s could not be loaded.	%s kunne ikke indlæses.
+%s directory structure.	%s filmappestruktur.
+%s does not allow multiple files	%s tillader ikke flere filer
+%s does not allow multiple values	%s tillader ikke flere værdier
+%s does not support file upload	%s understøtter ikke filupload
+%s error %d, %s	%s fejl %d, %s
+%s expected	Forventede %s
+%s exposes the following interfaces:	%s udviser følgende interfaces:
+%s has a factor of zero	%s har en faktor nul
+%s has not been registered as a COM class	%s er ikke blevet registreret som en COM klasse
+%s is already in the StatusBar	%s er allerede i statusbjælken
+%s is corrupt.	%s er korrupt.
+%s is not a Gopher+ server	%s er ikke en Gopher+ vært
+%s is not a valid BCD value	%s er ikke en gyldig BCD værdi
+%s is not a valid hex string	%s er ikke et gyldigt hexadecimalt tal
+%s is not a valid service.	%s er ikke en gyldig tjeneste.
+%s is not a valid value for field '%s'. The allowed range is %s to %s	%s er ikke en gyldig værdi for felt '%s'. Det tilladte område er %s til %s
+%s not in a class registration group	%s er ikke i en klasseregistreringsgruppe
+%s on %s	%s på %s
+%s on line %d	%s på linje %d
+%s property out of range	%s egenskab er uden for gyldigt talområde
+%s requires a file	%s kræver en fil
+%s.FieldName = ''	%s.FieldName = ''
+%s.Seek not implemented	%s.Seek er ikke implementeret
+%s.XMLBroker = nil	%s.XMLBroker = nil
+%s.XMLComponent = nil	%s.XMLComponent = nil
+%s: Action name is blank	%s: Action navn er tom
+%s: Adapter property is nil	%s: Adapter egenskab er nil
+%s: DataSet property is nil	%s: Dataset egenskaben er nil
+%s: DisplayComponent property is nil	%s: DisplayComponent egenskab er nil
+%s: Fieldname is blank	%s: Feltnavn er tomt
+%s: missing XMLBroker	%s: mangler XMLBroker
+%s_Disp	%s_Disp
+%s_Doc	%s_Doc
+%s_IDs	%s_IDs
+%s_Names	%s_Names
+%s_RS	%s_RS
+%s_Table	%s_Table
+%s_XML	%s_XML
+&Abort	&Abryd
+&About...	&Om programmet...
+&Activate at Startup	&Aktiver ved opstart
+&Add	&Tilføj
+&Add...	&Tilføj...
+&All	&Alle
+&Apply	&Anvend
+&Back	&Tilbage
+&Bindings	&Bindinger
+&Browser:	&Netlæser:
+&Caption:	&Overskrift:
+&Clear	&Slet
+&Close	&Luk
+&Copy	&Kopier
+&Default URL:	&Standart URL:
+&Delete	&Slet
+&Detail	&Detaljer
+&Details...	&Detaljer...
+&Directories:	&Filmapper:
+&Directory:	&Filmappe:
+&Down	&Ned
+&Edit CommandText	&Rediger CommandText
+&Edit Connection Properties	&Rediger forbindelsesegenskaber
+&Files: (*.*)	&Filer: (*.*)
+&Fill Color:	&Fyldfarve:
+&Find Next	Find &Næste
+&Forward	&Frem
+&Help	&Hjælp
+&IP Address	&IP adresse
+&Ignore	&Ignorer
+&Input Mask:	&Inddata maske:
+&Input Text:	&Inddata tekst:
+&Items	&Liste
+&List	&Liste
+&Load...	&Indlæs...
+&Log To List	&Log til liste
+&Log Traffic	&Log traffik
+&Look in:	&Se i:
+&Masks...	&Masker...
+&New Item	&Ny
+&New Message Part...	&Ny meddelelsesdel...
+&New Node	&Nyt knudepunkt
+&Next	&Næste
+&No	&Nej
+&OK	&O.k.
+&Open	&Åbn
+&Options...	&Indstillinger...
+&Password:	&Adgangskode:
+&Paste	&Indsæt
+&Port	&Port
+&Port:	&Port:
+&Previous	&Forrige
+&Reload	&Genindlæs
+&Remove	&Fjern
+&Rename	&Omdøb
+&Replace	&Erstat
+&Reset	&Nulstil
+&Retry	&Gentag
+&Sample Masks:	&Eksempler på masker:
+&Save...	&Gem...
+&Search Path:	&Søgesti:
+&Server	&Server
+&Small Icons	&Små ikoner
+&Start Server	&Start server
+&State Index:	&Tilstandsindeks:
+&Test Input:	&Test inddata:
+&Text:	&Tekst:
+&Translate Post	&Oversæt denne
+&Translate Text	&Oversæt tekst
+&Transparent Color:	&Transparentfarve:
+&UDP Port:	&UDP Port:
+&Up	&Op
+&Up one directory	&Et filmappeniveau op
+&User Name:	&Brugernavn
+&Wrap Text	&Ombryd tekst
+&Yes	&Ja
+'%d.%d' is not a valid timestamp	'%d.%d' er ikke et gyldigt tidspunkt
+'%g' is not a valid date and time	'%g' er ikke et gyldigt dato og klokkeslet
+'%s' is an invalid mask at (%d)	'%s' er en ugyldig maske ved (%d)
+'%s' is not a valid GUID value	'%s' er ikke en gyldig GUID værdi
+'%s' is not a valid boolean value	'%s' er ikke en gyldig boolean værdi
+'%s' is not a valid boolean value for field '%s'	'%s' er ikke en gyldig boolean værdi for felt '%s'
+'%s' is not a valid currency value	'%s' er ikke en gyldig valutaværdi
+'%s' is not a valid date	'%s' er ikke en gyldig dato
+'%s' is not a valid date and time	'%s' er ikke en gyldig dato og klokkeslet
+'%s' is not a valid floating point value	'%s' er ikke en gyldig kommatalsværdi
+'%s' is not a valid floating point value for field '%s'	'%s' er ikke en gyldig kommatalsværdi for felt '%s'
+'%s' is not a valid integer value	'%s' er ikke en gyldig heltalsværdi
+'%s' is not a valid integer value for field '%s'	'%s' er ikke en gyldig heltalsværdi for felt '%s'
+'%s' is not a valid time	'%s' er ikke et gyldigt klokkeslet
+''%s'' expected	Forventede ''%s''
+''%s'' is not a valid component name	''%s'' er ikke et gyldigt komponentnavn
+''%s'' is not a valid date	''%s'' er ikke en gyldig dato
+''%s'' is not a valid date and time	''%s'' er ikke en gyldig dato og klokkeslet
+''%s'' is not a valid integer value	''%s'' er ikke en gyldig heltalsværdi
+''%s'' is not a valid time	''%s'' er ikke et gyldigt klokkeslet
+'(' expected but %s found	'(' blev forventet men %s blev fundet
+')' expected but %s found	')' blev forventet, men %s blev fundet
+')' or ',' expected but %s found	')' eller ',' blev forventet, men %s fundet
+(%d, %d) is not a valid DateDay pair	(%d, %d) er ikke et gyldigt DatoDag par
+(%d, %d, %d) is not a valid DateWeek triplet	(%d, %d, %d) er ikke en gyldig DatoUge triplet
+(%d, %d, %d, %d) is not a valid DateMonthWeek quad	(%d, %d, %d, %d) er ikke en gyldig DatoMåneduge firling
+(%d, %d, %d, %d) is not a valid DayOfWeekInMonth quad	(%d, %d, %d, %d) er ikke en gyldig DayOfWeekInMonth firling
+(None)	(Ingen)
+(Not available)	(Ikke til rådighed)
+(Null)	(Null)
+(Unassigned)	(Ikke tildelt)
+(Unknown)	(Ukendt)
+(Untitled)	(Uden titel)
+(none)	(ingen)
+*	*
+-	-
+-Err 501 MailB is not implemented	-Err 501 MailB er ikke implementeret
+/Clean	/Clean
+/Details	/Details
+/List	/List
+0 lines	0 linjer
+1999 XML Schema Translator (.xsd <-> .xsd)	1999 XML skema oversætter (.xsd <-> .xsd)
+;Input;Output;Input/Output;Result	;Input;Output;Input/Output;Result
+;String;SmallInt;Integer;Word;Boolean;Float;Currency;BCD;Date;Time;DateTime;;;;Blob;Memo;Graphic;;;;;Cursor;	;String;SmallInt;Integer;Word;Boolean;Float;Currency;BCD;Date;Time;DateTime;;;;Blob;Memo;Graphic;;;;;Cursor;
+<	<
+<#DETAILS>	<#DETAILS>
+<#LIST>	<#LIST>
+</BODY>	</BODY>
+</HTML>	</HTML>
+</UL></BODY></HTML>\n	</UL></BODY></HTML>\n
+</head><body>	</head><body>
+</head><body><h1>Error Encountered</h1><P>Interface %s not found</P></body></html>	</head><body><h1>Fejl fundet</h1><P>Interface %s findes ikke</P></body></html>
+</head><body><h1>Forbidden (403)</h1><P>Access Forbidden</P></body></html>	</head><body><h1>Forbudt (403)</h1><P>Adgang forbudt</P></body></html>
+<<	<<
+<CR>	<CR>
+<EOL>	<EOL>
+<HTML><HEAD><TITLE>Directory of %s</TITLE></HEAD><BODY><H1>Directory of %0:s</H1>\n	<HTML><HEAD><TITLE>Filmappen %s</TITLE></HEAD><BODY><H1>Filmappen %0:s</H1>\n
+<HTML><HEAD><TITLE>Unauthorized</TITLE></HEAD><BODY><H1>Unauthorized</H1>Proper authorization is required for this area. Either your browser does not perform authorization, or your authorization has failed.</BODY></HTML>\n	<HTML><HEAD><TITLE>Uautoriseret</TITLE></HEAD><BODY><H1>Uautoriseret</H1>Korrekt autorisation er påkrævet for dette område. Enten foretager din netlæser ikke autorisation, eller også fejlede den.</BODY></HTML>\n
+<HTML><TITLE>Directory browsing is forbidden</TITLE><BODY><H1>The requested URL is forbidden</H1><P>HTTP status code: 403</BODY></HTML>\n	<HTML><TITLE>Filmappe visning er forbudt</TITLE><BODY><H1>Den angivne URL er forbudt</H1><P>HTTP statuskode: 403</BODY></HTML>\n
+<HTML><TITLE>Invalid HTTP request: Method not allowed for HTTP/1.0</TITLE><BODY><H1>Invalid HTTP request: Method not allowed for HTTP/1.0</H1><P>HTTP status code: 400</BODY></HTML>\n	<HTML><TITLE>Ugyldig HTTP forespørgsel: Metoden er ikke tilladt for HTTP/1.0</TITLE><BODY><H1>Ugyldig HTTP forespørgsel: Metoden er ikke tilladt for HTTP/1.0</H1><P>HTTP statuskode: 400</BODY></HTML>\n
+<HTML><TITLE>The requested URL is forbidden</TITLE><BODY><H1>The requested URL is forbidden</H1><P>HTTP status code: 403</BODY></HTML>\n	<HTML><TITLE>Den forespurgte URL er forbudt</TITLE><BODY><H1>Den forespurgte URL er forbudt</H1><P>HTTP statuskode: 403</BODY></HTML>\n
+<LF>	<LF>
+<LI><A HREF="%s">%s</A> (%d bytes)\n	<LI><A HREF="%s">%s</A> (%d byte)\n
+<LI>[ <A HREF="%s">%s</A> ]\n	<LI>[ <A HREF="%s">%s</A> ]\n
+<TABLE BORDER=1 CELLPADDING=4>\n<TR><TD><P ALIGN=CENTER>Design-time Warnings<P>\n%s\n</TD></TD>\n</TABLE>\n	<TABLE BORDER=1 CELLPADDING=4>\n<TR><TD><P ALIGN=CENTER>Design-tidspunkt advarsler<P>\n%s\n</TD></TD>\n</TABLE>\n
+<TITLE>Internal Server Error</TITLE><BODY><H1>Internal Server Error</H1><P>HTTP status code: 500<P>HTTP error message: %s</BODY>	<TITLE>Intern værtsfejl</TITLE><BODY><H1>Intern værtsfejl</H1><P>HTTP statuskode: 500<P>HTTP fejlbesked: %s</BODY>
+<TITLE>The requested URL was not found</TITLE><BODY><H1>The requested URL was not found</H1><P>HTTP status code: 404</BODY>	<TITLE>Den forespurgte URL blev ikke fundet</TITLE><BODY><H1>Den forespurgte URL blev ikke fundet</H1><P>HTTP statuskode: 404</BODY>
+<UL>\n	<UL>\n
+<a HREF=<#PATH>List>View List</a>&nbsp;|&nbsp;<a>View Details</a>\n	<a HREF=<#PATH>List>Vis liste</a>&nbsp;|&nbsp;<a>Vis detaljer</a>\n
+<a class="NavBar" href="%s">%s</a>&nbsp;&gt;&nbsp;<span class="Off">%s</span>	<a class="NavBar" href="%s">%s</a>&nbsp;&gt;&nbsp;<span class="Off">%s</span>
+<a>View List</a>&nbsp;|&nbsp;<a HREF="<#PATH>Details">View Details</a>\n	<a>Vis liste</a>&nbsp;|&nbsp;<a HREF="<#PATH>Details">Vis Detaljer</a>\n
+<h1>Internal Application Error</h1>\n<p>%0:s\n<p><hr width="100%%"><i>%1:s</i>	<h1>Intern programfejl</h1>\n<p>%0:s\n<p><hr width="100%%"><i>%1:s</i>
+<html><title>Document Moved 302</title>\n<body><h1>Object Moved</h1><hr>\nThis Object may be found <a HREF="%s">here.</a><br>\n<br></body></html>\n	<html><title>Dokument flyttet 302</title>\n<body><h1>Objekt flyttet</h1><hr>\nDette dokument forefindes muligvis <a HREF="%s">her.</a><br>\n<br></body></html>\n
+<html><title>Internal Server Error 500</title>\n<h1>Internal Server Error 500</h1><hr>\nException: %s<br>\nMessage: %s<br></html>\n	<html><title>Intern serverfejl 500</title>\n<h1>Intern serverfejl 500</h1><hr>\nUndtagelse: %s<br>\nMeddelelse: %s<br></html>\n
+<table width="95%%" border="1" cellspacing="0" bordercolor="#C0C0C0">\n<tr>\n<td colspan=2>\n<font color="#727272"><b>Error[%0:d]:</b> \n%1:s\n</font>\n</td>\n</tr>\n<tr>\n<td>\n<font color="#727272"><b>Line:</b> \n%2:d\n</font>\n</td>\n<td>\n<font color="#727272"><b>Position:</b> \n%3:d\n</font>\n</td>\n</tr>\n</table>\n	<table width="95%%" border="1" cellspacing="0" bordercolor="#C0C0C0">\n<tr>\n<td colspan=2>\n<font color="#727272"><b>Fejl[%0:d]:</b> \n%1:s\n</font>\n</td>\n</tr>\n<tr>\n<td>\n<font color="#727272"><b>Linje:</b> \n%2:d\n</font>\n</td>\n<td>\n<font color="#727272"><b>Position:</b> \n%3:d\n</font>\n</td>\n</tr>\n</table>\n
+<title>%s</title></head><body>	<title>%s</title></head><body>
+<unknown>	<ukendt>
+>	>
+>>	>>
+>|	>|
+?	?
+@ Outside address	@ udenfor adressen
+A Win32 API function failed	En Win32 API funktion fejlede
+A call to an OS function failed	Et kald til en operativsystemsfunktion fejlede
+A class named %s already exists	En klasse ved navn %s findes allerede
+A component named %s already exists	En komponent ved navn %s findes allerede
+A control cannot have itself as its parent	En kontrol kan ikke være sin egen forælder
+A file with that name already exists. Please specify a different filename.	En fil med det navn findes allerede. Specificer venligst et andet filnavn.
+A message has been received but the commication mode is unknown	En meddelelse er blevet modtaget, men kommunikationstilstanden er ukendt
+A property category called %s already exists	En egenskabskategori ved navn %s findes allerede
+A transaction is already active	En transaktion er allerede aktiv
+A&pply	&Anvend
+Abort	Abryd
+About	Om programmet
+About Internet &Direct (Indy) %s...	Om Internet &Direct (Indy) %s...
+About Web App Debugger	Om webprogram fejlsøgeren
+About...	Om programmet...
+Abstract Error	Fejl i abstrakt mekanismen
+AcceptWait property cannot be modified while server is active.	AcceptWait egenskaben kan ikke modificeres mens serveren er aktiv.
+Accepted	Akcepteret
+Access denied to "%s"	Adgang nægtet til "%s"
+Access denied.	Adgang nægtet.
+Access to %s denied	Adgang nægtet til %s
+Access violation	Vildfaren pointer
+Access violation at address %p in module '%s'. %s of address %p	Vildfaren pointer ved adresse %p i modul '%s'. %s af adresse %p
+Access violation at address %p, accessing address %p	Vildfaren pointer på adresse %p, forsøg på at tilgå adresse %p
+Access violation at address %p. %s of address %p	Vildfaren pointer på adresse %p. %s af adresse %p
+AccessRights	AccessRights
+AcreFeet	AcreFeet
+AcreInches	AcreInches
+Acres	Acres
+Action	Action
+Action can't redirect to blank URL	Handling kan ikke viderestille til en tom URL
+Action can't respond to unknown HTTP method	Handling can ikke svare på en ukendt HTTP metode
+Action can't respone to unknown HTTP method	Handling can ikke svare på en ukendt HTTP metode
+Action does not provide response	Handling giver ikke noget svar
+Adapter Request not handled: %0:s, %1:s	Adapterforespørgsel blev ikke håndteret: %0:s, %1:s
+Add	Tilføj
+Add &SubItem	Tilføj &Underelement
+Add Actions	Tilføj handlinger
+Add Actions...	Tilføj handlinger...
+Add All Actions	Tilføj alle handlinger
+Add All Columns	Tilføj alle kolonner
+Add All Commands	Tilføje alle kommandoer
+Add All Fields	Tilføj alle felter
+Add Columns	Tilføj kolonner
+Add Columns...	Tilføj kolonner...
+Add Commands	Tilføj kommandoer
+Add Commands...	Tilføj kommandoer...
+Add Fields	Tilføj felter
+Add Fields...	Tilføj felter...
+Add Images	Tilføj billeder
+Additional	Ekstra
+Address already in use.	Adressen bruges allerede.
+Address family not supported by protocol family.	Adressefamilien støttes ikke af protokolfamilien.
+Address type not supported.	Adressetypen er ikke understøttet.
+Administrator	Administrator
+Aggregate expressions not allowed in filters	Aggregatudtryk er ikke tilladt i filtre
+Alert: action must be taken immediately	Alarm: Der skal med det samme foretages noget
+All	Alle
+All Commands	Alle kommandoer
+All Files (*)|*	Alle filer (*)|*
+All Files (*)|*|	Alle filer (*)|*|
+All Files (*.*)|*.*	Alle filer (*.*)|*.*
+All Files (*.*)|*.*|	Alle Filer (*.*)|*.*|
+All Files(*)	Alle filer(*)
+Allowed login attempts exceeded, good bye.	Tilladt antal loginforsøg er overskredet. Farvel.
+Already connected.	Allerede forbundet.
+Alt+	Alt+
+An About Box is not available for this control	Der er ikke noget "Om..." vindue for denne kontrol
+An unknown error occurred while processing the certificate.	En ukendt fejl skete mens certifikatet blev analyseret.
+Ancestor for '%s' not found	Forfaderen for '%s' blev ikke fundet
+Angstroms	Ångstrøm
+Anonymous login OK, send e-mail as password.	Anonymous login er i orden, send e-post adresse som adgangskode.
+Anonymous user logged in, proceed.	Anonymous brugeren logget ind, fortsæt venligst.
+Any	Hvilkensomhelst
+Application Error	Programfejl
+Application is not licensed to use this feature	Programmet er ikke licensieret til at bruge denne facilitet
+Apply Updates	Anvend opdateringer
+ApplyUpdates error.  Error count: %d.	ApplyUpdates fejl. Fejlantal: %d.
+Apr	Apr
+April	April
+Are you sure you want to delete "%s"?	Er du sikker på at du vil slette "%s"?
+Are you sure you want to delete these %d items?	Er du sikker på, at du vil slette disse %d elementer?
+Area	Areal
+Ares	Ares
+Arithmetic in filter expressions not supported	Aritmetik er ikke understøttet i filterudtryk
+Array Node: %s has too many elements	Array knudepunkt: %s har for mange elementer
+Array elements of type %s are not supported	Array elementer af typen %s er ikke understøttet
+Array type expected. Node %s	Array type blev forventet. Knudepunkt %s
+Assertion failed	Antagelse fejlede
+Assigned Port value %d is invalid	Tildelt portværdi %d er ugyldig
+AstronomicalUnits	Astronomiske Enheder
+Asynchronous socket error %d	Asynkron socketfejl %d
+Attempt to %s while the HL7 Component is not working	Forsøg på %s mens HL7 komponenten ikke arbejdede
+Attributes	Attributter
+Attributes are not supported on this node type	Attributter er ikke understøttet på denne knudepunktstype
+Aug	Aug
+August	August
+Authenticated	Autentificeret
+Authentication Failed	Autentifikationen fejlede
+Authentication error to socks server.	Autentifikationsfejl til socksvært.
+Auto Preview	Automatisk visning
+Avg Response Time:	Gns. svartid
+BCD overflow	BCD overløb
+BG	BG
+Back	Tilbage
+BackTab	TilbageTab
+Backspace	Bak
+Bad Gateway	Dårlig gateway
+Bad Request	Dårlig forespørgsel
+Bad address.	Dårlig adresse.
+Bad file number.	Dårligt filnummer.
+Bad protocol option.	Dårlig protokolindstilling.
+Bad variant type %x	Dårlig varianttype %x
+Binding Editor	Binding redigering
+Bitmap image is not valid	Billede er ikke gyldigt
+Bitmap is empty	Billedet er tomt
+Bitmaps	Billeder
+Bitmaps (*.bmp)|*.bmp	Billeder (*.bmp)|*.bmp
+Bits index out of range	Bitindeks ude for gyldigt talområde
+Body Text Editor	Kropstekstredigeringsværktøj
+Bold	Fed
+Bold Italic	Fed Kursiv
+Boolean parameter expected	Forventede boolean parameter
+Borland Software Corporation	Borland Software Corporation
+Bring to Front	Hent frem foran
+BrowseAction	BrowseAction
+Build	Byg
+Built-in Type	Indbygget type
+Byte index out of range.	Byteindeks er uden for gyldigt område.
+ByteBool, WordBool and LongBool cannot be exposed by WebServices. Please use 'Boolean'	ByteBool, WordBool og LongBool kan ikke offentliggøres med WebServices. Benyt venligst 'Boolean'
+CRC Failed	CRC fejlede
+Call to %s.GetByte [property Bytes] with index <> [0..%d]	Kald til %s.GetByte [property Bytes] med indeks <> [0..%d]
+Can not bind in port range (%d - %d)	Kan ikke forbinde i port området (%d - %d)
+Can not change credentials after handle aquired. Use Release first	Kan ikke ændre rettigheder (credentials) efter at håndtag blev fremskaffet. Brug først release
+Can only modify an image if it contains a bitmap	Kan kun modificere et billede, hvis det indeholder et bitmap
+Can't change value while socket is active	Kan ikke ændre værdi mens socket er aktiv
+Can't create new socket	Kan ikke oprette ny socket
+Can't execute %s %d	Kan ikke udføre %s %d
+Can't find included page: %s	Kan ikke finde inkluderet side: %s
+Can't listen on an open socket	Kan ikke lytte til en åben socket
+Can't load package %s.\n%s	Kan ikke indlæse pakken %s.\n%s
+Can't open data connection.	Kan ikke åbne dataforbindelsen.
+Can't write to a read-only resource stream	Kan ikke skrive til en skrivebeskyttet resource strøm
+Cancel	Annuller
+Cancel edit	Annuller redigering
+Cannot access field '%s' as type %s	Kan ikke få adgang til felt '%s' som type %s
+Cannot access index field '%s'	Kan ikke få adgang til indeksfeltet '%s'
+Cannot access package information for package '%s'	Kan ikke få adgang til pakkeinformation for pakken '%s'
+Cannot allocate socket.	Kan ikke fremskaffe socket.
+Cannot apply updates to a ReadOnly provider	Kan ikke opdatere til en skrivebeskyttet provider
+Cannot assign a %s to a %s	Kan ikke tildele en %s til en %s
+Cannot assign requested address.	Kan ikke tilknytte den forespurgte adresse.
+Cannot call TerminateAndWaitFor on FreeAndTerminate threads	Kan ikke kalde TerminateAndWaitFor på FreeAndTerminate tråde
+Cannot change Visible in OnShow or OnHide	Can ikke ændre Visible i OnShow eller OnHide
+Cannot change connection on Active Monitor	Kan ikke ændre forbindelsen på ActiveMonitor
+Cannot change session state when the server is active.	Kan ikke ændre sessionstilstand når værten er aktiv.
+Cannot change target while active.	Kan ikke ændre fejlsøgningsmålet mens det er aktivt.
+Cannot change the size of an icon	Kan ikke ændre størrelsen på et ikon
+Cannot connect to database '%s'	Kan ikke forbinde til database '%s'
+Cannot connect, %s must contain a valid ServerName or ServerGUID	Kan ikke forbinde, %s skal indeholde et gyldigt værtsnavn eller ServerGUID
+Cannot connect, %s must contain a valid repository id	Kan ikke forbinde, %s skal indeholde et gyldigt repository id
+Cannot convert NAN to TBcd value	Kan ikke konvertere NAN (Not a Number, Ikke et tal) til TBcd værdi
+Cannot convert empty string to TBcd value	Kan ikke konvertere tom tekst til TBcd værdi
+Cannot convert from the specified type	Kan ikke konvertere fra den specificerede type
+Cannot convert scientific notation to TBcd value	Kan ikke konvertere videnskabeligt noterede tal til TBcd værdi
+Cannot convert to TBcd: string has more than 64 digits: %s	Kan ikke konvertere til TBcd: tekst har mere end 64 cifre: %s
+Cannot convert to the specified type	Kan ikke konvertere til den specificerede type
+Cannot create a default method name for an unnamed component	Kan ikke oprette en default metode for en komponent uden navn
+Cannot create a method for an unnamed component	Kan ikke oprette en metode for en unavngivet komponent
+Cannot create file "%s". %s	Kan ikke oprette fil "%s". %s
+Cannot create file %s	Kan ikke oprette filen %s
+Cannot create form. No MDI forms are currently active	Kan ikke oprette formular. Ingen MDI formularer er aktive lige nu
+Cannot create script engine: %s.  Error: %x	Kan ikke oprette scriptmaskine: %s. Fejl: %x
+Cannot delete a persistent reference from the designer	Kan ikke slette en persistent reference fra designeren
+Cannot drag a form	Kan ikke trække formular
+Cannot find TableName in CommandText	Kan ikke finde TableName i CommandText
+Cannot find node referenced by ID %s	Kan ikke finde knudepunkt, som blev referet til af ID %s
+Cannot focus a disabled or invisible window (%s)	Kan ikke fokusere et usynligt eller inaktiveret vindue (%s)
+Cannot hide an MDI Child Form	Kan ikke skjule en MDI Child formular
+Cannot initialize script engine	Kan ikke starte scriptmaskinen
+Cannot insert or delete rows from grid	Kan ikke indsætte eller slette rækker i gitteret
+Cannot load package '%s.'  It contains unit '%s,'which is also contained in package '%s'	Kan ikke indlæse pakke '%s.' Det indeholder unit '%s', som også er indeholdt i pakke '%s'
+Cannot make a visible window modal	Kan ikke gøre synligt vindue modal
+Cannot modify a read-only dataset	Kan ikke modificere et skrivebeskyttet datasæt
+Cannot open clipboard	Kan ikke tilgå udklipsholderen
+Cannot open detail table with master closed	Kan ikke åbne detaljetabel når mestertabellen er lukket
+Cannot open file "%s". %s	Kan ikke åbne fil "%s". %s
+Cannot open file %s	Kan ikke oprette fil %s
+Cannot perform task while server is active.	Kan ikke udføre opgaven mens serveren er aktiv.
+Cannot perform this operation on a closed connection	Kan ikke udføre denne handling på en lukket forbindelse
+Cannot perform this operation on a closed dataset	Kan ikke udføre denne handling på et lukket datasæt
+Cannot perform this operation on an empty dataset	Kan ikke udføre denne hadnling på et tomt datasæt
+Cannot perform this operation on an open connection	Kan ikke udføre denne handling på en åben forbindelse
+Cannot perform this operation on an open dataset	Kan ikke udføre denne handling på et åbent datasæt
+Cannot read WideString from odd byte position	Kan ikke læse en WideString fra en ulige byte position
+Cannot read directory:\n"%s"	Kan ikke læse filmappe:\n"%s"
+Cannot resolve to dataset when using nested datasets or references	Kan ikke resolve til datasættet når der bruges nestede datasæt eller referencer
+Cannot send or receive after socket is closed.	Kan ikke sende eller modtage efter at socket er lukket.
+Cannot set Clipped property while painting	Kan ikke sætte Clipped egenskaben, mens der tegnes
+Cannot write WideString to odd byte position	Can ikke skrive WideString til en ulige byte position
+Cannt connect to the Master server	Kan ikke forbinde til mestervært
+Canvas does not allow drawing	Kanvas tillader ikke at der tegnes på det
+Capacity cannot be less than size	Kapacitet kan ikke være mindre end størrelsen
+Categories must define their own name and description	Kategorier skal definere deres eget navn og beskrivelse
+Celsius	Celsius
+Centares	Centares
+CentiLiters	Centiliter
+Centigrams	Centigram
+Centimeters	Centimeter
+Centuries	Århundreder
+Chains	Chains
+Change view	Skift visning
+Character for &Blanks:	&Blanktegn:
+CheckSynchronize called from thread $%x, which is NOT the main thread	CheckSynchronize blev kaldet fra tråden $%x, som IKKE er hovedtråden
+ChildName cannot be blank	ChildName kan ikke være tom
+Chunk Started	Chunks startet
+Circular datalinks are not allowed	Cirkulære datareferencer er ikke tilladt
+Circular provider references not allowed	Cirkulære provider referencer er ikke tilladt
+Circular reference to Connection not allowed	Cirkulær reference til forbindelse er ikke tilladt
+Class %s could not create QT widget	Klasse %s kunne ikke oprette QT widget
+Class %s does not implement interface GUID %s	Klasse %s implementerer ikke interface GUID %s
+Class %s is not applicable to this module	Klasse %s er ikke anvendeligt med dette modul
+Class %s not found	Klassen %s blev ikke fundet
+Class not registered	Klassen er ikke registreret
+Classes that represent scalar types must decsend from TRemotable, %s does not	Klasser, som repræsenterer skalare typer skal nedarves fra TRemotableXS, %s gør ikke det
+Clear	Slet
+Clipboard does not support Icons	Udklipsholderen kan ikke håndtere ikoner
+CloneConnection invalid: distinct ClientDataSet descendents	CloneConnection ugyldig: forskellige nedarvninger fra ClientDataSet
+Closing data connection.	Lukker dataforbindelsen
+Code	Kode
+Codeset conversion failure	Tegnsætkonverteringsfejl
+Color depth must be 1, 8 or 32 bpp	Farvedybden skal være 1, 8 eller 32 bpp
+Command Not Handled: %s	Kommando blev ikke håndteret: %s
+Command Not Recognised	Kommando ikke genkendt
+Command not recognized	Kommando ikke genkendt
+Command not supported.	Kommando er ikke understøttet.
+CommandText changes are not allowed	CommandText må ikke modificeres
+CompleteAuthToken is not supported	CompleteAuthToken understøttes ikke
+Component does not support scripting. Class: %0:s, Name: %1:s	Komponenten understøtter ikke scripting. Klasse: %0:s, Navn: %1:s
+Component is in Asynchronous mode but OnMessageArrive has not been hooked	Komponenten er i asynkron tilstand, men OnMessageArrive er ikke blevet sat
+Component is in Synchronous mode but  OnMessageReceive has not been hooked	Komponenten er i synkron tilstand, men OnMessageReceive er ikke blevet sat
+Component name '%s' exceeds 64 character limit	Komponentnavnet '%s' er over 64 tegn langt
+Compression error	Kompressionsfejl
+Configuration file %s not found	Opsætningsfilen %s blev ikke fundet
+Confirm	Bekræft
+Confirm file deletion	Bekræft filsletning
+Conflict	Konflikt
+Connect timed out.	Forbindelse tidsudløb.
+Connected	Forbundet
+Connected.	Forbundet.
+Connecting	Forbinder
+Connecting to %s.	Forbinder til %s.
+Connection	Forbindelse
+Connection Closed Gracefully.	Forbindelsen blev lukket på korrekt vis.
+Connection established	Forbindelsen blev etableret
+Connection explicitly refused by NNTP server.	Forbindelsen blev eksplicit nægtet af NNTP værten.
+Connection name missing	Forbindelsesnavnet mangler
+Connection not allowed by ruleset.	Forbindelse er ikke tilladt ifølge regelsæt.
+Connection not allowed to TConnectionBroker	Forbindelse til TConnectionBroker er ikke tilladt
+Connection refused.	Forbindelsen blev nægtet.
+Connection reset by peer.	Forbindelsen blev nulstillet af modparten.
+Connection timed out.	Forbindelsen fik et tidsudløb.
+Constant is not correct type %s	Værdi er ikke af korrekt type %s
+Constant out of range	Talværdi er uden for gyldigt område
+Content Length	Indholdslængde
+Content Type	Indholdstype
+Content-Length header not found	Content-Length hovedsektion blev ikke fundet
+ContentModel not set	ContentModel er ikke angivet
+Continue	Fortsæt
+Continue delete operation?	Fortsæt sletning?
+Control	Kontrol
+Control '%s' has no parent widget	Kontrollen '%s' har ingen forælderwidget
+Control cannot be used in a DBCtrlGrid	Kontrol kan ikke bruges i en DBCtrlGrid
+Control file save to %s	Styrefil gemt til %s
+Control-C hit	Control-C blev trykket
+Conversion family (%s) already registered	Konverteringsfamilie (%s) er allerede registreret
+Conversion from Class %s to SOAP is not supported	Konvertering fra klasse %s til SOAP er ikke understøttet
+Conversion type (%s) already registered in %s	Konverteringstype (%s) er allerede registreret i %s
+Copy	Kopier
+Copyright (c) 1993 - 2002\nKudzu (Chad Z. Hower)\nand the\nIndy Pit Crew	Copyright (c) 1993 - 2002\nKudzu (Chad Z. Hower)\nog\nIndy Pit Crew
+Copy|Copies the selection and puts it on the Clipboard	Kopier|Kopierer det valgte til udklipsholderen
+CordFeet	CordFeet
+Cords	Cords
+Could not bind socket. Address and port are already in use.	Kunne ikke tilknytte socket. Adresse og port er allerede i brug.
+Could not convert variant of type (%s) into type (%s)	Kunne ikke konvertere variant af type (%s) til type (%s)
+Could not create XMLDocument	Kunne ikke oprette XMLDocument
+Could not load SSL library.	Kunne ikke indlæse SSL biblioteket.
+Could not load certificate.	Kunne ikke indlæse certifikat.
+Could not load key, check password.	Kunne ikke indlæse nøgle, kontroller adgangskoden.
+Could not load root certificate.	Kunne ikke indlæse rodcertifikat.
+Could not open file 	Kunne ikke åbne fil
+Could not parse %s	Kunne ikke tyde %s
+Could not parse SQL TimeStamp string	Kunne ikke forstå tekst i SQL som skulle angive et tidspunkt
+Could not parse imaginary portion	Kunne ikke tyde den imaginære del
+Could not parse real portion	Kan ikke tyde reel del
+Could not parse required '%s' symbol	Kunne ikke tyde '%s' symbolet
+Could not parse required '+' (or '-') symbol	Kunne ikke tyde det krævede '+' (eller '-') symbol
+Cr&op\nSt&retch\nC&enter\n	Besk&ær\nSt&ræk\nC&entrer\n
+Create new directory	Opret ny filmappe
+Created	Oprettet
+Critical: critical conditions	Kritisk: Kritisk tilstand
+Ctrl+	Ktrl+
+Cu&t	Kli&p
+CubicCentimeters	Kubikcentimeter
+CubicDecameters	Kubikdekameter
+CubicDecimeters	Kubikdecimeter
+CubicFeet	Kubikfod
+CubicHectometers	Kubikhektometer
+CubicInches	Kubiktommer
+CubicKilometers	Kubikkilometer
+CubicMeters	Kubikmeter
+CubicMiles	Kubikmil
+CubicMillimeters	Kubikmillimeter
+CubicYards	Kubikyard
+Cubits	Cubits
+Cursor not returned from Query	Forespørgsel returnerede ikke cursor
+Custom Colors	Brugervalgte farver
+Custom message interpretation failed	Specielt lavet meddelelsesforeståelse fejlede
+Custom variant type ($%.4x) already used by %s	Speciel varianttype ($%.4x) er allerede benyttet af %s
+Custom variant type ($%.4x) is not usable	Speciel varianttype ($%.4x) er ikke brugbar
+Custom variant type ($%.4x) is out of range	Special variant type ($%.4x) er uden for gyldigt område
+Custom variant type (%s%.4x) already used by %s	Speciel varianttype (%s%.4x) er allerede benyttet af %s
+Custom variant type (%s%.4x) is not usable	Speciel varianttype (%s%.4x) er ikke brugbar
+Custom variant type (%s%.4x) is out of range	Special variant type (%s%.4x) er uden for gyldigt område
+Cut	Klip
+Cut|Cuts the selection and puts it on the Clipboard	Klip|Klipper det valgte ud og lægger det i udklipsholderen
+D&rives:	D&rev:
+DBX Error: Command not found, error message cannot be retrieved	DBX fejl: Kommando ikke fundet, fejlmeddelelsen kan ikke fremfindes
+DBX Error: Connection not found, error message cannot be retrieved	DBX fejl: Forbindelsen blev ikke fundet, fejlmeddelelsen kan ikke fremskaffes
+DBX Error: Cursor not found, error message cannot be retrieved	DBX fejl: Cursor ikke fundet, fejlmeddelelsen kan ikke fremfindes
+DBX Error: MetadataObject not found, error message cannot be retrieved	DBX fejl: Metadataobjekt ikke fundet, fejlmeddelelsen kan ikke fremfindes
+DBX Error: No Mapping for Error Code Found	DBX fejl: Ingen kortlægning for den fundne fejlkode
+DLL/Shared Library Name not Set	DLL/delt biblioteksnavn ikke sat
+DNS Server Reports Query Format Error	DNS svarer med fejl i forespørgselsformatet
+DNS Server Reports Query Name Error	DNS svarer med fejl i navn
+DNS Server Reports Query Not Implemented Error	DNS svarer at den ikke har implementeret forespørgslen
+DNS Server Reports Query Refused Error	DNS nægter at håndtere forespørgslen
+DNS Server Reports Query Server Error	DNS svarer med fejl i forespørgselsværten
+DOM Implementation does not support IDOMParseOptions	DOM implementation udnerstøtter ikke IDOMParseOptions
+DOMString size error	Ugyldig DOMString størrelse
+DTD to XML Schema Translator (.dtd <-> .xsd)	DTD til XML skema oversætter (.dtd <-> .xsd)
+Data	Data
+Data Modification is not permitted	Dataændring er ikke tilladt
+Data connection already open; transfer starting.	Dataforbindelsen er allerede åben; starter overførsel.
+Data connection closed abnormally.	Dataforbindelsen lukkede unormalt.
+Data connection open; no transfer in progress.	Dataforbindelsen åben; der er ikke nogen overførsel igang.
+Data file saved to %s	Datafil gemt til %s
+Data set field is blank	Datasætfeltet er tomt
+Data set field not found: %s	Datasætfeltet ikke fundet: %s
+DataSet is nil	Datasæt er nil
+DataSource cannot be changed	DataSource kan ikke ændres
+Database	Database
+Database Login	Database login
+Database:	Database:
+Dataset not in edit or insert mode	Datasæt er ikke i redigerings- eller indsætningstilstand
+Datatype of TypeKind: %s not supported as argument for remote invocation	Datatypen/Typekind: %s ikke understøttet som argument til en remote invocation
+Date	Dato
+Date Modified	Dato ændret
+DateTime	DatoKlokkeslet
+Days	Dage
+De&lete	Sl&et
+Debug: debug-level messages	Fejlsøgning: Fejlsøgningsbeskeder
+Dec	Dec
+DecaLiters	Dekaliter
+Decades	Årtier
+Decagrams	Dekagram
+Decameters	Dekameter
+Decasteres	Decasteres
+December	December
+DeciLiters	Deciliter
+Decigrams	Decigram
+Decimeters	Decimeter
+Decisteres	Decisteres
+Decompression error	Dekompressionsfejl
+Default	Standart
+Default URL:	Standart URL:
+Del	Slet
+Delete	Slet
+Delete all selected records?	Slet alle markerede poster?
+Delete record	Slet post
+Delete record?	Slet post?
+Delete when max exceeded:	Slet når maks overskredet:
+Deletes are not allowed	Sletninger er ikke tilladt
+Delimiter and QuoteChar properties cannot have the same value	Delimiter og QuoteChar egenskaberne kan ikke have den samme værdi
+Demos Coordinator	Demonstrationskoordinator
+Destination address required.	Destinationsadressen er påkrævet.
+Destination file already exists.	Destinationsfilen findes allerede.
+Detaul view	Standardvisning
+Direction	Retning
+Directory	Filmappe
+Directory "%s" is not empty.	Filmappen "%s" er ikke tom.
+Directory %s does not exist	Filmappen %s findes ikke
+Directory &Name:	Filmappenavn:
+Directory not empty	Filmappen er ikke tom
+Disconnect	Afbryder
+Disconnected.	Afbrudt.
+Disconnecting.	Afbryder forbindelsen.
+Disk Quota Exceeded.	Diskkvota overskredet.
+Disk full	Disken er fuld
+Dispatching blank page name	Dispatching tomt sidenavn
+Distance	Afstand
+Distribution Coordinator	Distributionskoordinator
+Division by zero	Division med nul
+Do AcquireCredentialsHandle first	Først brug AcquireCredentialsHandle
+Do not allow connctions now	Tillad ikke forbindelser nu
+DocumentElement %s:%s expected, %s:%s found	DocumentElement %s:%s forventet, men %s:%s fundet
+Documentation	Dokumentation
+Documentation Coordinator	Dokumentationskoordinator
+Double parameter expected	Forventede parameter af datatypen double
+Down	Ned
+Drag and Drop	Træk og slip
+Drag, Drop and Docking	Træk, slip og dokning
+Drams	Drams
+Drawings	Tegninger
+Drive %s does not exist.\nPlease verify the correct drive was given.	Drevet %s findes ikke.\nKontroller venligst, at det blev angivet korrekt.
+Driver (%s) not found in Cfg file (%s)	Styreprogrammet (%s) blev ikke fundet i Cfg filen (%s)
+Driver/Connection Registry File '%s' not found	Driver/Forbindelse registreringsdatabase fil '%s' ikke fundet
+DryBuckets	DryBuckets
+DryBushels	DryBushels
+DryGallons	DryGallons
+DryPecks	DryPecks
+DryPints	DryPints
+DryQuarts	DryQuarts
+Duplicate action name	Dubleret handlingsnavn
+Duplicate field name '%s'	Dubleret feltnavn '%s'
+Duplicate index name '%s'	Dubleret indeksnavn '%s'
+Duplicate name '%s' in %s	Dubleret navn '%s' i %s
+Duplication prototype name	Dubleret protokoltypenavn
+E&xit	&Afslut
+E&xport...	E&ksport...
+ERROR	FEJL
+Edit	Rediger
+Edit Mask:	Redigeringsmaske:
+Edit Masks (*.dem)|*.dem|All Files (*.*)|*.*	Redigeringsmasker (*.dem)|*.dem|Alle filer (*.*)|*.*
+Edit record	Rediger post
+Editing %s%s%s	Redigerer %s%s%s
+Elapsed	Udløbet
+Element does not contain a single text node	Element indeholder ikke et enkelt tekstknudepunkt
+Element of Array type %s has no RTTI	Element af arraytype %s har ingen RTTI
+Emergency: system is unusable	Nødsituation: systemet er ikke brugbart
+Empty document	Tomt dokument
+Enabled	Slået til
+Encoding attachment	Koder vedhæftning
+Encoding text	Koder tekst
+End	Slut
+End of Status	Slut på status
+Enter	Enter-tast
+Enter password	Indtast adgangskode
+Entering Passive Mode (%s).	Går i passiv tilstand (%s).
+Error	Fejl
+Error Loading XML	Fejl ved indlæsning af XML
+Error Processing Header %s	Fejl ved håndtering af hovedsektion %s
+Error accepting connection with SSL.	Fejl ved modtagelse af SSL forbindelse.
+Error binding data to SSL socket.	Fejl ved binding af data til SSL socket.
+Error connecting with SSL.	Fejl ved oprettelse af SSL forbindelse.
+Error creating SSL context.	Fejl ved oprettelse af SSL kontekst.
+Error creating file %s	Fejl ved oprettelse af fil %s
+Error creating variant or safe array	Fejl ved oprettelse af variant eller sikkert array
+Error creating widget	Fejl ved oprettelse af widget
+Error decoding URL style (%%XX) encoded string at position %d	Fejl ved dekodning af URL type (%%XX) kodet tekst ved position %d
+Error downloading URL: %s	Fejl ved nedhentning af URL: %s
+Error geting SSL method.	Fejl ved henting af SSL metode.
+Error in parsing command.	Fejl ved forståelse af kommando.
+Error in transformation before send	Fejl ved transformation før afsendelse
+Error loading MIDAS.DLL	Fejl ved indlæsning af MIDAS.DLL
+Error loading library "%s": "%s"	Fejl ved indlæsning af bibliotek "%s": "%s"
+Error on call Winsock2 library function %s	Fejl ved kald til Winsock2 biblioteksfunktionen %s
+Error on line %d, position %d	Fejl på linje %d, position %d
+Error on loading Winsock2 library (%s)	Fejl ved inlæsning af Winsock2 biblioteket (%s)
+Error opening file	Fejl ved åbning af fil
+Error reading %s%s%s: %s	Fejl ved læsning af %s%s%s: %s
+Error reading from socket	Fejl ved læsning fra socket
+Error resizing ImageList	Fejl ved ændring af ImageList størrelse
+Error saving attachment.	Fejl ved gemning af vedhæftelse.
+Error saving file	Fejl ved gemning af fil
+Error setting stream size	Fejl ved sætning af strømstørrelse
+Error: 	Fejl: 
+Error: No program code to return request!	Fejl: Ingen programkode til at returnere forespørgslen!
+Error: error conditions	Fejl: Fejltilstand
+Error: no queues defined	Fejl: Ingen køer defineret
+Esc	Esc
+Event	Hændelse
+Exception %s in module %s at %p.\n%s%s\n	Undtagelse %s i modul %s ved %p.\n%s%s\n
+Exception in InterpretData: %s	Undtagelse i InterpretData: %s
+Exception in safecall method	Undtagelse i en safecall metode
+Execute not supported: %s	Udførsel er ikke understøttet: %s
+Execution of action %s is not permitted	Udførsel af aktion %s er ikke tilladt
+Expected return value not received	Forventet returværdi blev ikke modtaget
+Export Images	Eksporter billeder
+Expression expected but %s found	Udtryk blev forventet men %s blev fundet
+Expression is not an aggregate expression	Udtryk er ikke et aggregatudtryk
+Extension already exits	Endelsen findes allerede
+Extension is empty	Endelsen er tom
+Extensions supported:\nSIZE\nPASV\nREST\nEnd of extentions.	Extensions supported:\nSIZE\nPASV\nREST\nEnd of extentions.
+External exception %x	Ekstern undtagelse %x
+Extra Headers Text Editor	Ekstra hovedsektioner tekstredigeringsværktøj
+FB	FB
+FG	FG
+FTP daemon	FTP dæmon
+Facets and Enumeration not allowed on this kind of datatype "%s"	Facetter og optælling er ikke tilladt på denne art datatype "%s"
+Fahrenheit	Fahrenheit
+Failed attempting to retrieve time zone information.	Fejl ved forsøg på at skaffe tidszoneinformation.
+Failed to Start: %s	Start fejlede: %s
+Failed to Stop: %s	Standsning fejlede: %s
+Failed to create key %s	Oprettelse af nøgle %s fejlede
+Failed to delete tab at index %d	Ude af stand til at slette faneblad ved indeks %s
+Failed to get data for '%s'	Datahenting for '%s' fejlede
+Failed to set data for '%s'	Fejlede ved skrivning til registreringsdatabasen for '%s'
+False	Falsk
+Fatal error: Cannot create application object in a shared object or library.	Fatal fejl: Kan ikke oprette applikationsobjektet i et delt objekt eller bibliotek
+Fatal error: Cannot create more than one TApplication instance	Fatal fejl: Kan ikke oprette mere end en TApplicationsinterface
+Fathoms	Fathoms
+Feb	Feb
+February	Februar
+Feet	Fod
+Fi&nd what:	Fi&nd hvad:
+Field	Felt
+Field %s changed by another user	Felt %s ændret af en anden bruger
+Field %s did not provide an image	Felt %s leverer ikke et billede
+Field %s ignored, only one status field allowed	Felt %s ignoreret, kun et statusfelt er tilladt
+Field %s requires a value	Felt %s kræver en værdi
+Field '%s' cannot be a calculated or lookup field	Felt '%s' kan ikke være et beregnet felt eller opslagsfelt
+Field '%s' cannot be modified	Felt '%s' kan ikke modificeres
+Field '%s' cannot be used in a filter expression	Felt '%s' kan ikke bruges i et filterudtryk
+Field '%s' has no dataset	Felt '%s' har ikke noget datasæt
+Field '%s' is not indexed and cannot be modified	Felt '%s' er ikke indekseret og kan ikke modificeres
+Field '%s' is not of type Boolean	Felt '%s' er ikke af typen Boolean
+Field '%s' is not the correct type of calculated field to be used in an aggregate, use an internalcalc	Felt '%s' er ikke den korrekte type af beregnet felt til at blive brugt i et aggregat, brug en internalcalc
+Field '%s' is of an unknown type	Felt '%s' er af ukendt type
+Field '%s' is of an unsupported type	Felt '%s' er af en ikke understøttet type
+Field '%s' must have a value	Felt '%s' skal have en værdi
+Field '%s' not found	Felt '%s' ikke fundet
+Field Name	Feltnavn
+Field Type	Felttype
+Field index out of range	Feltindeks er uden for gyldigt talområde
+Field is not a dataset field: %s	Feltet er ikke et datasæt felt: %s
+Field name cannot be longer then %d characters.  Try setting ObjectView to True on the dataset	Feltnavn kan ikke være længere end %d tegn. Prøv at slå ObjectView til på datasættet
+Field name missing	Feltnavnet mangler
+Field not found: %s	Felt ikke fundet: %s
+Field view not permitted	Feltvisning er ikke tilladt
+Fieldname %s exceeds %d chars	Feltnavnet %s overskrider %d tegn
+File	Filer
+File "%s" not found	Filen "%s" kan ikke findes.
+File Name:	Filnavn:
+File Status:	Filstatus:
+File Type:	Filtype:
+File access denied	Filadgang nægtet
+File include error on line %d: expecting "	Fejl ved inklusion af fil på linie %d: forventede "
+File include error on line %d: expecting =	Fejl ved inklusion af fil på linie %d: forventede =
+File include error on line %d: expecting virtual, file, or page, but found %s.	Fejl ved inklusion af fil på linie %d: forventede virtual, file eller page, men fandt %s
+File name too long.	Filnavnet er for langt.
+File not found	Filen blev ikke fundet
+File status okay; about to open data connection.	Filestatus er O.k.; påbegynder nu åbning af dataforbindelsen.
+FileName cannot be blank	FileName kan ikke være tomt
+FileName property cannot be blank	FileName egenskaben kan ikke være tom
+Filter expression incorrectly terminated	Filterudtryk er afsluttet ukorrekt
+Find	Find
+First record	Første post
+Fixed column count must be less than column count	FixedColumnCount skal være mindre end ColumnCount
+Fixed row count must be less than row count	FixedRowCount skal være mindre end RowCount
+Floating point division by zero	Kommatalsberegning forsøgte at dividere med nul
+Floating point overflow	Kommatalsoverløb
+Floating point underflow	Kommatalsunderløb
+FluidCups	FluidCups
+FluidGallons	FluidGallons
+FluidGills	FluidGills
+FluidOunces	Fl. ounces
+FluidPints	FluidPints
+FluidQuarts	FluidQuarts
+FluidTablespoons	Spsk.
+FluidTeaspoons	Tsk.
+For the latest updates and information please visit:	For de seneste opdateringer og informationer, besøg:
+Forbidden	Forbudt
+Format '%s' invalid or incompatible with argument	Formatet '%s' er ugyldigt eller inkompatibelt med argumentet
+Format result longer than 4096 characters	Formatresultat er længere end 4096 tegn
+Format string too long	Formattekst er for lang
+Fortnights	Fortnights
+Forward	Frem
+Found	Fundet
+Fri	Fre
+Friday	Fredag
+Furlongs	Furlongs
+Gateway timeout	Gateway tidsudløb
+General SOCKS server failure.	Generel SOCKS vært fejl.
+Gigameters	Gigameter
+Global scheam items may not contain a ref	Globale skemaelementer må ikke indeholde referencer
+Go	Kør
+Gone	Væk
+Goodbye	Farvel
+Grains	Grains
+Grams	Gram
+Grid index out of range	Gitterindeks er uden for gyldigt område
+Grid requested to display more than 256 columns	Gitter forsøgte at vise mere end 256 kolonner
+Grid too large for operation	Gitteret er for stor til denne handling
+Group	Gruppe
+GroupIndex cannot be less than a previous menu item's GroupIndex	Gruppeindeks kan ikke være mindre end gruppeindeksen for et foregående menuelement
+Grouping level exceeds current index field count	Grupperingsniveauet overskrider indeks feltantallet
+Grouping level not defined	Grupperingsniveau er ikke defineret
+HTTP version not supported	HTTP version er ikke understøttet
+Hands	Hænder
+Header Section owner must be a TCustomHeaderControl	Header Section ejer skal være en TCustomHeaderControl
+Header has already been written.	Hoved er allerede blevet skrevet
+Hectares	Hektar
+HectoLiters	Hektoliter
+Hectograms	Hektogram
+Hectometers	Hektometer
+Hello %s	Hej %s
+Help	Hjælp
+Help and Hints	Hjælp og tips
+Hidden User:  Information was not returned at a user's request	Skjult bruger: Informationen blev ikke returneret på grund af en bruger's forespørgsel
+Hierarchy request error	Hierarki forespørgselsfejl
+Ho&me	&Hjem
+Home	Hjem
+Home directory	Hjemmemappe
+Host field is empty	Værtsfeltet er tomt
+Host is down.	Værten (eng. Host) er nede.
+Host is empty	Værten er tom
+Host not found.	Værten blev ikke fundet.
+Host unreachable.	Værten kan ikke nås.
+Hour Offset portion of time invalid	Timetalsforskydningen af tidspunktet er ugyldigt
+Hours	Timer
+Html files (*.htm *.html)|*.htm;*.html|All Files (*)|*	Html filer (*.htm *.html)|*.htm;*.html|Alle filer (*)|*
+Html files (*.htm;*.html)|*.htm;*.html|All Files (*.*)|*.*	Html filer (*.htm;*.html)|*.htm;*.html|Alle filer (*.*)|*.*
+I&mage Index:	&Billedeindeks:
+I/O error %d	I/O fejl %d
+ICMP Receive Error = 0.	ICMP modtagelsesfejl = 0.
+IDOMNode required	IDOMNode krævet
+IN predicate list may not be empty	IN predikatlisten er muligvis ikke tom
+IOHandler value is not valid	IOHandler værdien er ikke gyldig
+IRC Connect Failed	IRC forbindelse fejlede
+Icon image is not valid	Ikon er ikke gyldigt
+IconView Items Editor	IconView Items Editor
+Icons	Ikoner
+Identifier expected	Forventede et navn (identifier)
+Illegal family	Illegal familie
+Illegal type	Illegal type
+Ima&ge Index:	Bille&deindeks:
+Image format not recognized	Billedeformatet kan ikke genkendes
+Image width and heigth must match	Billedbredde og højde skal passe sammen
+ImageList Editor	ImageList Editor
+Inches	Tommer
+Include file %s includes itself	Inkluderingsfilen %s inkluderer sig selv
+Incompatible conversion types [%s - %s, %s - %s]	Inkompatible konverteringstyper [%s - %s, %s - %s]
+Incompatible conversion types [%s, %s, %s]	Inkompatible konverteringstyper [%s, %s, %s]
+Incompatible conversion types [%s, %s]	Inkompatible konverteringstyper [%s, %s]
+Incorrect image format (%0:s) for field %1:s	Ukorrekt billedformat (%0:s) for felt %1:s
+Incorrect length in received block	Ukorrekt længde i modtaget blok
+Incorrectly formed filter expression	Ukorrekt udformet filterudtryk
+Index '%s' not found	Indeks '%s' kan ikke findes
+Index size error	Fejl på indeksstørrelse
+Indy Clients	Indy klienter
+Indy FTP Server ready.	Indy FTP vært er parat.
+Indy I/O Handlers	Indy I/O Handlers
+Indy Intercepts	Indy Intercepts
+Indy Misc	Indy Misc
+Indy SMTP Server	Indy SMTP vært
+Indy Servers	Indy servere
+Indy Telnet Server	Indy Telnet Server
+Information	Information
+Informational: informational messages	Information: Ren informationsniveau
+Input	Inddata
+Input Mask Editor	Inddata maskeredigeringsværktøj...
+InputMask	InputMask
+Ins	Inds
+Insert record	Indsæt post
+Inserts are not allowed	Indsættelser er ikke tilladt
+Insufficient data for Content-Length	Mangler data til Content-Length
+Integer overflow	Heltalsoverløb
+Integer parameter expected	Forventede heltalsparametre
+InterceptEnabled cannot be set to true when Intercept is nil.	InterceptEnabled kan ikke være sand, når Intercept er nil.
+Interface %s has no RTTI	Interface %s har ingen RTTI
+Interface %s not registered	Interfacet %s er ikke registreret
+Interface has no RTTI, UUID = %s	Interface har ingen RTTI, UUID = %s
+Interface is unusable due to failure to stop	Interfacet er ubrugeligt på grund af at standsning ikke kan lade sig gøre
+Interface not registered, UUID = %s	Interface er ikke registreret, UUID = %s
+Interface not supported	Interface er ikke understøttet
+Interface was already started	Interfacet kørte allerede
+Interface was already stopped	Interface var allerede standset
+Internal Server Error	Intern værtsfejl
+Internal error: data type kind %s not expected in this context	Intern fejl: datatype/datakind %s blev ikke forventet i denne kontekst
+Internet Direct (Indy)	Internet Direct (Indy)
+Interpretation of message failed	Fortolkning af meddelelsen fejlede
+Interrupted system call.	Afbrudt systemkald.
+Inuse attribute error	Attribut er i brug
+Invalid %s value: "%s"	Ugyldig %s værdi: "%s"
+Invalid Action %d	Ugyldig handling %d
+Invalid Action registration	Ugyldig registrering af en Action
+Invalid Bcd Precision (%d) or Scale (%d)	Ugyldig Bcd præcision (%d) eller skalering (%d)
+Invalid Content-Type setting: %s	Ugyldig Content-Type indstilling: %s
+Invalid Encoding. UU only allows Body and Attachments	Ugyldig kodning. UU tillader kun krop og vedhæftninger.
+Invalid FieldKind	Ugyldig FieldKind
+Invalid HTML encoded character (%s) at position %d	Ugyldigt HTML kodet tegn (%s) ved position %d
+Invalid HTTP Request: Length is 0	Ugyldig HTTP forespørgsel: Længden er 0
+Invalid HTTP Response: Length is 0	Ugyldigt HTTP svar: Længden er 0
+Invalid Header Id %d	Ugyldig hoved id %d
+Invalid ImageList Index	Ugyldigt ImageList indeks
+Invalid LCDNumber value	Ugyldig LCDNumber værdi
+Invalid Login.	Ugyldigt login.
+Invalid MDIParent for class %s	Ugyldig MDIParent for klassen %s
+Invalid NULL variant operation	Ugyldig NULL variant handling
+Invalid Packet Size %d	Ugyldig pakkestørrelse %d
+Invalid Pointer	Ugyldig pointer
+Invalid Port Range (%d - %d)	Ugyldigt portområde (%d - %d)
+Invalid Port:  The foreign or local port is not specified correctly or invalid	Ugyldig port: Den lokale eller fjerne port er ikke angivet korrekt eller ugyldig
+Invalid Query Count %d	Udgyldigt forespørgselsantal %d
+Invalid SOAP Response	Ugyldigt SOAP svar
+Invalid SOAP array specification	Ugyldig SOAP array specifikation
+Invalid SOAP request	Ugyldig SOAP forespørgsel
+Invalid SQL date/time values	Ugyldige dato/tidsværdier i SQL
+Invalid Syslog message: packet too large (%d bytes)	Ukorrekt syslog meddelelse: pakke for stor (%d byte)
+Invalid Text count. TIdText must be greater than 1	Udgyldigt tekstantal. TIdText skal være større end 1
+Invalid URL encoded character (%s) at position %d	Ugyldigt URL kodet tegn (%s) ved position %d
+Invalid WSDL document '%s' - Please verify the location and content!\nError: %s	Ugyldigt WSDL dokument '%s' - Kontroller venligst sted og indhold!\nFejl: %s
+Invalid Web component creation	Ugyldig webkomponent oprettelse
+Invalid Web component enumeration	Ugyldig webkomponent optælling
+Invalid Web component registration	Ugyldig webkomponent registrering
+Invalid XImage	Ugyldig XImage
+Invalid access error	Ugyldig adgangsfejl
+Invalid action creation	Ugyldig aktionsoprettelse
+Invalid action enumeration	Ugyldig aktionsnummerering
+Invalid action received: %d	Ugyldig aktion modtaget: %d
+Invalid action registration	Ugyldig aktionsregistrering
+Invalid action unregistration	Ugyldig aktionsafregistrering
+Invalid argument	Ugyldigt argument
+Invalid argument to date encode	Ugyldigt argument til dateencode
+Invalid argument to time encode	Ugyldigt argument til TimeEncode
+Invalid argument.	Ugyldigt argument.
+Invalid binary value	Ugyldig binær værdi
+Invalid built-in type name "%s"	Ugyldigt indbygget typenavn "%s"
+Invalid canvas state request	Ugyldig kanvas tilstandsforespørgsel
+Invalid character error	Ugyldigt tegn
+Invalid class typecast	Ugyldig klasse typekonvertering
+Invalid clipboard format	Ugyldigt udklipsholderformat
+Invalid complex type derivation: %s	Ugyldig komplex type afledning: %s
+Invalid component registration	Ugyldig komponentregistrering
+Invalid data packet	Ugyldig datapakke
+Invalid data type for '%s'	Ugyldig datatype for '%s'
+Invalid date string: %s	Ugyldig dato: %s
+Invalid day: %d	Ugyldig dag: %d
+Invalid decimal string: ''%s''	Ugyldigt tal ved indlæsning: "%s"
+Invalid duration string: %s	Ugyldig varighedsangivelse: %s
+Invalid field registration	Ugyldig feltregistrering
+Invalid field size	Ugyldig feltstørrelse
+Invalid file name - %s	Ugyldigt filnavn - %s
+Invalid filename	Ugyldigt filnavn
+Invalid filter expression character: '%s'	Ugyldigt tegn i filterudtryk: '%s'
+Invalid floating point operation	Ugyldig kommatalsoperation
+Invalid format type for BCD	Ugyldig formattype for BCD
+Invalid fractional second: %f	Ugyldig sekundbrøk: %f
+Invalid graphic format	Ugyldigt grafikformat
+Invalid group declaration in "%s"	Igyldig gruppedeklaration i "%s"
+Invalid handle value for %s	Ugyldig handle værdi for %s
+Invalid host name. A SYSLOG host name cannot contain any space ("%s")+	Ugyldigt værtsnavn. Et SYSLOG værtsnavn kan ikke indeholde mellemrum ("%s")+
+Invalid hour offset: %d	Ugyldig timetalsforskydning: %d
+Invalid hour: %d	Ugyldigt timetal: %d
+Invalid image (the size is less than 4 bytes long).	Ugyldigt billede (størrelsen er mindre end 4 byte)
+Invalid image dimension	Ugyldig dimension for billedet
+Invalid image size	Ugyldig billedstørrelse
+Invalid image type	Ugyldig billedtype
+Invalid input value	Ugyldig inddataværdi
+Invalid input value.  Use escape key to abandon changes	Ugyldig inddata værdi. Brug escape tasten for at afbryde ændringer
+Invalid item level assignment	Ugyldig elementniveau tildeling
+Invalid level (%d) for item "%s"	Ugyldigt niveau (%d) for element "%s"
+Invalid millisecond: %d	Ugyldigt millisekundtal: %d
+Invalid minute: %d	Ugyldigt minuttal: %d
+Invalid modification error	Ugyldig modifikationsfejl
+Invalid month: %d	Ugyldig måned: %d
+Invalid network mask.	Ugyldig netværksmaske.
+Invalid node type	Ugyldig knudepunktstype
+Invalid numeric input	Ugyldig numerisk inddata
+Invalid numeric value	Ugyldig numerisk værdi
+Invalid operation on a hosted node	Ugyldig handling på et hostet knudepunkt
+Invalid or Unknown Time Zone	Ugyldig eller ukendt tidszone
+Invalid or unsupported XML Schema document	Ugyldigt eller ikke understøttet XMl skema dokument
+Invalid package file '%s'	Ugyldig pakkefil '%s'
+Invalid package handle	Ugyldigt pakkehåndtag
+Invalid parent	Ugyldig forælder
+Invalid parent class: %s	Ugyldig forælderklasse: %s
+Invalid password	Ugyldig adgangskode
+Invalid pixel format	Ugyldigt pixel format
+Invalid pointer operation	Ugyldig handling med pointer
+Invalid property element: %s	Ugyldigt egenskabselement: %s
+Invalid property path	Ugyldigt egenskabssti
+Invalid property type: %s	Ugyldigt egenskabstype: %s
+Invalid property value	Ugyldigt egenskabsværdi
+Invalid provider. Provider was freed by the application server	Ugyldig provider. Provider blev frigjort af applikationsværten
+Invalid response	Ugyldigt svar
+Invalid second: %d	Ugyldigt sekundtal: %d
+Invalid second: %f	Ugyldigt sekundtal: %f
+Invalid socks authentication method.	Ugyldig socks autentifikationsmetode.
+Invalid state error	Ugyldig tilstand
+Invalid stream format	Ugyldigt strømformat
+Invalid stream operation	Ugyldig strømhandling
+Invalid string constant	Ugyldig tekstværdi
+Invalid syslog message: incorrect PRI number "%s"	Ugyldig syslog meddelelse: ukorrekt PRI nummer "%s"
+Invalid syslog message: incorrect PRI section	Ugyldig syslog meddelelse: Ukorrekt PRI sektion
+Invalid syslog message: incorrect timestamp "%s"	Ukorrekt syslog meddelelse: ukorrekt tidsstempling "%s"
+Invalid time string: %s	Ugyldigt tidspunkt: %s
+Invalid url '%s' - only supports 'http' and 'https' schemes	Ugyldig url '%s' - understøtter kun 'http' og 'https' former
+Invalid use of keyword	Ugyldigt brug af nøgleord
+Invalid value for current item	Ugyldig værdi for nuværende element
+Invalid value for field '%s'	Ugyldig værdi for felt '%s'
+Invalid value length: Should be 32.	Ugyldig værdilængde: Skulle være 32.
+Invalid variant operation	Ugyldig variant handling
+Invalid variant operation ($%.8x)	Ugyldig variant handling ($%.8x)
+Invalid variant operation (%s%.8x)\n%s	Ugyldig variant handling (%s%.8x)\n%s
+Invalid variant type	Ugyldig varianttype
+Invalid variant type conversion	Ugyldig varianttype konvertering
+Invalid variant type or size for field '%s'	Ugyldig varianttype eller størrelse for felt '%s'
+Invalid widget handle	Ugyldig widget handle
+Invokable Class %s implements no interfaces	Den kørbare klasse %s implementerer ingen interfaces
+Italic	Kursiv
+Item Properties	Elementegenskaber
+Item not found ($0%x)	Element blev ikke fundet ($0%x)
+ItemTag property is not initialized	ItemTag egenskab er ikke initialiseret
+Items Editor...	Elementredigeringsværktøj...
+Jan	Jan
+January	Januar
+Jpegs	Jpeg'er
+Jul	Jul
+JulianDate	JulianskDato
+July	Juli
+Jun	Jun
+June	Juni
+Kelvin	Kelvin
+KiloLiters	Kiloliter
+Kilograms	Kilogram
+Kilometers	Kilometer
+L&oad	&Indlæs
+Large &Icons	Store &ikoner
+Large icon view	Vis store ikoner
+Last Response Time:	Sidste svartid:
+Last record	Sidste post
+Layout	Layout
+Left	Venstre
+Legacy	Arv
+Length Required	Længde påkrævet
+LightYears	Lysår
+Line	Linje
+Line too long	Linje for lang
+Link to 	Reference til 
+Linkage	Sammenkædning
+Links	Referencer
+List capacity out of bounds (%d)	Listekapaciteten er for stor (%d)
+List count out of bounds (%d)	Listeantallet er ude for gyldigt talområde (%d)
+List does not allow duplicates ($0%x)	Listen tillader ikke dubletter ($0%x)
+List index out of bounds (%d)	Listeindeks er uden for gyldigt talområde (%d)
+List is locked during an active ForEach	Listen er låst mens der er en aktiv ForEach
+List view	Listevisning
+ListButton	ListButton
+ListView Items Editor	ListView Items Editor
+Lists all the PortTypes published by this Service	Vis alle porttyper, som er publiceret af denne tjeneste
+Liters	Liter
+Load Picture	Indlæs billede
+Load string list	Indlæs tekstliste
+Loading...	Indlæser...
+Local time is %s	Lokal tid er %s
+Local type declarations cannot have a name.  Element: %s	Lokal typedeklaration kan ikke have et navn. Element: %s
+Locale	Sprogvalg
+Localizable	Oversættelig
+Log	Log
+Log files (*.log)	Logfiler (*.log)
+Log(%d)	Log(%d)
+LogDetail	LogDetail
+Login page is not defined	Loginsiden er ikke defineret
+Login with USER first.	Log først ind med USER.
+LongTons	LongTons
+Lookup information for field '%s' is incomplete	Opslagsoplysningerne for felt '%s' er ikke komplette
+MD is an Obsolete Command. Use MX.	MD er en udgående kommando. Brug MX.
+MF is an Obsolete Command. USE MX.	MF er en udgået kommando. Brug MX.
+MS Sans Serif	MS Sans Serif
+MailA is an Obsolete Command. USE MX.	MailA er en udgående kommando. Brug MX.
+MainUpdateAction	MainUpdateAction
+Mar	Mar
+March	Marts
+Masked Text Editor	Redigeringsværktøj for maskeret tekst
+Mass	Masse
+Match &case	Bogstavsstørrelse skal passe
+Match &whole word only	&Sammenlign hele ord
+Max Events:	Maks antal hændelser:
+Max Response Time:	Maksimal svartid:
+Max line length exceeded.	Maksimal linielængde overskredet.
+Maximum connections limit exceeded. Try again later.	Maksim antal forbindelser blev overskredet. Forsøg igen senere.
+Maximum number of concurrent connections exceeded.  Please try again later	Maksimum antal samtidige forbindelser blev overskredet. Prøv igen senere
+Maximum sessions exceeded	Maksimum antal sessioner overskredet
+May	Maj
+Megameters	Megameter
+Memo1\n	Memo1\n
+Menu '%s' is already being used by another form	Menu '%s' er allerede i brug af en anden formular
+Menu index out of range	Menuindeks er uden for gyldigt område
+Menu inserted twice	Menu blev indsat to gange
+Menu insertion recursion not allowed	Menuindsættelse må ikke være rekursiv
+Message decoder not found	Meddelelsesdekoder blev ikke fundet
+Message encoder not found	Meddelelseskoder blev ikke fundet
+Message handling failed	Meddelelseshåndtering fejlede
+Message too long.	Meddelelsen er for lang.
+Message type recognition error	Fejl ved genkendelse af meddelelsestype
+Meters	Meter
+Method has no RTTI	Metode har ingen RTTI
+Method not allowed	Metode er ikke tilladt
+Method not permitted in TSoapDataList	Metode er ikke tilladt i TSoapDataList
+MetricTons	Metriske tons
+Micrograms	Mikrogram
+Micromicrons	Mikromicron
+Microns	Micron
+Microsoft MSXML is not installed	Microsoft MSXML er ikke installeret
+Miles	Mil
+Millennia	Årtusinde
+MilliLiters	Milliliter
+MilliSeconds	Millisekunder
+Milligrams	Milligram
+Millimeters	Millimeter
+Millimicrons	Millimicron
+Millisecond Values must be between 000 - 999	Millisekundværdier skal være mellem 000 og 999
+Mime format not supported for TIcon	Mimeformatet kan ikke bruges med TIcon
+MimeSource format must have an associated data stream	MimeSource formatet skal have en tilknyttet datastrøm
+Mimetype is empty	Mimetypen er tom
+Min Response Time:	Minimum svartid:
+Minutes	Minutter
+Miscellaneous	Diverse
+Mismatched paramaters to RegisterChildNodes	Parametrene til RegisterChildNodes passer ikke
+Missing DataSet property	Mangler DataSet egenskaben
+Missing DataSetField property	Mangler DataSetField egenskaben
+Missing Database property	Mangler databasegenskab
+Missing Delta Packet	Mangler Delta pakken
+Missing DriverName property	Mangler DriverName egenskab
+Missing FaultString or FaultCode element	Mangler FaultString eller FaultCode element
+Missing ProgID	Mangler ProgID
+Missing SQLConnection property	Mangler SQLConnection egenskab
+Missing TableName property	Mangler TableName egenskaben
+Missing Type name	Mangler typenavn
+Missing XML Data Component	Mangler XML data komponent
+Missing data provider or data packet	Mangler dataprovider eller datapakke
+Missing password	Mangler adgangskode
+Missing query, table name or procedure name	Mangler forespørgsel, tabelnavn eller procedurenavn
+Missing user name	Mangler brugernavn
+Mode has not been set.	Tilstand er ikke blevet sat.
+Mode is not initialised	Tilstanden er ikke initialiseret
+Mode set to %s.	Tilstand blev sat til %s.
+Modification of %s is not permitted	Ændring af %s er ikke tilladt
+Modifications are not allowed	Modifikationer er ikke tilladt
+ModifiedJulianDate	ModificeretJulianskDato
+Mon	Man
+Monday	Mandag
+Months	Måneder
+Moved Permanently	Permanent flyttet
+Moved Temporarily	Midlertidigt flyttet
+Movie not loaded	Film ikke indlæst
+MultiLine must be True when TabPosition is tpLeft or tpRight	MultiLine skal være Sand, når TabPosition er tpLeft eller tpRight
+Multidimensional variant arrays not supported in this release	Multidimensionelle variantarrays er ikke understøttet i denne version
+Multiple Connections not supported by %s driver	Flere samtidige forbindelser kan ikke lade sig gøre med %s styreprogrammet
+Multiple body elements not supported	Flere kropselementer er ikke understøttet
+Must allow multiref output for objects when serializing a graph of objects	Skal tillade multiref uddata for objekter når en objektgraf serialiseres
+Must apply updates before refreshing data	Skal udføre opdateringer før data kan genindlæses
+Must have a target stream	Skal have en målstrøm
+N&ew SubItem	N&yt underelement
+N&ew SubNode	N&yt underknudepunkt
+N&o to All	N&ej til alle
+NTP subsystem	NTP undersystem
+NULL only allowed with '=' and '<>'	NULL er kun tilladt med '=' eller '<>'
+Name	Navn
+Name not allowed on a ref item	Navn ikke tilladt på et referenceelement
+Namespace URI	Namespace URI
+Namespace error	Namespace fejl
+Nanograms	Nanogram
+NauticalMiles	Nautiske mil
+Ne&twork...	Ne&tværk...
+Need account for login.	Har brug for en konto til login.
+Need account for storing files.	Har brug for en konto for at gemme filer.
+Negative stream size invalid	Negativ streamstørrelse er ugyldig
+Nested dataset must inherit from %s	Nestede datasæt skal nedarve fra %s
+Nested datasets cannot have a MasterSource	Nestede datasæt kan ikke have en MasterSource
+Net dropped connection or reset.	Netværket mistede forbindelsen eller blev nustillet.
+Network is down.	Netværket er nede.
+Network is unreachable.	Netværket kan ikke nås.
+Network subsystem is unavailable.	Netværksundersystem er ikke til rådighed.
+Network unreachable.	Netværket kan ikke nås.
+New &Directory	Ny &filmappe
+New Folder	Ny mappe
+New Lookup Field	Nyt opslagsfelt
+New components cannot be added to frame instances.	Nye komponenter kan ikke tilføjes til rammeinstanser.
+Next record	Næste post
+Nick	Øgenavn
+No Class is regisgtered to implement interface %s	Ingen klasse er registreret som implementation af interface %s
+No Content	Intet indhold
+No Dispatcher set	Ingen dispatcher er sat
+No Help Manager installed.	Ingen hjælpemanger er installeret.
+No Message processing node set	Intet meddelelseshåndteringsknudepunkt er sat
+No Native to Message converter set	Ingen Native til Message konverterer er sat
+No OnListDirectory event found!	Ingen OnListDirectory håndtering fundet!
+No OnNewGroupsList event has been defined.	Ingen OnNewGroupsList hændelse er blevet defineret.
+No OnNewNewsList event has been defined.	Ingen OnNewNewsList hændelse er blevet defineret.
+No OnNewsgroupList event has been defined.	Ingen OnNewsgroupList hændelse er blevet defineret.
+No PSecPkgInfo specified	Ingen PSecPkgInfo blev angivet
+No Preview Available	Intet forhåndsvisning til rådighed
+No SQL statement available	Mangler SQL kommando
+No Table of Contents found.	Ingen indholdsfortegnelse fundet.
+No URL set	Mangler URL
+No URL was specified for 'GET'	Ingen URL var specificeret for 'GET'
+No User:  Port pair is not used or not used by an identifiable user	Ingen bruger: Portpar er ikke brugt eller ikke brugt af en identificerbar bruger
+No WSDL document associated with WSDLView	Intet WSDL dokument er associeret med WSDLView
+No WSDL or URL property was set in the THTTPRIO component. You must set the WSDL or URL property before invoking the Web Service	Ingen WSDL eller URL egenskaber var sat i THTTPRIO komponenten. Du skal sætte WSDL eller URL egenskaberne før du kan starte webtjenesten
+No access to temporary file	Ingen adgang til midlertidig fil
+No access to temporary file: check TMPDIR setting	Ingen adgang til midlertidig fil: kontroller TMPDIR indstilling
+No active document	Intet aktivt dokument
+No address specified	Ingen adresse angivet
+No argument for format '%s'	Intet argument for formatet '%s'
+No authentication handler has been specified.	Der er ikke angivet nogen autentifikationshåndterer.
+No authority could be contacted for authentication.	Ingen autoritet kunne kontaktes til autentificering
+No automatically activated data modules	Ingen automatisk aktiverede data moduler
+No bindings specified.	Ingen bindinger angivet
+No buffer space available.	Ingen stødpudeplads til rådighed.
+No class registered for invokable interface %s	Ingen klasse registreret for kørbart interface %s
+No command handler found.	Ingen kommandohåndterer blev fundet.
+No context-sensitive Help installed.	Ingen kontekst-sensitiv hjælp er installeret.
+No credential handle acquired	Ingen credential handle opnået
+No credentials are available in the security package	Ingen rettigheder (credentials) er tilgængelige i sikkerhedspakken
+No data allowed error	Data er ikke tilladt her
+No data modules registered	Ingen datamoduler er registreret
+No data to read.	Ingen data til læsning.
+No dispatcher component found on data module	Ingen dispatchkomponent blev fundet på datamodulet
+No execute handler found.	Ingen execute håndterer blev fundet
+No fields defined.  Cannot create dataset	Ingen felter defineret. Kan ikke oprette datasæt
+No help available	Ingen hjælp tilgængelig
+No help found for "%s"	Ingen hjælp fundet for "%s"
+No host	Ingen vært
+No index currently active	Intet indeks er aktivt lige nu
+No index for fields '%s'	Intet indeks for felt '%s'
+No interface  registered for URL '%s'	Intet interface registreret for URL '%s'
+No interface  registered for soap action '%s'	Ingen interface registreret for soap action '%s'
+No interface is registered to handle URL %s	Ingen interface er registreret til at håndtere URL %s
+No invokable class registered that implements interface %s of (soap action/path) %s	Der er ikke nogen fremkaldbar klasse registreret, som implementerer interfacet %s af (soap action/path) %s
+No matching DOM Vendor: "%s"	Ingen passende DOM Forhandler: "%s"
+No matching Kylix type was found for type: URI = %s, Name = %s on Node %s	Ingen matchende Kylix type blev fundet for type: URI = %s, Name = %s på Node %s
+No method named '%s' is supported by interface '%s'	Ingen metode ved navn '%s' forfindes i interface '%s'
+No modification allowed error	Ændringer er ikke tilladt (skrivebeskyttede data)
+No parameter type for parameter '%s'	Ingen parameter type for parameter '%s'
+No printer adapter available for printing	Ingen printeradaptor tilgængelig for udskrivning
+No property pages are available for this control	Ingen egenskabssider til rådighed for denne kontrol
+No request handlers handled this request. The WebAppComponents PageDispatcher, AdapterDispatcher or DispatchActions property may not be set.	Ingen forespørgselshåndterere håndterede denne forespørgsel. WebAppComponents PageDispatcher, AdapterDispatcher eller DispatchActions egenskaberne er muligvis ikke angivet.
+No route to host.	Ingen rute til værten.
+No server available	Ingen vært til rådighed
+No service available for URL %s	Ingen tjeneste til rådighed for URL %s
+No topic-based Help installed.	Ingen emne-baseret hjælp er installeret.
+No value for parameter '%s'	Ingen værdi for parameter '%s'
+Node "%s" not found	Knudepunktet "%s" blev ikke fundet
+Node cannot be null	Knudepunktet kan ikke være null
+Node is readonly	Knudepunkt er skrivebeskyttet
+Non Authenticated	Ikke autentificeret
+Non-authoritative Information	Ikke autoritativ information
+Non-authoritative response (try again or check DNS setup).	Ikke-autoritativt svar (prøv igen eller kontroller DNS opsætning)
+Non-echo type response received	Ikke-ekko type svar modtaget
+Non-recoverable errors: FORMERR, REFUSED, NOTIMP.	Fejl uden mulighed for genopretning: FORMERR, REFUSED, NOTIMP.
+None	Ingen
+Not Acceptable	Ikke akceptabelt
+Not Connected	Ikke forbundet
+Not Found	Ikke fundet
+Not Implemented	Ikke implementeret
+Not Modified	Ikke ændret
+Not all bytes sent.	Ikke alle byte blev sendt.
+Not connected to server.	Ikke forbundet med vært.
+Not enough bytes received	Ikke modtaget nok byte
+Not enough data in buffer.	Ikke nok data i buffer.
+Not enough memory is available to complete this request	Ikke nok hukommelse til at udføre denne forespørgsel
+Not enough timers available	Ikke nok timere til rådighed
+Not found	Ikke fundet
+Not found error	Ikke fundet
+Not in cached update mode	Ikke i cached update tilstand
+Not logged in.	Ikke logget ind.
+Not supported error	Ikke understøttet
+Notice: normal but significant condition	Besked: normaltt, men vigtigt
+Nov	Nov
+November	November
+Number expected	Forventede et tal
+OK	O.k.
+Object does not support scripting. Class: %0:s	Objekt understøtter ikke scripting. Klasse: %0:s
+Object not available: %s	Objekt er ikke til rådighed: %s
+Object type name required as parameter value	Objekttypenavnet er krævet som parameterværdi
+Object type not supported.	Objekttypen er ikke understøttet
+ObjectView must be True for Table with Object fields	ObjectView skal være slået til for tabeller med objektfelter
+Oct	Okt
+October	Oktober
+Odd byte position not valid for WideString	Ulige byte position er ikke gyldig for WideString
+Odd size not valid for WideString	Ulige størrelse er ikke gyldigt for WideString
+Ok	O.k.
+OnDataAvailable event is nil.	OnDataAvailable handling er nil.
+OnExecute not assigned.	OnExecute er ikke sat.
+Only one FaultCode element allowed	Kun en FaultCode element er tilladt
+Only one FaultString element allowed	Kun et FaultString element er tilladt
+Only one TIdAntiFreeze can exist per application.	Der må kun bruges en TIdAntiFreeze per program.
+Only one WebDispatcher per form/data module	Kun en WebDispatcher per formular/datamodul
+Only one data module per application	Kun et datamodul per program
+Open	Åbn
+Open Mask File	Åbn maskefil
+Open MyBase table	Åbn MyBase tabel
+Open as &read-only	Åbn &skrivebeskyttet
+Open trace log file	Åbner sporingslogfil
+Operation aborted	Handling blev afbrudt
+Operation already in progress.	Handlingen er allerede i gang.
+Operation cannot mix aggregate value with record-varying value	Handling kan ikke blande aggregatværdier med post-varierende værdier
+Operation not allowed in a DBCtrlGrid	Handling er ikke tilladt i en DBCtrlGrid
+Operation not allowed on a unidirectional dataset	Handling er ikke tilladt på et envejs datasæt
+Operation not allowed on sorted list	Handling er ikke tilladt på en sorteret liste
+Operation not allowed while dispatching application events	Handlingen er ikke tilladt mens applikationshandlinger bliver udført
+Operation not allowed with aggregates active	Handling er ikke tilladt med aktive aggregater
+Operation not supported	Handling er ikke understøttet
+Operation not supported on selected printer	Denne handling er kan ikke lade sig gøre med den valgte printer
+Operation not supported on socket.	Denne handling understøttes ikke af denne socket.
+Operation not supported.  %s component does not support IGetWebComponentList	Handling er ikke understøttet. %s  komponent understøtter ikke IGetWebComponentList
+Operation now in progress.	Handlingen er nu i gang.
+Operation would block. 	Handlingen ville blokere.
+Option not set to allow Native type to be set to NULL	Indstillingen til at tillade Native typen at være sat til nul, er ikke sat
+Options	Indstillinger
+OtherNick	OtherNick
+Ounces	Ounces
+Out of memory	Ikke mere hukommelse
+Out of memory while expanding memory stream	Hukommelsesmangel opstod ved udpakning af hukommelsesstrøm
+Out of system resources	Løbet tør for systemresourcer
+Overflow while converting variant of type (%s) into type (%s)	Overløb ved konvertering af variant af type (%s) til type (%s)
+Owner	Indehaver
+Owner is not a TCustomHeaderSection	Ejeren er ikke en TCustomHeaderSection
+PNGs	PNGer
+POP3 proxy ready	POP3 proxy er parat
+POP3 proxy signing off	POP3 proxy logger af
+Paces	Paces
+Package Size Too Big.	Pakkestørrelsen er for stor.
+Packages are not supported by '%s' Server	'%s' værten understøtter ikke pakker
+Page %s does not support inclusion	Siden %s understøtter ikke inkludering
+Page access denied	Adgang til siden blev nægtet
+Parameter %s on Method %s of Interface %s has no RTTI	Parameter %s på metode %s fra interfacet %s har ingen RTTI
+Parameter '%s' not found	Parameteren '%s' blev ikke fundet
+Parameter '%s', cannot save data larger than %d bytes	Parameter '%s', kan ikke gemme data større end %d byte
+Parameter expected	Forventet parameter
+Parent given is not a parent of '%s'	Den givne forælder er ikke en forælder til '%s'
+ParentConnection is not assigned	ParentConnection er ikke tildelt
+Parsecs	Parsec
+Partial Content	Delvist indhold
+Password	Adgangskode
+Password must not be blank	Adgangskoden må ikke være tom
+Password: 	Adgangskode:
+Paste	Indsæt
+Paste|Inserts Clipboard contents	Indsæt|Indsætter udklipsholderens indhold
+Path	Sti
+PathInfo	PathInfo
+PgDn	PgDn
+PgUp	PgUp
+Phone | 4155551212 | !\\(999\\)000-0000;1;_\nExtension | 15450 | !99999;1;_\nSocial Security | 555555555 | 000\\-00\\-0000;1;_\nShort Zip Code | 90504 | 00000;1;_\nLong Zip Code | 905040000 | 00000\\-9999;1;_\nDate | 062794 | !99/99/00;1;_\nLong Time | 090515PM | !90:00:00>LL;1;_\nShort Time | 1345 | !90:00;1;_\n	Telefon | 4155551212 | !\\(999\\)000-0000;1;_\nLokalnummer | 15450 | !99999;1;_\nSygesikringsnr | 555555555 | 000\\-00\\-0000;1;_\nKort postnr | 90504 | 00000;1;_\nLangt postnr | 905040000 | 00000\\-9999;1;_\nDato | 062794 | !99/99/00;1;_\nLang klokkeslet | 090515PM | !90:00:00>LL;1;_\nKort klokkeslet | 1345 | !90:00;1;_\n
+Picas	Pica
+Picture Editor	Billede editor
+Picture:	Billede:
+Pixmaps	Pixmaps
+Points	Punkt
+Polite people say HELO	Høflige folk siger HELO
+Port	Port
+Port Type	Porttype
+Port:	Port:
+PortName	Portnavn
+Post	Send
+Post edit	Gem redigering
+Pounds	Pund
+Precondition Failed	Førbetingelse fejlede
+Preparation of default expression failed with error "%s"	Foreberedelse af standardudtrykket fejlede med meddelelsen "%s"
+Preparation of field constraint failed with error "%s"	Forberedelse af feltbegræsning fejlede med meddelelse "%s"
+Preparation of record constraint failed with error "%s"	Forberedelse af post begrænsning fejlede med meddelelsen "%s"
+Preview	Vis udskrift
+PreviewLabel	PreviewLabel
+Printer index out of range	Printerindeks er uden for gyldigt talområde
+Printer is not currently printing	Printeren skriver ikke ud lige nu
+Printer selected is not valid	Den valgte printer er ikke gyldig
+Printing in progress	Udskriver
+Prior record	Forrige post
+Privileged instruction	Priviligeret CPU instruktion
+Producer	Producent
+Project Co-Coordinator	Projekt ko-koordinator
+Project Coordinator	Projektkoordinator
+Properties	Egenskaber
+Property %s does not exist	Egenskaben %s findes ikke
+Property '%s' has not been initialized on component '%s'	Egenskab '%s' er ikke blevet initialiseret på komponent '%s'
+Property already defined by lookup field	Egenskab er allerede defineret af opslagsfelt
+Property category does not exist (%s)	Egenskabskategorien findes ikke (%s)
+Property filters may only be name, class or type based (%d:%d)	Egenskabsfilter må kun være baseret på navn, klasse eller type (%d:%d)
+Property is read-only	Egenskaben er skrivebeskyttet
+Property may not be modified while aggregate is active	Egenskab må ikke modificeres mens et aggregat er aktivt
+Property or Method "%s" is not supported by DOM Vendor "%s"	Egenskab eller metode "%s" er ikke understøttet af DOM Forhandleren "%s"
+Protocol family not supported.	Protokolfamilien er ikke understøttet.
+Protocol field is empty	Protokolfeltet er tomt
+Protocol not supported.	Protokollen er ikke supporteret.
+Protocol wrong type for socket.	Protokoltypen er forkert for socket.
+Provider name "%s" was not recognized by the server	Providernavn "%s" blev ikke genkendt af værten
+Provider not exported: %s	Provider ikke eksporteret: %s
+Proxy Authentication Required	Proxy autentifikation er nødvendig
+PutObject to undefined item	PutObject til udefineret element
+Queue %s status: %s	Kø %s status: %s
+Quit key hit	Afsluttasten blev trykket
+RCode NO Error	RCode NO Error
+RESPONSE	SVAR
+Radio items must have a Controller as a parent	Radio elementer skal have en Controller som forælder
+Range check error	Heltalsoverløb
+Range check error for variant of type (%s)	Kontrol for gyldigt talområde fejlede for variant af type (%s)
+Range check error while converting variant of type (%s) into type (%s)	Kontrol for gyldigt talområde fejlede under konvertering af variant af type (%s) til type (%s)
+Range of %d to %d is invalid	Området %d til %d er ugyldigt
+Rankine	c
+Raw Receive Error = 0.	Raw Receive fejl = 0.
+Re&move all	&Fjern alle
+Read	Læsning
+Read Timeout	Tidsudløb ved læsning
+Read beyond end of file	Læsning forsøgt efter slutning på fil
+Real name	Virkeligt navn
+Reason: %s\n	Årsag: %s\n
+Reaumur	c
+Receive	Modtage
+Receive control file	Modtage styrefil
+Receive data file	Modtage datafil
+Received Packet is too small. %d	Modtaget pakke er for lille. %d
+Received Packet is too small. Less than 12 bytes %d	Modtaget pakke er for lille, mindre end 12 byte %d
+Received Packet is too small. Less than 4 bytes %d	Den modtagne pakke er for lille, mindre end 4 byte %d
+Received someone else's packet	Modtaget en anden's pakke
+Reconnect at %s: %s	Genopkobling %s: %s
+Record not found	Post ikke fundet
+Record not found or changed by another user	Post ikke fundet eller ændret af en anden bruger
+Record or field constraint failed.	Post eller felt begrænsning fejlede
+Recursion while doing a VarDataCastTo	Rekursion mens VarDataCastTo udføres
+Recursion while doing a VarDataClear	Rekursion mens VarDataClear udføres
+Recursion while doing a VarDataCopy	Rekursion mens VarDataCopy udføres
+Recursion while doing a VarDataCopyNoInd	Rekursion mens VarDataCopyNoInd udføres
+Recursion while doing a VarDataInit	Rekursion mens VarDataInit udføres
+Recv 	Modt
+Redo	Omgør
+Refresh data	Genindlæs data
+Refresh is only supported if the FileName or XML properties are set	Genindlæs er kun understøttet hvis FileName eller XML egenskaber er sat
+Registered Types	Kun registrerede typer
+Regular	Normal
+Reload	Genindlæs
+Remotable Type %s not registered	Remotable typen %s er ikke registreret
+Remote Login	Fjernlogin
+Remote Method Call: unsupported calling convention %s for method %s on interface %s	Remote Method Call: Kaldekonventionen %s er ikke understøttet for metoden %s på interfacet %s
+Remove	Fjern
+Rep&lace with:	&Erstat med:
+Replace	Erstat
+Replace &All	Erstat &alle
+Reply %s on Job ID %s	Svar %s på Job ID %s
+Reply Timed Out:  The server did not return a response and the query has been abandoned	Tidsudløb for svar: Værten returnerede ikke et svar og forespørgslen er forladt
+Request Entity To Long	Forespørgselsdel er for lang
+Request Timeout	Tidsudløb på forespørgsel
+Request rejected because SOCKS server cannot connect.	Forespørgslen fejlede fordi SOCKS værten ikke kan forbinde.
+Request rejected because the client program and identd report different user-ids.	Forespørgslen fejlede fordi klientprogrammet og identd rapporterer forskellige brugerid'ere.
+Request rejected or failed.	Forespørgslen blev afvist eller fejlede.
+Request-URI Too Long. 256 Chars max	Forespørgsels-URI for lang. Max 256 tegn.
+RequestCount:	RequestCount:
+Requested action aborted: local error in processing.	Den forespurgte handling blev afbrudt: lokal fejl ved udførsel.
+Requested action aborted: page type unknown.	Forespurgt handling blev afbrudt: sidetypen (page type) er ukendt.
+Requested action not taken.	Forespurgt handling blev ikke udført.
+Requested file action aborted.	Forespurgt handling blev afbrudt.
+Requested file action not taken.	Forespurgt filhandling blev ikke udført.
+Requested file action okay, completed.	Den forespurgte filhandling er O.k. og afsluttet.
+Requested file action pending further information.	Den forespurgte filhandling mangler yderligere information.
+Requires Connection before opening	Kræver forbindelse får den åbnes
+Reset	Nulstil
+Reset Content	Nulstil indhold
+Resolving hostname %s.	Finder IP for værtsnavn %s.
+Resource %s is of incorrect class	Resource %s er af forkert klasse
+Resource %s not found	Resource %s ikke fundet
+Result	Resultat
+Retired/Past Contributors	Pensionerede/foregående bidragydere
+Return	Retur
+Right	Højre
+Rods	Rods
+Row not found in %s	Række ikke fundet i %s
+S&top Server	S&top server
+S&ub Items	&Underelementer
+SOAP Response Packet: result element expected, received "%s"	SOAP Svarpakke: forventede result element, men modtog "%s"
+SQL Error: Error mapping failed	SQL fejl: Fejlkortlægning fejlede
+SQL not supported: %s	SQL er ikke understøttet: %s
+SQLConnection property required for this operation	SQLConnection egenskab er påkrævet for denne handling
+SSL certificate request error.	SSL certifikat forespørgselsfejl.
+SSL connection has dropped.	SSL forbindelsen blev tabt.
+SSL library internal error.	Intern fejl i SSL biblioteket.
+SSL status: "%s"	SSL status: "%s"
+SSPI %s returns error #%d(0x%x): %s	SSPI %s returnerer fejl #%d(0x%x): %s
+SSPI interface has failed to initialise properly	SSPI interface fejlede ved opstart
+Sat	Lør
+Saturday	Lørdag
+Save	Gem
+Save %s as	Gem %s som
+Save &Literal Characters	Gem &almindelige tegn
+Save As	Gem som
+Save Picture As	Gem billede som
+Save string list	Gem tekstliste
+Scan line index out of range	Skanlinie indeks er ude for gyldigt område
+Script Object expected	Forventede scriptobjekt 
+Script engine not found: %s.	Scriptmaskine blev ikke fundet: %s
+Scrollbar property out of range	Scrollbar egenskab er uden for gyldigt talområde
+Seconds	Sekunder
+See Other	Se andet
+Sele&cted Index:	&Valgt indeks:
+Select &All	Vælg &alle
+Select &Font...	Vælg &skrifttype...
+Select All	Vælg alle
+Select All|Selects the entire document	Vælg alle|Vælger hele dokumentet
+Select Directory	Vælg filmappe
+Selected	Markeret
+Selected DOM Vendor does not support this property or method	Den valgte DOM forhandler understøtter ikke denne egenskab eller metode
+Selection contains a component introduced in an ancestor form which cannot be deleted	Det valgte indeholder en komponent, som var introduceret i en forfader form, og som derfor ikke kan slettes
+Send	Send
+Send a message	Send en besked
+Send to Back	Flyt om bagerst
+Sent 	Sendt
+Sep	Sep
+September	September
+Server Connection not locatable when sending message	Værtsforbindelse kunne ikke findes da det blev forsøgt at sende en meddelelse
+Server Returned Unknown Error	Værten returnerede en ukendt fejl
+Server did not respond.	Værten svarede ikke.
+Server do not support APOP (no timestamp)	Værten understøtter ikke APOP (ingen tidsstempling)
+Server is busy	Værten har travlt
+Server status: active	Værtsstatus: aktiv
+ServerInfo	ServerInfo
+Service Info Page	Service Info Page
+Service Unavailable	Service ikke tilgængelig
+Service closing control connection.	Tjenesten lukker styreforbindelsen.
+Service not available, closing control connection.	Tjenesten er ikke til rådighed, lukker styreforbindelsen.
+Service ready for new user.	Tjenesten er parat til en ny bruger.
+Set Size Exceeded.	Sæt størrelse overskredet
+Set the GroupRef property for the cmGroupRef content model	Sæt GroupRef egenskaben for cmGroupRef indholdsmodellen
+SetCipher failed.	SetCipher fejlede.
+Shift+	Skift+
+Show &Hidden Files	Vis &skjulte filer
+Show in Log	Vis i log
+Signing Off	Afbryder forbindelsen
+Size	Størrelse
+Size mismatch for field '%s', expecting: %d actual: %d	Størrelserne passer ikke for felt '%s', forventer %d men det var %d
+Small Icon view	Vis med små ikoner
+Soap header %s with attribute 'mustUnderstand' set to true was not handled	SOAP hovedsektionen %s med attributtet 'mustUnderstand' sat til sand blev ikke håndteret
+Socket Error # %d\n%s	Socketfejl # %d\n%s
+Socket already open	Socket er allerede åben
+Socket is already connected.	Socket er allerede forbundet.
+Socket is not connected.	Socket er ikke forbundet.
+Socket must be in blocking mode	Socket skal være i blokerende tilstand
+Socket operation on non-socket.	Socket handling på en ikke-socket.
+Socket read error	Socket læsefejl
+Socket type not supported.	Sockettype er ikke supporteret.
+Socks server did not respond.	Socksværten svarede ikke.
+Software caused connection abort.	Programmellet medførte en afbrydelse af forbindelsen.
+Space	Mellemrum
+SquareCentimeters	Kvadratcentimeter
+SquareDecameters	Kvadratdekameter
+SquareDecimeters	Kvadratdecimeter
+SquareFeet	Kvadratfod
+SquareHectometers	Hektar
+SquareInches	Kvadrattommer
+SquareKilometers	Kvadratkilometer
+SquareMeters	Kvadratmeter
+SquareMiles	Kvadratmil
+SquareMillimeters	Kvadratmillimeter
+SquareRods	SquareRods
+SquareYards	Kvadratyard
+Stack overflow	Stakoverløb
+Stale NFS file handle.	Stale NFS filhåndtag.
+Start	Start
+Start mail input; end with <CRLF>.<CRLF>	Start post inddata; afslut med <CRLF>.<CRLF>
+Starting FTP transfer	Starter FTP overførsel
+Stat 	Stat
+Statistics	Statistik
+Steres	Steres
+Stones	Sten
+Stop	Stop
+Stopped	Standset
+Stored Procedures not supported by '%s' Server	'%s' værten understøtter ikke Stored Procedures
+Stream read error	Strømlæsningsfejl
+Stream write error	Strømskrivningsfejl
+String	String
+String expected	Forventede tekst
+String list does not allow duplicates	tekstlisten tillader ikke dubletter
+String list editor	Tekstliste redigeringsværktøj
+String parameter expected	Forventede tekstparameter
+Stringlist not initialized!	Stringlist er ikke startet op!
+Structure set to %s.	Struktur blev sat til %s.
+Sub Item &Properties	Underelement &egenskaber
+Sub-menu is not in menu	Undermenu er ikke i menu
+Submit	Send
+Successfull API call	API kald lykkedes
+Sun	Søn
+Sunday	Søn
+Switching protocols	Skifter protokoller
+Syntax Error - Command not understood: %s	Syntaksfejl - Kommando blev ikke forstået: %s
+Syntax error	Syntaksfejl
+Syntax error, command unrecognized.	Syntaksfejl, kommando ikke genkendt.
+System Error.  Code: %d.\n%s	Systemfejl. kode: %d.\n%s
+TAggregateStream Error: no internal streams	TAggregateStream fejl: Ingen interne strømme
+TIdIRC 1.061 by Steve Williams	TIdIRC 1.061 by Steve Williams
+TIdMessagePart can not be created.  Use descendant classes. 	TIdMessagePart kan ikke oprettes. Brug nedarvede klasser.
+TIdSNPP Mess command only supports single line Messages.	TIdSNPP Mes kommando understøtter kun enkeltliniebeskeder.
+TMenu.SetForm: argument must be TCustomForm	TMenu.SetForm: argumentet skal være en TCustomForm
+TStrings descendant %s failed to call inherited constructor	TStrings nedarvning %s fejlede da den kaldte den nedarvede constructor
+TTL expired.	TTL udløb.
+Tab	Faneblad
+Tab index out of bounds	Tab indeks er ude for gyldigt interval
+Tab position incompatible with current tab style	Tab position er inkompatibel med nuværende tab stil
+Tab style incompatible with current tab position	Tab stil er inkompatibel med nuværende tab position
+Table/Procedure not found	Tabel/procedure blev ikke fundet
+Te&xt:	Te&kst:
+Temperature	Temperatur
+Terminate Thread Timeout	Tidsudløb for trådstandsning
+Text exceeds memo capacity	Tekst er større en kapaciteten for memo'en
+Text files (*.txt)|*.txt|All files (*.*)|*.*	Tekst filer (*.txt)|*.txt|Alle filer (*.*)|*.*
+Text files (*.txt)|*.txt|Config files (*.conf)|*.conf|Shell scripts (*.sh)|*.sh|All files (*)|*\n	Tekstfiles (*.txt)|*.txt|Konfigurationsfiler (*.conf)|*.conf|Skalscripts (*.sh)|*.sh|Alle filer (*)|*\n
+Text files (*.txt)|*.txt|Shell scripts (*.sh)|*.sh|Config files (*.conf)|*.conf|All files (*)|*\n	Tekstfiler (*.txt)|*.txt|Skalscripts (*.sh)|*.sh|Konfigurationsfiler (*.conf)|*.conf|Alle filer (*)|*\n
+Text not found: "%s"	Teksten blev ikke fundet: "%s"
+The Local Security Authority cannot be contacted	Den lokale sikkerhedsautoritet kan ikke kontaktes
+The buffers supplied to a function was too small.	Bufferne givet til funktionen var for små.
+The caller is not the owner of the desired credentials	Opkalderen ejer ikke de nødvendige rettigheder (credentials)
+The certificate chain was issued by an untrusted authority.	Certifikatskæden blev givet af en ubetroet autoritet
+The client and server cannot communicate, because they do not possess a common algorithm.	Klienten og værten kan ikke kommunikere, eftersom der ikke findes en fælles algoritme for dem begge.
+The clocks on the client and server machines are skewed.	Urene på klient- og værtsmaskine går ikke ens.
+The context data must be renegotiated with the peer.	Kontekst data skal genaftales med modparten.
+The context has expired and can no longer be used.	Kontakten er udløbet og kan ikke længere bruges.
+The credentials supplied to the package were not recognized	Rettighederne (credentials) som blev givet til pakken blev ikke genkendt
+The credentials supplied were not complete, and could not be verified. Additional information can be returned from the context.	Rettighederne (credentials) som blev givet var ikke komplette, og kunne ikke verificeres. Yderligere informationer kan fås af konteksten.
+The credentials supplied were not complete, and could not be verified. The context could not be initialized.	Rettighederne (credentials) var ikke komplette, og kunne ikke verificeres. Konteksten kunne ikke oprettes.
+The following SITE commands are supported: HELP  DIRSTYLE	Følgende SITE kommandoer er understøttet: HELP  DIRSTYLE
+The function completed successfully, but CompleteToken must be called	Funktionen afsluttede med succes, men CompleteToken skal kaldes
+The function completed successfully, but both CompleteToken and this function must be called to complete the context	Funktionen afsluttede med succes, men både CompleteToken og denne funktion skal kaldes for at færdiggøre kontekst
+The function completed successfully, but must be called again to complete the context	Funktionen afsluttede med succes, men skal kaldes igen for at færdiggøre kontekst
+The function requested is not supported	Den forespurgte funktion er ikke understøttet
+The handle specified is invalid	Det angivne håndtag er ikke gyldigt
+The logon attempt failed	Logonforsøget fejlede
+The logon was completed, but no network authority was available. The logon was made using locally known information	Logon blev foretages, men ingen netværksautoritet var tilgængelig. Logon blev gjort med lokalt tilgængelige oplysninger
+The message or signature supplied for verification has been altered	Meddelelsen eller signaturen er blevet ændret og signaturens sammenhæng med meddelelsen kan derfor ikke verificeres
+The message received was unexpected or badly formatted.	Meddelelsen der blev modtaget var uventet eller dårligt formateret.
+The message supplied for verification is out of sequence	Meddelelsen som blev forsøgt verificeret er ude af sekvensrækkefølge
+The per-message Quality of Protection is not supported by the security package	Per-besked Quality of Protection er ikke understøttet af sikkerhedspakken
+The received certificate has expired.	Certifikatet der blev modtaget er udløbet.
+The requested security package does not exist	Den forespurgte sikkerhedspakke findes ikke
+The security context could not be established due to a failure in the requested quality of service (e.g. mutual authentication or delegation).	Sikkerhedskonteksten kan ikke oprettes på grund af en fejl i den forespurgte servicekvalitet (QoS).
+The security context does not allow impersonation of the client	Sikkerhedskonteksten tillader ikke at klienten lader som om den er en anden
+The security package failed to initialize, and cannot be installed	Sikkerhedspakken kunne ikke starte, og kan ikke installeres
+The security package is not able to marshall the logon buffer, so the logon attempt has failed	Sikkerhedspakken er ikke i stand til at kontrollere logonbufferen, så logonforsøget fejlede
+The specified data could not be decrypted.	De angive data kan ikke dekrypteres.
+The specified data could not be encrypted.	De angivne data kan ikke krypteres.
+The specified directory does not exist. Create it?	Den valgte filmappe findes ikke. Skal den oprettes?
+The specified target is unknown or unreachable	Det angivne mål er ikke kendt eller kan ikke nås
+The string %s does not translate into a valid IP.	Teksten %s kan ikke oversættes til et gyldigt IP nummer.
+The supplied IP address is not a valid multicast address [224.0.0.0 to 239.255.255.255].	Den angivne IP adresse er ikke en gyldig multicast adresse [224.0.0.0 til 239.255.255.255].
+The supplied message is incomplete.  The signature was not verified.	Den leverede besked er ikke komplet. Signaturen blev ikke verificeret.
+The target principal name is incorrect.	Det principielle navn for målet er ikke korrekt (target principal name).
+The token supplied to the function is invalid	Funktionen fik en ugyldig token
+There is no LSA mode context associated with this context.	Der er ingen LSA mode kontekst tilknyttet denne kontekst.
+There is no active transaction	Der er ikke nogen aktiv transaktion
+There is no default printer currently selected	Der er ikke valgt nogen standard printer lige nu
+There is too many IP addresses in the specified range (%d) to be displayed at design time.	Der er for mange IP adresser i det angivne område (%d) til at de kan vises på designtidspunktet.
+This authentication method is already registered with class name %s.	Denne autentifikationsmetode er allerede registreret med klassenavnet %s.
+This function is not supported on Win32.	Denne funktion er ikke understøttet af Win32.
+This property or method is not implemented in the Open XML Parser	Denne egenskab eller metode er ikke implementereti OpenXML parseren
+Thread	Tråd
+Thread Class Not Specified.	Trådklasse er ikke angivet.
+Thread Error: %s (%d)	Trådfejl: %s (%d)
+Thread creation error: %s	Trådoprettelsesfejl: %s
+Thu	Tor
+Thursday	Torsdag
+Time	Tid
+TimedOut	Tidsudløb
+Timeout	Timeout
+Timeout occurred waiting for %s to execute	Tidsudløb ved udførsel af %s
+Toggle	Skift
+Tons	Tons
+Too many buttons specified for message box	For mange knapper specificeret til meddelelsesboks
+Too many custom variant types have been registered	For mange specielle varianttype er blevet registreret
+Too many images	For mange billeder
+Too many levels of remote in path.	For mange niveauer af remote i stien.
+Too many levels of symbolic links.	For mange niveauer af symbolske referencer.
+Too many open files	For mange åbne filer
+Too many open files.	For mange åbne filer.
+Too many parameters in method %s	For mange parametre i metode %s
+Too many processes.	For mange processer.
+Too many references, cannot splice.	For mange referencer, kan ikke opdele.
+Too many rows or columns deleted	Slettet for mange rækker eller kolonner
+Too many table columns	For mange tabelkolonner
+Too many users.	For mange brugere.
+ToolBar1	ToolBar1
+ToolButton3	ToolButton3
+Total Response Time:	Total svartid:
+Transfer aborted	Overførsel afbrudt
+Transfer complete	Overførsel færdig
+Transform failed	Transformation fejlede
+TransformNode most be called using a document node (not a document element) for the source and the stylesheet.	TransformNode skal kaldes ved hjælp af et dokument knudepunkt (ikke et dokument element) for kilden og stylesheetet.
+TransformationFile must be specified	TransformationFile skal angives
+TreeView Items Editor	TreeView elementeditor
+True	Sand
+Tue	Tir
+Tuesday	Tirsdag
+Type	Type
+Type cannot be cast as Variant	Type kan ikke konverteres til Variant
+Type mismatch for field '%s', expecting: %s actual: %s	Typerne passer ikke for felt '%s'. Forventer %s, men det var %s
+Type mismatch in expression	Typefejl  i udtryk
+Type mismatch in parameter %s	Typefejl i parameteren %s
+Type set to %s.	Type blev sat til %s.
+UDP Receive Error = 0.	UDP Modtagelsesfejl = 0.
+UKBuckets	UKBuckets
+UKBushels	UKBushels
+UKGallons	UKGallons
+UKGill	UKGill
+UKOunces	UKOunces
+UKPecks	UKPecks
+UKPints	UKPints
+UKPottle	UKPottle
+UKQuarts	UKQuarts
+URL must be in the form "http://server.company.com/scripts/httpsrvr.dll"	URL skal være i formen "http://server.company.com/scripts/httpsrvr.dll"
+URL required	URL krævet
+UUCP subsystem	UUCP undersystem
+Unable to Find Procedure %s	Ude af stand til at finde procedure %s
+Unable to Load %s	Ude af stand til at indlæse %s
+Unable to Open Metadata	Ude af stand til at åbne metadata
+Unable to Replace Image	Ikke i stand til at erstatte billede
+Unable to complete write request, progress halted at %d bytes	Ude af stand til at færdiggøre skriveforespørgsel, standsede ved %d byte
+Unable to create directory	Ude af stand til at oprette filmappe
+Unable to create directory "%s".	Ude af stand til at oprette filmappe "%s".
+Unable to determine field names for %s	Ude af stand til at afgøre feltnavne for %s
+Unable to exec file %s	Ude af stand til at udføre %s
+Unable to execute %s	Ude af stand til at udføre %s
+Unable to execute Query	Ude af stand til at udføre forespørgsel
+Unable to execute command, wrong connection state;Current connection state: %s.	Ude af stand til at udføre kommando, forkert forbindelsestilstand;Nuværende tilstand: %s.
+Unable to find file %s	Ude af stand til at finde fil %s
+Unable to find record.  No key specified	Ude af stand til at finde post. Ingen nøgle angivet
+Unable to initialize compressor	Ude af stand til at starte kompressor
+Unable to initialize decompressor	Ude af stand til at starte dekompressoren
+Unable to insert a line	Ikke i stand til at indsætte en linje
+Unable to load %s	Ude af stand til at indlæse %s
+Unable to load WSDL File/Location: %s.  Error [%s]	Ude af stand til at indlæse WSDL fil/sted: %s. Fejl [%s]
+Unable to load bind parameters	Ude af stand til at indlæse bind parametre
+Unable to locate form/component, '%s'	Ude af stand til at finde formular/komponent, '%s'
+Unable to locate property '%s' on component '%s'	Ude af stand til at finde egenskab '%s' på komponent '%s'
+Unable to move %s to %s	Ude af stand til at flytte %s til %s
+Unable to not open registry key: %s	Ude af stand til at åbne registreringsdatabase nøgle: %s
+Unable to open %s	Ude af stand til at åbne %s
+Unable to read directory "%s".	Ude af stand til at læse mappe "%s"
+Unable to resolve records.  Table name not found.	Ude af stand til at resolve poster. Tabelnavn kunne ikke findes.
+Unable to retrieve the URL endpoint for Service/Port '%s'/'%s' from WSDL '%s'	Ude af stand til at hente URL slutpunktet for Service/Port '%s'/'%s' fra WSDL '%s'
+Unable to stop client thread	Ude af stand til at stande klienttråd
+Unable to write bitmap	Ude af stand til at skrive billede
+Unable to write to %s	ude af stand til at skrive til %s
+Unassigned variant value	Variantværdi er ikke tildelt
+Unauthorized	Uautoriseret
+Undo	&Fortryd
+Uneven size in DecodeToStream.	Ulige størrelse i DecodeToStream
+Uneven size in Encode.	Ulige størrelse i Encode.
+Unexpected characters	Uventede tegn
+Unexpected end of string [%s]	Uventet afslutning på tekst [%s]
+Unexpected error occurred executing %s	Uventet fejl opstod, da %s blev udført
+Unexpected message arrived to an interface that is not listening	Uventet meddelelse ankom til et interface, som ikke lyttede
+Unexpected operation from %s:%d	Uventet handling fra %s:%d
+Unexpected parameter type	Forventede ikke denne parametertype
+Unexpected return type	Uventet returtype
+Unexpected script error	Uventet scriptfejl
+Unexpected variant error	Uventet variantfejl
+Unexpected variant or safe array error: %s%.8x	Uventet variant eller safe array fejl: %s%.8x
+Unknown	Ukendt
+Unknown Adapter mode: %s	Ukendt adaptertilstand: %s
+Unknown Error	Ukendt fejl
+Unknown FTP listing format	Ukendt FTP listningsformat
+Unknown Message Part Type.	Ukendt meddelelsesdelstype
+Unknown Response Code	Ukendt svarkode
+Unknown SOAPAction %s	Ukendt SOAPAction %s
+Unknown Type	Ukendt type
+Unknown command	Ukendt kommando
+Unknown conversion family %s	Ukendt konverteringsfamilie %s
+Unknown conversion type %s	Ukendt konverteringstype %s
+Unknown credentials use	Ukendt rettighedsproblem (credentials)
+Unknown custom variant type ($%.4x)	Ukendt speciel varianttype ($%.4x)
+Unknown datatype "%s"	Ukendt datatype "%s"
+Unknown error	Ukendt fejl
+Unknown mode	Ukendt tilstand
+Unknown or illegale facility code	Ukendt eller illegal facilitetskode
+Unknown or illegale security code	Ukendt eller illegal sikkerhedskode
+Unknown or other error: Can not determine owner, other error, or the error can not be revealed.	Ukendt eller anden fejl: Kan ikke afgøre ejer, anden fejl, eller fejlen kan ikke afsløres.
+Unknown picture file extension (.%s)	Ukendt billedefilendelse (.%s)
+Unknown queue %s	Ukendt kø %s
+Unknown socks error.	Ukendt socks fejl.
+Unknown user name	Ukendt brugernavn
+Unnamed	Unavngivet
+Unrecognized IMAP4 Response Header.	IMAP4 svar ikke forstået.
+Unrecognized POP3 Response Header:\n"%s"	Ukendt POP3 Svar:\n"%s"
+Unrecognized UUE encoding scheme.	UUE kodningsskema blev ikke genkendt.
+Unrecognized content trasnfer encoding.	Ukendt indholdsoverførselskodning (content transfer encoding).
+Unrecognized movie format	Ukendt filmformat
+Unsupported Media Type	Medietype er ikke understøttet
+Unsupported SOAP encodingStyle %s	SOAP encodingStyle %s er ikke understøttet
+Unsupported authorization scheme.	Autorisationsskema er ikke understøttet.
+Unsupported calling convention: %s	Kaldekonventionen %s er ikke understøttet
+Unsupported character encoding "%s", try using LoadFromFile	Tegnsætkodningen "%s" er ikke understøttet, prøv at bruge LoadFromFile
+Unsupported clipboard format	Udklipsholderformat er ikke supporteret
+Unsupported hash algorithm. This implementation supports only MD5 encoding.	Hashalgoritme er ikke understøttet. Denne implementering virker kun med MD5 hash kodning.
+Unsupported object type. You can assign only one of the following types or thir descendants: TStrings, TStream.	Objekttypen er ikke understøttet. Du kan kun tildele en af følgende typer eller en nedarvning: TStrings, TStream.
+Unsupported transfer mode: "%s"	Overførselsmetode understøttes ikke: "%s"
+Unsupported variant type: %s	Varianttypen %s er ikke understøttet
+Unsuppported variant type	Varianttypen er ikke understøttet
+Unterminated field name	Uafsluttet feltnavn
+Unterminated string constant	Uafsluttet tekst værdi
+Up	Op
+Up one directory	Et filmappeniveau op
+Up to <A HREF="%s">%0:s</A>\n<UL>	Op til <A HREF="%s">%0:s</A>\n<UL>
+Up to <A HREF="%s">root directory</A>\n<UL>	Op til <A HREF="%s">rodmappen</A>\n<UL>
+Update affected more than 1 record.	Opdateringen berørte mere end 1 post.
+Uploaded file expected for field %s	Indsendt fil forventet for felt %s
+Use Proxy	Benyt proxy
+User logged in, proceed.	Bruger logget ind, fortsæt venligst.
+User name okay, need password.	Brugernavn er i orden, mangler adgangskode.
+User not local, Will forward	Bruger er ikke lokal, vil videresende
+UserID not found	BrugerID blev ikke fundet
+UserName	Brugernavn
+Username must not be blank	Brugernavnet må ikke være tomt
+Username: 	Brugernavn:
+Valid name, no data record (check DNS setup).	Gyldigt navn, ingen datapost (kontroller DNS opsætning).
+Value cannot be stored in an optional parameter	Værdi kan ikke gemmes i en valgfri parameter
+Value must be between %d and %d	Værdi skal være mellem %d og %d
+Value of field '%s' is out of range	Værdi fra felt '%s' er uden for gyldigt område
+Variable %s is not a container	Variablen %s er ikke en container
+Variable not found: %s	Variablen blev ikke fundet: %s
+Variant is empty	Variant er tom
+Variant is not an array	Variant er ikke et array
+Variant method calls not supported	Variantmetodekald er ikke understøttet
+Variant operation ran out memory	Varianthandling løb tør for hukommelse
+Variant or safe array index out of bounds	Variant eller sikkert array indeks er ude for gyldigt område
+Variant or safe array is locked	Variant eller safe array er låst
+Variant overflow	Variant overløb
+Version %s	Version %s
+Version 3.0	Version 3.0
+Version of Transformation File not supported	Denne transformationsfilsversion er ikke understøttet
+Visual	Visuel
+Volume	Indhold
+WINSOCK DLL Version out of range.	WINSOCK DLL version er forkert.
+WSDL	WSDL
+WSDL Ports for PortType	WSDL porte for PortType
+Warning	Advarsel
+Warning: warning conditions	Advarsel: advarselstilstand
+Web App Debugger	Web App Fejlsøger
+Web App Module Factory already registered.	Web App Module Factory allerede registreret.
+Web Application Debugger	Webprogram Fejlsøger
+Web Module Factory already registered	Web Module Factory allerede registreret
+Web Page does not provide content	Websiden leverer ikke noget indhold
+Web Page does not support redirect	Netsiden understøtter ikke viderestilling
+Web Page not found: %s	Netsiden blev ikke fundet: %s
+WebActionItem1	WebActionItem1
+WebActionItem2	WebActionItem2
+WebActionItem3	WebActionItem3
+WebService Listing	WebService listning
+WebService Listing Administrator	WebService Listing Administrator
+Wed	Ons
+Wednesday	Onsdag
+Weeks	Uger
+Welcome to the INDY SMTP Server	Welkommen til Indy SMTP værten
+WideString index out of bounds	WideString indeks overskrider rammerne
+Win32 Error.  Code: %d.\n%s	Win32 fejl. Kode: %d.\n%s
+WinSock 2 must be installed to use the socket connection	WinSock 2 skal være installeret for at bruge socketforbindelsen
+Windows socket error: %s (%d), on API '%s'	Windows socket fejl: %s (%d), på API '%s'
+Winshoes LPD Server %s 	Winshoes LPD vært %s 
+Winsock Initialization Error.	Fejl ved opstart af winsock.
+Winsock not loaded yet.	Winsock er ikke indlæst endnu.
+Winsock stack	Winsock stak
+Write	Skriv
+WriteObject called twice for the same instance	WriteObject blev kaldt to gange for den samme instans
+Wrong document error	Forkert dokument fejl
+XDR to XML Schema Translator (.xdr <-> .xsd)	XDR til XML skema oversætter (.xdr <-> .xsd)
+XML Parse Error:\n	XML tydningsfejl:\n
+XMLBroker: %s is not connected	XMLBroker: %s er ikke forbundet
+XMLData to XML Schema Translator (.xml -> .xsd)	XMLData til XML skema oversætter (.xml -> .xsd)
+XMLDataFile must be specified	XMLDataFile skal angives
+Yards	Yard
+Year portion of date too large for conversion	Årsdelen af dato er for stor til at blive konverteret
+Years	År
+Yes to &All	Ja til &alle
+You cannot send a message while you are still waiting for an answer	Du kan ikke sende en meddelelse mens du venter på et svar
+You cannot set %s while the HL7 Component is working	Du kan ikke sætte %s mens HL7 komponenten arbejder
+You must chain this component to another I/O Handler before using it	Du skal kæde denne komponent sammen med en anden I/O håndterer før du kan bruge den
+ZLib error: target buffer may be too small	ZLib fejl: destinationsbuffer er måske for lille
+[$%.8x]	[$%.8x]
+[%s%.8x]	[%s%.8x]
+_	_
+abort job	afbryd job
+address	adresse
+bmp	bmp
+by DNSName [127.0.0.1] running Indy SMTP	by DNSName [127.0.0.1] running Indy SMTP
+cbPort	cbPort
+clock daemon (1)	tidsdæmon (1)
+clock daemon (2)	tidsdæmon (2)
+closing connection	lukker forbindelsen
+command must be either USER or QUIT	Kommandoen skal enten være USER eller QUIT
+command not recognized	kommando blev ikke forstået
+connected with %s	forbundet med %s
+dbExpress Error: Application is not licensed to use this feature	dbExpress fejl: Programmet er ikke licensieret til at bruge denne facilitet
+dbExpress Error: Duplicate Transaction ID	dbExpress fejl: Dubleret transaktions ID
+dbExpress Error: Insufficient Memory for Operation	dbExpress fejl: Mangler hukommelse for at kunne udføre handling
+dbExpress Error: Invalid Data Translation	dbExpress fejl: Ugyldig data oversættelse
+dbExpress Error: Invalid Field Type	dbExpress fejl: Ugyldig filtype
+dbExpress Error: Invalid Handle	dbExpress fejl: ugyldigt håndtag
+dbExpress Error: Invalid Length	dbExpress fejl: Ugyldig længde
+dbExpress Error: Invalid Parameter	dbExpress fejl: Ugyldig parameter
+dbExpress Error: Invalid Precision	dbExpress fejl: ugyldig præcision
+dbExpress Error: Invalid Time	dbExpress fejl: Ugyldigt klokkeslet
+dbExpress Error: Invalid Transaction ID	dbExpress fejl: ugyldigt transaktions ID
+dbExpress Error: Invalid Transaction Isolation Level	dbExpress fejl: Ugyldig transaktionsisoleringsniveau
+dbExpress Error: Invalid Username/Password	dbExpress fejl: ugyldigt brugernavn/adgangskode
+dbExpress Error: Local Transaction already active	dbExpress fejl: Lokal transaktion er allerede aktiv
+dbExpress Error: Multiple Transactions not Enabled	dbExpress fejl: Muligheden for flere samtidige transaktioner er ikke slået til
+dbExpress Error: Operation Not Supported	dbExpress fejl: Handling er ikke understøttet
+dbExpress Error: Parameter Not Set	dbExpress fejl: Parameter ikke angivet
+dbExpress Error: Parameter/Column out of Range	dbExpress fejl: Parameter/kolonne ude for gyldigt talområde
+dbExpress Error: Result set at EOF	dbExpress fejl: Resultatsættet er ved EOF
+ddd, dd mmm yyyy hh:mm:ss	ddd, dd mmm yyyy hh:mm:ss
+dem	dem
+edDefault	edDefault
+edPath	edPath
+helvetica	helvetica
+http://server.company.com/scripts/httpsrvr.dll	http://server.company.com/scripts/httpsrvr.dll
+http://www.nevrona.com/indy/	http://www.nevrona.com/indy/
+kernel messages	kernemeddelelser
+line	linje
+line printer subsystem	linjeskriver undersystem
+lines	linjer
+local use 0  (local0)	lokalt brug 0 (local0)
+local use 1  (local1)	lokalt brug 1 (local1)
+local use 2  (local2)	lokalt brug 2 (local2)
+local use 3  (local3)	lokalt brug 3 (local 3)
+local use 4  (local4)	lokalt brug 4 (local4)
+local use 5  (local5)	lokalt brug 5 (local5)
+local use 6  (local6)	lokalt brug 6 (local6)
+local use 7  (local7)	lokalt brug 7 (local7)
+log alert	log advarsel
+log audit	log auditering
+mail system	postsystem
+messages generated internally by syslogd	meddelelser lavet internt af syslogd
+method not supported	metode er ikke understøttet
+mozilla	mozilla
+network news subsystem	nyhedsgruppe undersystem
+nothing	ingenting
+security/authorization messages (1)	sikkerheds-/autoriseringsmeddelelser (1)
+security/authorization messages (2)	sikkerheds-/autorisationsmeddelelser (2)
+server not responding	værten svarer ikke
+sigaction call failed	sigaction kald fejlede
+system daemons	systemdæmoner
+txt	txt
+user-level messages	brugerniveau meddelelser (user-level)
+username	brugernavn
+varDate type not supported	varDate typen er ikke understøttet
+varDispatch type not supported	varDispatch typen er ikke understøttet
+varError type not supported	varError typen er ikke understøttet
+varVariant type not supported	varVariant typen er ikke understøttet
+|<	|<

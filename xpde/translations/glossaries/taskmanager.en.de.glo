@@ -1,0 +1,118 @@
+en	de
+Close Task Manager ?	Soll der Task-Manager geschlossen werden?
+Cannot kill process PID	Kann Prozess PID nicht beenden
+Kill selected tasks ?	Markierte Tasks beenden?
+You must select process !	Sie müssen einen Prozess auswählen!
+You must specify command !	Sie müssen ein Kommando wählen!
+TaskManager Error :	Task-Manager Fehler:
+Error !	Fehler!
+About Task Manager	Über Task-Manager
+OK	OK
+XPde Task Manager	XPde Task-Manager
+Version 0.1 (Build 10232002)	Version 0.1 (Build 10232002)
+Copyright © 2002 XPde Team	Copyright © 2002 XPde Team
+Developed by:	Programmiert von:
+ttm@xpde.com && zeljko@xpde.com	ttm@xpde.com && zeljko@xpde.com
+Physical memory available to Linux:	Für Linux verfügbarer physikalischer Speicher:
+%s KB	%s KB
+OK	OK
+Cancel	Abbrechen
+&Browse...	&Durchsuchen...
+Run in separate &memory space	In eigenem Speicherbereich ausführen
+Create New Task	Neuen Task erstellen
+Type the name of a program, folder, document, or Internet resource, and XPde will open it for you.	Geben Sie Programme, Ordner, Dokumente oder Internetressourcen an, die geöffnet werden sollen.
+&Open:	Ö&ffnen:
+$HOME	$HOME
+Choose program to run	Auszuführende Anwendung auswählen
+&About Task Manager	Über Task-Manager
+&Always on top	Immer im Vordergrund
+&End Task	Task Be&enden
+&Switch To	&Wechseln zu
+&New Task...	&Neuer Task...
+&Disconnect	&Trennen
+&Logoff	&Abmelden
+&Send Message...	&Nachricht senden...
+&End Process	Prozess Be&enden
+&Show processes from all users	&Prozesse aller Benutzer anzeigen
+Close	Schließen
+&Details	&Details
+E&xit Task Manager	Task-Manager Be&enden
+&File	&Datei
+CPU Usage	CPU-Auslastung
+CPU User Usage History	Verlauf der CPU-Auslastung
+CPU Usage	CPU-Auslastung
+CPU System Usage History	Verlauf der CPU-Auslastung
+Swap Memory (K)	Auslagerungsspeicher (KB)
+Physical Memory (K)	Physikalischer Speicher (KB)
+Processes Info	Prozessinfo
+Network Status	Network Status
+&Help	&Hilfe
+Total	Insgesamt
+Running	Gestartet
+Available	Verfügbar
+Total	Insgesamt
+Forks since boot	Forks seit Systemstart
+Swap Used	Ausgelagert
+Total	Insgesamt
+Available	Verfügbar
+Buffered	Systemcache
+Lar&ge Icons	Große Symbole
+Process ID	Prozess-ID
+Command	Kommando
+User	Benutzer
+ID	ID
+Status	Status
+Client Name	Clientname
+Adapter Name	Adaptername
+Device IP Address	Geräte IP-Adresse
+Speed	Übertragungsrate
+State	Status
+-	-
+&New Task (Run...)	&Neuer Task (Ausführen...)
+&Refresh Now	&Aktualisieren
+Sh&ut Down	Herunterfahren
+S&mall Icons	Kleine Symbole
+Processes:	Prozesse:
+CPU Usage:	CPU-Auslastung:
+Free Memory (K):	Freier Speicher (K):
+Applications	Anwendungen
+Users	Benutzer
+Network	Netzwerk
+Performance	Systemleistung
+Processes	Prozesse
+&Options	&Optionen
+&Always On Top	Immer im Vordergrund
+&Minimize On Use	Nach Programmstart minimieren
+&Hide When Minimized	Ausblenden, wenn minimiert
+&Windows	&Fenster
+Tile &Horizontally	Nebeneinander
+Tile &Vertically	Untereinander
+&Minimize	&Minimieren
+Ma&ximize	Ma&ximieren
+&Cascade	Überlappend
+&Bring To Front	In Vordergrund
+Task Manager &Help Topics	Task-Manager &Hilfethemen
+Application	Anwendung
+User	Benutzer
+&Update Speed	&Aktualisierungsgeschwindigkeit
+&High	&Hoch
+&Normal	&Normal
+&Low	&Niedrig
+&Paused	&Angehalten
+&View	&Ansicht
+Windows Task Manager	Windows Task-Manager
+About XPde	Über XPde
+OK	OK
+Copyright (c) 2002-2003 XPde Team	Copyright (c) 2002-2003 XPde Team
+This product is licensed under the GPL license, you can read it at http://www.gnu.org/licenses/gpl.txt	Dieses Produkt ist lizensiert unter der GPL-Lizens, zu lesen unter http://www.gnu.org/licenses/gpl.txt\n
+Available memory to XPde :	Verfügbarer Hauptspeicher für XPde :
+&Browse...	&Durchsuchen...
+Cancel	Abbrechen
+OK	OK
+&Always use the selected program to open this kind of file	&Dateityp immer mit dem ausgewählten Programm öffnen
+&Programs	&Programme
+Choose the program you want to use to open this file:	Wählen Sie das Programm, das zum Öffnen dieser Datei verwendet werden soll:
+File:	Datei:
+Executables Files (*)|*	Programme (*)|*
+Select a program	Programm auswählen
+Open With	Öffnen mit

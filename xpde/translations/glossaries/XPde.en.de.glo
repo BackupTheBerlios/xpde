@@ -1,0 +1,117 @@
+en	de
+My Documents	Eigene Dateien
+My Computer	Arbeitsplatz
+My Home	Eigenes Verzeichnis
+My Network Places	Netzwerkumgebung
+Recycle Bin	Papierkorb
+&Next >	&Weiter >
+Create Shortcut	Verknüpfung erstellen
+&Finish	&Fertig stellen
+Select a Title for the Program	Programmbezeichnung auswählen
+Select a directory	Verzeichnis auswählen
+New Folder (%d)	Neuer Ordner (%d)
+About XPde	Über XPde
+OK	OK
+Copyright (c) 2002-2003 XPde Team	Copyright (c) 2002-2003 XPde Team
+This product is licensed under the GPL license, you can read it at http://www.gnu.org/licenses/gpl.txt	Dieses Produkt ist lizensiert unter der GPL-Lizens, zu lesen unter http://www.gnu.org/licenses/gpl.txt\n
+Available memory to XPde :	Verfügbarer Hauptspeicher für XPde :
+&Browse...	&Durchsuchen...
+Cancel	Abbrechen
+OK	OK
+&Always use the selected program to open this kind of file	&Dateityp immer mit dem ausgewählten Programm öffnen
+&Programs	&Programme
+Choose the program you want to use to open this file:	Wählen Sie das programm, das zum Öffnen dieser Datei verwendet werden soll:
+File:	Datei:
+Executables Files (*)|*	Programme (*)|*
+Select a program	Programm auswählen
+Open With	Öffnen mit
+Align to Grid	Am Raster ausrichten
+Arrange Icons By	Symbole anordnen
+Auto Arrange	Automatisch anordnen
+Copy	Kopieren
+Create Shortcut	Verknüpfung erstellen
+Cut	Ausschneiden
+Delete	Löschen
+Folder	Ordner
+Lock Web Items on Desktop	Webelemente auf Desktop fixieren
+Modified	Änderungsdatum
+-	-
+-	-
+-	-
+-	-
+-	-
+-	-
+-	-
+-	-
+Name	Name
+New	Neu
+Open	Öffnen
+Paste	Einfügen
+Paste Shortcut	Verknüpfung einfügen
+Properties	Eigenschaften
+Properties	Eiegnschaften
+Refresh	Aktualisieren
+Rename	Umbenennen
+Run as...	Ausführen als...
+Run Desktop Cleanup Wizard	Desktopbereinigungs-Assistent ausführen
+Send to	Senden an
+Shortcut	Verknüpfung
+Show Desktop Icons	Symbole auf Desktop anzeigen
+Show in Groups	In Gruppen anzeigen
+Size	Größe
+Type	Typ
+Cancel	Abbrechen
+&Change Icon...	&Symbol ändern...
+OK	OK
+&Find Target...	&Zieldatei suchen...
+A&dvanced...	&Erweitert...
+&Apply	&Anwenden
+Help	Hilfe
+&Change...	&Ändern...
+A&dvanced...	&Erweitert...
+&Read-only	&Schreibgeschützt
+&Hidden	&Versteckt
+File name:	Dateiname:
+Created:	Erstellt:
+Modified:	Geändert:
+Accessed:	Letzter Zugriff:
+Attributes:	Attribute:
+Target type:	Zieldateityp:
+Application	Anwendung
+Target location:	Zielort:
+&Target:	&Ziel:
+&Start in:	&Starten in:
+Shortcut &key:	Shortcut-&Taste:
+&Run:	&Ausführen:
+C&omment:	K&ommentar:
+Type of file:	Dateityp:
+Description:	Beschreibung:
+Location:	Speicherort:
+Size:	Größe:
+Size on disk:	Größe auf Datenträger:
+LNK Properties	LNK Eigenschaften
+General	Allgemein
+Shortcut	Verknüpfung
+&Browse...	&Durchsuchen...
+&Restore Defaults	&Standard wieder herstellen
+OK	OK
+Cancel	Abbrechen
+Change Icon	Symbol ändern
+&Look for icons in this directory:	&Nach Symbolen in diesem Verzeichnis suchen:
+&Select an icon from the list below:	&Wählen Sie ein Symbol aus der unteren Liste aus:
+< &Back	< &Zurück
+B&rowse...	&Durchsuchen...
+Cancel	Abbrechen
+&Next >	&Weiter >
+&Next >	&Weiter >
+Help	Hilfe
+Create Shortcut	Verknüpfung erstellen
+This wizard helps you to create shortcuts to local or network programs, files, folders, computers, or Internet addresses.	Mit diesem Assisten können Sie Verknüpfungen mit lokalen oder vernetzten Programmen, Dateien, Ordnern, Computern oder Internetadressen erstellen.
+&Type the location of the item:	&Geben Sie den Speicherort des Elements ein:
+Click Next to continue.	Klicken Sie auf Weiter um fortzufahren.
+&Type a name for this shortcut:	&Geben Sie den Namen für die Vernknüpfung ein:
+Click Finish to create the shortcut.	Klicken Sie auf "Fertig stellen", um die Verknüpfung zu erstellen.
+All Files (*)|*	Alle Dateien (*)|*
+Select Item	Element auswählen
+Create Shortcut	Verknüpfung erstellen
+Select a Title for the Program	Programmbezeichnung auswählen

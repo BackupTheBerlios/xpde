@@ -488,7 +488,7 @@ begin
       name := 'ColormapNotify';
       end;
      ClientMessage: begin
-      {
+     {
         char *str;
         name := 'ClientMessage';
         meta_error_trap_push (display);
@@ -552,6 +552,10 @@ begin
         unmapnotify: begin
 //            spewEvent(application.display,event^);
             result:=(xpwindowmanager.handleUnmapNotify(event^)=1);
+        end;
+        ClientMessage: begin
+//            spewEvent(application.display,event^);
+            result:=(xpwindowmanager.handleClientMessage(event^)=1);
         end;
         enternotify: begin
 //            spewEvent(application.display,event^);
@@ -713,9 +717,36 @@ begin
 end;
 
 function TXPWindowManager.handleClientMessage(var event:XEvent): integer;
+var
+    c: TWMClient;
+    xwindow: window;
 begin
-    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleclient message',[]));
     result:=0;
+    xwindow:=event.xclient.xwindow;
+    {$ifdef DEBUG}
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleClientMessage %s',[xlibinterface.formatwindow(xwindow)]));
+    {$endif}
+
+    if ( event.xclient.message_type = atoms[atom_wm_change_state]) then begin
+        c:=findclient(xwindow);
+        if assigned(c) then begin
+            if ( event.xclient.data.l[0] = IconicState) then begin
+                c.minimize;
+                result:=1;
+            end;
+        end;
+    end;
+    {
+      gulong action;
+      Atom first;
+      Atom second;
+
+      action = event->xclient.data.l[0];
+      first = event->xclient.data.l[1];
+      second = event->xclient.data.l[2];
+
+    xlibinterface.outputDebugString(iMETHOD,format('TXPWindowManager.handleclient message',[]));
+    }
 end;
 
 function TXPWindowManager.handleColorMapNotify(var event:XEvent): integer;
@@ -950,10 +981,7 @@ begin
            {$ifdef DEBUG}
            xlibinterface.outputDebugString(iINFO,format('Removing client %s',[xlibinterface.formatwindow(xwindow)]));
            {$endif}
-//            writeln('UnmapNotify');
-//            writeln(clients.count);
             clients.Remove(c);
-//            writeln(clients.count);            
 
             if c=FActiveClient then begin
                 if Clients.count>=1 then begin

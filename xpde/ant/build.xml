@@ -3,7 +3,7 @@
   XPde build file
   </description>
   <property name="kylix" location="/home/ttm/kylix3" />
-  <property name="version" value="0.2.1" />
+  <property name="version" value="0.3.5" />
   <property name="src" location="src"/>
   <property name="build" location="xpde-${version}"/>
   <property name="units" location="dcu"/>  
@@ -11,8 +11,10 @@
   <property name="base" location="${src}/xpde" />  
   <property name="sources" location="${base}/src" />
   <property name="libpath" value="${kylix}/bin:${build}" />
-  <property name="dcupath" value="${sources}/common:${sources}/components/style:${sources}/components/menu:${sources}/components/commctrls:${sources}/components/toolsapi:${sources}/components/localization:${sources}/components/registry:${sources}/components/shellcontrols:${sources}/components/colorselect" />  
+  <property name="packages" value="rtl:visualclx:XPRegistry:XPCommon:XPAPI:XPMenus:XPTrayIcon:XPStyle:XPColorSelect:XPShellControls:XPCommctrls" />
+  <property name="dcupath" value="${sources}/common:${sources}/components/style:${sources}/components/menu:${sources}/components/commctrls:${sources}/components/toolsapi:${sources}/components/localization:${sources}/components/registry:${sources}/components/shellcontrols:${sources}/components/colorselect:${sources}/core/xpde" />  
   <property name="params" value="-B -E${build} -LE${build} -LN${units} -U${units}:${dcupath} -N${units}" />
+  <property name="pkgparams" value="${params} -LU${packages}" />
 
   <target name="init">
     <tstamp/>
@@ -23,7 +25,7 @@
 	</exec>
   </target>
 
-  <target name="compile" depends="init" description="Compile the source" >
+  <target name="compile" description="Compile the source" >
   
   <mkdir dir="${build}"/>
   <mkdir dir="${units}"/>
@@ -52,23 +54,17 @@
 	  <arg line="XPMenus.dpk" />
   </exec>      
   
+  <exec dir="${sources}/components/trayicon" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
+	  <arg line="${params}" />
+	  <arg line="XPTrayIcon.dpk" />
+  </exec>        
+  
   <exec dir="${sources}/components/style" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
 	  <arg line="${params}" />
 	  <arg line="XPStyle.dpk" />
   </exec>        
-  
-  <exec dir="${sources}/components/localization" executable="${dcc}">
-	  <env key="LD_LIBRARY_PATH" value="${libpath}" />        
-	  <arg line="${params}" />
-	  <arg line="XPLocalizator.dpk" />
-  </exec>          
-  
-  <exec dir="${sources}/components/localization" executable="${dcc}">
-	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
-	  <arg line="XPLocalizatorIDE.dpk" />
-  </exec>            
   
   <exec dir="${sources}/components/colorselect" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
@@ -90,92 +86,93 @@
   
   <exec dir="${sources}/apps/taskmanager" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="taskmanager.dpr" />
   </exec>
   
   <exec dir="${sources}/apps/networkstatus" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="networkstatus.dpr" />
   </exec>  
 
-  <exec dir="${sources}/apps/controlpanel" executable="${dcc}">
-	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
-	  <arg line="controlpanel.dpr" />
-  </exec>  
 
   <exec dir="${sources}/apps/notepad" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="notepad.dpr" />
   </exec>  
   
+  <exec dir="${sources}/apps/calculator" executable="${dcc}">
+	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
+	  <arg line="${pkgparams}" />
+	  <arg line="calculator.dpr" />
+  </exec>    
+  
   <exec dir="${sources}/apps/networkproperties" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="networkproperties.dpr" />
   </exec>    
   
   <exec dir="${sources}/apps/fileexplorer" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="fileexplorer.dpr" />
   </exec>      
   
   <exec dir="${sources}/applets/mouse" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="mouse.dpr" />
   </exec>    
 
   <exec dir="${sources}/applets/keyboard" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="keyboard.dpr" />
   </exec>  
   
  
   <exec dir="${sources}/applets/desk" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="desk.dpr" />
   </exec>  
   
   <exec dir="${sources}/applets/regional" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="regional.dpr" />
   </exec>    
   
   <exec dir="${sources}/apps/appexec" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="appexec.dpr" />
   </exec>        
   
   <exec dir="${sources}/applets/DateTimeProps" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="DateTimeProps.dpr" />
   </exec>  
   
   <exec dir="${sources}/applets/xpsu" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="xpsu.dpr" />
   </exec>      
 
   <exec dir="${sources}/core/xpwm" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="XPwm.dpr" />
   </exec>        
   
   <exec dir="${sources}/core/xpde" executable="${dcc}">
 	  <env key="LD_LIBRARY_PATH" value="${libpath}" />      
-	  <arg line="${params}" />
+	  <arg line="${pkgparams}" />
 	  <arg line="XPde.dpr" />
   </exec>
   

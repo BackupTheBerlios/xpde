@@ -671,7 +671,7 @@ var
 begin
     if pnTray.controlcount=0 then begin
         pnTimer.width:=50;
-        pnTray.width:=50;
+        pnTray.width:=0;
         pnTimer.invalidate;
         pnTimer.update;
     end

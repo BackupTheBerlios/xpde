@@ -1,0 +1,109 @@
+object INetDialFm: TINetDialFm
+  Left = 422
+  Top = 488
+  ActiveControl = efPhone
+  AutoScroll = False
+  BorderStyle = fbsSingle
+  Caption = 'Connect to Internet'
+  ClientHeight = 175
+  ClientWidth = 251
+  Color = clBackground
+  Font.Color = clBlack
+  Font.Height = 12
+  Font.Name = 'helvetica'
+  Font.Pitch = fpVariable
+  Font.Style = []
+  ParentFont = False
+  Position = poScreenCenter
+  OnShow = FormShow
+  PixelsPerInch = 89
+  TextHeight = 15
+  TextWidth = 7
+  object btnDial: TButton
+    HelpType = htContext
+    Left = 8
+    Top = 136
+    Width = 75
+    Height = 25
+    Caption = '&Dial'
+    TabOrder = 3
+    OnClick = btnDialClick
+  end
+  object btnDisconnect: TButton
+    HelpType = htContext
+    Left = 88
+    Top = 136
+    Width = 75
+    Height = 25
+    Caption = 'D&isconnect'
+    TabOrder = 4
+    OnClick = btnDisConnectClick
+  end
+  object btnCancel: TButton
+    HelpType = htContext
+    Left = 168
+    Top = 136
+    Width = 75
+    Height = 25
+    Caption = 'C&ancel'
+    TabOrder = 5
+    OnClick = btnCancelClick
+  end
+  object Label1: TLabel
+    Left = 8
+    Top = 19
+    Width = 36
+    Height = 15
+    Caption = 'Phone'
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 51
+    Width = 55
+    Height = 15
+    Caption = 'Username'
+  end
+  object Label3: TLabel
+    Left = 8
+    Top = 83
+    Width = 54
+    Height = 15
+    Caption = 'Password'
+  end
+  object efPhone: TEdit
+    Left = 88
+    Top = 16
+    Width = 153
+    Height = 23
+    TabOrder = 0
+    Text = 'efPhone'
+    OnKeyPress = efPhoneKeyPress
+  end
+  object efUserName: TEdit
+    Left = 88
+    Top = 48
+    Width = 153
+    Height = 23
+    TabOrder = 1
+    Text = 'efUserName'
+  end
+  object efPassword: TEdit
+    Left = 88
+    Top = 80
+    Width = 153
+    Height = 23
+    EchoMode = emPassword
+    TabOrder = 2
+    Text = 'efPassword'
+  end
+  object ActionList1: TActionList
+    Left = 32
+    Top = 48
+  end
+  object TimerUpdateControls: TTimer
+    Interval = 50
+    OnTimer = TimerUpdateControlsTimer
+    Left = 56
+    Top = 8
+  end
+end

@@ -50,6 +50,7 @@ type
         procedure updateWidgets(aowner:TComponent);
         function setCursor(bmp:TBitmap):QCursorH;
         procedure setDefaultCursor;
+        procedure OutputDebugString(const str:string);        
         procedure setWaitCursor;
         function getExecutable(ext:string):string;
         procedure storeExecutable(ext:string;executable:string);
@@ -417,6 +418,12 @@ begin
         siSystemDir: result:=CurrentThemeDir+'/system/';
         siApplicationsDir: result:=CurrentThemeDir+'/applications/';
     end;
+end;
+
+procedure TXPAPI.OutputDebugString(const str: string);
+begin
+    showmessage(str);
+    writeln(str);
 end;
 
 initialization

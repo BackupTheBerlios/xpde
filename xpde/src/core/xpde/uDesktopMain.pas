@@ -75,6 +75,7 @@ type
     Properties2: TMenuItem;
     XPDictionary: TXPDictionary;
     XPLocalizator: TXPLocalizator;
+    ListBox: TListBox;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -104,8 +105,11 @@ type
   end;
 
   TXPDesktop=class(TInterfacedObject, IXPDesktop)
+  public
+        function GetClientArea:TRect;
         procedure customize;
         procedure applychanges;
+        procedure addDebugMessage(const msg:string);
   end;
 
 var
@@ -380,6 +384,13 @@ end;
 
 { TXPDesktop }
 
+procedure TXPDesktop.addDebugMessage(const msg: string);
+begin
+//    mainform.listbox.items.add(msg);
+//    mainform.listbox.itemindex:=mainform.listbox.items.count-1;
+//    mainform.ListBox.ItemVisible(mainform.listbox.ItemIndex);
+end;
+
 procedure TXPDesktop.applychanges;
 begin
     mainform.loadDesktopProperties;
@@ -388,6 +399,11 @@ end;
 procedure TXPDesktop.customize;
 begin
     loadpackage(XPAPI.getSysInfo(siUserDir)+'/xpde/bpldesk.so');
+end;
+
+function TXPDesktop.GetClientArea: TRect;
+begin
+    result:=mainform.ClientRect;
 end;
 
 initialization

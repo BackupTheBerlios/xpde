@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 8
-  Top = 46
+  Left = 642
+  Top = 37
   Width = 587
   Height = 340
   BorderStyle = fbsNone
@@ -10,8 +10,23 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 17
+  TextHeight = 16
   TextWidth = 7
+  object ListBox: TListBox
+    Left = 128
+    Top = 28
+    Width = 441
+    Height = 297
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    Font.Color = clBlack
+    Font.Height = 14
+    Font.Name = 'Nimbus Sans l'
+    Font.Pitch = fpVariable
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    Visible = False
+  end
   object deskpopup: TXPPopupMenu
     AutoHotkeys = maManual
     Left = 344

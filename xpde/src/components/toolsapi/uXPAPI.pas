@@ -58,6 +58,8 @@ type
         procedure focus;
         procedure minimize;
         procedure maximize;
+        procedure beginresize;
+        procedure endresize;        
         procedure restore;
         procedure close;
         procedure map;

@@ -57,10 +57,26 @@ type
         client:TWMClient;
         gradbmp: TBitmap;
         lastRect: TRect;                                                        //To hold the last rect drawn to prevent repaint the gradient
+
+        brTopLeft: TRect;
+        brTop: TRect;
+        brTopRight: TRect;
+
+        brTopLeft2: TRect;
+        brTopRight2: TRect;
+
         brRight: TRect;
+        brBottomRight: TRect;
+        brBottom: TRect;
+        brBottomLeft: TRect;
+        brLeft: TRect;
         moving: boolean;
+        resizetype: integer;
         ox:longint;
         oy:longint;
+        ow: longint;
+        oh: longint;
+        ore: TRect;
         windowtitle:string;
         procedure paintTitle;
         function getFrameBorderSizes:TRect;
@@ -78,6 +94,15 @@ var
 const
     iBorder=3;
     iTitleHeight=23;
+
+    rtTopLeft=1;
+    rtTop=2;
+    rtTopRight=3;
+    rtLeft=4;
+    rtRight=5;
+    rtBottomLeft=6;
+    rtBottom=7;
+    rtBottomRight=8;
 
 implementation
 
@@ -127,6 +152,7 @@ procedure TWindowsClassic.FormCreate(Sender: TObject);
 var
     co: TPoint;
 begin
+    resizetype:=0;
     client:=nil;
     lbTitle.font.color:=clSilver;
     co:=getorigin;
@@ -149,10 +175,55 @@ begin
     btnMaximize.left:=btnClose.left-18;
     btnMinimize.left:=btnMaximize.left-16;
 
+    brBottomRight.left:=clientwidth-13;
+    brBottomRight.top:=clientheight-13;
+    brBottomRight.right:=clientwidth;
+    brBottomRight.bottom:=clientheight;
+
     brRight.left:=clientwidth-3;
-    brRight.top:=clientheight-13;
+    brRight.top:=13;
     brRight.right:=clientwidth;
-    brRight.bottom:=clientheight;
+    brRight.bottom:=clientheight-13;
+
+    brTopRight.left:=clientwidth-13;
+    brTopRight.top:=0;
+    brTopRight.right:=clientwidth;
+    brTopRight.bottom:=3;
+
+    brTop.left:=13;
+    brTop.top:=0;
+    brTop.right:=clientwidth-13;
+    brTop.bottom:=3;
+
+    brTopLeft.left:=0;
+    brTopLeft.top:=0;
+    brTopLeft.right:=13;
+    brTopLeft.bottom:=3;
+
+    brTopRight2.left:=clientwidth-3;
+    brTopRight2.top:=0;
+    brTopRight2.right:=clientwidth;
+    brTopRight2.bottom:=13;
+
+    brTopLeft2.left:=0;
+    brTopLeft2.top:=0;
+    brTopLeft2.right:=3;
+    brTopLeft2.bottom:=13;
+
+    brLeft.left:=0;
+    brLeft.top:=13;
+    brLeft.right:=3;
+    brLeft.bottom:=clientheight-13;
+
+    brBottomLeft.left:=0;
+    brBottomLeft.top:=clientheight-13;
+    brBottomLeft.right:=13;
+    brBottomLeft.bottom:=clientheight;
+
+    brBottom.left:=13;
+    brBottom.top:=clientheight-13;
+    brBottom.right:=clientwidth-13;
+    brBottom.bottom:=clientheight;
 
     FormPaint(self);
 end;
@@ -160,6 +231,11 @@ end;
 procedure TWindowsClassic.FormMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
+    ow:=clientwidth;
+    oh:=clientheight;
+    ox:=x;
+    oy:=y;
+    ore:=boundsrect;
     if assigned(client) then begin
         if (not client.isactive) then client.activate;
         SetCaptureControl((sender as TControl));
@@ -169,6 +245,30 @@ begin
                 ox:=x;
                 oy:=y;
             end;
+        end
+        else if (ptInRect(Point(x,y),brBottomRight)) then begin
+            resizetype:=rtBottomRight;
+        end
+        else if (ptInRect(Point(x,y),brTopLeft)) or (ptInRect(Point(x,y),brTopLeft2)) then begin
+            resizetype:=rtTopLeft;
+        end
+        else if (ptInRect(Point(x,y),brRight)) then begin
+            resizetype:=rtRight;
+        end
+        else if (ptInRect(Point(x,y),brLeft)) then begin
+            resizetype:=rtLeft;
+        end
+        else if (ptInRect(Point(x,y),brTopRight)) or (ptInRect(Point(x,y),brTopRight2)) then begin
+            resizetype:=rtTopRight;
+        end
+        else if (ptInRect(Point(x,y),brBottomLeft)) then begin
+            resizetype:=rtBottomLeft;
+        end
+        else if (ptInRect(Point(x,y),brTop)) then begin
+            resizetype:=rtTop;
+        end
+        else if (ptInRect(Point(x,y),brBottom)) then begin
+            resizetype:=rtBottom;
         end;
     end;
 end;
@@ -177,6 +277,9 @@ procedure TWindowsClassic.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 //var
 //    r: TRect;
+var
+    r: TRect;
+    nw,nh: integer;
 begin
     if moving then begin
         {
@@ -198,36 +301,129 @@ begin
 //        XSync(XPWindowManager.Display,0);
    end
     else begin
-    {
-        if resform4 then begin
-            nw:=width+(x-ox);
-            nh:=height+(y-oy);
+        if resizetype<>0 then begin
+            client.beginresize;
+            try
+            nw:=ow+(x-ox);
+            nh:=oh+(y-oy);
 
-            ox:=x;
-            oy:=y;
-            if assigned(client) then begin
-                XResizeWindow(XPWindowManager.getDisplay,client.getwindow,nw-iBorder*2,nh-iBorder*2-iTitleHeight);
+            r:=ore;
+            case resizetype of
+                rtBottomRight: begin
+                  r.Right:=r.left+nw;
+                  r.bottom:=r.bottom+(y-oy);
+                end;
+
+                rtBottom: begin
+                  r.bottom:=r.bottom+(y-oy);
+                end;
+
+                rtRight: begin
+                  r.Right:=r.right+(x-ox);
+                end;
+
+                rtTopRight: begin
+                  r.Right:=r.right+(x-ox);
+                  r.top:=boundsrect.top+(y-oy);
+                  if ((r.bottom-r.top)<Constraints.MinHeight) then r.top:=boundsrect.top;
+                end;
+
+                rtTop: begin
+                  r.top:=boundsrect.top+(y-oy);
+                  if ((r.bottom-r.top)<Constraints.MinHeight) then r.top:=boundsrect.top;
+                end;
+
+                rtLeft: begin
+                  r.left:=boundsrect.left+(x-ox);
+                  if ((r.Right-r.Left)<Constraints.MinWidth) then r.left:=boundsrect.left;
+                end;
+
+                rtTopLeft: begin
+                  r.top:=boundsrect.top+(y-oy);     
+                  r.left:=boundsrect.left+(x-ox);
+                  if ((r.Right-r.Left)<Constraints.MinWidth) then r.left:=boundsrect.left;
+                  if ((r.bottom-r.top)<Constraints.MinHeight) then r.top:=boundsrect.top;
+                end;
+
+                rtBottomLeft: begin
+                  r.bottom:=r.bottom+(y-oy);
+                  r.left:=boundsrect.left+(x-ox);
+                  if ((r.Right-r.Left)<Constraints.MinWidth) then r.left:=boundsrect.left;
+                end;
+
             end;
-            width:=nw;
-            height:=nh;
+
+            boundsrect:=r;
+
+            if assigned(client) then begin
+                XResizeWindow(XPWindowManager.Display,client.getwindow,(clientwidth-iBorder*2)-2,(clientheight-iBorder*2-iTitleHeight)+2);
+            end;
+            finally
+                client.endresize;
+            end;
+
+
+
+            {
+            if resizetype=rtBottomRight then begin
+                QWidget_resize(self.handle,nw,nh);
+                if assigned(client) then begin
+                    XResizeWindow(XPWindowManager.Display,client.getwindow,(clientwidth-iBorder*2)-2,(clientheight-iBorder*2-iTitleHeight)+2);
+                end;
+            end
+            else
+            if resizetype=rtRight then begin
+                QWidget_resize(self.handle,nw,oh);
+                if assigned(client) then begin
+                    XResizeWindow(XPWindowManager.Display,client.getwindow,(clientwidth-iBorder*2)-2,(clientheight-iBorder*2-iTitleHeight)+2);
+                end;
+            end
+            else
+            if resizetype=rtBottom then begin
+                QWidget_resize(self.handle,ow,nh);
+                if assigned(client) then begin
+                    XResizeWindow(XPWindowManager.Display,client.getwindow,(clientwidth-iBorder*2)-2,(clientheight-iBorder*2-iTitleHeight)+2);
+                end;
+            end;
+
+            if resizetype=rtTop then begin
+
+                r.top:=r.top+(y-oy);
+                boundsrect:=r;
+                if assigned(client) then begin
+                    XResizeWindow(XPWindowManager.Display,client.getwindow,(clientwidth-iBorder*2)-2,(clientheight-iBorder*2-iTitleHeight)+2);
+                end;
+            end;
+            }
+            
         end
         else begin
-            if (ptInRect(Point(x,y),brRight)) then begin
+            if (ptInRect(Point(x,y),brBottomRight)) or (ptInRect(Point(x,y),brTopLeft)) or (ptInRect(Point(x,y),brTopLeft2)) then begin
                 screen.cursor:=crSizeNWSE;
             end
+            else if (ptInRect(Point(x,y),brRight)) or (ptInRect(Point(x,y),brLeft)) then begin
+                screen.cursor:=crSizeWE;
+            end
+            else if (ptInRect(Point(x,y),brTopRight)) or (ptInRect(Point(x,y),brTopRight2)) or  (ptInRect(Point(x,y),brBottomLeft)) then begin
+                screen.cursor:=crSizeNESW;
+            end
+            else if (ptInRect(Point(x,y),brTop)) or  (ptInRect(Point(x,y),brBottom)) then begin
+                screen.cursor:=crSizeNS;
+            end
             else begin
-                XPAPI.setDefaultCursor;
+                screen.cursor:=crDefault;
+                //XPAPI.setDefaultCursor;
             end;
         end;
-    }
     end;
 end;
 
 procedure TWindowsClassic.FormMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
+    resizetype:=0;
     moving:=false;
-    SetCaptureControl(nil);    
+    SetCaptureControl(nil);
 end;
 
 procedure TWindowsClassic.btnCloseClick(Sender: TObject);
@@ -241,13 +437,13 @@ begin
     if assigned(client) then begin
         if client.windowstate<>wsMaximized then begin
             client.maximize;
-            repaint;
             btnMaximize.glyph.Assign(restore.picture.graphic);
+            FormPaint(self);
         end
         else begin
             client.restore;
-            repaint;
             btnMaximize.glyph.Assign(maximize.picture.graphic);
+            FormPaint(self);
         end;
     end;
 end;

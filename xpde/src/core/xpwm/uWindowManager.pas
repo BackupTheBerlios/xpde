@@ -108,6 +108,7 @@ type
         xwindow: Window;
         frame: TForm;
         wRect: TRect;
+        inresize: boolean;
         FUnmapCounter:integer;
         FWindowManager: TXPWindowManager;
         FWindowState: TWindowState;
@@ -127,6 +128,8 @@ type
         procedure maximize;
         procedure restore;
         procedure setMapState(state:integer);
+        procedure beginresize;
+        procedure endresize;
         procedure close;
         procedure bringtofront;
         function getWindow: Window;
@@ -537,7 +540,7 @@ end;
 constructor TXPWindowManager.Create;
 begin
     inherited;
-    FActiveClient:=nil;    
+    FActiveClient:=nil;
     FServerGrabCount:=0;
     FDisplay:=nil;
     FRoot:=none;
@@ -1218,6 +1221,11 @@ begin
     focus;
 end;
 
+procedure TWMClient.beginresize;
+begin
+    inresize:=true;
+end;
+
 procedure TWMClient.bringtofront;
 begin
     if not assigned(frame) then exit;
@@ -1267,6 +1275,7 @@ var
   fbs: TRect;
   co: TPoint;
 begin
+    if not inresize then begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iBEGINPROCESS,'CONFIGURE_REQUEST');
     xlibinterface.outputDebugString(iINFO,'configure request for window '+xlibinterface.formatWindow(event.xconfigurerequest.xwindow)+format('[%s]',[(frame as TWindowsClassic).gettitle]));
@@ -1471,12 +1480,14 @@ begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iENDPROCESS,'CONFIGURE_REQUEST');
     {$endif}
+  end;
 end;
 
 constructor TWMClient.Create(AWindow: Window;
   AWindowManager: TXPWindowManager);
 begin
     inherited Create;
+    inresize:=false;
     minimizedstate:=wsNormal;
     FWindowState:=wsNormal;
     xwindow:=AWindow;
@@ -1688,6 +1699,11 @@ begin
     WindowManager.ungrabdisplay;
   end;
   inherited;
+end;
+
+procedure TWMClient.endresize;
+begin
+    inresize:=false;
 end;
 
 procedure TWMClient.focus;

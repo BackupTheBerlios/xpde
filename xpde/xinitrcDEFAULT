@@ -1,3 +1,8 @@
 export LD_LIBRARY_PATH=/opt/xpde/bin
+if ! test -d "$HOME/.xpde"
+then
+  cp -r /opt/xpde/defaultdesktop "$HOME/.xpde"
+fi
+
 /opt/xpde/bin/XPde full &
 /opt/xpde/bin/XPwm

@@ -174,6 +174,7 @@ const
 var
     XLibInterface: TXLibInterface;
     XPWindowManager: TXPWindowManager;
+    oldevent: X11EventFilter;
 
 implementation
 
@@ -519,7 +520,7 @@ begin
         buttonpress: result:=(xpwindowmanager.handlebuttonpress(event^)=1);
         configurerequest: result:=(xpwindowmanager.handleConfigurerequest(event^)=1);
         configurenotify: result:=(xpwindowmanager.handleConfigurenotify(event^)=1);
-        else result:=false;
+        else result:=oldevent(event);
     end;
 end;
 
@@ -1085,13 +1086,11 @@ begin
 end;
 
 procedure TXPWindowManager.setupEventHandler;
-var
-    e: X11EventFilter;
 begin
     {$ifdef DEBUG}
     xlibinterface.outputDebugString(iMETHOD,'TXPWindowManager.setupEventHandler');
     {$endif}
-    e:=application.SetX11EventFilter(eventhandler);
+    oldevent:=application.SetX11EventFilter(eventhandler);
 //  qt_set_x11_event_filter(@eventHandler);
 end;
 

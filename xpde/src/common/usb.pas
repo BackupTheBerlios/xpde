@@ -32,11 +32,20 @@ Type
      USB_CLASS_AUDIO = 1;
      USB_CLASS_COMM = 2;
      USB_CLASS_HID = 3;
+     USB_CLASS_PHYSICAL	= 5;
+     USB_CLASS_STILL_IMAGE = 6;
      USB_CLASS_PRINTER = 7;
      USB_CLASS_MASS_STORAGE = 8;
      USB_CLASS_HUB = 9;
-     USB_CLASS_DATA = 10;
+     USB_CLASS_CDC_DATA	= $0A;
+     USB_CLASS_CSCID = $0B; // chip+ smart card
+     USB_CLASS_CONTENT_SEC = $0D;
+     USB_CLASS_APP_SPEC	 = $FE;
      USB_CLASS_VENDOR_SPEC = $ff;
+     USB_CLASS_UNKNOWN = -1;
+
+
+
   {
      Descriptor types
     }

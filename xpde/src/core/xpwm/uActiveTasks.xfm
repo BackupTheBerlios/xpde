@@ -3,7 +3,7 @@ object ActiveTasksDlg: TActiveTasksDlg
   Top = 103
   Width = 330
   Height = 107
-  HorzScrollBar.Range = 123
+  HorzScrollBar.Range = 305
   Color = clBackground
   FormStyle = fsStayOnTop
   KeyPreview = True
@@ -16,9 +16,10 @@ object ActiveTasksDlg: TActiveTasksDlg
   object Label1: TLabel
     Left = 17
     Top = 77
-    Width = 106
+    Width = 288
     Height = 15
     Anchors = [akLeft, akBottom]
+    AutoSize = False
     Caption = 'My Network Places'
     Font.Color = clBlack
     Font.Height = 11

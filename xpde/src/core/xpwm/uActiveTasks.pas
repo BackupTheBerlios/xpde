@@ -19,6 +19,7 @@ type
   private
     { Private declarations }
     activetask: integer;
+    function getDottedText(const text: string; maxwidth: integer): string;
   public
     { Public declarations }
     procedure incActiveTask;
@@ -117,6 +118,27 @@ begin
     action:=caFree;
 end;
 
+function TActiveTasksDlg.getDottedText(const text:string;maxwidth:integer):string;
+var
+    w: integer;
+    wc: widestring;
+    k: integer;
+begin
+    wc:=text;
+
+    k:=1;
+    canvas.Font.assign(label1.font);
+    w:=canvas.TextWidth(wc);
+
+    while w>maxwidth do begin
+        wc:=copy(text,1,length(text)-k)+'...';
+        w:=canvas.TextWidth(wc);
+        inc(k);
+    end;
+
+    result:=wc;
+end;
+
 procedure TActiveTasksDlg.incActiveTask;
 var
     c: TWMClient;
@@ -128,7 +150,7 @@ begin
 
     invalidate;
     c:=xpwindowmanager.clients[activetask];
-    label1.caption:=c.gettitle;
+    label1.caption:=getdottedText(c.gettitle,label1.width);
 end;
 
 end.

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.0.1  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Djeizon Barros">
+	<META NAME="CREATED" CONTENT="20030112;18484600">
+	<META NAME="CHANGEDBY" CONTENT="Djeizon Barros">
+	<META NAME="CHANGED" CONTENT="20030112;18532200">
+</HEAD>
+<BODY LANG="pt-BR">
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4 STYLE="font-size: 15pt"><B>Guia
+de compila&ccedil;&atilde;o XPde.</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-weight: medium"><FONT FACE="Arial, sans-serif"><FONT SIZE=3>Em
+Portugu&ecirc;s Brasileiro</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>Conte&uacute;do:</B></FONT></FONT></P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Introdu&ccedil;&atilde;o</FONT></FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Obtendo
+	os fontes</FONT></FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Instalando
+	o Kylix OE</FONT></FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT COLOR="#0000ff"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Recompilando
+	os fontes</FONT></FONT></FONT></P>
+</OL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>Introdu&ccedil;&atilde;o:</B></FONT></FONT></P>
+</OL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Este
+documento explica como compilar o Xpde com os fontes do CVS.
+Documenta como obter os fontes, onde baixar e instalar o Kylix OE,
+qual projeto de grupo carregar e quais pacotes instalar do IDE. &Eacute;
+muito simples, siga os passos e voc&ecirc; poder&aacute; recompilar,
+modificar e contribuir para o Xpde.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<OL START=2>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>Obtendo
+	os fontes</B></FONT></FONT></P>
+</OL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Para
+obter os fontes, voc&ecirc; precisar&aacute; ter o programa cvs
+instalado. Esse programa est&aacute; inclu&iacute;do em quase todas
+as distribui&ccedil;&otilde;es Linux. Voc&ecirc; poder&aacute;
+verificar digitando na linha de comando: </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>#
+cvs</FONT></FONT></P>
+<PRE><FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Usage: cvs [cvs-options] command [command-options-and-arguments]</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>  where cvs-options are -q, -n, etc.</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>    (specify --help-options for a list of options)</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>  where command is add, admin, etc.</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>    (specify --help-commands for a list of commands</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>     or --help-synonyms for a list of command synonyms)</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>  where command-options-and-arguments depend on the specific command</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>    (specify -H followed by a command name for command-specific help)</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>  Specify --help to receive this message</FONT></FONT></FONT>
+
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>The Concurrent Versions System (CVS) is a tool for version control.</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>For CVS updates and additional information, see</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>    the CVS home page at http://www.cvshome.org/ or</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Verdana"><FONT SIZE=2><FONT FACE="Arial, sans-serif">    Pascal Molli's CVS site at </FONT></FONT><A HREF="http://www.loria.fr/~molli/cvs-index.html"><FONT SIZE=2><FONT FACE="Arial, sans-serif">http://www.loria.fr/~molli/cvs-index.html</FONT></FONT></A></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Verdana"><FONT SIZE=2 STYLE="font-size: 9pt"><FONT SIZE=2><FONT FACE="Arial, sans-serif">Se voc&ecirc; n&atilde;o tiver, voc&ecirc; poder&aacute; instalar o programa cvs dos seus CD's da sua distribui&ccedil;&atilde;o, ou visitar o site: </FONT></FONT><A HREF="http://www.cvshome.org/"><FONT SIZE=2><FONT FACE="Arial, sans-serif">http://www.cvshome.org</FONT></FONT></A><FONT SIZE=2><FONT FACE="Arial, sans-serif"> </FONT></FONT></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Para pegar os fontes do Xpde, v&aacute; ao diret&oacute;rio de usu&aacute;rio e digite esse comandos:</FONT></FONT></FONT>
+<FONT FACE="Arial, sans-serif"><FONT SIZE=2><FONT COLOR="#505050">cvs -d:pserver:anonymous@cvs.xpde.berlios.de:/cvsroot/xpde login<BR>cvs -z3 -d:pserver:anonymous@cvs.xpde.berlios.de:/cvsroot/xpde co xpde</FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>O primeiro comando far&aacute; voc&ecirc; logar-se no servidor. Se for pedido alguma senha, simplesmente pressione ENTER. O segundo comando ir&aacute; criar um diret&oacute;rio chamado xpde no seu diret&oacute;rio atual e far&aacute; o download de todos os fontes do Xpde. </FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>3. Instalando Kylix OE</B></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT SIZE=2><FONT FACE="Arial, sans-serif">O Kylix OE &eacute; uma vers&atilde;o &ldquo;enxugada&rdquo; da vers&atilde;o Kylix Enterprise. O download &eacute; de gra&ccedil;a e seu uso &eacute; apenas para projetos GPL, como esse. Sempre manteremos nosso objetivo de que o Xpde seja compilado pelo Kylix OE. Voc&ecirc; poder&aacute; fazer o download de </FONT></FONT><A HREF="http://www.borland.com/products/downloads/download_kylix.html"><FONT SIZE=2><FONT FACE="Arial, sans-serif">http://www.borland.com/products/downloads/download_kylix.html</FONT></FONT></A><FONT SIZE=2><FONT FACE="Arial, sans-serif">. No tempo da publica&ccedil;&atilde;o deste documento, a vers&atilde;o mais atual &eacute; a &ldquo;Kylix 3 Open Edition&rdquo;. Tamb&eacute;m requer um registro no website. </FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Depois que baixar o arquivo, descompacte usando o comando:</FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>tar xvfz kylix3_open.tar.gz               (provavelmente este nome mesmo)</FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Isto criar&aacute; um diret&oacute;rio que conter&aacute; toda a instala&ccedil;&atilde;o do Kylix.</FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Execute a instala&ccedil;&atilde;o.</FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>$HOME/kylix3_open/setup.sh </FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2> </FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2><B>Nota: </B><I>Instalar o Kylix OE como root pode acarretar problemas, &eacute; melhor instalar como usu&aacute;rio. Recentes pesquisas mostram um problema com Red Hat 8.0 e Mandrake 9.0. A instala&ccedil;&atilde;o nesses sistemas deve ser feita com o par&acirc;metro -m, e se poss&iacute;vel recompilar um novo e atual kernel no Red Hat 8.0. </I></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=4><B>4. Recompilando os fontes.</B></FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Recompilar os fontes &eacute; f&aacute;cil. Voc&ecirc; precisar&aacute; somente abrir um Projeto-grupo, instalar v&aacute;rios pacotes no ambiente IDE e selecionar Build All no menu Project do Kylix. O arquivo de Projeto-grupo que voc&ecirc; precisar&aacute; abrir &eacute; xpde/src/core/xpde/XPdePG.bpg</FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>No momento desta documenta&ccedil;&atilde;o, o projeto-grupo &eacute; composto pelos seguintes projetos:</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPCommon</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPRegistry</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPAPI</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPMenus</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPStyle</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPLocalizator</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPLocalizatorIDE</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPColorSelect</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPShellControls</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bplXPCommctrls</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>taskmanager</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>networkstatus</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>networkproperties</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>appexec</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>bpldesk.so</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>XPwm</FONT></FONT></FONT>
+<FONT COLOR="#505050"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Xpde</FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>O diret&oacute;rio-alvo de todos esses projetos &eacute; configurado para $HOME/xpde. Isto significa que este diret&oacute;rio ir&aacute; existir, ou voc&ecirc; ter&aacute; erros de compila&ccedil;&atilde;o.</FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Voc&ecirc; precisar&aacute; instalar todos os pacotes, de bplXPCommon ao bplXPCommctrls. Voc&ecirc; poder&aacute; fazer isso clicando com o bot&atilde;o direito do mouse sobre o Project Manager e selecionando a op&ccedil;&atilde;o Install. Isto recompilar&aacute; aquele pacote e instalar&aacute; no ambiente IDE. </FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>O projeto-grupo crescer&aacute; e talvez este guia se tornar&aacute; obsoleto entre novas vers&otilde;es, ent&atilde;o a regra geral de sempre &eacute; &ldquo;instalar todos os pacotes no ambiente IDE desde o in&iacute;cio at&eacute; voc&ecirc; achar a aplica&ccedil;&atilde;o&rdquo;.</FONT></FONT></FONT>
+<FONT COLOR="#000000"><FONT FACE="Arial, sans-serif"><FONT SIZE=2>Depois de voc&ecirc; instalar todos os pacotes necess&aacute;rios, voc&ecirc; pode usar o comando Project / Build All Projects. Isto ir&aacute; recompilar o projeto todo. E &eacute; isso. Para rodar, leia o arquivo INSTALL.pt_BR que explica sobre a instala&ccedil;&atilde;o em si. </FONT></FONT></FONT>
+
+
+
+
+</PRE><P STYLE="margin-bottom: 0cm">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+</BODY>
+</HTML>

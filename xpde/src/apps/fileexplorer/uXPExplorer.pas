@@ -42,6 +42,7 @@ type
         procedure copycurrentselectiontoclipboard;
         procedure copytoclipboard(const item:string); overload;
         procedure setclipboard;
+        function getcurrentpath:string;
         procedure copytoclipboard(const items:TStrings); overload;
         function createNewProgressDlg(const title:string):TForm;
         procedure updateProgressDlg(const dialog:TForm; const progress: integer; const max: integer; const str: string; const status: string; const eta:string);
@@ -194,6 +195,14 @@ begin
     finally
         m.free;
     end;
+end;
+
+function TXPExplorer.getcurrentpath: string;
+begin
+    if assigned(explorerform.tvItems.selected) then begin
+        result:=IXPVirtualFile(ExplorerForm.tvItems.Selected.Data).getuniqueid;
+    end
+    else result:='';
 end;
 
 initialization

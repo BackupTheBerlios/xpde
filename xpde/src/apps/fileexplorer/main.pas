@@ -91,6 +91,7 @@ type
     Panel3: TPanel;
     pmItemProperties: TPopupMenu;
     About1: TMenuItem;
+    dummy1: TMenuItem;
     procedure tvItemsExpanding(Sender: TObject; Node: TTreeNode;
       var AllowExpansion: Boolean);
     procedure tvItemsEditing(Sender: TObject; Node: TTreeNode;
@@ -152,6 +153,7 @@ var
 begin
     n:=tvItems.Items.AddChildObject(parent, item.getDisplayName, pointer(item));
     item.setNode(n);
+    item.setChildrenModified(ChildrenNotified);
     n.ImageIndex:=item.getIcon;
     if item.hasChild then begin
         items:= item.getChildren;
@@ -164,6 +166,9 @@ begin
                 p.ImageIndex:=f.getIcon;
                 tvItems.Items.AddChild(p,'dummy');
                 //if f.hasChild then populatenodes(n,f);
+            end;
+            if items.count=0 then begin
+                tvItems.Items.AddChild(n,'dummy');
             end;
         end;
     end;
@@ -558,6 +563,10 @@ var
 begin
     itemverbs:=TStringList.create;
     try
+        if assigned(dummy1) then begin
+            dummy1.free;
+            dummy1:=nil;
+        end;
         for i:=Fitemverbs.count-1 downto 0 do begin
             m:=Fitemverbs[i];
             Fitemverbs.delete(i);
@@ -614,6 +623,9 @@ var
             l:=lvItems.Items.Add;
             l.Data:=TObject(item);
             item.setChildrenModified(ChildrenNotified);
+            if item.hasChild then begin
+                populatenodes(tvItems.Selected,item);
+            end;
             item.getcolumndata(cols);
             l.Caption:=item.getDisplayName;
             l.SubItems.assign(cols);
@@ -701,6 +713,7 @@ procedure TExplorerForm.hideFolderPanel;
 begin
     pnFolders.visible:=false;
     spLeft.visible:=pnFolders.visible;
+    sbFolders.down:=pnFolders.visible;
 end;
 
 procedure TExplorerForm.sbNextClick(Sender: TObject);

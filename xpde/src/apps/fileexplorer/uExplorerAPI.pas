@@ -70,6 +70,7 @@ type
         function getImageList: TImageList;
         function getClipboard:TStringList;
         function ClipboardEmpty:boolean;
+        function getcurrentpath:string;        
         procedure clearclipboard;
         procedure copycurrentselectiontoclipboard;
         procedure copytoclipboard(const item:string); overload;

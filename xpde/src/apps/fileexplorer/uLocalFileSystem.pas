@@ -346,6 +346,19 @@ begin
     end;
 end;
 
+function extractdirpart(const str:string):string;
+var
+    i:longint;
+begin
+    result:=removetrailingslash(str);
+    for i:=length(str)-1 downto 1 do begin
+        if (str[i]='/') then begin
+            result:=copy(result,1,i);
+            break;
+        end;
+    end;
+end;
+
 function addTrailingSlash(const str:string):string;
 begin
     result:=str;
@@ -1252,6 +1265,7 @@ procedure TFileCopier.copyFile(const source, target, basepath: string);
 var
     s: TFileStream;
     t: TFileStream;
+    basedir: string;
     sourcename:string;
     targetname:string;
     k: integer;
@@ -1284,9 +1298,16 @@ begin
     newdir:=getNewDir(targetname,basepath);
     addnew:=not directoryexists(basepath+newdir);
     ForceDirectories(extractfilepath(targetname));
-    if addnew then begin
+    if (addnew) then begin
         targetFolder.addFolder(basepath+newdir);
     end;
+
+    basedir:=extractdirpart(extractfilepath(targetname));
+
+    if (addnew) or (basedir=XPExplorer.getcurrentpath) then begin
+        targetFolder.addFolder(extractfilepath(targetname));
+    end;
+
     t:=TFileStream.Create(targetname, fmOpenWrite or fmCreate);
     try
         while t.size<s.size do begin
@@ -1297,7 +1318,7 @@ begin
             application.processmessages;
             if copydlg.tag=1 then break;
         end;
-        if (newdir='') or (targetFolder.getDisplayName=newdir) then targetFolder.addFile(targetname);
+        if (newdir='') or (targetFolder.getDisplayName=newdir) or (extractfilepath(targetname)=XPExplorer.getcurrentpath) then targetFolder.addFile(targetname);
     finally
         t.free;
         s.free;

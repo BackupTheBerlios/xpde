@@ -468,6 +468,7 @@ begin
       DeleteFile(fCurrentPath + PathDelim + Name + file_types[REG_SZ]) else
       if FileExists(fCurrentPath + PathDelim + Name + file_types[REG_BINARY]) then
         DeleteFile(fCurrentPath + PathDelim + Name + file_types[REG_BINARY]);
+        Result:=true;
 end;
 
 function CleanPath(Path:String):String;
@@ -484,12 +485,16 @@ end;
 function TRegistry.ExportRegDataFile(Key, Filename: string): boolean;
 Var ExpData:TStrings;
 begin
- ExpData:=TStringList.create;
- ExpData.Add('REGEDIT4');
- ExpData.Add('');
- if ExportRegDataStrings(Key,ExpData) then
- ExpData.SaveToFile(FileName);
- ExpData.free;
+        ExpData:=TStringList.create;
+        try
+        ExpData.Add('REGEDIT4');
+        ExpData.Add('');
+        if ExportRegDataStrings(Key,ExpData) then
+        ExpData.SaveToFile(FileName);
+        finally
+        Result:=true;
+        ExpData.free;
+        End;
 end;
 
 function TRegistry.ExportRegDataStrings(Key: string; StriLi:TStrings): boolean;
@@ -536,8 +541,8 @@ var RtKey: string;
   end;
 
 
-  procedure CollectKey(KeyName: string);
-  var RKI: TRegKeyInfo;
+procedure CollectKey(KeyName: string);
+  var // RKI: TRegKeyInfo;
     i: integer;
     Str: TStrings;
   begin
@@ -693,6 +698,7 @@ begin
   FillChar(Value, SizeOf(TRegKeyInfo), 0);
   CountSubFolders(fCurrentPath, Value.NumSubKeys, Value.MaxSubKeyLen,
     Value.NumValues, Value.MaxValueLen);
+    Result:=true;
 end;
 
 procedure TRegistry.GetKeyNames(Strings: TStrings);

@@ -90,7 +90,7 @@ begin
         //Create the editor and setup all is needed
         stringeditor:=TStringEditor.create(nil);
         stringeditor.editor:=self;
-        stringeditor.caption:=stringeditor.caption+' - '+anentry.resourcename;
+        stringeditor.caption:=stringeditor.caption+' - '+anentry.sResourcename;
         entry:=anentry;
         loadeditor;
 
@@ -191,7 +191,7 @@ begin
         //Create the editor and setup all is needed
         stringeditor:=TStringEditor.create(nil);
         stringeditor.editor:=self;
-        stringeditor.caption:=stringeditor.caption+' - '+anentry.resourcename;
+        stringeditor.caption:=stringeditor.caption+' - '+anentry.sResourcename;
         entry:=anentry;
         loadeditor;
     end;

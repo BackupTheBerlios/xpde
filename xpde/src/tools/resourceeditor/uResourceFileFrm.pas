@@ -2,7 +2,9 @@
 {                                                                             }
 { This file is part of the XPde project                                       }
 {                                                                             }
-{ Copyright (c) 2002 José León Serna <ttm@xpde.com>                           }
+{ Copyright (c) 2002                                                          }
+{ José León Serna <ttm@xpde.com>                                              }
+{ Jens Kühner <jens@xpde.com>                                                 }
 {                                                                             }
 { This program is free software; you can redistribute it and/or               }
 { modify it under the terms of the GNU General Public                         }
@@ -20,6 +22,7 @@
 { Boston, MA 02111-1307, USA.                                                 }
 {                                                                             }
 { *************************************************************************** }
+
 unit uResourceFileFrm;
 
 interface
@@ -44,18 +47,20 @@ type
     procedure tvEntriesItemClick(Sender: TObject; Button: TMouseButton;
       Node: TTreeNode; const Pt: TPoint);
     procedure Edit1Click(Sender: TObject);
+    procedure tvEntriesDblClick(Sender: TObject);
   private
     { Private declarations }
-  public
-    { Public declarations }
     editors: TList;
     resourceFile:TResourceFile;
     procedure OnEditorDestroyed(Sender:TObject);
     procedure destroyEditors;
     procedure updateResourceTree;
-    procedure loadFromFile(const filename:string);
+  public
+    { Public declarations }
     constructor Create(AOwner:TComponent);override;
     destructor Destroy;override;
+    procedure loadFromFile(const filename:string);
+    procedure SaveToFile(const filename: string);
   end;
 
 var
@@ -76,6 +81,7 @@ end;
 
 destructor TResourceFileFrm.Destroy;
 begin
+    destroyEditors;
     editors.free;
     resourceFile.free;
     inherited;
@@ -88,6 +94,11 @@ begin
     caption:=filename;
     //Updates the tree
     updateResourceTree;
+end;
+
+procedure TResourceFileFrm.SaveToFile(const filename: string);
+begin
+    resourcefile.savetofile(filename);
 end;
 
 procedure TResourceFileFrm.updateResourceTree;
@@ -120,14 +131,14 @@ begin
         root:=tvEntries.Items.AddChild(nil,'Resources');
 
         for i:=0 to resourcefile.resources.count-1 do begin
-            entry:=resourcefile.resources[i];
+            entry:=resourcefile.resources[i] as TResourceEntry;
             if entry.resourcetype<>rtNone then category:=ResourceTypeToString(entry.resourcetype)
             else category:=entry.sresourcetype;
 
             //Finds the category for this resource
             catnode:=FindCategory(category);
             if (not assigned(catnode)) then catnode:=tvEntries.Items.AddChild(root,category);
-            node:=tvEntries.Items.AddChildObject(catnode,entry.resourcename,entry);
+            node:=tvEntries.Items.AddChildObject(catnode,entry.sResourcename,entry);
         end;
     finally
         tvEntries.items.EndUpdate;
@@ -143,7 +154,6 @@ begin
     end;
 
     action:=caFree;
-    destroyEditors;
 end;
 
 procedure TResourceFileFrm.tvEntriesEditing(Sender: TObject;
@@ -198,6 +208,11 @@ end;
 procedure TResourceFileFrm.OnEditorDestroyed(Sender: TObject);
 begin
     editors.Remove(sender);
+end;
+
+procedure TResourceFileFrm.tvEntriesDblClick(Sender: TObject);
+begin
+   Edit1Click(nil);
 end;
 
 end.

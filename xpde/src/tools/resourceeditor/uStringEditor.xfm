@@ -11,7 +11,7 @@ object StringEditor: TStringEditor
   OnClose = FormClose
   OnResize = FormResize
   PixelsPerInch = 84
-  TextHeight = 16
+  TextHeight = 15
   TextWidth = 7
   object sgStrings: TStringGrid
     Left = 0

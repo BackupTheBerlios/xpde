@@ -1,6 +1,6 @@
 object ResourceFileFrm: TResourceFileFrm
-  Left = 340
-  Top = 465
+  Left = 344
+  Top = 485
   Width = 378
   Height = 248
   VertScrollBar.Range = 19
@@ -11,7 +11,7 @@ object ResourceFileFrm: TResourceFileFrm
   Position = poDefault
   OnClose = FormClose
   PixelsPerInch = 84
-  TextHeight = 20
+  TextHeight = 15
   TextWidth = 7
   object tvEntries: TTreeView
     Left = 0
@@ -21,6 +21,7 @@ object ResourceFileFrm: TResourceFileFrm
     Align = alClient
     Columns = <>
     TabOrder = 0
+    OnDblClick = tvEntriesDblClick
     OnEditing = tvEntriesEditing
     OnItemClick = tvEntriesItemClick
   end

@@ -2,7 +2,9 @@
 {                                                                             }
 { This file is part of the XPde project                                       }
 {                                                                             }
-{ Copyright (c) 2002 José León Serna <ttm@xpde.com>                           }
+{ Copyright (c) 2002                                                          }
+{ José León Serna <ttm@xpde.com>                                              }
+{ Jens Kühner <jens@xpde.com>                                                 }
 {                                                                             }
 { This program is free software; you can redistribute it and/or               }
 { modify it under the terms of the GNU General Public                         }
@@ -20,11 +22,13 @@
 { Boston, MA 02111-1307, USA.                                                 }
 {                                                                             }
 { *************************************************************************** }
+
 unit main;
 
 interface
 
 uses
+  uResourceFileFrm,
   SysUtils, Types, Classes,
   Variants, QTypes, QGraphics,
   QControls, QForms, uResourceAPI,
@@ -39,12 +43,20 @@ type
     OpenDialog: TOpenDialog;
     StatusBar1: TStatusBar;
     ToolBar1: TToolBar;
+    Saveas1: TMenuItem;
+    N1: TMenuItem;
+    Exit1: TMenuItem;
+    SaveDialog: TSaveDialog;
     procedure Open1Click(Sender: TObject);
+    procedure Exit1Click(Sender: TObject);
+    procedure Saveas1Click(Sender: TObject);
   private
     { Private declarations }
+    ResourceFileFrm : TResourceFileFrm;
+    procedure OpenFile(const filename:string);
+    procedure SaveFile(const filename:string);
   public
     { Public declarations }
-    procedure OpenFile(const filename:string);
   end;
 
   //Framework API
@@ -56,7 +68,7 @@ type
         procedure registerEditor(const resourcetype:string;const editorclass:TResourceEditorClass);
         //Calls a registered editor for an entry
         function callEditor(const entry:TResourceEntry): TResourceEditor;
-        
+
         constructor Create;
         destructor Destroy;override;
   end;
@@ -65,8 +77,6 @@ var
   MainForm: TMainForm;
 
 implementation
-
-uses uResourceFileFrm;
 
 {$R *.xfm}
 
@@ -77,11 +87,39 @@ begin
    end;
 end;
 
-procedure TMainForm.OpenFile(const filename: string);
+procedure TMainForm.Saveas1Click(Sender: TObject);
+var
+  strFileName : string;
 begin
-    with TResourceFileFrm.create(application) do begin
-        loadfromfile(filename);
-    end;
+    if assigned(ResourceFileFrm) then begin
+       strFileName := OpenDialog.filename;
+       SaveDialog.InitialDir := extractFilePath(strFileName);
+       SaveDialog.FileName   := '_'+extractFilename(strFileName);
+       if SaveDialog.execute then
+          SaveFile(SaveDialog.filename);
+    end else begin
+       application.messagebox('No resource file opened!');
+   end;
+end;
+
+procedure TMainForm.Exit1Click(Sender: TObject);
+begin
+   close;
+end;
+
+procedure TMainForm.OpenFile(const filename: string);
+var
+  i : integer;
+begin
+    ResourceFileFrm.free;
+
+    ResourceFileFrm := TResourceFileFrm.create(application);
+    ResourceFileFrm.loadfromfile(filename);
+end;
+
+procedure TMainForm.SaveFile(const filename: string);
+begin
+    ResourceFileFrm.savetofile(filename);
 end;
 
 { TResourceAPI }
@@ -126,6 +164,7 @@ procedure TResourceAPI.registerEditor(const resourcetype: string; const editorcl
 begin
     editors.addobject(ansilowercase(resourcetype),TObject(editorclass));
 end;
+
 
 initialization
     ResourceAPI:=TResourceAPI.create;

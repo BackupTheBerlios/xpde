@@ -1,5 +1,5 @@
 object TaskBar: TTaskBar
-  Left = 266
+  Left = 269
   Top = 855
   ActiveControl = btnStart
   AutoScroll = False
@@ -172,6 +172,7 @@ object TaskBar: TTaskBar
       ParentShowHint = False
       ShowHint = False
       TabOrder = 0
+      ToggleButton = True
       OnMouseDown = btnStartMouseDown
       Margin = 0
       Spacing = 2

@@ -301,8 +301,9 @@ end;
 
 procedure TTaskBar.startmenuHide(Sender: TObject);
 begin
-    QButton_setDown(btnStart.handle,false);
-    application.processmessages;
+    btnStart.Toggle;
+//    QButton_setDown(btnStart.handle,false);
+//    application.processmessages;
 end;
 
 procedure TTaskBar.LogOffAdministrator1Click(Sender: TObject);
